@@ -1,0 +1,31 @@
+package mods.morePistons.common;
+
+
+import net.minecraft.src.ModLoader;
+import net.minecraft.block.Block; //amq;
+import net.minecraft.item.Item; //up;
+import net.minecraft.item.ItemStack; //ur;
+
+public class MorePistonsRecipes {
+	public MorePistonsRecipes() {
+		
+		ModLoader.addRecipe(new ItemStack(MorePistons.doublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), Block.pistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.doubleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.doublePistonBase, Character.valueOf('Y'), Item.slimeBall });
+		ModLoader.addRecipe(new ItemStack(MorePistons.doubleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), Block.pistonStickyBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.triplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.doublePistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.tripleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.triplePistonBase, Character.valueOf('Y'), Item.slimeBall });
+		ModLoader.addRecipe(new ItemStack(MorePistons.tripleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.doubleStickyPistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.quadruplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.triplePistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.quadrupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.quadruplePistonBase, Character.valueOf('Y'), Item.slimeBall });
+		ModLoader.addRecipe(new ItemStack(MorePistons.quadrupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.tripleStickyPistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.quintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.quadruplePistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.quintupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.quintuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
+		ModLoader.addRecipe(new ItemStack(MorePistons.quintupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.quadruplePistonBase });
+		ModLoader.addRecipe(new ItemStack(MorePistons.gravitationalPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), Block.pistonBase, Character.valueOf('Y'), Block.tnt });
+		ModLoader.addRecipe(new ItemStack(MorePistons.gravitationalStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.gravitationalPistonBase, Character.valueOf('Y'), Item.slimeBall });
+		
+		ModLoader.addRecipe(new ItemStack(MorePistons.superPistonBase, 1), new Object[] { "WWW", "CIC", "ORO", Character.valueOf('W'), Block.planks, Character.valueOf('C'), Block.cobblestone, Character.valueOf('I'), Item.ingotIron, Character.valueOf('O'), Block.obsidian, Character.valueOf('R'), Item.redstone });
+		ModLoader.addRecipe(new ItemStack(MorePistons.superStickyPistonBase, 1), new Object[] { "S", "P", Character.valueOf('S'), Item.slimeBall, Character.valueOf('P'), MorePistons.superPistonBase });
+		
+	}
+}
