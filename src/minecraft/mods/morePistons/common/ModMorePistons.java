@@ -15,7 +15,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraftforge.common.Configuration;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.0 for [1.5.1 Build Smeagol]")
+@Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.1 for [1.5.1 Build Smeagol]")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
@@ -36,6 +36,12 @@ public class ModMorePistons {
 	public static int idBlockQuadStickyPistonBase;
 	public static int idBlockQuintPistonBase;
 	public static int idBlockQuintStickyPistonBase;
+	public static int idBlockSextPistonBase;
+	public static int idBlockSextStickyPistonBase;
+	public static int idBlockSeptPistonBase;
+	public static int idBlockOctStickyPistonBase;
+	public static int idBlockOctPistonBase;
+	public static int idBlockSeptStickyPistonBase;
 	public static int idBlockGravitationalPistonBase;
 	public static int idBlockGravitationalStickyPistonBase;
 	public static int idBlockPistonExtension;
@@ -67,6 +73,12 @@ public class ModMorePistons {
 		idBlockStrongStickyPistonBase        = config.getBlock("Super Sticky Piston", 220)        .getInt();
 		idBlockQuintPistonBase               = config.getBlock("Quintuple Piston", 221)           .getInt();
 		idBlockQuintStickyPistonBase         = config.getBlock("Quintuple Sticky Piston", 222)    .getInt();
+		idBlockSextPistonBase                = config.getBlock("Sextuple Piston", 223)           .getInt();
+		idBlockSextStickyPistonBase          = config.getBlock("Sextuple Sticky Piston", 224)    .getInt();
+		idBlockSeptPistonBase                = config.getBlock("Septuple Piston", 225)           .getInt();
+		idBlockSeptStickyPistonBase          = config.getBlock("Septuple Sticky Piston", 226)    .getInt();
+		idBlockOctPistonBase                = config.getBlock("Octuple Piston", 227)           .getInt();
+		idBlockOctStickyPistonBase          = config.getBlock("Octuple Sticky Piston", 228)    .getInt();
 		
 		config.save();
 	}

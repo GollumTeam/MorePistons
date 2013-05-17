@@ -187,19 +187,19 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		// Si redstone active et piston fermer alors il faut ouvrir
 		if (powered && !extended) {
-			ModMorePistons.log("Etat du piston : "+x+"x"+y+"x"+z+" metadata = "+metadata+" orientation = "+orientation);
-			ModMorePistons.log("Powered : "+powered+" Extended : "+extended);
+			//ModMorePistons.log("Etat du piston : "+x+"x"+y+"x"+z+" metadata = "+metadata+" orientation = "+orientation);
+			//ModMorePistons.log("Powered : "+powered+" Extended : "+extended);
 			if (this.canExtend(world, x, y, z, orientation)) {
 				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
 				world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
 			} else {
-				ModMorePistons.log("Le piston est bloqué");
+				//ModMorePistons.log("Le piston est bloqué");
 			}
 			
 		// Si redstone eteinte et piston ouvert alors il faut fermer
 		} else if (!powered && extended) {
-			ModMorePistons.log("Etat du piston : "+x+"x"+y+"x"+z+" metadata = "+metadata+" orientation = "+orientation);
-			ModMorePistons.log("Powered : "+powered+" Extended : "+extended);
+			//ModMorePistons.log("Etat du piston : "+x+"x"+y+"x"+z+" metadata = "+metadata+" orientation = "+orientation);
+			//ModMorePistons.log("Powered : "+powered+" Extended : "+extended);
 			world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 			world.addBlockEvent(x, y, z, this.blockID, 1, orientation);
 		}
@@ -216,7 +216,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		
 		if (fermer == 0) {
-			ModMorePistons.log("Ouvrir le piston");
+			//ModMorePistons.log("Ouvrir le piston");
 			
 			if (tryExtend(world, x, y, z, orientation)) {
 				
@@ -229,7 +229,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				world.setBlockMetadataWithNotify (x, y, z, orientation, 2);
 			}
 		} else {
-			ModMorePistons.log("Fermer le piston");
+			//ModMorePistons.log("Fermer le piston");
 			
 			// Debut de l'effet d'ouverture :) l'adapter pour tous les pistons
 			
@@ -442,7 +442,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		}
 	}
 	
-	
 	private boolean tryExtend(World world, int x, int y, int z, int orientation) {
 	
 		
@@ -464,10 +463,9 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 		}
 		
-		
-		int listId[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0};
-		int listMetadata[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0};
-		int sizes[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0};
+		int listId[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0, 0, 0};
+		int listMetadata[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0, 0, 0};
+		int sizes[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0, 0, 0};
 		int pos = 0;
 		int size = this.length;
 		
@@ -478,7 +476,12 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			z1 += Facing.offsetsZForSide[orientation];
 			
 			int id = world.getBlockId(x1, y1, z1);
-			if (id != 0) {
+			
+			if (
+				id != 0 && 
+				id != MorePistons.pistonExtension.blockID && 
+				id != MorePistons.pistonRod.blockID
+			) {
 				listId[pos] = id;
 				listMetadata[pos] = world.getBlockMetadata (x1, y1, z1);
 				sizes[pos] = size;
@@ -501,12 +504,11 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			int id = listId[i];
 			int meta = listMetadata[i];
 			int length = sizes[i];
-			if (id != 0) {
+			if (id != 0 && id != Block.pistonMoving.blockID) {
 				
 				x1 += Facing.offsetsXForSide[orientation];
 				y1 += Facing.offsetsYForSide[orientation];
 				z1 += Facing.offsetsZForSide[orientation];
-				
 				
 				// Ajout d'une animation
 				world.setBlock(x1, y1, z1, Block.pistonMoving.blockID, meta, 2);

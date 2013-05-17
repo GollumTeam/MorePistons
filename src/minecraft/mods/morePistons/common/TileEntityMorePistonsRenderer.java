@@ -99,7 +99,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 					par1TileEntityPiston.zCoord
 				);
 			}
-
+			
 			tessellator.setTranslation(0.0D, 0.0D, 0.0D);
 			tessellator.draw();
 			RenderHelper.enableStandardItemLighting();

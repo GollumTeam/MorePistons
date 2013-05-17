@@ -37,7 +37,6 @@ public class TileEntityMorePistons extends TileEntityPiston {
 		this.isPistonRoot = false;
 	}
 	
-	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance) {
 		
 		this.storedBlockID = id;
@@ -59,7 +58,6 @@ public class TileEntityMorePistons extends TileEntityPiston {
 		this.distance = distance;
 		this.isPistonRoot = isRoot;
 	}
-	
 	
 	public int getStoredBlockID () {
 		return this.storedBlockID;
@@ -109,7 +107,6 @@ public class TileEntityMorePistons extends TileEntityPiston {
 			z -= Facing.offsetsZForSide[this.storedOrientation];
 			
 		}
-		
 		
 	}
 	
