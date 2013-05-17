@@ -124,7 +124,7 @@ public class TileEntityMorePistons extends TileEntityPiston {
 			List var4 = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, var3);
 			
 			// Revoir la collision ici
-			if (!var4.isEmpty()) {
+			if (!var4.isEmpty() && this.extending) {
 				this.pushedObjects.addAll(var4);
 				Iterator i = this.pushedObjects.iterator();
 				

@@ -64,7 +64,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 	}
 
 	/**
-	 * Enregistre les textures Depuis la 1.5 on est oblig� de charger les
+	 * Enregistre les textures Depuis la 1.5 on est obligé de charger les
 	 * texture fichier par fichier
 	 */
 	public void registerIcons(IconRegister iconRegister) {
@@ -124,11 +124,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 	}
 
 	public void onBlockAdded(World par1World, int par2, int par3, int par4) {
-		if ((!par1World.isRemote)
-				&& (par1World.getBlockTileEntity(par2, par3, par4) == null)
-				&& (!ignoreUpdates)) {
-			updatePistonState(par1World, par2, par3, par4);
-		}
+		return;
 	}
 
 	private void updatePistonState(World par1World, int par2, int par3, int par4) {

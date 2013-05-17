@@ -146,6 +146,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		int orientation  = determineOrientation(world, x, y, z, entityLiving);
 		world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 		
+		ModMorePistons.log("1 : "+orientation);
+		
 		if (!this.ignoreUpdates) {
 			this.updatePistonState(world, x, y, z);
 		}
@@ -166,9 +168,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * Called whenever the block is added into the world. Args: world, x, y, z
 	 */
 	public void onBlockAdded(World world, int x, int y, int z) {
-		if (world.getBlockTileEntity(x, y, z) == null && !this.ignoreUpdates) {
-			this.updatePistonState(world, x, y, z);
-		}
+		return;
 	}
 	
 	/**
@@ -216,7 +216,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		this.ignoreUpdates = true;
 		
-		
 		if (fermer == 0) {
 			//ModMorePistons.log("Ouvrir le piston");
 			
@@ -262,10 +261,16 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				
 				int id = world.getBlockId(destX, destY, destZ);
 				
-				if (id != 0) {
+				if (
+					id != 0 &&
+					id != Block.waterMoving.blockID &&
+					id != Block.waterStill.blockID &&
+					id != Block.lavaMoving.blockID &&
+					id != Block.lavaStill.blockID
+				) {
 					int blockMeta = world.getBlockMetadata(destX, destY, destZ);
 					
-					world.setBlock(destX, destY, z, 0);
+					world.setBlock(destX, destY, destZ, 0);
 					world.setBlockMetadataWithNotify (destX, destY, destZ, 0, 2);
 					
 					world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
@@ -482,7 +487,11 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			if (
 				id != 0 && 
 				id != MorePistons.pistonExtension.blockID && 
-				id != MorePistons.pistonRod.blockID
+				id != MorePistons.pistonRod.blockID &&
+				id != Block.waterMoving.blockID &&
+				id != Block.waterStill.blockID &&
+				id != Block.lavaMoving.blockID &&
+				id != Block.lavaStill.blockID
 			) {
 				listId[pos] = id;
 				listMetadata[pos] = world.getBlockMetadata (x1, y1, z1);

@@ -115,9 +115,7 @@ public class BlockGravitationalPistonBase extends BlockPistonBase {
 	}
 
 	public void onBlockAdded (World world, int i, int j, int k) {
-		if ((world.getBlockTileEntity(i, j, k) == null) && (!ignoreUpdates)) {
-			updatePistonState(world, i, j, k);
-		}
+		return;
 	}
 
 	private void updatePistonState(World world, int i, int j, int k) {
