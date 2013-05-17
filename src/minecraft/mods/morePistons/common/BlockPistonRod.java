@@ -31,10 +31,6 @@ public class BlockPistonRod extends Block {
 	public boolean northSouth = false;
 	public boolean upDown = false;
 	
-	// public boolean broken = false;
-	// public static boolean pistonMoving2 = false;
-	// private int pistonRodSprTop = 32;
-	// private int pistonRodSprSide = 33;
 	//
 	public BlockPistonRod(int id) {
 		super(id, Material.air);
@@ -60,7 +56,7 @@ public class BlockPistonRod extends Block {
 	}
 
 	/**
-	 * Enregistre les textures Depuis la 1.5 on est oblig� de charger les
+	 * Enregistre les textures Depuis la 1.5 on est obligé de charger les
 	 * texture fichier par fichier
 	 */
 	public void registerIcons(IconRegister iconRegister) {
@@ -85,9 +81,9 @@ public class BlockPistonRod extends Block {
 		return this.textureFileV;
 	}
 
-	public Icon getBlockTextureFromSideAndMetadata(int i, int j) {
+	public Icon getIcon(int i, int j) {
 		int k = getDirectionMeta(j);
-		return i != Facing.faceToSide[k] ? this.textureFileV : this.textureFileH;
+		return i != Facing.oppositeSide[k] ? this.textureFileV : this.textureFileH;
 	}
 	
 	//////////////////////////////////

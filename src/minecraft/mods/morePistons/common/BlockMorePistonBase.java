@@ -28,9 +28,9 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	private String texturePrefixe;
 	private Icon textureFileTop;
 	private Icon textureFileTopSticky;
-	private Icon textureFileTopOpen;
-	private Icon textureFileTopSide;
-	private Icon textureFileTopBottom;
+	private Icon textureFileOpen;
+	private Icon textureFileSide;
+	private Icon textureFileBottom;
 	
 	/**
 	 * Constructeur
@@ -64,14 +64,16 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	// Gestion des textures //
 	//////////////////////////
 	
+	
 	/**
 	 * Charge une texture et affiche dans le log
+	 * 
 	 * @param iconRegister
 	 * @param key
 	 * @return
 	 */
-	public Icon loadTexture (IconRegister iconRegister, String key) {
-		ModMorePistons.log("Register icon More Piston :\""+key+"\"");
+	public Icon loadTexture(IconRegister iconRegister, String key) {
+		ModMorePistons.log("Register icon More Piston :\"" + key + "\"");
 		return iconRegister.registerIcon(key);
 	}
 	
@@ -82,17 +84,17 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	public void registerIcons(IconRegister iconRegister) {
 		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top"));
 		this.textureFileTopSticky = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top_sticky"));
-		this.textureFileTopOpen   = this.loadTexture(iconRegister, ModMorePistons.getTexture (this.texturePrefixe + "top"));
-		this.textureFileTopBottom = this.loadTexture(iconRegister, ModMorePistons.getTexture (this.texturePrefixe + "bottom"));
-		this.textureFileTopSide   = this.loadTexture(iconRegister, ModMorePistons.getTexture (this.texturePrefixe + "side"));
+		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.getTexture (this.texturePrefixe + "top"));
+		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.getTexture (this.texturePrefixe + "bottom"));
+		this.textureFileSide      = this.loadTexture(iconRegister, ModMorePistons.getTexture (this.texturePrefixe + "side"));
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public Icon getPistonExtensionTexture() {
 		return this.isSticky ? this.textureFileTopSticky : this.textureFileTop;
 	}
-
-	public Icon getBlockTextureFromSideAndMetadata(int i, int j) {
+	
+	public Icon getIcon(int i, int j) {
 		int k = getOrientation(j);
 		if (k > 5) {
 			return this.textureFileTopSticky;
@@ -101,13 +103,13 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			if ((isExtended(j)) || (this.minX > 0.0D) || (this.minY > 0.0D)
 					|| (this.minZ > 0.0D) || (this.maxX < 1.0D)
 					|| (this.maxY < 1.0D) || (this.maxZ < 1.0D)) {
-				return this.textureFileTopOpen;
+				return this.textureFileOpen;
 			}
 
 			return this.isSticky ? this.textureFileTopSticky : this.textureFileTop;
 		}
 
-		return i != Facing.faceToSide[k] ? this.textureFileTopSide : this.textureFileTopBottom;
+		return i != Facing.oppositeSide[k] ? this.textureFileSide : this.textureFileBottom;
 	}
 	
 	////////////////////////

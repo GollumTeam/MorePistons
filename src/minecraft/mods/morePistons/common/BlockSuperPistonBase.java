@@ -34,9 +34,9 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 	
 	private Icon textureFileTop;
 	private Icon textureFileTopSticky;
-	private Icon textureFileTopOpen;
-	private Icon textureFileTopSide;
-	private Icon textureFileTopBottom;
+	private Icon textureFileOpen;
+	private Icon textureFileSide;
+	private Icon textureFileBottom;
 
 	public BlockSuperPistonBase(int par1, boolean par3) {
 		super(par1, par3);
@@ -70,9 +70,9 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 	public void registerIcons(IconRegister iconRegister) {
 		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top"));
 		this.textureFileTopSticky = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top_sticky"));
-		this.textureFileTopOpen   = this.loadTexture(iconRegister, ModMorePistons.getTexture ("super_top"));
-		this.textureFileTopBottom = this.loadTexture(iconRegister, ModMorePistons.getTexture ("super_bottom"));
-		this.textureFileTopSide   = this.loadTexture(iconRegister, ModMorePistons.getTexture ("super_side"));
+		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.getTexture ("super_top"));
+		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.getTexture ("super_bottom"));
+		this.textureFileSide      = this.loadTexture(iconRegister, ModMorePistons.getTexture ("super_side"));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -80,7 +80,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 		return this.isSticky ? this.textureFileTopSticky : this.textureFileTop;
 	}
 
-	public Icon getBlockTextureFromSideAndMetadata(int i, int j) {
+	public Icon getIcon(int i, int j) {
 		int k = getOrientation(j);
 		if (k > 5) {
 			return this.textureFileTopSticky;
@@ -89,13 +89,13 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 			if ((isExtended(j)) || (this.minX > 0.0D) || (this.minY > 0.0D)
 					|| (this.minZ > 0.0D) || (this.maxX < 1.0D)
 					|| (this.maxY < 1.0D) || (this.maxZ < 1.0D)) {
-				return this.textureFileTopOpen;
+				return this.textureFileOpen;
 			}
 
 			return this.isSticky ? this.textureFileTopSticky : this.textureFileTop;
 		}
 
-		return i != Facing.faceToSide[k] ? this.textureFileTopSide : this.textureFileTopBottom;
+		return i != Facing.oppositeSide[k] ? this.textureFileSide : this.textureFileBottom;
 	}
 	
 	////////////////////////
@@ -286,7 +286,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 					par1World.setBlock(par2, par3, par4, Block.pistonMoving.blockID, var13, 2);
 					par1World.setBlockTileEntity(par2, par3, par4, BlockPistonMoving.getTileEntity(var12, var13, par6, false, false));
 					tryDependableBlocks(par1World, par2, par3, par4,
-							Facing.faceToSide[par6]);
+							Facing.oppositeSide[par6]);
 					ignoreUpdates = false;
 
 					ignoreUpdates = true;
@@ -600,7 +600,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 
 			if ((blockID == Block.reed.blockID)
 					|| (blockID == Block.doorWood.blockID)
-					|| (blockID == Block.doorSteel.blockID)) {
+					|| (blockID == Block.doorIron.blockID)) {
 				for (int a = 2; a < 258; a++) {
 					if (world.getBlockId(x, y + 1, z) == 0) {
 						System.out.println("Not facing UP or DOWN");
@@ -618,7 +618,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 						y++;
 						yOffset++;
 					} else if ((world.getBlockId(xOffset, yOffset + 2, zOffset) == Block.doorWood.blockID)
-							|| (world.getBlockId(xOffset, yOffset + 2, zOffset) == Block.doorSteel.blockID)) {
+							|| (world.getBlockId(xOffset, yOffset + 2, zOffset) == Block.doorIron.blockID)) {
 						metadata = world.getBlockMetadata(xOffset, yOffset + 2, zOffset);
 						y++;
 						yOffset++;

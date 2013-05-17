@@ -15,7 +15,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraftforge.common.Configuration;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.1 for [1.5.1 Build Smeagol]")
+@Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.2 for [1.5.2 Build Smeagol]")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
