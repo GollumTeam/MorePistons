@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 import net.minecraft.block.BlockContainer; // akb;
 import net.minecraft.block.Block; // amq;
 import net.minecraft.tileentity.TileEntity; // any;
@@ -23,6 +23,7 @@ import net.minecraft.world.World; // yc;
 import net.minecraft.world.IBlockAccess; // ym;
 
 public class BlockGravitationalPistonBase extends BlockPistonBase {
+	private static final EntityPlayer EntityPlayer = null;
 	private boolean isSticky;
 	private static boolean ignoreUpdates;
 	public double power = 1.35D;
@@ -100,7 +101,7 @@ public class BlockGravitationalPistonBase extends BlockPistonBase {
 	}
 
 	public void onBlockPlacedBy (World world, int i, int j, int k, EntityLiving entityliving) {
-		int l = determineOrientation(world, i, j, k, (EntityPlayer) entityliving);
+		int l = determineOrientation(world, i, j, k, (EntityPlayer) EntityPlayer);
 		world.setBlockMetadataWithNotify (i, j, k, l, 2);
 		if (!ignoreUpdates) {
 			updatePistonState(world, i, j, k);

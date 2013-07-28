@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 
 import net.minecraft.block.Block; // amq;
 import net.minecraft.tileentity.TileEntity; // any;
@@ -10,9 +10,12 @@ import net.minecraft.block.BlockPistonExtension; // aob;
 import net.minecraft.client.renderer.RenderHelper; // arw;
 import net.minecraft.client.renderer.Tessellator; // baz;
 import net.minecraft.client.renderer.RenderBlocks; // bbb;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer; // bdx
 import net.minecraft.client.Minecraft;
+
 import org.lwjgl.opengl.GL11;
+
 import net.minecraft.world.World; // yc;
 
 public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
@@ -28,7 +31,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 		
 		if (block != null && par1TileEntityPiston.getProgress(par8) < 1.0F) {
 			Tessellator tessellator = Tessellator.instance;
-			this.bindTextureByName("/terrain.png");
+			Minecraft.getMinecraft().func_110434_K().func_110577_a(TextureMap.field_110575_b);
 			RenderHelper.disableStandardItemLighting();
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glEnable(GL11.GL_BLEND);

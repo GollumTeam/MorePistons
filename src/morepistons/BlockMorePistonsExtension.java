@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.Facing;

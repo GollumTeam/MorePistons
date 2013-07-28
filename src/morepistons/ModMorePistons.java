@@ -1,11 +1,8 @@
-package mods.morePistons.common;
+package morepistons;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -15,14 +12,14 @@ import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraftforge.common.Configuration;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.3 for [1.5.2 Build Smeagol]")
+@Mod(modid = "more-pistons", name = "More Pistons", version = "X.X.X for [1.6.2 Build By: Master801]")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
 	@Instance("ModMorePistons")
 	public static ModMorePistons instance;
 	
-	@SidedProxy(clientSide = "mods.morePistons.common.ClientProxyMorePistons", serverSide = "mods.morePistons.common.CommonProxyMorePistons")
+	@SidedProxy(clientSide = "morepistons.ClientProxyMorePistons", serverSide = "morepistons.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
 	
 	private static boolean DEBUG = true;
@@ -49,42 +46,42 @@ public class ModMorePistons {
 	public static int idBlockStrongPistonBase;
 	public static int idBlockStrongStickyPistonBase;
 	
-	private static String texturePath = "morePistons:";
+	private static String texturePath = "morepistons:";
 
 
 	
-	@Mod.PreInit
+	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		
 		config.load();
 		
-		idBlockDoublePistonBase              = config.getBlock("Double Piston", 210)              .getInt();
-		idBlockDoubleStickyPistonBase        = config.getBlock("Double Sticky Piston", 211)       .getInt();
-		idBlockTriplePistonBase              = config.getBlock("Triple Piston", 212)              .getInt();
-		idBlockTripleStickyPistonBase        = config.getBlock("Triple Sticky Piston", 213)       .getInt();
-		idBlockQuadPistonBase                = config.getBlock("Quadruple Piston", 214)           .getInt();
-		idBlockQuadStickyPistonBase          = config.getBlock("Quadruple Sticky Piston", 215)    .getInt();
-		idBlockGravitationalPistonBase       = config.getBlock("Gravitational Piston", 216)       .getInt();
-		idBlockGravitationalStickyPistonBase = config.getBlock("Gravitational Sticky Piston", 223).getInt();
-		idBlockPistonExtension               = config.getBlock("Piston Extension", 217)           .getInt();
-		idBlockPistonRod                     = config.getBlock("Piston Rod", 218)                 .getInt();
-		idBlockStrongPistonBase              = config.getBlock("Super Piston", 219)               .getInt();
-		idBlockStrongStickyPistonBase        = config.getBlock("Super Sticky Piston", 220)        .getInt();
-		idBlockQuintPistonBase               = config.getBlock("Quintuple Piston", 221)           .getInt();
-		idBlockQuintStickyPistonBase         = config.getBlock("Quintuple Sticky Piston", 222)    .getInt();
-		idBlockSextPistonBase                = config.getBlock("Sextuple Piston", 223)           .getInt();
-		idBlockSextStickyPistonBase          = config.getBlock("Sextuple Sticky Piston", 224)    .getInt();
-		idBlockSeptPistonBase                = config.getBlock("Septuple Piston", 225)           .getInt();
-		idBlockSeptStickyPistonBase          = config.getBlock("Septuple Sticky Piston", 226)    .getInt();
-		idBlockOctPistonBase                = config.getBlock("Octuple Piston", 227)           .getInt();
-		idBlockOctStickyPistonBase          = config.getBlock("Octuple Sticky Piston", 228)    .getInt();
+		idBlockDoublePistonBase              = config.getBlock("Double Piston", 1000)              .getInt();
+		idBlockDoubleStickyPistonBase        = config.getBlock("Double Sticky Piston", 1001)       .getInt();
+		idBlockTriplePistonBase              = config.getBlock("Triple Piston", 1002)              .getInt();
+		idBlockTripleStickyPistonBase        = config.getBlock("Triple Sticky Piston", 1003)       .getInt();
+		idBlockQuadPistonBase                = config.getBlock("Quadruple Piston", 1004)           .getInt();
+		idBlockQuadStickyPistonBase          = config.getBlock("Quadruple Sticky Piston", 1005)    .getInt();
+		idBlockGravitationalPistonBase       = config.getBlock("Gravitational Piston", 1006)       .getInt();
+		idBlockGravitationalStickyPistonBase = config.getBlock("Gravitational Sticky Piston", 1007).getInt();
+		idBlockPistonExtension               = config.getBlock("Piston Extension", 1008)           .getInt();
+		idBlockPistonRod                     = config.getBlock("Piston Rod", 1009)                 .getInt();
+		idBlockStrongPistonBase              = config.getBlock("Super Piston", 1010)               .getInt();
+		idBlockStrongStickyPistonBase        = config.getBlock("Super Sticky Piston", 1011)        .getInt();
+		idBlockQuintPistonBase               = config.getBlock("Quintuple Piston", 1012)           .getInt();
+		idBlockQuintStickyPistonBase         = config.getBlock("Quintuple Sticky Piston", 1013)    .getInt();
+		idBlockSextPistonBase                = config.getBlock("Sextuple Piston", 1014)           .getInt();
+		idBlockSextStickyPistonBase          = config.getBlock("Sextuple Sticky Piston", 1015)    .getInt();
+		idBlockSeptPistonBase                = config.getBlock("Septuple Piston", 1016)           .getInt();
+		idBlockSeptStickyPistonBase          = config.getBlock("Septuple Sticky Piston", 1017)    .getInt();
+		idBlockOctPistonBase                = config.getBlock("Octuple Piston", 1018)           .getInt();
+		idBlockOctStickyPistonBase          = config.getBlock("Octuple Sticky Piston", 1019)    .getInt();
 		
 		config.save();
 	}
 	
 	/** 2 **/
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		new MorePistonsBlocks();
@@ -95,7 +92,7 @@ public class ModMorePistons {
 	}
 
 	/** 3 **/
-	@PostInit
+	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 
 	}

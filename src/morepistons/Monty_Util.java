@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 
 import java.io.Writer;
 import java.text.SimpleDateFormat;

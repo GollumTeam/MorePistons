@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 
 import net.minecraft.block.Block; // amq;
 import net.minecraft.block.BlockPistonMoving; // aoc;

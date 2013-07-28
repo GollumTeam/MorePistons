@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 
 
 public class CommonProxyMorePistons {
