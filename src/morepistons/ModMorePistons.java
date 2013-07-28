@@ -22,7 +22,7 @@ public class ModMorePistons {
 	@SidedProxy(clientSide = "morepistons.ClientProxyMorePistons", serverSide = "morepistons.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
 	
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 	
 	public static boolean configFlag;
 	public static int idBlockDoublePistonBase;
