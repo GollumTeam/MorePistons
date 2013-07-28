@@ -1,7 +1,7 @@
-package mods.morePistons.common;
+package morepistons;
 
 
-import mods.morePistons.common.CommonProxyMorePistons;
+import morepistons.CommonProxyMorePistons;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.client.MinecraftForgeClient;
 

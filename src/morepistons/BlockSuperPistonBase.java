@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package morepistons;
 
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.block.BlockFlower; // aje;
@@ -108,8 +108,9 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
 			EntityLiving par5EntityLiving) {
+		EntityPlayer par5EntityPlayer = null;
 		int var6 = determineOrientation(par1World, par2, par3, par4,
-				(EntityPlayer) par5EntityLiving);
+				(EntityPlayer) par5EntityPlayer);
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, var6, 2);
 		if ((!par1World.isRemote) && (!ignoreUpdates)) {
 			updatePistonState(par1World, par2, par3, par4);
