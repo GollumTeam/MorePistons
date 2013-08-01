@@ -17,6 +17,7 @@ import java.util.Random;
 import net.minecraft.util.MathHelper; // ke;
 import net.minecraft.entity.Entity; // lq;
 import net.minecraft.entity.EntityLiving; // md;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingSand; // pw;
 import net.minecraft.entity.player.EntityPlayer; // qx;
 import net.minecraft.world.World; // yc;
@@ -100,7 +101,7 @@ public class BlockGravitationalPistonBase extends BlockPistonBase {
 	}
 
 	public void onBlockPlacedBy (World world, int i, int j, int k, EntityLiving entityliving) {
-		int l = determineOrientation(world, i, j, k, (EntityPlayer) entityliving);
+		int l = determineOrientation(world, i, j, k, (EntityLivingBase) entityliving);
 		world.setBlockMetadataWithNotify (i, j, k, l, 2);
 		if (!ignoreUpdates) {
 			updatePistonState(world, i, j, k);
@@ -306,8 +307,7 @@ public class BlockGravitationalPistonBase extends BlockPistonBase {
 		return (i & 0x8) != 0;
 	}
 
-	public static int determineOrientation(World world, int i, int j, int k,
-			EntityPlayer entityplayer) {
+	public static int determineOrientation(World world, int i, int j, int k, EntityLivingBase entityplayer) {
 		if ((MathHelper.abs((float) entityplayer.posX - i) < 2.0F)
 				&& (MathHelper.abs((float) entityplayer.posZ - k) < 2.0F)) {
 			double d = entityplayer.posY + 1.82D - entityplayer.yOffset;
