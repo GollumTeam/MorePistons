@@ -23,6 +23,8 @@ public class MorePistons {
 	public static Block gravitationalStickyPistonBase;
 	public static Block superPistonBase;
 	public static Block superStickyPistonBase;
+	public static Block redStonePistonBase;
+	public static Block redStoneStickyPistonBase;
 	public static Block pistonExtension;
 	public static Block pistonRod;
 	
@@ -45,7 +47,9 @@ public class MorePistons {
 		ModMorePistons.idBlockOctStickyPistonBase,
 		ModMorePistons.idBlockGravitationalPistonBase,
 		ModMorePistons.idBlockStrongPistonBase,
-		ModMorePistons.idBlockStrongStickyPistonBase
+		ModMorePistons.idBlockStrongStickyPistonBase,
+		ModMorePistons.idBlockRedStonePistonBase,
+		ModMorePistons.idBlockRedStoneStickyPistonBase
 	};
 	
 	public static String[] pistonListName = {
@@ -68,7 +72,9 @@ public class MorePistons {
 		"PistonExtension",
 		"PistonRod",
 		"SuperPistonBase",
-		"SuperStickyPistonBase"
+		"SuperStickyPistonBase",
+		"RedStonePistonBase",
+		"RedStoneStickyPistonBase"
 	};
 
 	public MorePistons() {
@@ -83,7 +89,8 @@ public class MorePistons {
 			octuplePistonBase      , octupleStickyPistonBase,
 			gravitationalPistonBase, gravitationalStickyPistonBase,
 			pistonExtension, pistonRod, 
-			superPistonBase, superStickyPistonBase
+			superPistonBase, superStickyPistonBase, 
+			redStonePistonBase, redStoneStickyPistonBase
 		});
 		
 		
@@ -101,9 +108,12 @@ public class MorePistons {
 		LanguageRegistry.addName(septupleStickyPistonBase       , "Septuple Sticky Piston");
 		LanguageRegistry.addName(octuplePistonBase             , "Octuple Piston");
 		LanguageRegistry.addName(octupleStickyPistonBase       , "Octuple Sticky Piston");
-		
+
 		LanguageRegistry.addName(gravitationalPistonBase        , "Gravitational Piston");
 		LanguageRegistry.addName(gravitationalStickyPistonBase  , "Gravitational Sticky Piston");
+		
+		LanguageRegistry.addName(redStonePistonBase             , "Redstone Piston");
+		LanguageRegistry.addName(redStoneStickyPistonBase       , "Redstone Sticky Piston");
 		
 		LanguageRegistry.addName(superPistonBase                , "Super Piston");
 		LanguageRegistry.addName(superStickyPistonBase          , "Super Sticky Piston");

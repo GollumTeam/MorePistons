@@ -23,8 +23,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	public  int maxBlockMove = 12;
 	protected int length = 1;
 	
-	
-	// Texture attribut
 	protected String texturePrefixe;
 	protected Icon textureFileTop;
 	protected Icon textureFileTopSticky;
@@ -146,8 +144,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		int orientation  = determineOrientation(world, x, y, z, entityLiving);
 		world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 		
-		ModMorePistons.log("1 : "+orientation);
-		
 		if (!this.ignoreUpdates) {
 			this.updatePistonState(world, x, y, z);
 		}
@@ -159,6 +155,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * their own) Args: x, y, z, neighbor blockID
 	 */
 	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
+		ModMorePistons.log("On change Block");
 		if (!this.ignoreUpdates) {
 			this.updatePistonState(world, x, y, z);
 		}
@@ -337,6 +334,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		if (flag) {
 			return true;
 		}
+		
 		return false;
 	}
 	
@@ -390,7 +388,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	/**
 	 * checks to see if this piston could push the blocks in front of it.
 	 */
-	private boolean canExtend(World world, int x, int y, int z, int orientation) {
+	protected boolean canExtend(World world, int x, int y, int z, int orientation) {
 		
 		
 		int x1 = x;

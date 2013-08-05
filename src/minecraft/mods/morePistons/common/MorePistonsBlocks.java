@@ -23,6 +23,9 @@ public class MorePistonsBlocks {
 		MorePistons.gravitationalPistonBase       = new BlockGravitationalPistonBase(ModMorePistons.idBlockGravitationalPistonBase, false);
 		MorePistons.gravitationalStickyPistonBase = new BlockGravitationalPistonBase(ModMorePistons.idBlockGravitationalStickyPistonBase, true);
 		
+		MorePistons.redStonePistonBase            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase      , false, "redstonepiston_");
+		MorePistons.redStoneStickyPistonBase      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase, true , "redstonepiston_");
+		
 		MorePistons.superPistonBase       = new BlockSuperPistonBase(ModMorePistons.idBlockStrongPistonBase, false);
 		MorePistons.superStickyPistonBase = new BlockSuperPistonBase(ModMorePistons.idBlockStrongStickyPistonBase, true);
 		

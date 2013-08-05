@@ -22,8 +22,6 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	private boolean ignoreUpdates = false;
 	public  int maxBlockMove = 12;
 	
-	
-	// Texture attribut
 	private Icon textureFileSide1;
 	private Icon textureFileSide2;
 	private Icon textureFileSide3;
@@ -52,6 +50,7 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	 * Enregistre les textures
 	 * Depuis la 1.5 on est obligé de charger les texture fichier par fichier
 	 */
+	@Override
 	public void registerIcons(IconRegister iconRegister) {
 		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top"));
 		this.textureFileTopSticky = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top_sticky"));
@@ -69,6 +68,7 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 		this.textureFileSide     = this.textureFileSide1;
 	}
 	
+	@Override
 	public Icon getIcon(int i, int j) {
 		
 		int multi = this.getMutiplicateur ();
@@ -85,7 +85,7 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 			default: this.textureFileSide     = this.textureFileSide1; multi = 1; this.setMutiplicateur (1); break;
 		}
 		
-		return super (i, j);
+		return super.getIcon (i, j);
 	}
 	
 	
@@ -98,9 +98,26 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	}
 	
 	
-	public int setMutiplicateur (int multi) {
+	public void setMutiplicateur (int multi) {
 		return;
 	} 
 	
+	/**
+	 * Called when the block receives a BlockEvent - see World.addBlockEvent. By default, passes it on to the tile
+	 * entity at this location. Args: world, x, y, z, blockID, EventID, event parameter
+	 */
+	public boolean onBlockEventReceived(World world, int x, int y, int z, int fermer, int orientation) {
+
+		int power = world.getBlockPowerInput(x, y, z);
+
+		ModMorePistons.log("Power on Redstone Piston : "+power);
+		power = (power <= 0) ? 16 : power;
+		power = (power > 16) ? 16 : power;
+		
+		this.setLength(power);
+		
+		return super.onBlockEventReceived (world, x, y, z, fermer, orientation);
+	}
+
 	
 }
