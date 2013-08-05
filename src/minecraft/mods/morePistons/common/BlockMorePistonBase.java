@@ -18,19 +18,19 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonBase extends BlockPistonBase {
 	
-	private boolean isSticky;
+	protected boolean isSticky;
 	private boolean ignoreUpdates = false;
 	public  int maxBlockMove = 12;
-	private int length = 1;
+	protected int length = 1;
 	
 	
 	// Texture attribut
-	private String texturePrefixe;
-	private Icon textureFileTop;
-	private Icon textureFileTopSticky;
-	private Icon textureFileOpen;
-	private Icon textureFileSide;
-	private Icon textureFileBottom;
+	protected String texturePrefixe;
+	protected Icon textureFileTop;
+	protected Icon textureFileTopSticky;
+	protected Icon textureFileOpen;
+	protected Icon textureFileSide;
+	protected Icon textureFileBottom;
 	
 	/**
 	 * Constructeur
@@ -79,7 +79,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	
 	/**
 	 * Enregistre les textures
-	 * Depuis la 1.5 on est oblig� de charger les texture fichier par fichier
+	 * Depuis la 1.5 on est obligé de charger les texture fichier par fichier
 	 */
 	public void registerIcons(IconRegister iconRegister) {
 		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.getTexture ("top"));
