@@ -48,8 +48,22 @@ public class ModMorePistons {
 	public static int idBlockPistonRod;
 	public static int idBlockStrongPistonBase;
 	public static int idBlockStrongStickyPistonBase;
-	public static int idBlockRedStonePistonBase;
-	public static int idBlockRedStoneStickyPistonBase;
+	public static int idBlockRedStonePistonBase1;
+	public static int idBlockRedStonePistonBase2;
+	public static int idBlockRedStonePistonBase3;
+	public static int idBlockRedStonePistonBase4;
+	public static int idBlockRedStonePistonBase5;
+	public static int idBlockRedStonePistonBase6;
+	public static int idBlockRedStonePistonBase7;
+	public static int idBlockRedStonePistonBase8;
+	public static int idBlockRedStoneStickyPistonBase1;
+	public static int idBlockRedStoneStickyPistonBase2;
+	public static int idBlockRedStoneStickyPistonBase3;
+	public static int idBlockRedStoneStickyPistonBase4;
+	public static int idBlockRedStoneStickyPistonBase5;
+	public static int idBlockRedStoneStickyPistonBase6;
+	public static int idBlockRedStoneStickyPistonBase7;
+	public static int idBlockRedStoneStickyPistonBase8;
 	
 	private static String texturePath = "morePistons:";
 
@@ -82,8 +96,22 @@ public class ModMorePistons {
 		idBlockSeptStickyPistonBase          = config.getBlock("Septuple Sticky Piston", 226)    .getInt();
 		idBlockOctPistonBase                 = config.getBlock("Octuple Piston", 227)            .getInt();
 		idBlockOctStickyPistonBase           = config.getBlock("Octuple Sticky Piston", 228)     .getInt();
-		idBlockRedStonePistonBase            = config.getBlock("Redstone Piston", 229)           .getInt();
-		idBlockRedStoneStickyPistonBase      = config.getBlock("Redstone Sticky Piston", 230)    .getInt();
+		idBlockRedStonePistonBase1           = config.getBlock("Redstone Piston1", 229)           .getInt();
+		idBlockRedStonePistonBase2           = config.getBlock("Redstone Piston2", 230)           .getInt();
+		idBlockRedStonePistonBase3           = config.getBlock("Redstone Piston3", 231)           .getInt();
+		idBlockRedStonePistonBase4           = config.getBlock("Redstone Piston4", 232)           .getInt();
+		idBlockRedStonePistonBase5           = config.getBlock("Redstone Piston5", 233)           .getInt();
+		idBlockRedStonePistonBase6           = config.getBlock("Redstone Piston6", 234)           .getInt();
+		idBlockRedStonePistonBase7           = config.getBlock("Redstone Piston7", 235)           .getInt();
+		idBlockRedStonePistonBase8           = config.getBlock("Redstone Piston8", 236)           .getInt();
+		idBlockRedStoneStickyPistonBase1     = config.getBlock("Redstone Sticky Piston1", 237)    .getInt();
+		idBlockRedStoneStickyPistonBase2     = config.getBlock("Redstone Sticky Piston2", 238)    .getInt();
+		idBlockRedStoneStickyPistonBase3     = config.getBlock("Redstone Sticky Piston3", 239)    .getInt();
+		idBlockRedStoneStickyPistonBase4     = config.getBlock("Redstone Sticky Piston4", 240)    .getInt();
+		idBlockRedStoneStickyPistonBase5     = config.getBlock("Redstone Sticky Piston5", 241)    .getInt();
+		idBlockRedStoneStickyPistonBase6     = config.getBlock("Redstone Sticky Piston6", 242)    .getInt();
+		idBlockRedStoneStickyPistonBase7     = config.getBlock("Redstone Sticky Piston7", 243)    .getInt();
+		idBlockRedStoneStickyPistonBase8     = config.getBlock("Redstone Sticky Piston8", 244)    .getInt();
 		
 		config.save();
 	}

@@ -1,6 +1,7 @@
 package mods.morePistons.common;
 
 import net.minecraft.block.Block; //amq;
+import net.minecraft.creativetab.CreativeTabs;
 
 public class MorePistonsBlocks {
 	
@@ -22,9 +23,23 @@ public class MorePistonsBlocks {
 		MorePistons.octupleStickyPistonBase       = new BlockMorePistonBase (ModMorePistons.idBlockOctStickyPistonBase   , true , "oct_")   .setLength (8);
 		MorePistons.gravitationalPistonBase       = new BlockGravitationalPistonBase(ModMorePistons.idBlockGravitationalPistonBase, false);
 		MorePistons.gravitationalStickyPistonBase = new BlockGravitationalPistonBase(ModMorePistons.idBlockGravitationalStickyPistonBase, true);
-		
-		MorePistons.redStonePistonBase            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase      , false, "redstonepiston_");
-		MorePistons.redStoneStickyPistonBase      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase, true , "redstonepiston_");
+
+		MorePistons.redStonePistonBase1            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase1      , false, "redstonepiston_").setMultiplicateur(1).setCreativeTab(CreativeTabs.tabRedstone);
+		MorePistons.redStoneStickyPistonBase1      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase1, true , "redstonepiston_").setMultiplicateur(1).setCreativeTab(CreativeTabs.tabRedstone);
+		MorePistons.redStonePistonBase2            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase2      , false, "redstonepiston_").setMultiplicateur(2);
+		MorePistons.redStoneStickyPistonBase2      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase2, true , "redstonepiston_").setMultiplicateur(2);
+		MorePistons.redStonePistonBase3            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase3      , false, "redstonepiston_").setMultiplicateur(3);
+		MorePistons.redStoneStickyPistonBase3      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase3, true , "redstonepiston_").setMultiplicateur(3);
+		MorePistons.redStonePistonBase4            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase4      , false, "redstonepiston_").setMultiplicateur(4);
+		MorePistons.redStoneStickyPistonBase4      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase4, true , "redstonepiston_").setMultiplicateur(4);
+		MorePistons.redStonePistonBase5            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase5      , false, "redstonepiston_").setMultiplicateur(5);
+		MorePistons.redStoneStickyPistonBase5      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase5, true , "redstonepiston_").setMultiplicateur(5);
+		MorePistons.redStonePistonBase6            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase6      , false, "redstonepiston_").setMultiplicateur(6);
+		MorePistons.redStoneStickyPistonBase6      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase6, true , "redstonepiston_").setMultiplicateur(6);
+		MorePistons.redStonePistonBase7            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase7      , false, "redstonepiston_").setMultiplicateur(7);
+		MorePistons.redStoneStickyPistonBase7      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase7, true , "redstonepiston_").setMultiplicateur(7);
+		MorePistons.redStonePistonBase8            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase8      , false, "redstonepiston_").setMultiplicateur(8);
+		MorePistons.redStoneStickyPistonBase8      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase8, true , "redstonepiston_").setMultiplicateur(8);
 		
 		MorePistons.superPistonBase       = new BlockSuperPistonBase(ModMorePistons.idBlockStrongPistonBase, false);
 		MorePistons.superStickyPistonBase = new BlockSuperPistonBase(ModMorePistons.idBlockStrongStickyPistonBase, true);

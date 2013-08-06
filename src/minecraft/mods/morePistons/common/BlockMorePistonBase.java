@@ -43,8 +43,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		this.isSticky = flag;
 		this.texturePrefixe = texturePrefixe;
-		
-		setCreativeTab(CreativeTabs.tabRedstone); // Le place dans orientation 'onglet redStone
 	}
 	
 	/**
@@ -155,7 +153,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * their own) Args: x, y, z, neighbor blockID
 	 */
 	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
-		ModMorePistons.log("On change Block");
 		if (!this.ignoreUpdates) {
 			this.updatePistonState(world, x, y, z);
 		}

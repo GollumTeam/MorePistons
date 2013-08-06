@@ -74,7 +74,7 @@ public class TileEntityMorePistons extends TileEntityPiston {
 	public int getPistonOrientation () {
 		return this.storedOrientation;
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	public boolean shouldRenderHead () {
 		return this.shouldHeadBeRendered;
