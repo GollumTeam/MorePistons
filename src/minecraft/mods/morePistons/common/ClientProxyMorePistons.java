@@ -11,6 +11,8 @@ public class ClientProxyMorePistons extends CommonProxyMorePistons {
 		
 		ModLoader.registerTileEntity(TileEntityMorePistons.class, "MorePistons");
 		ModLoader.registerTileEntity(TileEntityMorePistons.class, "MorePistonsRenderer", new TileEntityMorePistonsRenderer());
+
+		super.registerRenderers();
 		
 	}
 

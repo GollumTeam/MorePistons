@@ -80,10 +80,10 @@ public class ModMorePistons {
 		idBlockSextStickyPistonBase          = config.getBlock("Sextuple Sticky Piston", 224)    .getInt();
 		idBlockSeptPistonBase                = config.getBlock("Septuple Piston", 225)           .getInt();
 		idBlockSeptStickyPistonBase          = config.getBlock("Septuple Sticky Piston", 226)    .getInt();
-		idBlockOctPistonBase                 = config.getBlock("Octuple Piston", 227)           .getInt();
-		idBlockOctStickyPistonBase           = config.getBlock("Octuple Sticky Piston", 228)    .getInt();
-		idBlockRedStonePistonBase            = config.getBlock("Redstone Piston", 227)           .getInt();
-		idBlockRedStoneStickyPistonBase      = config.getBlock("Redstone Sticky Piston", 228)    .getInt();
+		idBlockOctPistonBase                 = config.getBlock("Octuple Piston", 227)            .getInt();
+		idBlockOctStickyPistonBase           = config.getBlock("Octuple Sticky Piston", 228)     .getInt();
+		idBlockRedStonePistonBase            = config.getBlock("Redstone Piston", 229)           .getInt();
+		idBlockRedStoneStickyPistonBase      = config.getBlock("Redstone Sticky Piston", 230)    .getInt();
 		
 		config.save();
 	}
