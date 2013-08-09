@@ -1,6 +1,7 @@
 package mods.morePistons.common;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.naming.ldap.HasControls;
 
@@ -57,6 +58,10 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	public BlockMorePistonRedStone setMultiplicateur (int mutiplicateur) {
 		this.mutiplicateur = mutiplicateur;
 		return this;
+	}
+
+	public int idDropped(int par1, Random par2Random, int par3) {
+		return MorePistons.redStonePistonBase1.blockID;
 	}
 	
 	//////////////////////////

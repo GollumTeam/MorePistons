@@ -203,6 +203,46 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	}
 	
 	/**
+	 * Caclcule la logueur d'ouverture d'un piston
+	 * @param World world
+	 * @param int x
+	 * @param int y
+	 * @param int z
+	 * @param int orientation
+	 * @return int
+	 */
+	public int getOpenedLenght (World world, int x, int y, int z, int orientation) {
+		
+		int lenght = -1;
+
+		int id = 0;
+		int metadata = 0;
+		int blockOrentation = 0;
+		
+		do {
+			
+			lenght++;
+
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			id       = world.getBlockId(x, y, z);
+			metadata = world.getBlockMetadata(x, y, z);
+			blockOrentation = this.getOrientation(metadata);
+			
+		} while (
+			(
+				id == MorePistons.pistonRod.blockID ||
+				id == MorePistons.pistonExtension.blockID
+			) &&
+			orientation == blockOrentation
+		);
+		
+		return lenght;
+	}
+	
+	/**
 	 * Called when the block receives a BlockEvent - see World.addBlockEvent. By default, passes it on to the tile
 	 * entity at this location. Args: world, x, y, z, blockID, EventID, event parameter
 	 */
@@ -228,14 +268,17 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 			// Debut de l'effet d'ouverture :) l'adapter pour tous les pistons
 			
+			int openedLenght = this.getOpenedLenght(world, x, y, z, orientation);
 			TileEntity tileentity = world.getBlockTileEntity(x + Facing.offsetsXForSide[orientation], y + Facing.offsetsYForSide[orientation], z + Facing.offsetsZForSide[orientation]);
+			
+			ModMorePistons.log("openedLenght = "+openedLenght);
 			
 			if (tileentity instanceof TileEntityPiston) {
 				((TileEntityPiston)tileentity).clearPistonTileEntity();
 			}
 			
 			world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
-			world.setBlockTileEntity(x, y, z, ModMorePistons.getTileEntity (this.blockID, orientation, orientation, false, true, this.length, true));
+			world.setBlockTileEntity(x, y, z, ModMorePistons.getTileEntity (this.blockID, orientation, orientation, false, true, openedLenght, true));
 			
 			if (this.isSticky) {
 				
@@ -268,7 +311,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 					world.setBlockMetadataWithNotify (destX, destY, destZ, 0, 2);
 					
 					world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
-					world.setBlockTileEntity(x, y, z, ModMorePistons.getTileEntity (id, blockMeta, orientation, false, false, this.length));
+					world.setBlockTileEntity(x, y, z, ModMorePistons.getTileEntity (id, blockMeta, orientation, false, false, openedLenght));
 				}
 
 				x -= Facing.offsetsXForSide[orientation];
