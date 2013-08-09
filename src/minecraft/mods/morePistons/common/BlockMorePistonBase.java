@@ -182,20 +182,19 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		boolean extended = isExtended(metadata);
 		
 		// Si redstone active et piston fermer alors il faut ouvrir
-		if (powered && !extended) {
-			//ModMorePistons.log("Etat du piston : "+x+"x"+y+"x"+z+" metadata = "+metadata+" orientation = "+orientation);
-			//ModMorePistons.log("Powered : "+powered+" Extended : "+extended);
-			if (this.canExtend(world, x, y, z, orientation)) {
-				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
-				world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
-			} else {
-				//ModMorePistons.log("Le piston est bloqué");
-			}
+		//if (powered && !extended) {
+		if (powered) {
+			
+			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
+			world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
+			
+//			if (this.canExtend(world, x, y, z, orientation)) {
+//			} else {
+//				//ModMorePistons.log("Le piston est bloqué");
+//			}
 			
 		// Si redstone eteinte et piston ouvert alors il faut fermer
 		} else if (!powered && extended) {
-			//ModMorePistons.log("Etat du piston : "+x+"x"+y+"x"+z+" metadata = "+metadata+" orientation = "+orientation);
-			//ModMorePistons.log("Powered : "+powered+" Extended : "+extended);
 			world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 			world.addBlockEvent(x, y, z, this.blockID, 1, orientation);
 		}
@@ -203,7 +202,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	}
 	
 	/**
-	 * Caclcule la logueur d'ouverture d'un piston
+	 * Caclcule la longueur d'ouverture d'un piston
 	 * @param World world
 	 * @param int x
 	 * @param int y
@@ -241,37 +240,94 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		return lenght;
 	}
+
+	/**
+	 * Caclcule la longueur d'ouverture maximal que pourra effectuer le piston sans collision blocante
+	 * @param World world
+	 * @param int x
+	 * @param int y
+	 * @param int z
+	 * @param int orientation
+	 * @return int
+	 */
+	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
+		
+		return 4 - this.getOpenedLenght(world, x, y, z, orientation);
+	}
 	
 	/**
 	 * Called when the block receives a BlockEvent - see World.addBlockEvent. By default, passes it on to the tile
 	 * entity at this location. Args: world, x, y, z, blockID, EventID, event parameter
 	 */
-	public boolean onBlockEventReceived(World world, int x, int y, int z, int fermer, int orientation) {
+	public boolean onBlockEventReceived(World world, int x, int y, int z, int idEvent, int orientation) {
 		
 		this.ignoreUpdates = true;
+		int openedLenght = this.getOpenedLenght(world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
 		
-		if (fermer == 0) {
-			//ModMorePistons.log("Ouvrir le piston");
+		if (idEvent == 0) { // Demande une ouverture du piston
 			
-			if (tryExtend(world, x, y, z, orientation)) {
+			// Si le piston est fermer: on ouvre autant que l'on peu
+			// Si le piston est ouvert mais que la longueur du piston est plus courte que l'ouverture actuel: On Retracte le piston à la longueur max du piston
+			// Si le piston est ouvert m'et n'a aps atteint la longueur max on tente d'ouvrir le piston au maximum posible jusqu'a un obstacle
+			
+			if (openedLenght == this.length) {
+				this.ignoreUpdates = false;
+				return true;
+			}
+
+			boolean extendOpen = false;
+			boolean extendClose = false;
+			
+			if (openedLenght == 0) { //Le piston était fermer
 				
+				int maxOpen = this.getMaximalOpenedLenght(world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
+				if (maxOpen > 0) {
+					if (this.tryExtend(world, x, y, z, orientation, maxOpen)) {
+						extendOpen = true;
+					}
+				}
+				
+			} else  if (this.length > openedLenght) {
+
+				
+				ModMorePistons.log ("Cool");
+				
+				int x2 = z;
+				int y2 = y;
+				int z2 = z;
+				for (int i = 0; i <  openedLenght; i++) {
+					x2 += Facing.offsetsXForSide[orientation];
+					y2 += Facing.offsetsYForSide[orientation];
+					z2 += Facing.offsetsZForSide[orientation];
+				}
+				
+				int maxOpen = this.getMaximalOpenedLenght(world, x2, y2, z2, orientation); //On recupère l'ouverture actuel du piston
+				if (maxOpen > 0) {
+					if (this.tryExtend(world, x2, y2, z2, orientation, maxOpen)) {
+						extendOpen = true;
+					}
+				}
+				
+			}
+			
+			if (extendOpen) {
 				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
 				// On joue le son
 				world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.out", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
-				
-			} else {
-				ModMorePistons.log("Le piston est bloqué - mais la methode canExtend ne la pas détecté");
-				world.setBlockMetadataWithNotify (x, y, z, orientation, 2);
 			}
-		} else {
-			//ModMorePistons.log("Fermer le piston");
 			
-			// Debut de l'effet d'ouverture :) l'adapter pour tous les pistons
+			if (extendClose) {
+				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
+				// On joue le son
+				//world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.in", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
+			}
 			
-			int openedLenght = this.getOpenedLenght(world, x, y, z, orientation);
+		} else {  // Demande une fermeture du piston
+			
+			// Debut de l'effet de fermeture adapter pour tous les pistons
+			// On calcule la taille du piston et on retacte se que l'on peu
+			
 			TileEntity tileentity = world.getBlockTileEntity(x + Facing.offsetsXForSide[orientation], y + Facing.offsetsYForSide[orientation], z + Facing.offsetsZForSide[orientation]);
-			
-			ModMorePistons.log("openedLenght = "+openedLenght);
 			
 			if (tileentity instanceof TileEntityPiston) {
 				((TileEntityPiston)tileentity).clearPistonTileEntity();
@@ -317,6 +373,16 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				x -= Facing.offsetsXForSide[orientation];
 				y -= Facing.offsetsYForSide[orientation];
 				z -= Facing.offsetsZForSide[orientation];
+			} else {
+				
+				for (int i = 0; i < openedLenght; i++) {
+					x += Facing.offsetsXForSide[orientation];
+					y += Facing.offsetsYForSide[orientation];
+					z += Facing.offsetsZForSide[orientation];
+				}
+
+				world.setBlock(x, y, z, 0, orientation, 2);
+				world.setBlockMetadataWithNotify (x, y, z, 0, 2);
 			}
 			
 			
@@ -487,7 +553,18 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		}
 	}
 	
-	private boolean tryExtend(World world, int x, int y, int z, int orientation) {
+	/**
+	 * Ouvre le piston de la longueur choisi
+	 * Déplace les objets devant le piston
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @param lenghtMove
+	 * @return
+	 */
+	private boolean tryExtend(World world, int x, int y, int z, int orientation, int lenghtMove) {
 	
 		
 		
@@ -500,7 +577,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		int zExtension = z1;
 		
 		
-		for( int i = 0;i < this.length; i++) {
+		for( int i = 0;i < lenghtMove; i++) {
 			
 			xExtension += Facing.offsetsXForSide[orientation];
 			yExtension += Facing.offsetsYForSide[orientation];
@@ -508,11 +585,11 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 		}
 		
-		int listId[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0, 0, 0};
-		int listMetadata[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0, 0, 0};
-		int sizes[] = {0, 0 ,0 ,0 , 0, 0 , 0, 0 ,0 ,0 , 0, 0, 0, 0};
+		int listId[]       = {0, 0 ,0 ,0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int listMetadata[] = {0, 0 ,0 ,0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int sizes[]        = {0, 0 ,0 ,0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		int pos = 0;
-		int size = this.length;
+		int size = lenghtMove;
 		
 		for (int i = 0; i < 14; i++) {
 			
@@ -570,7 +647,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		// Ajout d'une animation
 		int metadata = orientation | (this.isSticky ? 0x8 : 0);
 		world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, metadata, 2);
-		TileEntity teExtension = ModMorePistons.getTileEntity(MorePistons.pistonExtension.blockID, metadata, orientation, true, false, this.length);
+		TileEntity teExtension = ModMorePistons.getTileEntity(MorePistons.pistonExtension.blockID, metadata, orientation, true, false, lenghtMove);
 		world.setBlockTileEntity(xExtension, yExtension, zExtension, teExtension);
 		
 		return true;
