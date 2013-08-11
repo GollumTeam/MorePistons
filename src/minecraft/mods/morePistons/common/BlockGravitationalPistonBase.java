@@ -36,6 +36,8 @@ public class BlockGravitationalPistonBase extends BlockPistonBase {
 	public BlockGravitationalPistonBase(int i, boolean flag) {
 		super(i, flag);
 		this.isSticky = flag;
+		
+        this.setCreativeTab(ModMorePistons.morePistonsTabs);
 	}
 	
 	//////////////////////////

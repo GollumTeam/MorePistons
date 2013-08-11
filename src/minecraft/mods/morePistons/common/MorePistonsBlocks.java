@@ -24,8 +24,8 @@ public class MorePistonsBlocks {
 		MorePistons.gravitationalPistonBase       = new BlockGravitationalPistonBase(ModMorePistons.idBlockGravitationalPistonBase, false);
 		MorePistons.gravitationalStickyPistonBase = new BlockGravitationalPistonBase(ModMorePistons.idBlockGravitationalStickyPistonBase, true);
 
-		MorePistons.redStonePistonBase1            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase1      , false, "redstonepiston_").setMultiplicateur(1).setCreativeTab(CreativeTabs.tabRedstone);
-		MorePistons.redStoneStickyPistonBase1      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase1, true , "redstonepiston_").setMultiplicateur(1).setCreativeTab(CreativeTabs.tabRedstone);
+		MorePistons.redStonePistonBase1            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase1      , false, "redstonepiston_").setMultiplicateur(1).setCreativeTab(ModMorePistons.morePistonsTabs);
+		MorePistons.redStoneStickyPistonBase1      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase1, true , "redstonepiston_").setMultiplicateur(1).setCreativeTab(ModMorePistons.morePistonsTabs);
 		MorePistons.redStonePistonBase2            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase2      , false, "redstonepiston_").setMultiplicateur(2);
 		MorePistons.redStoneStickyPistonBase2      = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStoneStickyPistonBase2, true , "redstonepiston_").setMultiplicateur(2);
 		MorePistons.redStonePistonBase3            = new BlockMorePistonRedStone(ModMorePistons.idBlockRedStonePistonBase3      , false, "redstonepiston_").setMultiplicateur(3);

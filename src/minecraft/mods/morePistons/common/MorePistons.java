@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class MorePistons {
+	
 	public static Block doublePistonBase;
 	public static Block doubleStickyPistonBase;
 	public static Block triplePistonBase;

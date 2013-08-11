@@ -12,7 +12,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraftforge.common.Configuration;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;// any;
 
 @Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.3 for [1.5.2 Build Smeagol]")
@@ -28,6 +30,9 @@ public class ModMorePistons {
 	private static boolean DEBUG = true;
 	
 	public static boolean configFlag;
+	
+	public static MorePistonsTabs morePistonsTabs;
+	
 	public static int idBlockDoublePistonBase;
 	public static int idBlockDoubleStickyPistonBase;
 	public static int idBlockTriplePistonBase;
@@ -119,10 +124,17 @@ public class ModMorePistons {
 	/** 2 **/
 	@Init
 	public void load(FMLInitializationEvent event) {
+
+		morePistonsTabs = new MorePistonsTabs("More Pistons");
+		
 		proxy.registerRenderers();
 		new MorePistonsBlocks();
 		new MorePistons();
 		new MorePistonsRecipes();
+		
+		morePistonsTabs.setIconItem(Block.pistonBase.blockID);
+		Block.pistonBase.setCreativeTab(morePistonsTabs);
+		Block.pistonStickyBase.setCreativeTab(morePistonsTabs);
 		
 		configFlag = false;
 	}

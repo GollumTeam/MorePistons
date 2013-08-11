@@ -43,7 +43,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 		this.isSticky = par3;
 		setStepSound(soundStoneFootstep);
 		setHardness(0.5F);
-		setCreativeTab(CreativeTabs.tabRedstone);
+        this.setCreativeTab(ModMorePistons.morePistonsTabs);
 	}
 
 	

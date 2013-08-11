@@ -15,7 +15,7 @@ import net.minecraft.entity.Entity; // lq;
 import net.minecraft.world.World; // yc;
 
 public class TileEntityMorePistons extends TileEntityPiston {
-	private int storedBlockID;
+	public int storedBlockID;
 	private int storedMetadata;
 	private int storedOrientation;
 	private boolean extending;

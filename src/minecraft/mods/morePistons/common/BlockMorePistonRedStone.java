@@ -153,7 +153,6 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-	//1657-4-781
 	
 	/**
 	 * Called when the block receives a BlockEvent - see World.addBlockEvent. By default, passes it on to the tile
@@ -161,7 +160,7 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	 */
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int fermer, int orientation) {
 		
-		int power    = world.getBlockPowerInput(x, y, z);		
+		int power    = world.getBlockPowerInput(x, y, z);
 		int multi    = getMutiplicateur();
 		
 		power = (power <= 0) ? 16 : power;
