@@ -1,6 +1,7 @@
 package mods.morePistons.common;
 
 import net.minecraft.src.ModLoader;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.BlockPistonBase; // aoa;
@@ -33,12 +34,12 @@ public class BlockPistonRod extends Block {
 	
 	//
 	public BlockPistonRod(int id) {
-		super(id, Material.air);
+		super(id, Material.grass);
 		//this.headTexture = -1;
 		setStepSound(soundStoneFootstep);
 		setHardness(0.3F);
 	}
-
+	
 	// ////////////////////////
 	// Gestion des textures //
 	// ////////////////////////
@@ -166,12 +167,13 @@ public class BlockPistonRod extends Block {
 	}
 	
 	public boolean renderAsNormalBlock() {
-		return false;
+		return true;
 	}
 	
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
+	
 	public boolean canPlaceBlockAt(World world, int i, int j, int k) {
 		return false;
 	}
@@ -185,7 +187,7 @@ public class BlockPistonRod extends Block {
 	}
 	
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
-
+		
 		int xx= x;
 		int yy= y;
 		int zz= z;
