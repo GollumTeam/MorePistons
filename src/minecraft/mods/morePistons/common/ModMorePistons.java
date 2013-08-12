@@ -164,6 +164,47 @@ public class ModMorePistons {
 		}
 	}
 	
+	public static boolean isPistonId (int id) {
+		return 
+				id == Block.pistonBase.blockID ||
+				id == Block.pistonStickyBase.blockID ||
+				id == MorePistons.doublePistonBase.blockID ||
+				id == MorePistons.doubleStickyPistonBase.blockID ||
+				id == MorePistons.triplePistonBase.blockID ||
+				id == MorePistons.tripleStickyPistonBase.blockID ||
+				id == MorePistons.quadruplePistonBase.blockID ||
+				id == MorePistons.quadrupleStickyPistonBase.blockID ||
+				id == MorePistons.quintuplePistonBase.blockID ||
+				id == MorePistons.quintupleStickyPistonBase.blockID ||
+				id == MorePistons.sextuplePistonBase.blockID ||
+				id == MorePistons.sextupleStickyPistonBase.blockID ||
+				id == MorePistons.septuplePistonBase.blockID ||
+				id == MorePistons.septupleStickyPistonBase.blockID ||
+				id == MorePistons.octuplePistonBase.blockID ||
+				id == MorePistons.octupleStickyPistonBase.blockID ||
+				id == MorePistons.redStoneStickyPistonBase1.blockID ||
+				id == MorePistons.redStoneStickyPistonBase2.blockID ||
+				id == MorePistons.redStoneStickyPistonBase3.blockID ||
+				id == MorePistons.redStoneStickyPistonBase4.blockID ||
+				id == MorePistons.redStoneStickyPistonBase5.blockID ||
+				id == MorePistons.redStoneStickyPistonBase6.blockID ||
+				id == MorePistons.redStoneStickyPistonBase7.blockID ||
+				id == MorePistons.redStoneStickyPistonBase8.blockID ||
+				id == MorePistons.redStonePistonBase1.blockID ||
+				id == MorePistons.redStonePistonBase2.blockID ||
+				id == MorePistons.redStonePistonBase3.blockID ||
+				id == MorePistons.redStonePistonBase4.blockID ||
+				id == MorePistons.redStonePistonBase5.blockID ||
+				id == MorePistons.redStonePistonBase6.blockID ||
+				id == MorePistons.redStonePistonBase7.blockID ||
+				id == MorePistons.redStonePistonBase8.blockID ||
+				id == MorePistons.gravitationalPistonBase.blockID ||
+				id == MorePistons.gravitationalStickyPistonBase.blockID ||
+				id == MorePistons.superPistonBase.blockID ||
+				id == MorePistons.superStickyPistonBase.blockID;
+				
+	}
+	
 
 	public static TileEntity getTileEntity(int par0, int par1, int par2, boolean par3, boolean par4, int length) {
 		return new TileEntityMorePistons(par0, par1, par2, par3, par4, length);

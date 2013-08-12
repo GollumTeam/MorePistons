@@ -721,7 +721,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 					|| (l2 == Block.vine.blockID)
 					|| (l2 == Block.tripWireSource.blockID)
 					|| (l2 == Block.trapdoor.blockID)) {
-				System.out.println("Not facing UP or DOWN 2");
+				ModMorePistons.log("Not facing UP or DOWN 2");
 				world.setBlock (l1, i2, j2, 0, 0, 2);
 				world.setBlock (xOffset, yOffset, zOffset, 0, 0, 2);
 				world.setBlock (xOffset, yOffset, zOffset, Block.pistonMoving.blockID, i3, 2);
@@ -762,7 +762,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 							|| (l2 == Block.reed.blockID)
 							|| (l2 == Block.sapling.blockID)
 							|| (l2 == Block.tallGrass.blockID) || (l2 == Block.tripWire.blockID)))) {
-				System.out.println("Facing UP");
+				ModMorePistons.log("Facing UP");
 				world.setBlock (l1, i2, j2, 0, 0, 2);
 				world.setBlock (xOffset, yOffset, zOffset, Block.pistonMoving.blockID, i3, 2);
 				world.setBlockTileEntity (xOffset, yOffset, zOffset, BlockPistonMoving.getTileEntity (l2, i3, direction, true, false));

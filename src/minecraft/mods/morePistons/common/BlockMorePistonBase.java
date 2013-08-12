@@ -270,7 +270,44 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 */
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
 		
-		return 1;
+		int max = 0;
+		int blockPush = 0;
+		
+		for (int i = 0; i < this.length; i++) {
+			
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			int id = world.getBlockId(x, y, z);
+			
+			
+			if (id != 0) {
+				
+				// Le block ne bouge pas on ne peut plus avancer
+				if (!this.canPushBlock(id, world, x, y, z, true)) {
+					break;
+				}
+				
+				// Ce n'est pas un morceau du piston déjà ouvert
+				if (
+					id != MorePistons.pistonExtension.blockID &&
+					id != MorePistons.pistonRod.blockID &&
+					Block.blocksList[id].getMobilityFlag() != 1
+				) {
+					max--;
+					blockPush++;
+					if (blockPush == 13) {
+						break;
+					}
+				}
+			}
+			
+			max++;
+			
+		}
+		
+		return max;
 	}
 	
 	/**
@@ -321,7 +358,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				if (maxOpen > 0) {
 					
 					world.setBlock(x2, y2, z2, MorePistons.pistonRod.blockID, orientation, 2);
-					if (this.tryExtend(world, x2, y2, z2, orientation, maxOpen)) {
+					if (this.tryExtend(world, x2, y2, z2, orientation, maxOpen - openedLenght)) {
 						extendOpen = true;
 					}
 				}
@@ -473,80 +510,80 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		return false;
 	}
-	
-	/**
-	 * Regarde si on peu déplacé un pistont sur la distance voulu
-	 * @param distance
-	 * @param world
-	 * @param id
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param orientation
-	 * @param blockmoved
-	 * @return
-	 */
-	private boolean canMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation, int blockmoved) {
-		
-		if (blockmoved == this.maxBlockMove) {
-			return false;
-		}
-		
-		if (id == 0 || Block.blocksList[id].getMobilityFlag() == 1) {
-			ModMorePistons.log ("Erreur d'algo on ne devrait jamais rentrer ici");
-			return false;
-		}
-		
-		if (!this.canPushBlock(id, world, x, y, z, true)) {
-			return false;
-		}
-		
-		int x1 = x;
-		int y1 = y;
-		int z1 = z;
-		for (int i = 0; i < distance; i++) {
-			
-			x1 += Facing.offsetsXForSide[orientation];
-			y1 += Facing.offsetsYForSide[orientation];
-			z1 += Facing.offsetsZForSide[orientation];
-			int id1 = world.getBlockId(x1, y1, z1);
-			if (id1 == 0 || Block.blocksList[id1].getMobilityFlag() == 1) {
-				continue;
-			} else {
-				return canMoveBlockOnDistance (distance - i, world, id1, x1, y1, z1, orientation, blockmoved + 1);
-			}
-			
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * checks to see if this piston could push the blocks in front of it.
-	 */
-	protected boolean canExtend(World world, int x, int y, int z, int orientation) {
-		
-		
-		int x1 = x;
-		int y1 = y;
-		int z1 = z;
-		
-		for (int i  = 0; i < this.length; i++) {
-			x1 += Facing.offsetsXForSide[orientation];
-			y1 += Facing.offsetsYForSide[orientation];
-			z1 += Facing.offsetsZForSide[orientation];
-			int id1 = world.getBlockId(x1, y1, z1);
-			
-			if (id1 == 0 || Block.blocksList[id1].getMobilityFlag() == 1) {
-				continue;
-			} else {
-				return canMoveBlockOnDistance (this.length - i, world, id1, x1, y1, z1, orientation, 0);
-			}
-			
-		}
-		
-		return true;
-	}
+//	
+//	/**
+//	 * Regarde si on peu déplacé un pistont sur la distance voulu
+//	 * @param distance
+//	 * @param world
+//	 * @param id
+//	 * @param x
+//	 * @param y
+//	 * @param z
+//	 * @param orientation
+//	 * @param blockmoved
+//	 * @return
+//	 */
+//	private boolean canMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation, int blockmoved) {
+//		
+//		if (blockmoved == this.maxBlockMove) {
+//			return false;
+//		}
+//		
+//		if (id == 0 || Block.blocksList[id].getMobilityFlag() == 1) {
+//			ModMorePistons.log ("Erreur d'algo on ne devrait jamais rentrer ici");
+//			return false;
+//		}
+//		
+//		if (!this.canPushBlock(id, world, x, y, z, true)) {
+//			return false;
+//		}
+//		
+//		int x1 = x;
+//		int y1 = y;
+//		int z1 = z;
+//		for (int i = 0; i < distance; i++) {
+//			
+//			x1 += Facing.offsetsXForSide[orientation];
+//			y1 += Facing.offsetsYForSide[orientation];
+//			z1 += Facing.offsetsZForSide[orientation];
+//			int id1 = world.getBlockId(x1, y1, z1);
+//			if (id1 == 0 || Block.blocksList[id1].getMobilityFlag() == 1) {
+//				continue;
+//			} else {
+//				return canMoveBlockOnDistance (distance - i, world, id1, x1, y1, z1, orientation, blockmoved + 1);
+//			}
+//			
+//		}
+//		
+//		return true;
+//	}
+//	
+//	/**
+//	 * checks to see if this piston could push the blocks in front of it.
+//	 */
+//	protected boolean canExtend(World world, int x, int y, int z, int orientation) {
+//		
+//		
+//		int x1 = x;
+//		int y1 = y;
+//		int z1 = z;
+//		
+//		for (int i  = 0; i < this.length; i++) {
+//			x1 += Facing.offsetsXForSide[orientation];
+//			y1 += Facing.offsetsYForSide[orientation];
+//			z1 += Facing.offsetsZForSide[orientation];
+//			int id1 = world.getBlockId(x1, y1, z1);
+//			
+//			if (id1 == 0 || Block.blocksList[id1].getMobilityFlag() == 1) {
+//				continue;
+//			} else {
+//				return canMoveBlockOnDistance (this.length - i, world, id1, x1, y1, z1, orientation, 0);
+//			}
+//			
+//		}
+//		
+//		return true;
+//	}
 	
 	/**
 	 * returns true if the piston can push the specified block
@@ -605,7 +642,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		int xExtension = x1;
 		int yExtension = y1;
 		int zExtension = z1;
-		
+
+		ModMorePistons.log("lenghtMove "+lenghtMove);
 		
 		for( int i = 0;i < lenghtMove; i++) {
 			
@@ -628,6 +666,19 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			z1 += Facing.offsetsZForSide[orientation];
 			
 			int id = world.getBlockId(x1, y1, z1);
+			boolean skip = false;
+			
+			if (id == Block.pistonMoving.blockID) {
+				TileEntity tileEntity= world.getBlockTileEntity(x1, y1, z1);
+				int metadata = world.getBlockMetadata(x1, y1, z1);
+				if (tileEntity instanceof TileEntityMorePistons) {
+					int idMoving = ((TileEntityMorePistons)tileEntity).storedBlockID;
+					if (!ModMorePistons.isPistonId(idMoving) && this.getOrientation(metadata) == orientation) {
+						skip = true;
+					}
+					
+				}
+			}
 			
 			if (
 				id != 0 && 
@@ -635,7 +686,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				id != MorePistons.pistonRod.blockID &&
 				id != Block.waterMoving.blockID &&
 				id != Block.waterStill.blockID &&
-				id != Block.lavaMoving.blockID
+				id != Block.lavaMoving.blockID &&
+				!skip
 			) {
 				listId[pos] = id;
 				ModMorePistons.log("add "+id+" "+pos);
