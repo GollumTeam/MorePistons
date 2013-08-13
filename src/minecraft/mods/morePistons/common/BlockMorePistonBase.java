@@ -377,6 +377,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				TileEntity teExtension = ModMorePistons.getTileEntity(MorePistons.pistonExtension.blockID, orientation, orientation, true, false, -diff);
 				world.setBlockTileEntity(x2, y2, z2, teExtension);
 				
+				this.retracSticky(world, x2, y2, z2, orientation, diff);
+				
 			}
 			
 			
@@ -400,11 +402,9 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			world.setBlockTileEntity(x, y, z, ModMorePistons.getTileEntity (this.blockID, orientation, orientation, false, true, openedLenght, true));
 			
 			if (openedLenght != 0) { // Sinon le piston risque de disparaitre
-				for (int i = 0; i < openedLenght; i++) {
-					x2 += Facing.offsetsXForSide[orientation];
-					y2 += Facing.offsetsYForSide[orientation];
-					z2 += Facing.offsetsZForSide[orientation];
-				}
+				x2 += Facing.offsetsXForSide[orientation] * openedLenght;
+				y2 += Facing.offsetsYForSide[orientation] * openedLenght;
+				z2 += Facing.offsetsZForSide[orientation] * openedLenght;
 	
 				world.setBlock(x2, y2, z2, 0, orientation, 2);
 				world.setBlockMetadataWithNotify (x2, y2, z2, 0, 2);
@@ -412,53 +412,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				extendClose = true;
 			}
 			
-//			if (this.isSticky) {
-//				
-//				x2 += Facing.offsetsXForSide[orientation];
-//				y2 += Facing.offsetsYForSide[orientation];
-//				z2 += Facing.offsetsZForSide[orientation];
-//				
-//				int destX = x2;
-//				int destY = y2;
-//				int destZ = z2;
-//				
-//				for(int i = 0; i < openedLenght; i++) {
-//					destX += Facing.offsetsXForSide[orientation];
-//					destY += Facing.offsetsYForSide[orientation];
-//					destZ += Facing.offsetsZForSide[orientation];
-//				}
-//				
-//				int id = world.getBlockId(destX, destY, destZ);
-//				
-//				if (
-//					id != 0 &&
-//					id != Block.waterMoving.blockID &&
-//					id != Block.waterStill.blockID &&
-//					id != Block.lavaMoving.blockID &&
-//					id != Block.lavaStill.blockID
-//				) {
-//					int blockMeta = world.getBlockMetadata(destX, destY, destZ);
-//					
-//					world.setBlock(destX, destY, destZ, 0);
-//					world.setBlockMetadataWithNotify (destX, destY, destZ, 0, 2);
-//					
-//					world.setBlock(
-//						x2 + Facing.offsetsXForSide[orientation],
-//						y2 + Facing.offsetsYForSide[orientation],
-//						z2 + Facing.offsetsZForSide[orientation], 
-//						Block.pistonMoving.blockID, 
-//						orientation, 
-//						2
-//					);
-//					world.setBlockTileEntity(
-//						x2 + Facing.offsetsXForSide[orientation],
-//						y2 + Facing.offsetsYForSide[orientation],
-//						z2 + Facing.offsetsZForSide[orientation],
-//						ModMorePistons.getTileEntity (id, blockMeta, orientation, false, false, openedLenght)
-//					);
-//				}
-//				
-//			}
+			this.retracSticky(world, x, y, z, orientation, openedLenght);
 			
 		}
 		
@@ -477,6 +431,53 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		this.ignoreUpdates = false;
 		
 		return true;
+	}
+	
+	/**
+	 * Retracte le block qui ets collé au piston si le piston est un sticky piston
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param length
+	 */
+	protected void retracSticky (World world, int x, int y, int z, int orientation, int length) {
+		if (this.isSticky) {
+			
+			int x2 = x + Facing.offsetsXForSide[orientation] * (length + 1);
+			int y2 = y + Facing.offsetsYForSide[orientation] * (length + 1);
+			int z2 = z + Facing.offsetsZForSide[orientation] * (length + 1);
+			
+			int id = world.getBlockId(x2, y2, z2);
+			
+			if (
+					id != 0 &&
+					id != Block.waterMoving.blockID &&
+					id != Block.waterStill.blockID &&
+					id != Block.lavaMoving.blockID &&
+					id != Block.lavaStill.blockID
+				) {
+					int blockMeta = world.getBlockMetadata(x2, y2, z2);
+					
+					world.setBlock(x2, y2, z2, 0);
+					world.setBlockMetadataWithNotify (x2, y2, z2, 0, 2);
+					
+					world.setBlock(
+						x + Facing.offsetsXForSide[orientation],
+						y + Facing.offsetsYForSide[orientation],
+						z + Facing.offsetsZForSide[orientation], 
+						Block.pistonMoving.blockID, 
+						orientation, 
+						2
+					);
+					world.setBlockTileEntity(
+						x + Facing.offsetsXForSide[orientation],
+						y + Facing.offsetsYForSide[orientation],
+						z + Facing.offsetsZForSide[orientation],
+						ModMorePistons.getTileEntity (id, blockMeta, orientation, false, false, length)
+					);
+				}
+		}
 	}
 	
 	/**

@@ -29,7 +29,6 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	
-	private boolean isSticky;
 	private boolean ignoreUpdates = false;
 	public  int maxBlockMove = 12;
 	
@@ -136,18 +135,32 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 		int metadata = world.getBlockMetadata(x, y, z);
 		BlockMorePistonRedStone newBlock = null;
 		
-		switch (multi) {
-			case 1:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase1;  break;
-			case 2:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase2;  break;
-			case 3:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase3;  break;
-			case 4:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase4;  break;
-			case 5:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase5;  break;
-			case 6:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase6;  break;
-			case 7:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase7;  break;
-			case 8:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase8;  break;
-			default: newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase1;  break;
+		if (this.isSticky) {
+			
+			switch (multi) {
+				case 1:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase1;  break;
+				case 2:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase2;  break;
+				case 3:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase3;  break;
+				case 4:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase4;  break;
+				case 5:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase5;  break;
+				case 6:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase6;  break;
+				case 7:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase7;  break;
+				case 8:  newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase8;  break;
+				default: newBlock = (BlockMorePistonRedStone) MorePistons.redStoneStickyPistonBase1;  break;
+			}
+		} else {
+			switch (multi) {
+				case 1:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase1;  break;
+				case 2:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase2;  break;
+				case 3:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase3;  break;
+				case 4:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase4;  break;
+				case 5:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase5;  break;
+				case 6:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase6;  break;
+				case 7:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase7;  break;
+				case 8:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase8;  break;
+				default: newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase1;  break;
+			}
 		}
-		
 		world.setBlock(x, y, z, newBlock.blockID);
 		world.setBlockMetadataWithNotify(x, y, z, metadata, 2);
 		

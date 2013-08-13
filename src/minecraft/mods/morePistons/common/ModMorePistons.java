@@ -125,7 +125,8 @@ public class ModMorePistons {
 	@Init
 	public void load(FMLInitializationEvent event) {
 
-		morePistonsTabs = new MorePistonsTabs("More Pistons");
+		morePistonsTabs = new MorePistonsTabs("Pistons");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.Pistons", "en_US", "Pistons");
 		
 		proxy.registerRenderers();
 		new MorePistonsBlocks();
