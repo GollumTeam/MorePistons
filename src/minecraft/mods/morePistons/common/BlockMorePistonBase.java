@@ -169,7 +169,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	/**
 	 * handles attempts to extend or retract the piston.
 	 */
-	private void updatePistonState(World world, int x, int y, int z) {
+	protected void updatePistonState(World world, int x, int y, int z) {
 		int metadata = world.getBlockMetadata(x, y, z);
 		int orientation = getOrientation(metadata);
 		
@@ -271,7 +271,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
 		
 		int max = 0;
-		ModMorePistons.log("length : " + this.length);
+//		ModMorePistons.log("length : " + this.length);
 		
 		for (int i = 0; i < this.length; i++) {
 			
@@ -281,7 +281,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 			int id = world.getBlockId(x, y, z);
 
-			ModMorePistons.log("i : " + i);
+//			ModMorePistons.log("i : " + i);
 			
 			if (id != 0) {
 				
@@ -298,8 +298,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 					id != Block.pistonMoving.blockID
 				) {
 					int walking = this.canMoveBlockOnDistance(this.length - i, world, id, x, y, z, orientation);
-					ModMorePistons.log("max : " + max);
-					ModMorePistons.log("walking : " + walking);
+//					ModMorePistons.log("max : " + max);
+//					ModMorePistons.log("walking : " + walking);
 					max += walking;
 					break;
 				}
@@ -308,7 +308,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			max++;
 			
 		}
-		ModMorePistons.log("max total : " + max);
+//		ModMorePistons.log("max total : " + max);
 		
 		return max;
 	}
@@ -332,13 +332,18 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				this.ignoreUpdates = false;
 				return true;
 			}
-
+			
+			//ModMorePistons.log ("openedLenght : " + openedLenght);
+			
 			boolean extendOpen = false;
 			boolean extendClose = false;
 			
 			if (openedLenght == 0) { //Le piston était fermer
 				
 				int maxOpen = this.getMaximalOpenedLenght(world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
+
+				//ModMorePistons.log ("maxOpen : " + maxOpen);
+				
 				if (maxOpen > 0) {
 					if (this.tryExtend(world, x, y, z, orientation, maxOpen)) {
 						extendOpen = true;
@@ -351,8 +356,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				int y2 = y;
 				int z2 = z;
 				
-				ModMorePistons.log ("openedLenght : " + openedLenght);
-				
 				for (int i = 0; i <  openedLenght; i++) {
 					x2 += Facing.offsetsXForSide[orientation];
 					y2 += Facing.offsetsYForSide[orientation];
@@ -362,6 +365,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				int maxOpen = this.getMaximalOpenedLenght(world, x2, y2, z2, orientation); //On recupère l'ouverture actuel du pistonl
 				
 				if (maxOpen > 0) {
+					
+					//ModMorePistons.log ("maxOpen 2 : " + maxOpen);
 					
 					world.setBlock(x2, y2, z2, MorePistons.pistonRod.blockID, orientation, 2);
 					if (this.tryExtend(world, x2, y2, z2, orientation, maxOpen - openedLenght)) {

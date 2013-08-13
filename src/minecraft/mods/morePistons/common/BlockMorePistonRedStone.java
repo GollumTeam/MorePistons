@@ -145,9 +145,12 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 			case 8:  newIdBlock = MorePistons.redStonePistonBase8.blockID;  break;
 			default: newIdBlock = MorePistons.redStonePistonBase1.blockID;  break;
 		}
-
+		
 		world.setBlock(x, y, z, newIdBlock);
 		world.setBlockMetadataWithNotify(x, y, z, metadata, 2);
+		
+		this.updatePistonState(world, x, y, z);
+		
 	}
 
 	////////////////////////
@@ -163,7 +166,7 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 		int power    = world.getBlockPowerInput(x, y, z);
 		int multi    = getMutiplicateur();
 		
-		power = (power <= 0) ? 16 : power;
+		power = (power < 0) ? 0 : power;
 		power = (power > 16) ? 16 : power;
 		
 		this.setLength(power*multi);
