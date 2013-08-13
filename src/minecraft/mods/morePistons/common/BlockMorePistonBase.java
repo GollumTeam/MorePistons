@@ -271,6 +271,10 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			y += Facing.offsetsYForSide[orientation];
 			z += Facing.offsetsZForSide[orientation];
 			
+			if (y >= 255) {
+				return max;
+			}
+			
 			int id = world.getBlockId(x, y, z);
 			
 			if (id != 0) {
@@ -355,8 +359,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				extendClose = true;
 				int diff = openedLenght - this.length;
 				
-				ModMorePistons.log ("diff " + diff);
-
 				int x2 = x + Facing.offsetsXForSide[orientation] * (openedLenght);
 				int y2 = y + Facing.offsetsYForSide[orientation] * (openedLenght);
 				int z2 = z + Facing.offsetsZForSide[orientation] * (openedLenght);
@@ -374,9 +376,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				world.setBlock(x2, y2, z2, Block.pistonMoving.blockID, orientation, 2);
 				TileEntity teExtension = ModMorePistons.getTileEntity(MorePistons.pistonExtension.blockID, orientation, orientation, true, false, -diff);
 				world.setBlockTileEntity(x2, y2, z2, teExtension);
-			
-//				world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
-//				world.setBlockTileEntity(x2, y2, z2, ModMorePistons.getTileEntity (this.blockID, orientation, orientation, false, true, diff, true));
+				
 			}
 			
 			
@@ -572,6 +572,10 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				x += Facing.offsetsXForSide[orientation];
 				y += Facing.offsetsYForSide[orientation];
 				z += Facing.offsetsZForSide[orientation];
+				
+				if (y >= 255) {
+					return walking;
+				}
 				
 				int idNext = world.getBlockId(x, y, z);
 				

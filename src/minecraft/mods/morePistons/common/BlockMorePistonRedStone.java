@@ -7,6 +7,7 @@ import javax.naming.ldap.HasControls;
 
 import scala.collection.generic.Clearable;
 import scala.collection.mutable.HashMap;
+import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -185,12 +186,17 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	/**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int faceClicked, float par7, float par8, float par9)
     {
+    	int metadata = world.getBlockMetadata(x, y, z);
+    	int orientation = this.getOrientation(metadata);
+    	if (faceClicked == orientation) {
+    		return false;
+    	}
     	
 		int multi    = getMutiplicateur() % 8 + 1;
-		applyMutiplicateur(par1World, par2, par3, par4, multi);
-    	par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.6F);
+		applyMutiplicateur(world, x, y, z, multi);
+		world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "random.click", 0.3F, 0.6F);
     	
         return true;
     }
