@@ -47,27 +47,28 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 	 */
 	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
 		
-//		int metadata    = world.getBlockMetadata(x, y, z);
-//		int orientation = this.getDirectionMeta(metadata);
-//		
-//		int x2 = x;
-//		int y2 = y;
-//		int z2 = z;
-//		int id2 = 0;
+		int metadata    = world.getBlockMetadata(x, y, z);
+		int orientation = this.getDirectionMeta(metadata);
 		
-//		do {
-//			//ModMorePistons.log ("Moveeeee");
-//			
-//			x2 -= Facing.offsetsXForSide[orientation];
-//			y2 -= Facing.offsetsYForSide[orientation];
-//			z2 -= Facing.offsetsZForSide[orientation];
-//			id2 = world.getBlockId(x2, y2, z2);
-//			if (id2 == MorePistons.pistonRod.blockID) {
-//				int metadata2 = world.getBlockMetadata(x2, y2, z2);
-//				world.setBlock(x2, y2, z2, id2);
-//				world.setBlockMetadataWithNotify(x2, y2, z2, metadata2, 2);
-//			}
-//		} while (id2 == MorePistons.pistonRod.blockID);
+		int x2 = x;
+		int y2 = y;
+		int z2 = z;
+		int id2 = 0;
+		
+		world.setBlock(x2, y2, z2, this.blockID);
+		world.setBlockMetadataWithNotify(x2, y2, z2, metadata, 2);
+		
+		do {
+			x2 -= Facing.offsetsXForSide[orientation];
+			y2 -= Facing.offsetsYForSide[orientation];
+			z2 -= Facing.offsetsZForSide[orientation];
+			id2 = world.getBlockId(x2, y2, z2);
+			if (id2 == MorePistons.pistonRod.blockID) {
+				int metadata2 = world.getBlockMetadata(x2, y2, z2);
+				world.setBlock(x2, y2, z2, id2);
+				world.setBlockMetadataWithNotify(x2, y2, z2, metadata2, 2);
+			}
+		} while (id2 == MorePistons.pistonRod.blockID);
 		
 	}
 	

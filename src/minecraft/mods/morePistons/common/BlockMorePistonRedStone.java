@@ -164,11 +164,18 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	 */
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int fermer, int orientation) {
 		
-		int power    = world.getBlockPowerInput(x, y, z);
+		int power = 0;
 		int multi    = getMutiplicateur();
 		
-		power = (power < 0) ? 0 : power;
-		power = (power > 16) ? 16 : power;
+		
+		if (this.isIndirectlyPowered(world, x, y, z, orientation)) {
+			
+			power = world.getBlockPowerInput(x, y, z);
+			
+			power = (power <= 0) ? 16 : power;
+			power = (power > 16) ? 16 : power;
+		}
+		
 		
 		this.setLength(power*multi);
 		

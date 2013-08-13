@@ -183,16 +183,9 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		boolean extended = isExtended(metadata);
 		
 		// Si redstone active et piston fermer alors il faut ouvrir
-		//if (powered && !extended) {
 		if (powered) {
-			
 			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
 			world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
-			
-//			if (this.canExtend(world, x, y, z, orientation)) {
-//			} else {
-//				//ModMorePistons.log("Le piston est bloqué");
-//			}
 			
 		// Si redstone eteinte et piston ouvert alors il faut fermer
 		} else if (!powered && extended) {
@@ -268,26 +261,22 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * @param int orientation
 	 * @return int
 	 */
-	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
+	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation, int length) {
 		
 		int max = 0;
-//		ModMorePistons.log("length : " + this.length);
 		
-		for (int i = 0; i < this.length; i++) {
+		for (int i = 0; i < length; i++) {
 			
 			x += Facing.offsetsXForSide[orientation];
 			y += Facing.offsetsYForSide[orientation];
 			z += Facing.offsetsZForSide[orientation];
 			
 			int id = world.getBlockId(x, y, z);
-
-//			ModMorePistons.log("i : " + i);
 			
 			if (id != 0) {
 				
 				// Le block ne bouge pas on ne peut plus avancer
 				if (!this.canPushBlock(id, world, x, y, z, true)) {
-					ModMorePistons.log("canPushBlock : " + id);
 					break;
 				}
 				
@@ -297,9 +286,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 					id != MorePistons.pistonRod.blockID&&
 					id != Block.pistonMoving.blockID
 				) {
-					int walking = this.canMoveBlockOnDistance(this.length - i, world, id, x, y, z, orientation);
-//					ModMorePistons.log("max : " + max);
-//					ModMorePistons.log("walking : " + walking);
+					int walking = this.canMoveBlockOnDistance(length - i, world, id, x, y, z, orientation);
 					max += walking;
 					break;
 				}
@@ -308,7 +295,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			max++;
 			
 		}
-//		ModMorePistons.log("max total : " + max);
+		
 		
 		return max;
 	}
@@ -320,9 +307,11 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int idEvent, int orientation) {
 		
 		this.ignoreUpdates = true;
+		boolean extendOpen = false;
+		boolean extendClose = false;
 		int openedLenght = this.getOpenedLenght(world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
 		
-		if (idEvent == 0) { // Demande une ouverture du piston
+		if (idEvent == 0 && this.length != 0) { // Demande une ouverture du piston
 			
 			// Si le piston est fermer: on ouvre autant que l'on peu
 			// Si le piston est ouvert mais que la longueur du piston est plus courte que l'ouverture actuel: On Retracte le piston à la longueur max du piston
@@ -333,60 +322,64 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				return true;
 			}
 			
-			//ModMorePistons.log ("openedLenght : " + openedLenght);
-			
-			boolean extendOpen = false;
-			boolean extendClose = false;
-			
 			if (openedLenght == 0) { //Le piston était fermer
 				
-				int maxOpen = this.getMaximalOpenedLenght(world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
-
-				//ModMorePistons.log ("maxOpen : " + maxOpen);
+				int maxOpen = this.getMaximalOpenedLenght(world, x, y, z, orientation, this.length); //On recupère l'ouverture actuel du piston
 				
 				if (maxOpen > 0) {
 					if (this.tryExtend(world, x, y, z, orientation, maxOpen)) {
 						extendOpen = true;
 					}
+				} else {
+					world.setBlockMetadataWithNotify (x, y, z, orientation, 2);
 				}
 				
 			} else  if (this.length > openedLenght) {
 				
-				int x2 = x;
-				int y2 = y;
-				int z2 = z;
+				int x2 = x + Facing.offsetsXForSide[orientation] * openedLenght;
+				int y2 = y + Facing.offsetsYForSide[orientation] * openedLenght;
+				int z2 = z + Facing.offsetsZForSide[orientation] * openedLenght;
 				
-				for (int i = 0; i <  openedLenght; i++) {
-					x2 += Facing.offsetsXForSide[orientation];
-					y2 += Facing.offsetsYForSide[orientation];
-					z2 += Facing.offsetsZForSide[orientation];
-				}
-				
-				int maxOpen = this.getMaximalOpenedLenght(world, x2, y2, z2, orientation); //On recupère l'ouverture actuel du pistonl
+				int maxOpen = this.getMaximalOpenedLenght(world, x2, y2, z2, orientation, this.length - openedLenght); //On recupère l'ouverture actuel du pistonl
 				
 				if (maxOpen > 0) {
 					
-					//ModMorePistons.log ("maxOpen 2 : " + maxOpen);
-					
 					world.setBlock(x2, y2, z2, MorePistons.pistonRod.blockID, orientation, 2);
-					if (this.tryExtend(world, x2, y2, z2, orientation, maxOpen - openedLenght)) {
+					if (this.tryExtend(world, x2, y2, z2, orientation, maxOpen)) {
 						extendOpen = true;
 					}
 				}
 				
+			} else {
+				
+				extendClose = true;
+				int diff = openedLenght - this.length;
+				
+				ModMorePistons.log ("diff " + diff);
+
+				int x2 = x + Facing.offsetsXForSide[orientation] * (openedLenght);
+				int y2 = y + Facing.offsetsYForSide[orientation] * (openedLenght);
+				int z2 = z + Facing.offsetsZForSide[orientation] * (openedLenght);
+				
+				for (int i = 0; i < diff; i++) {
+
+					world.setBlock(x2, y2, z2, 0, 0, 2);
+					
+					x2 -= Facing.offsetsXForSide[orientation];
+					y2 -= Facing.offsetsYForSide[orientation];
+					z2 -= Facing.offsetsZForSide[orientation];
+				}
+				
+				
+				world.setBlock(x2, y2, z2, Block.pistonMoving.blockID, orientation, 2);
+				TileEntity teExtension = ModMorePistons.getTileEntity(MorePistons.pistonExtension.blockID, orientation, orientation, true, false, -diff);
+				world.setBlockTileEntity(x2, y2, z2, teExtension);
+			
+//				world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
+//				world.setBlockTileEntity(x2, y2, z2, ModMorePistons.getTileEntity (this.blockID, orientation, orientation, false, true, diff, true));
 			}
 			
-			if (extendOpen) {
-				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
-				// On joue le son
-				world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.out", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
-			}
 			
-			if (extendClose) {
-				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
-				// On joue le son
-				//world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.in", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
-			}
 			
 		} else {  // Demande une fermeture du piston
 			
@@ -415,6 +408,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	
 				world.setBlock(x2, y2, z2, 0, orientation, 2);
 				world.setBlockMetadataWithNotify (x2, y2, z2, 0, 2);
+				
+				extendClose = true;
 			}
 			
 //			if (this.isSticky) {
@@ -465,14 +460,19 @@ public class BlockMorePistonBase extends BlockPistonBase {
 //				
 //			}
 			
-			
-			// Fin de l'effet de fermeture
-			
-			
+		}
+		
+		if (extendOpen) {
+			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
+			// On joue le son
+			world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.out", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
+		}
+		
+		if (extendClose) {
+			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
 			// On joue le son
 			world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.in", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
 		}
-		
 		
 		this.ignoreUpdates = false;
 		
@@ -482,7 +482,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	/**
 	 * checks the block to that side to see if it is indirectly powered.
 	 */
-	private boolean isIndirectlyPowered(World world, int x, int y, int z, int orientation) {
+	protected boolean isIndirectlyPowered(World world, int x, int y, int z, int orientation) {
 		if ((orientation != 0) && (world.getIndirectPowerOutput (x, y - 1, z, 0))) {
 			return true;
 		}
@@ -537,24 +537,28 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * @return
 	 */
 	private int canMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation) {
-//		return this.canMoveBlockOnDistance(distance, world, id, x, y, z, orientation, 0);
-//	}
-//	
-//	/**
-//	 * Regarde si on peu déplacé un pistont sur la distance voulu
-//	 * @param distance
-//	 * @param world
-//	 * @param id
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 * @param orientation
-//	 * @param walking
-//	 * @return
-//	 */
-//	private int canMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation, int moved) {
-//		
-		int walking =0;
+		return this.canMoveBlockOnDistance(distance, world, id, x, y, z, orientation, 1);
+	}
+	
+	/**
+	 * Regarde si on peu déplacé un pistont sur la distance voulu
+	 * @param distance
+	 * @param world
+	 * @param id
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @param walking
+	 * @return
+	 */
+	private int canMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation, int moved) {
+		
+		if (moved == 12) {
+			return 0;
+		}
+		
+		int walking = 0;
 		
 		if (
 			this.canPushBlock(id, world, x, y, z, true) &&
@@ -576,40 +580,15 @@ public class BlockMorePistonBase extends BlockPistonBase {
 					continue;
 				}
 				
-				return walking + this.canMoveBlockOnDistance(distance - i + 1, world, idNext, x, y, z, orientation);
+				
+				int moving = this.canMoveBlockOnDistance(distance - i, world, idNext, x, y, z, orientation, moved + 1);
+				return walking + moving;
 				
 			}
 		}
 		
 		return walking;
 	}
-//	
-//	/**
-//	 * checks to see if this piston could push the blocks in front of it.
-//	 */
-//	protected boolean canExtend(World world, int x, int y, int z, int orientation) {
-//		
-//		
-//		int x1 = x;
-//		int y1 = y;
-//		int z1 = z;
-//		
-//		for (int i  = 0; i < this.length; i++) {
-//			x1 += Facing.offsetsXForSide[orientation];
-//			y1 += Facing.offsetsYForSide[orientation];
-//			z1 += Facing.offsetsZForSide[orientation];
-//			int id1 = world.getBlockId(x1, y1, z1);
-//			
-//			if (id1 == 0 || Block.blocksList[id1].getMobilityFlag() == 1) {
-//				continue;
-//			} else {
-//				return canMoveBlockOnDistance (this.length - i, world, id1, x1, y1, z1, orientation, 0);
-//			}
-//			
-//		}
-//		
-//		return true;
-//	}
 	
 	/**
 	 * returns true if the piston can push the specified block
