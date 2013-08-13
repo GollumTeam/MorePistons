@@ -22,7 +22,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.util.MathHelper; // ke;
 import net.minecraft.entity.EntityLiving; // md;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer; // qx;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs; // tj;
@@ -108,7 +107,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 	}
 
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
-		int var6 = determineOrientation(par1World, par2, par3, par4, (EntityLivingBase) par5EntityLiving);
+		int var6 = determineOrientation(par1World, par2, par3, par4, (EntityLiving) par5EntityLiving);
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, var6, 2);
 		if ((!par1World.isRemote) && (!ignoreUpdates)) {
 			updatePistonState(par1World, par2, par3, par4);
@@ -377,7 +376,7 @@ public class BlockSuperPistonBase extends BlockPistonBase {
 		return (par0 & 0x8) != 0;
 	}
 
-	public static int determineOrientation(World world, int i, int j, int k, EntityLivingBase entityplayer) {
+	public static int determineOrientation(World world, int i, int j, int k, EntityLiving entityplayer) {
 		if ((MathHelper.abs((float) entityplayer.posX - i) < 2.0F)
 				&& (MathHelper.abs((float) entityplayer.posZ - k) < 2.0F)) {
 			double d = entityplayer.posY + 1.82D - entityplayer.yOffset;

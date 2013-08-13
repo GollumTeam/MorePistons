@@ -133,23 +133,24 @@ public class BlockMorePistonRedStone extends BlockMorePistonBase {
 	public void applyMutiplicateur (World world, int x, int y, int z, int multi) {
 		
 		int metadata = world.getBlockMetadata(x, y, z);
-		int newIdBlock = MorePistons.redStonePistonBase1.blockID;
+		BlockMorePistonRedStone newBlock = null;
+		
 		switch (multi) {
-			case 1:  newIdBlock = MorePistons.redStonePistonBase1.blockID;  break;
-			case 2:  newIdBlock = MorePistons.redStonePistonBase2.blockID;  break;
-			case 3:  newIdBlock = MorePistons.redStonePistonBase3.blockID;  break;
-			case 4:  newIdBlock = MorePistons.redStonePistonBase4.blockID;  break;
-			case 5:  newIdBlock = MorePistons.redStonePistonBase5.blockID;  break;
-			case 6:  newIdBlock = MorePistons.redStonePistonBase6.blockID;  break;
-			case 7:  newIdBlock = MorePistons.redStonePistonBase7.blockID;  break;
-			case 8:  newIdBlock = MorePistons.redStonePistonBase8.blockID;  break;
-			default: newIdBlock = MorePistons.redStonePistonBase1.blockID;  break;
+			case 1:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase1;  break;
+			case 2:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase2;  break;
+			case 3:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase3;  break;
+			case 4:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase4;  break;
+			case 5:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase5;  break;
+			case 6:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase6;  break;
+			case 7:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase7;  break;
+			case 8:  newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase8;  break;
+			default: newBlock = (BlockMorePistonRedStone) MorePistons.redStonePistonBase1;  break;
 		}
 		
-		world.setBlock(x, y, z, newIdBlock);
+		world.setBlock(x, y, z, newBlock.blockID);
 		world.setBlockMetadataWithNotify(x, y, z, metadata, 2);
 		
-		this.updatePistonState(world, x, y, z);
+		newBlock.updatePistonState(world, x, y, z);
 		
 	}
 
