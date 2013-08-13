@@ -37,6 +37,60 @@ public class MorePistonsRecipes {
 		ModLoader.addRecipe(new ItemStack(MorePistons.octupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.octuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
 		ModLoader.addRecipe(new ItemStack(MorePistons.octupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), MorePistons.septuplePistonBase });
 		
+		ModLoader.addRecipe(
+			new ItemStack(MorePistons.redStonePistonBase1, 1), 
+			new Object[] {
+				"XXX",
+				"DRE",
+				" Y ",
+				Character.valueOf('X'), Block.planks,
+				Character.valueOf('D'), Item.diamond,
+				Character.valueOf('E'), Item.emerald,
+				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('Y'), MorePistons.octuplePistonBase
+			}
+		);
+		ModLoader.addRecipe(
+			new ItemStack(MorePistons.redStonePistonBase1, 1), 
+			new Object[] {
+				"XXX",
+				"ERD",
+				" Y ",
+				Character.valueOf('X'), Block.planks,
+				Character.valueOf('D'), Item.diamond,
+				Character.valueOf('E'), Item.emerald,
+				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('Y'), MorePistons.octuplePistonBase
+			}
+		);
+		ModLoader.addRecipe(
+			new ItemStack(MorePistons.redStoneStickyPistonBase1, 1), 
+			new Object[] {
+				"XXX",
+				"ERD",
+				" Y ",
+				Character.valueOf('X'), Block.planks,
+				Character.valueOf('D'), Item.diamond,
+				Character.valueOf('E'), Item.emerald,
+				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('Y'), MorePistons.octupleStickyPistonBase
+			}
+		);
+		ModLoader.addRecipe(
+			new ItemStack(MorePistons.redStoneStickyPistonBase1, 1), 
+			new Object[] {
+				"XXX",
+				"DRE",
+				" Y ",
+				Character.valueOf('X'), Block.planks,
+				Character.valueOf('D'), Item.diamond,
+				Character.valueOf('E'), Item.emerald,
+				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('Y'), MorePistons.octupleStickyPistonBase
+			}
+		);
+		ModLoader.addRecipe(new ItemStack(MorePistons.redStoneStickyPistonBase1, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.redStonePistonBase1, Character.valueOf('Y'), Item.slimeBall });
+		
 		ModLoader.addRecipe(new ItemStack(MorePistons.gravitationalPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), Block.pistonBase, Character.valueOf('Y'), Block.tnt });
 		ModLoader.addRecipe(new ItemStack(MorePistons.gravitationalStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), MorePistons.gravitationalPistonBase, Character.valueOf('Y'), Item.slimeBall });
 		
