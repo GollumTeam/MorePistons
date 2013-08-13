@@ -70,7 +70,7 @@ public class ModMorePistons {
 	public static int idBlockRedStoneStickyPistonBase7;
 	public static int idBlockRedStoneStickyPistonBase8;
 	
-	private static String texturePath = "morePistons:";
+	private static String texturePath = "morepistons:";
 
 
 
