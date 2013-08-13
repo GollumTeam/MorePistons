@@ -17,7 +17,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.3.3 for [1.5.2 Build Smeagol]")
+@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.0 for [1.5.2 Build Smeagol]")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
@@ -27,7 +27,7 @@ public class ModMorePistons {
 	@SidedProxy(clientSide = "mods.morePistons.common.ClientProxyMorePistons", serverSide = "mods.morePistons.common.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
 	
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 	
 	public static boolean configFlag;
 	
