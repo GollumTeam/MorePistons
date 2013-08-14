@@ -17,7 +17,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.0 for [1.5.2 Build Smeagol]")
+@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.0 for [1.6.2 Build Smeagol]")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
@@ -70,7 +70,7 @@ public class ModMorePistons {
 	public static int idBlockRedStoneStickyPistonBase7;
 	public static int idBlockRedStoneStickyPistonBase8;
 	
-	private static String texturePath = "morePistons:";
+	private static String texturePath = "morepistons:";
 
 
 
