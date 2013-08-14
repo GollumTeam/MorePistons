@@ -75,7 +75,7 @@ public class ModMorePistons {
 
 
 	
-	@Mod.PreInit
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		
@@ -122,7 +122,7 @@ public class ModMorePistons {
 	}
 	
 	/** 2 **/
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent event) {
 
 		morePistonsTabs = new MorePistonsTabs("Pistons");
@@ -141,7 +141,7 @@ public class ModMorePistons {
 	}
 
 	/** 3 **/
-	@PostInit
+	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 
 	}
