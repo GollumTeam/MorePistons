@@ -18,7 +18,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.0 for [1.6.2 Build Smeagol]")
+@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.1 [Build Smeagol]", acceptedMinecraftVersions = "1.6.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
@@ -125,7 +125,9 @@ public class ModMorePistons {
 	/** 2 **/
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
-
+		
+		VersionChecker.getInstance().check(this);
+		
 		morePistonsTabs = new MorePistonsTabs("Pistons");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.Pistons", "en_US", "Pistons");
 		

@@ -134,7 +134,7 @@ public class MorePistons {
 			pistonExtension, pistonRod, 
 			superPistonBase, superStickyPistonBase, 
 			redStonePistonBase1,redStonePistonBase2,redStonePistonBase3,redStonePistonBase4,redStonePistonBase5,redStonePistonBase6,redStonePistonBase7,redStonePistonBase8,
-			redStoneStickyPistonBase1, redStoneStickyPistonBase2, redStoneStickyPistonBase3, redStoneStickyPistonBase4, redStoneStickyPistonBase6, redStoneStickyPistonBase6, redStoneStickyPistonBase7, redStoneStickyPistonBase8, 
+			redStoneStickyPistonBase1, redStoneStickyPistonBase2, redStoneStickyPistonBase3, redStoneStickyPistonBase4, redStoneStickyPistonBase5, redStoneStickyPistonBase6, redStoneStickyPistonBase7, redStoneStickyPistonBase8, 
 		});
 		
 		
