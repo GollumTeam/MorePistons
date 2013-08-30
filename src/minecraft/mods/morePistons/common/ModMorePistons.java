@@ -1,5 +1,8 @@
 package mods.morePistons.common;
 
+import java.util.logging.Level;
+
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,7 +20,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;// any;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version="1.4.0 [Build Smeagol]", acceptedMinecraftVersions="1.5.2" )
+@Mod(modid = "More Pistons", name = "More Pistons", version="1.4.1 [Build Smeagol]", acceptedMinecraftVersions="1.5.2" )
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
@@ -27,7 +30,7 @@ public class ModMorePistons {
 	@SidedProxy(clientSide = "mods.morePistons.common.ClientProxyMorePistons", serverSide = "mods.morePistons.common.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
 	
-	private static boolean DEBUG = false;
+	private static boolean DEBUG = true;
 	
 	public static boolean configFlag;
 	
@@ -163,7 +166,7 @@ public class ModMorePistons {
 	 */
 	public static void log (String str) {
 		if (DEBUG) {
-			System.out.println (str);
+			FMLLog.log("More Pistons", Level.INFO, str);
 		}
 	}
 	
