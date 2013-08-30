@@ -434,6 +434,46 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	}
 	
 	/**
+	 * Test if this block is movable
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public static boolean isMovableBlock (World world, int x, int y, int z) {
+		int id = world.getBlockId(x, y, z);
+		return isMovableBlock (world, x, y, z, id, world.getBlockMetadata(x, y, z));
+	}
+	
+	/**
+	 * Test if this block is movable
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	private static boolean isMovableBlock(World world, int x, int y, int z, int id, int metadata) {
+		boolean mobility = 
+			id != 0 && (
+				Block.blocksList[id].getMobilityFlag() != 2 || (
+					ModMorePistons.isPistonId (id) &&
+					!isExtended(metadata)
+				)
+			)
+		;
+		
+		return
+			id != Block.waterMoving.blockID &&
+			id != Block.waterStill.blockID &&
+			id != Block.lavaMoving.blockID &&
+			id != Block.lavaStill.blockID &&
+			id != Block.obsidian.blockID &&
+			mobility;
+	}
+	
+	/**
 	 * Retracte le block qui ets collé au piston si le piston est un sticky piston
 	 * @param world
 	 * @param x
@@ -450,12 +490,13 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 			int id = world.getBlockId(x2, y2, z2);
 			
-			if (
-					id != 0 &&
-					id != Block.waterMoving.blockID &&
-					id != Block.waterStill.blockID &&
-					id != Block.lavaMoving.blockID &&
-					id != Block.lavaStill.blockID
+			if ( 
+					isMovableBlock (world, x, y, z, id, world.getBlockMetadata(x2, y2, z2))
+//					id != 0 &&
+//					id != Block.waterMoving.blockID &&
+//					id != Block.waterStill.blockID &&
+//					id != Block.lavaMoving.blockID &&
+//					id != Block.lavaStill.blockID
 				) {
 					int blockMeta = world.getBlockMetadata(x2, y2, z2);
 					
@@ -479,7 +520,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				}
 		}
 	}
-	
+
 	/**
 	 * checks the block to that side to see if it is indirectly powered.
 	 */
@@ -541,6 +582,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		return this.canMoveBlockOnDistance(distance, world, id, x, y, z, orientation, 1);
 	}
 	
+	
 	/**
 	 * Regarde si on peu déplacé un pistont sur la distance voulu
 	 * @param distance
@@ -595,6 +637,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		return walking;
 	}
 	
+	
 	/**
 	 * returns true if the piston can push the specified block
 	 */
@@ -611,7 +654,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 					return false;
 				}
 				
-				if (Block.blocksList[id].getMobilityFlag() == 2) {
+				if (!isMovableBlock (world, x, y, z, id, world.getBlockMetadata(x, y, z))) {
 					return false;
 				}
 				
@@ -619,8 +662,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 					if (!par5)  {
 						return false;
 					}
-					
-					return true;
 				}
 			} else if (isExtended(world.getBlockMetadata(x, y, z))) {
 				return false;
