@@ -170,29 +170,31 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * handles attempts to extend or retract the piston.
 	 */
 	protected void updatePistonState(World world, int x, int y, int z) {
-		int metadata = world.getBlockMetadata(x, y, z);
-		int orientation = getOrientation(metadata);
-		
-		// Normalement c'est impossible. Il n'y a que 6 face sur un block. Mais il le mette de partout
-		// On vera bien
-		if (orientation == 7) {
-			return;
-		}
-		
-		boolean powered = this.isIndirectlyPowered(world, x, y, z, orientation);
-		boolean extended = isExtended(metadata);
-		
-		// Si redstone active et piston fermer alors il faut ouvrir
-		if (powered) {
-			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
-			world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
+		if (!this.ignoreUpdates) {
 			
-		// Si redstone eteinte et piston ouvert alors il faut fermer
-		} else if (!powered && extended) {
-			world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
-			world.addBlockEvent(x, y, z, this.blockID, 1, orientation);
+			int metadata = world.getBlockMetadata(x, y, z);
+			int orientation = getOrientation(metadata);
+			
+			// Normalement c'est impossible. Il n'y a que 6 face sur un block. Mais il le mette de partout
+			// On vera bien
+			if (orientation == 7) {
+				return;
+			}
+			
+			boolean powered = this.isIndirectlyPowered(world, x, y, z, orientation);
+			boolean extended = isExtended(metadata);
+			
+			// Si redstone active et piston fermer alors il faut ouvrir
+			if (powered) {
+				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
+				world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
+				
+			// Si redstone eteinte et piston ouvert alors il faut fermer
+			} else if (!powered && extended) {
+				world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
+				world.addBlockEvent(x, y, z, this.blockID, 1, orientation);
+			}
 		}
-		
 	}
 	
 	/**
@@ -595,11 +597,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		int walking = 0;
 		
-		if (this.isMovableBlock(world, x, y, z) &&
-			id != MorePistons.pistonExtension.blockID &&
-			id != MorePistons.pistonRod.blockID &&
-			id != Block.pistonMoving.blockID
-		) {
+		if (this.isMovableBlock(world, x, y, z)) {
 			
 			for (int i = 0; i < distance; i++) {
 				
