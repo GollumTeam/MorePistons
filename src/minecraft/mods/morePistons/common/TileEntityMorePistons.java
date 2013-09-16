@@ -27,25 +27,11 @@ public class TileEntityMorePistons extends TileEntityPiston {
 	public boolean isPistonRoot;
 	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered) {
-		
-		this.storedBlockID = id;
-		this.storedMetadata = metadata;
-		this.storedOrientation = orientation;
-		this.extending = extending;
-		this.shouldHeadBeRendered = shouldHeadBeRendered;
-		this.distance = 2;
-		this.isPistonRoot = false;
+		this (id, metadata, orientation, extending, shouldHeadBeRendered, 2, false);
 	}
 	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance) {
-		
-		this.storedBlockID = id;
-		this.storedMetadata = metadata;
-		this.storedOrientation = orientation;
-		this.extending = extending;
-		this.shouldHeadBeRendered = shouldHeadBeRendered;
-		this.distance = distance;
-		this.isPistonRoot = false;
+		this (id, metadata, orientation, extending, shouldHeadBeRendered, distance, false);
 	}
 	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isRoot) {

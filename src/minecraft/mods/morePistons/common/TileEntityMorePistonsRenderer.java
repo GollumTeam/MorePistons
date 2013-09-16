@@ -72,7 +72,8 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 				Block.pistonExtension.setHeadTexture(((BlockPistonBase) block).getPistonExtensionTexture());
 				
 				this.blockRenderer.renderPistonExtensionAllFaces(
-						Block.pistonExtension, par1TileEntityPiston.xCoord,
+						Block.pistonExtension,
+						par1TileEntityPiston.xCoord,
 						par1TileEntityPiston.yCoord,
 						par1TileEntityPiston.zCoord,
 						par1TileEntityPiston.getProgress(par8) < 0.5F

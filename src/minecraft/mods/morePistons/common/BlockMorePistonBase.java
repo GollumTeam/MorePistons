@@ -493,24 +493,16 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 			if (isMovableBlock (world, x2, y2 , z2)) {
 					int blockMeta = world.getBlockMetadata(x2, y2, z2);
+
+					int xPlus1 = x + Facing.offsetsXForSide[orientation];
+					int yPlus1 = y + Facing.offsetsYForSide[orientation];
+					int zPlus1 = z + Facing.offsetsZForSide[orientation];
 					
 					world.setBlock(x2, y2, z2, 0);
 					world.setBlockMetadataWithNotify (x2, y2, z2, 0, 2);
 					
-					world.setBlock(
-						x + Facing.offsetsXForSide[orientation],
-						y + Facing.offsetsYForSide[orientation],
-						z + Facing.offsetsZForSide[orientation], 
-						Block.pistonMoving.blockID, 
-						orientation, 
-						2
-					);
-					world.setBlockTileEntity(
-						x + Facing.offsetsXForSide[orientation],
-						y + Facing.offsetsYForSide[orientation],
-						z + Facing.offsetsZForSide[orientation],
-						ModMorePistons.getTileEntity (id, blockMeta, orientation, false, false, length)
-					);
+					world.setBlock(xPlus1, yPlus1, zPlus1, Block.pistonMoving.blockID, blockMeta, 2);
+					world.setBlockTileEntity(xPlus1, yPlus1, zPlus1, ModMorePistons.getTileEntity(id, blockMeta, orientation, false, false, length));
 				}
 		}
 	}
