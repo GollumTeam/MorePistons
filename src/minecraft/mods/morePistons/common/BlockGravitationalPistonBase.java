@@ -1,26 +1,25 @@
 package mods.morePistons.common;
-import net.minecraft.block.BlockContainer; // akb;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.block.Block; // amq;
-import net.minecraft.tileentity.TileEntity; // any;
+import net.minecraft.block.BlockContainer; // akb;
 import net.minecraft.block.BlockPistonBase; //aoa;
 import net.minecraft.block.BlockPistonMoving; // aoc;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.AxisAlignedBB; // aoe;
-import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import java.io.PrintStream;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import net.minecraft.util.MathHelper; // ke;
 import net.minecraft.entity.Entity; // lq;
 import net.minecraft.entity.EntityLiving; // md;
 import net.minecraft.entity.item.EntityFallingSand; // pw;
 import net.minecraft.entity.player.EntityPlayer; // qx;
-import net.minecraft.world.World; // yc;
+import net.minecraft.tileentity.TileEntity; // any;
+import net.minecraft.util.AxisAlignedBB; // aoe;
+import net.minecraft.util.Facing;
+import net.minecraft.util.Icon;
+import net.minecraft.util.MathHelper; // ke;
 import net.minecraft.world.IBlockAccess; // ym;
+import net.minecraft.world.World; // yc;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockGravitationalPistonBase extends BlockPistonBase {
 	private boolean isSticky;
