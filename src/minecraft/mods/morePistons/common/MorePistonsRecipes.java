@@ -1,10 +1,10 @@
 package mods.morePistons.common;
 
 
-import net.minecraft.src.ModLoader;
 import net.minecraft.block.Block; //amq;
 import net.minecraft.item.Item; //up;
 import net.minecraft.item.ItemStack; //ur;
+import net.minecraft.src.ModLoader;
 
 public class MorePistonsRecipes {
 	public MorePistonsRecipes() {

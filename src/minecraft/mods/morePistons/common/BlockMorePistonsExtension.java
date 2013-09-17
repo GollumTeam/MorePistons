@@ -1,15 +1,10 @@
 package mods.morePistons.common;
 
-import net.minecraft.src.ModLoader;
-import net.minecraft.util.Facing;
-import net.minecraft.block.Block; // amq;
 import net.minecraft.block.BlockPistonExtension; //aob;
-import net.minecraft.client.entity.EntityClientPlayerMP; // ays;
+import net.minecraft.util.Facing;
+import net.minecraft.world.World; // yc;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerCapabilities; //qv;
-import net.minecraft.world.World; // yc;
 
 public class BlockMorePistonsExtension extends BlockPistonExtension {
 	private int headTexture;

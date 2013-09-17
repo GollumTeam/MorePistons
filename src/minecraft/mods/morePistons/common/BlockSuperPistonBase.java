@@ -1,32 +1,22 @@
 package mods.morePistons.common;
 
-import net.minecraft.block.material.Material; // agi;
-import net.minecraft.block.BlockFlower; // aje;
-import net.minecraft.block.BlockDeadBush; // ajr;
-import net.minecraft.block.BlockContainer; // akb;
-import net.minecraft.block.BlockFire; // akf;
-import net.minecraft.block.BlockTallGrass; // amm;
 import net.minecraft.block.Block; // amq;
-import net.minecraft.block.BlockTripWireSource; // anb;
-import net.minecraft.tileentity.TileEntity; // any;
+import net.minecraft.block.BlockContainer; // akb;
 import net.minecraft.block.BlockPistonBase; // aoa;
 import net.minecraft.block.BlockPistonMoving; // aoc;
+import net.minecraft.block.material.Material; // agi;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.EntityLiving; // md;
+import net.minecraft.entity.player.EntityPlayer; // qx;
+import net.minecraft.tileentity.TileEntity; // any;
 import net.minecraft.util.AxisAlignedBB; // aoe;
 import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
-
-import java.io.PrintStream;
-import java.util.Random;
-
+import net.minecraft.util.MathHelper; // ke;
+import net.minecraft.world.IBlockAccess; // ym;
+import net.minecraft.world.World; // yc;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.util.MathHelper; // ke;
-import net.minecraft.entity.EntityLiving; // md;
-import net.minecraft.entity.player.EntityPlayer; // qx;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs; // tj;
-import net.minecraft.world.World; // yc;
-import net.minecraft.world.IBlockAccess; // ym;
 
 public class BlockSuperPistonBase extends BlockPistonBase {
 	private boolean isSticky;

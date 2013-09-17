@@ -1,27 +1,17 @@
 package mods.morePistons.common;
 
-import net.minecraft.src.ModLoader;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.block.material.Material; // agi;
-import net.minecraft.block.Block; // world.getBlockMetadata;
-import net.minecraft.block.BlockPistonBase; // aoa;
-import net.minecraft.block.BlockPistonMoving; // aoc;
-import net.minecraft.util.AxisAlignedBB; // aoe;
-import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
-import net.minecraft.client.entity.EntityClientPlayerMP; // ays;
-import net.minecraft.client.renderer.texture.IconRegister;
-
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block; // world.getBlockMetadata;
+import net.minecraft.block.material.Material; // agi;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity; // lq;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerCapabilities; // qv;
-import net.minecraft.world.World; // yc;
+import net.minecraft.util.AxisAlignedBB; // aoe;
+import net.minecraft.util.Facing;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess; // ym;
+import net.minecraft.world.World; // yc;
 
 public class BlockPistonRod extends Block {
 	//private int headTexture;

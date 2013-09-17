@@ -1,18 +1,17 @@
 package mods.morePistons.common;
 
-import net.minecraft.block.Block; // amq;
-import net.minecraft.block.BlockPistonMoving; // aoc;
-import net.minecraft.tileentity.TileEntityPiston; // aod;
-import net.minecraft.util.AxisAlignedBB; // aoe;
-import net.minecraft.util.Facing;
-import net.minecraft.nbt.NBTTagCompound; // bq;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import net.minecraft.block.Block; // amq;
 import net.minecraft.entity.Entity; // lq;
-import net.minecraft.world.World; // yc;
+import net.minecraft.nbt.NBTTagCompound; // bq;
+import net.minecraft.tileentity.TileEntityPiston; // aod;
+import net.minecraft.util.AxisAlignedBB; // aoe;
+import net.minecraft.util.Facing;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileEntityMorePistons extends TileEntityPiston {
 	public int storedBlockID;
@@ -27,25 +26,11 @@ public class TileEntityMorePistons extends TileEntityPiston {
 	public boolean isPistonRoot;
 	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered) {
-		
-		this.storedBlockID = id;
-		this.storedMetadata = metadata;
-		this.storedOrientation = orientation;
-		this.extending = extending;
-		this.shouldHeadBeRendered = shouldHeadBeRendered;
-		this.distance = 2;
-		this.isPistonRoot = false;
+		this (id, metadata, orientation, extending, shouldHeadBeRendered, 2, false);
 	}
 	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance) {
-		
-		this.storedBlockID = id;
-		this.storedMetadata = metadata;
-		this.storedOrientation = orientation;
-		this.extending = extending;
-		this.shouldHeadBeRendered = shouldHeadBeRendered;
-		this.distance = distance;
-		this.isPistonRoot = false;
+		this (id, metadata, orientation, extending, shouldHeadBeRendered, distance, false);
 	}
 	
 	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isRoot) {
