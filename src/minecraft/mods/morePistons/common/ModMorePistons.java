@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.1 [Build Smeagol]", acceptedMinecraftVersions = "1.6.2")
+@Mod(modid = "More Pistons", name = "More Pistons", version = "1.4.1 [Build Smeagol]", acceptedMinecraftVersions = "1.6.1")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
 
