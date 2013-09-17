@@ -195,6 +195,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				world.addBlockEvent(x, y, z, this.blockID, 1, orientation);
 			}
 		}
+		
 	}
 	
 	/**

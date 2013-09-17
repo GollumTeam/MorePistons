@@ -163,11 +163,20 @@ public class ModMorePistons {
 	/**
 	 * Affiche un log
 	 * @param str
+	 * @param force
 	 */
-	public static void log (String str) {
-		if (DEBUG) {
+	public static void log (String str, boolean force) {
+		if (DEBUG || force) {
 			FMLLog.log("More Pistons", Level.INFO, str);
 		}
+	}
+	
+	/**
+	 * Affiche un log
+	 * @param str
+	 */
+	public static void log (String str) {
+		log (str, false);
 	}
 	
 	public static boolean isPistonId (int id) {

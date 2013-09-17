@@ -185,7 +185,7 @@ public class MorePistons {
 		int i = ablock1.length;
 		for (int j = 0; j < i; j++) {
 			Block block = ablock1[j];
-			System.out.println("Register Block : " + pistonListName[j]);
+			ModMorePistons.log ("Register Block : " + pistonListName[j], true);
 			block.setUnlocalizedName(pistonListName[j]);
 			GameRegistry.registerBlock(block, pistonListName[j]);
 		}
