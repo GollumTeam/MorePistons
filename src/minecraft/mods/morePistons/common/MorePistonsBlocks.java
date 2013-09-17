@@ -1,8 +1,5 @@
 package mods.morePistons.common;
 
-import net.minecraft.block.Block; //amq;
-import net.minecraft.creativetab.CreativeTabs;
-
 public class MorePistonsBlocks {
 	
 	public MorePistonsBlocks() {

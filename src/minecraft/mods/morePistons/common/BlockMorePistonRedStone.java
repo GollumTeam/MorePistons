@@ -1,30 +1,10 @@
 package mods.morePistons.common;
 
-import java.util.List;
 import java.util.Random;
 
-import javax.naming.ldap.HasControls;
-
-import scala.collection.generic.Clearable;
-import scala.collection.mutable.HashMap;
-import cpw.mods.fml.common.Mod.Metadata;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonBase;
-import net.minecraft.block.BlockPistonMoving;
-import net.minecraft.block.BlockSnow;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityPiston;
-import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockMorePistonRedStone extends BlockMorePistonBase {

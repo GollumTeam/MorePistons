@@ -2,23 +2,20 @@ package mods.morePistons.common;
 
 import java.util.logging.Level;
 
+import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntity;// any;
+import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraftforge.common.Configuration;
-import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;// any;
 
 @Mod(modid = "More Pistons", name = "More Pistons", version="1.4.1 [Build Smeagol]", acceptedMinecraftVersions="1.5.2" )
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
