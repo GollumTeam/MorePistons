@@ -30,7 +30,7 @@ public class ModMorePistons {
 	@SidedProxy(clientSide = "mods.morePistons.common.ClientProxyMorePistons", serverSide = "mods.morePistons.common.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
 	
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 	
 	public static boolean configFlag;
 	
