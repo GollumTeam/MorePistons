@@ -29,7 +29,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 		if (block != null && par1TileEntityPiston.getProgress(par8) < 1.0F) {
 			Tessellator tessellator = Tessellator.instance;
 			//this.bindTextureByName("/terrain.png");
-			Minecraft.getMinecraft().func_110434_K().func_110577_a(TextureMap.field_110575_b); 
+			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture); 
 			RenderHelper.disableStandardItemLighting();
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glEnable(GL11.GL_BLEND);

@@ -122,7 +122,7 @@ public class VersionChecker extends Thread {
 		
 		String player = "MINECRAFT_SERVER";
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-			player = Minecraft.getMinecraft().func_110432_I ().func_111285_a ();
+			player = Minecraft.getMinecraft().getSession().getUsername();
 		}
 		
 		try
