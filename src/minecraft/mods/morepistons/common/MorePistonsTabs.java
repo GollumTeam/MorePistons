@@ -1,21 +1,18 @@
-package mods.morePistons.common;
+package mods.morepistons.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 
 public class MorePistonsTabs extends CreativeTabs {
 	
-	private int iconID = 1;
+	private int iconId = 1;
 
-	public MorePistonsTabs(String label) {
+	public MorePistonsTabs(String label, int iconId) {
 		super(label);
-	}
-	
-	public void setIconItem(int id) {
-		iconID = id;
+		this.iconId = iconId;
 	}
 	
 	@Override
     public int getTabIconItemIndex() {
-        return iconID;
+        return iconId;
     }
 }

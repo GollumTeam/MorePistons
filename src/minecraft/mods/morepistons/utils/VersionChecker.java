@@ -1,4 +1,4 @@
-package mods.morePistons.common;
+package mods.morepistons.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,6 +24,13 @@ import cpw.mods.fml.relauncher.Side;
 
 public class VersionChecker extends Thread {
 	
+	
+	/**
+	 * Affiche le message de mise à jour
+	 */
+	private static boolean _display = true;
+	
+	
 	public class EnterWorldHandler implements ITickHandler {
 		
 		private boolean nagged = false;;
@@ -31,11 +38,11 @@ public class VersionChecker extends Thread {
 		@Override
 		public void tickStart(EnumSet<TickType> type, Object... tickData) {
 		}
-
+		
 		@Override
 		public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 			
-			if (nagged) {
+			if (nagged || !VersionChecker._display) {
 				return;
 			}
 			if (_message != null) {
@@ -52,7 +59,7 @@ public class VersionChecker extends Thread {
 
 		@Override
 		public String getLabel() {
-			return _getModid()+" - Player update tick";
+			return _getModid() + " - Player update tick";
 		}
 	}
 	
@@ -63,11 +70,27 @@ public class VersionChecker extends Thread {
 	private static String _message = null;
 	private static String _type = "";
 	
+	/**
+	 * Recupère l'instance
+	 * @return VersionChecker
+	 */
 	public static VersionChecker getInstance () {
 		if (_intance == null) {
 			_intance = new VersionChecker();
 		}
 		return _intance;
+	}
+	
+	/**
+	 * Recupère l'instance
+	 * @param display Affiche ou non le message de version
+	 * @return VersionChecker
+	 */
+	public static VersionChecker getInstance (boolean display) {
+		
+		VersionChecker._display = display;
+		
+		return VersionChecker.getInstance ();
 	}
 	
 	protected VersionChecker () {}
