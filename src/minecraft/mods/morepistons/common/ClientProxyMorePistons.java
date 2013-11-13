@@ -1,7 +1,6 @@
 package mods.morepistons.common;
 
-
-//import net.minecraft.src.ModLoader;
+import net.minecraft.src.ModLoader;
 
 public class ClientProxyMorePistons extends CommonProxyMorePistons {
 	@Override

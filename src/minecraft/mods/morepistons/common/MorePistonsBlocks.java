@@ -11,6 +11,8 @@ public class MorePistonsBlocks {
 	
 	public ArrayList<BlockMorePistonBase> blocks = new ArrayList<BlockMorePistonBase>();
 	
+	public BlockMorePistonBase doublePistonBase;
+	public BlockMorePistonBase doubleStickyPistonBase;
 	
 	public MorePistonsBlocks() {
 		
@@ -61,8 +63,8 @@ public class MorePistonsBlocks {
 	
 	private void create () {
 
-		blocks.add (new BlockMorePistonBase (ModMorePistons.idBlockDoublePistonBase      , false, "Double Piston"       , "double_").setLength (2));
-		blocks.add (new BlockMorePistonBase (ModMorePistons.idBlockDoubleStickyPistonBase, true , "Double Sticky Piston", "double_").setLength (2));
+		blocks.add (doublePistonBase       = new BlockMorePistonBase (ModMorePistons.idBlockDoublePistonBase      , false, "Double Piston"       , "double_").setLength (2));
+		blocks.add (doubleStickyPistonBase = new BlockMorePistonBase (ModMorePistons.idBlockDoubleStickyPistonBase, true , "Double Sticky Piston", "double_").setLength (2));
 	}
 	
 	private void register () {

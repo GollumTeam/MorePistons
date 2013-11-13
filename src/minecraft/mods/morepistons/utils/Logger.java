@@ -29,7 +29,7 @@ public class Logger {
 	public static void log (Object obj, boolean force) {
 		if (_isInit) {
 			if (_debug || force) {
-				FMLLog.log(_getModid (), Level.INFO, "", obj);
+				FMLLog.log(_getModid (), Level.INFO, "%s", obj);
 			}
 		}
 	}
