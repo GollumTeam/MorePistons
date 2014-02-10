@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
@@ -251,7 +252,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	* @return int
 	*/
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
-		return 4;
+		return this.getLengthInWorld(world, x, y, z);
 	}
 	
 	/**
@@ -263,13 +264,52 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * @param int orientation
 	 * @return int
 	 */
-	public int getOpenedLenght (World world, int x, int y, int z, int orientation) {
-		
-		TileEntity te = world.getBlockTileEntity(x, y, z);
-		if (te instanceof TileEntityMorePistons) {
-			return ((TileEntityMorePistons)te).getOpened();
-		}
-		return 0;
+	public int getOpenedLenght(World world, int x, int y, int z, int orientation) {
+
+		int lenght = -1;
+
+		int id = 0;
+		int metadata = 0;
+		int blockOrentation = 0;
+		boolean moving = false;
+
+		do {
+
+			lenght++;
+
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+
+			id = world.getBlockId(x, y, z);
+			metadata = world.getBlockMetadata(x, y, z);
+			blockOrentation = this.getOrientation(metadata);
+
+			moving = false;
+			if (id == Block.pistonMoving.blockID) {
+				TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+				if (tileEntity instanceof TileEntityMorePistons) {
+					int idMoving = ((TileEntityMorePistons) tileEntity).storedBlockID;
+					if (
+						idMoving == ModMorePistons.blockPistonRod.blockID || 
+						idMoving == ModMorePistons.blockPistonExtension.blockID
+					) {
+						moving = true;
+					}
+
+				}
+			}
+
+		} while (
+			(
+				moving || 
+				id == ModMorePistons.blockPistonRod.blockID ||
+				id == ModMorePistons.blockPistonExtension.blockID
+			)
+			&& orientation == blockOrentation
+		);
+
+		return lenght;
 	}
 	
 	/**
@@ -279,7 +319,12 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int lenghtOpened, int orientation) {
 		
 		if (!this.ignoreUpdates) {
-
+			
+			this.ignoreUpdates = true;
+			
+			boolean extendOpen = false;
+			boolean extendClose = false;
+			
 			int currentOpened = this.getOpenedLenght (world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
 			ModMorePistons.log.debug("L'ouverture du piston : "+x+", "+y+", "+z+": currentOpened="+currentOpened+", lenghtOpened="+lenghtOpened);
 			
@@ -300,17 +345,48 @@ public class BlockMorePistonBase extends BlockPistonBase {
 				
 				if (currentOpened == 0) { //Le piston était fermer
 					this.extend(world, x, y, z, orientation, lenghtOpened);
+					extendOpen = true;
 				}
 				
 			// Demande de fermeture du piston
 			} else {
-				ModMorePistons.log.debug("demande de fermeture : "+x+", "+y+", "+z);
 				
-				
-				
-				
+				if (currentOpened != 0) {
+					
+					ModMorePistons.log.debug("demande de fermeture : "+x+", "+y+", "+z);
+					
+					// Debut de l'effet de fermeture adapter pour tous les pistons
+					// On calcule la taille du piston et on retacte se que l'on peu
+					TileEntity tileentity = world.getBlockTileEntity(x + Facing.offsetsXForSide[orientation], y + Facing.offsetsYForSide[orientation], z + Facing.offsetsZForSide[orientation]);
+					
+					if (tileentity instanceof TileEntityPiston) {
+						((TileEntityPiston)tileentity).clearPistonTileEntity();
+					}
+					
+					world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
+					world.setBlockTileEntity(x, y, z, new TileEntityMorePistons (this.blockID, orientation, orientation, false, true, currentOpened, true));
+					
+					extendClose = true;
+				}
 			}
 			
+			///////////////////
+			// Joue les sons //
+			///////////////////
+			
+			if (extendOpen) {
+				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
+				// On joue le son
+				world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.out", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
+			}
+
+			if (extendClose) {
+				world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
+				// On joue le son
+				world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "tile.piston.in", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
+			}
+			
+			this.ignoreUpdates = false;
 			
 		}
 		
@@ -328,14 +404,18 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 */
 	private void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
 
-		int xExtension = Facing.offsetsXForSide[orientation] * lenghtOpened;
-		int yExtension = Facing.offsetsXForSide[orientation] * lenghtOpened;
-		int zExtension = Facing.offsetsXForSide[orientation] * lenghtOpened;
+		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
+		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
+		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 		
-		//Dépalce avec une animation l'extention du piston
+		
+		
+		//Déplace avec une animation l'extention du piston
+		ModMorePistons.log.debug("Create PistonMoving : "+xExtension+", "+yExtension+", "+zExtension+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
+		
 		int metadata = orientation | (this.isSticky ? 0x8 : 0);
-		world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
-		TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension.blockID, metadata, orientation, true, false, lenghtOpened);
+		world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, orientation, 2);
+		TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension.blockID, metadata, orientation, true, false, lenghtOpened, true);
 		world.setBlockTileEntity(xExtension, yExtension, zExtension, teExtension);
 		
 	}
