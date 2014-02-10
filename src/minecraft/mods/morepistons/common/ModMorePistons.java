@@ -7,6 +7,8 @@ import mods.gollum.core.creativetab.GollumCreativeTabs;
 import mods.gollum.core.log.Logger;
 import mods.gollum.core.version.VersionChecker;
 import mods.morepistons.common.block.BlockMorePistonBase;
+import mods.morepistons.common.block.BlockMorePistonsExtension;
+import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -177,13 +179,58 @@ public class ModMorePistons {
 	public void initBlocks() {
 		
 		// Création des blocks
-		this.blockDoublePistonBase  = (new BlockMorePistonBase(this.blockDoublePistonBaseID, false, "double_")).setLength (2).setUnlocalizedName("DoublePistonBase");
+		this.blockPistonExtension = new BlockMorePistonsExtension(this.blockPistonExtensionID).setUnlocalizedName("MorePistonsExtension");
+		this.blockPistonRod       = new BlockMorePistonsRod      (this.blockPistonRodID)      .setUnlocalizedName("MorePistonsRod");
+		
+		this.blockDoublePistonBase           = (new BlockMorePistonBase(this.blockDoublePistonBaseID      , false, "double_")).setLength (2).setUnlocalizedName("DoublePistonBase");
+		this.blockDoubleStickyPistonBase     = (new BlockMorePistonBase(this.blockDoubleStickyPistonBaseID, true , "double_")).setLength (2).setUnlocalizedName("DoubleStikyPistonBase");
+		this.blockTriplePistonBase           = (new BlockMorePistonBase(this.blockTriplePistonBaseID      , false, "triple_")).setLength (3).setUnlocalizedName("TriplePistonBase");
+		this.blockTripleStickyPistonBase     = (new BlockMorePistonBase(this.blockTripleStickyPistonBaseID, true , "triple_")).setLength (3).setUnlocalizedName("TripleStikyPistonBase");
+		this.blockQuadruplePistonBase        = (new BlockMorePistonBase(this.blockQuadPistonBaseID        , false, "quad_"  )).setLength (4).setUnlocalizedName("QuadruplePistonBase");
+		this.blockQuadrupleStickyPistonBase  = (new BlockMorePistonBase(this.blockQuadStickyPistonBaseID  , true , "quad_"  )).setLength (4).setUnlocalizedName("QuadrupleStikyPistonBase");
+		this.blockQuintuplePistonBase        = (new BlockMorePistonBase(this.blockQuintPistonBaseID       , false, "quint_" )).setLength (5).setUnlocalizedName("QuintuplePistonBase");
+		this.blockQuintupleStickyPistonBase  = (new BlockMorePistonBase(this.blockQuintStickyPistonBaseID , true , "quint_" )).setLength (5).setUnlocalizedName("QuintupleStikyPistonBase");
+		this.blockSextuplePistonBase         = (new BlockMorePistonBase(this.blockSextPistonBaseID        , false, "sext_"  )).setLength (6).setUnlocalizedName("SextuplePistonBase");
+		this.blockSextupleStickyPistonBase   = (new BlockMorePistonBase(this.blockSextStickyPistonBaseID  , true , "sext_"  )).setLength (6).setUnlocalizedName("SextupleStikyPistonBase");
+		this.blockSeptuplePistonBase         = (new BlockMorePistonBase(this.blockSeptPistonBaseID        , false, "sept_"  )).setLength (7).setUnlocalizedName("SeptuplePistonBase");
+		this.blockSeptupleStickyPistonBase   = (new BlockMorePistonBase(this.blockSeptStickyPistonBaseID  , true , "sept_"  )).setLength (7).setUnlocalizedName("SeptupleStikyPistonBase");
+		this.blockOctuplePistonBase          = (new BlockMorePistonBase(this.blockOctPistonBaseID         , false, "oct_"   )).setLength (8).setUnlocalizedName("OctuplePistonBase");
+		this.blockOctupleStickyPistonBase    = (new BlockMorePistonBase(this.blockOctStickyPistonBaseID   , true , "oct_"   )).setLength (8).setUnlocalizedName("OctupleStikyPistonBase");
 		
 		// Enregistrement des blocks
-		GameRegistry.registerBlock(this.blockDoublePistonBase , this.blockDoublePistonBase.getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockPistonExtension          , this.blockPistonExtension          .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockPistonRod                , this.blockPistonRod                .getUnlocalizedName());
+		
+		GameRegistry.registerBlock(this.blockDoublePistonBase         , this.blockDoublePistonBase         .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockDoubleStickyPistonBase   , this.blockDoubleStickyPistonBase   .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockTriplePistonBase         , this.blockTriplePistonBase         .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockTripleStickyPistonBase   , this.blockTripleStickyPistonBase   .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockQuadruplePistonBase      , this.blockQuadruplePistonBase      .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockQuadrupleStickyPistonBase, this.blockQuadrupleStickyPistonBase.getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockQuintuplePistonBase      , this.blockQuintuplePistonBase      .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockQuintupleStickyPistonBase, this.blockQuintupleStickyPistonBase.getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockSextuplePistonBase       , this.blockSextuplePistonBase       .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockSextupleStickyPistonBase , this.blockSextupleStickyPistonBase .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockSeptuplePistonBase       , this.blockSeptuplePistonBase       .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockSeptupleStickyPistonBase , this.blockSeptupleStickyPistonBase .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockOctuplePistonBase        , this.blockOctuplePistonBase        .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockOctupleStickyPistonBase  , this.blockOctupleStickyPistonBase  .getUnlocalizedName());
 		
 		// Nom des blocks
-		LanguageRegistry.addName(this.blockDoublePistonBase , "Double Piston");
+		LanguageRegistry.addName(this.blockDoublePistonBase   , "Double Piston");
+		LanguageRegistry.addName(this.blockDoubleStickyPistonBase   , "Double Sticky Piston");
+		LanguageRegistry.addName(this.blockTriplePistonBase         , "Triple Piston");
+		LanguageRegistry.addName(this.blockTripleStickyPistonBase   , "Triple Sticky Piston");
+		LanguageRegistry.addName(this.blockQuadruplePistonBase      , "Quadruple Piston");
+		LanguageRegistry.addName(this.blockQuadrupleStickyPistonBase, "Quadruple Sticky Piston");
+		LanguageRegistry.addName(this.blockQuintuplePistonBase      , "Quintuple Piston");
+		LanguageRegistry.addName(this.blockQuintupleStickyPistonBase, "Quintuple Sticky Piston");
+		LanguageRegistry.addName(this.blockSextuplePistonBase       , "Sextuple Piston");
+		LanguageRegistry.addName(this.blockSextupleStickyPistonBase , "Sextuple Sticky Piston");
+		LanguageRegistry.addName(this.blockSeptuplePistonBase       , "Septuple Sticky Piston");
+		LanguageRegistry.addName(this.blockSeptupleStickyPistonBase , "Septuple Piston");
+		LanguageRegistry.addName(this.blockOctuplePistonBase        , "Octuple Sticky Piston");
+		LanguageRegistry.addName(this.blockOctupleStickyPistonBase  , "Octuple Sticky Piston");
 	}
 	
 	/**

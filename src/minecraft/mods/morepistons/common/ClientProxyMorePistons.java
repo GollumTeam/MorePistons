@@ -1,13 +1,14 @@
 package mods.morepistons.common;
 
-import net.minecraft.src.ModLoader;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 
 public class ClientProxyMorePistons extends CommonProxyMorePistons {
 	@Override
 	public void registerRenderers() {
 		
-//		ModLoader.registerTileEntity(TileEntityMorePistons.class, "MorePistons");
-//		ModLoader.registerTileEntity(TileEntityMorePistons.class, "MorePistonsRenderer", new TileEntityMorePistonsRenderer());
+//		GameRegistry.registerTileEntity(TileEntityMorePistons.class, "MorePistons");
+//		GameRegistry.registerTileEntity(TileEntityMorePistons.class, "MorePistonsRenderer", new TileEntityMorePistonsRenderer());
 		
 	}
 
