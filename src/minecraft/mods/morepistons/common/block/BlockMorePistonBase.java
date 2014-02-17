@@ -1,10 +1,13 @@
 package mods.morepistons.common.block;
 
+import java.util.ArrayList;
+
 import com.google.common.util.concurrent.MoreExecutors;
 
 import mods.morepistons.common.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFluid;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +17,8 @@ import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.IFluidBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -124,6 +129,26 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	// Gestion des events //
 	////////////////////////
 	
+
+	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+
+		int orientation = this.getOrientation(metadata);
+		int id = ModMorePistons.blockPistonRod.blockID;
+		while (id == ModMorePistons.blockPistonRod.blockID) {
+			
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			id = world.getBlockId(x, y, z);
+			
+			if (id == ModMorePistons.blockPistonRod.blockID || id == ModMorePistons.blockPistonExtension.blockID) {
+				world.destroyBlock(x, y, z, false);
+			}
+			
+		}
+	}
+	
 	/**
 	 * Called when the block is placed in the world. Envoie un event qunad on
 	 * place un block sur le monde
@@ -135,7 +160,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		ModMorePistons.log.debug("onBlockPlacedBy : "+x+", "+y+", "+z);
 		
-		if (!this.ignoreUpdates) {
+		if (!this.ignoreUpdates && !world.isRemote) {
 			this.updatePistonState(world, x, y, z);
 		}
 	}
@@ -148,7 +173,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		ModMorePistons.log.debug("onNeighborBlockChange : "+x+", "+y+", "+z);
 		
-		if (!this.ignoreUpdates) {
+		if (!this.ignoreUpdates && !world.isRemote) {
 			this.updatePistonState(world, x, y, z);
 		}
 	}
@@ -157,12 +182,7 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * Called whenever the block is added into the world. Args: world, x, y, z
 	 */
 	public void onBlockAdded(World world, int x, int y, int z) {
-
-		ModMorePistons.log.debug("onBlockAdded : "+x+", "+y+", "+z);
-		
-		if (world.getBlockTileEntity(x, y, z) == null && !ignoreUpdates) {
-			this.updatePistonState(world, x, y, z);
-		}
+		return;
 	}
 
 	/////////////////////////
@@ -252,7 +272,59 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	* @return int
 	*/
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
-		return this.getLengthInWorld(world, x, y, z);
+		int maxlengt = this.getLengthInWorld(world, x, y, z);
+		int lenght = 0;
+		
+		for (int i = 0; i < maxlengt; i++) {
+			
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			if (y >= 255) {
+				break;
+			}
+			
+			int id = world.getBlockId(x, y, z);
+			
+			if (
+				id != 0 &&
+				Block.blocksList[id].getMobilityFlag() != 1 &&
+				!((Block.blocksList[id]) instanceof BlockFluid) &&
+				!((Block.blocksList[id]) instanceof IFluidBlock)
+			) {
+				lenght += this.getMoveBlockOnDistance (length - i, world, id, x, y, z, orientation);
+			}
+			lenght++;
+		}
+		
+		ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " : lenght="+lenght);
+		
+		return lenght;
+	}
+	
+	/**
+	 * Regarde si on peu déplacé un pistont sur la distance voulu
+	 * @param distance
+	 * @param world
+	 * @param id
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @return
+	 */
+	private int getMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation) {
+		return distance;
+	}
+	
+	/**
+	 * Test if this block is movable
+	 * @param id
+	 * @return
+	 */
+	public static boolean isMovableBlock(int id) {
+		return id == 0 || Block.blocksList[id].getMobilityFlag() == 2;
 	}
 	
 	/**
@@ -351,7 +423,11 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			// Demande de fermeture du piston
 			} else {
 				
-				if (currentOpened != 0) {
+				if (currentOpened == 0) {
+
+					world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
+					
+				} else {
 					
 					ModMorePistons.log.debug("demande de fermeture : "+x+", "+y+", "+z);
 					
@@ -403,12 +479,52 @@ public class BlockMorePistonBase extends BlockPistonBase {
 	 * @param lenghtOpened
 	 */
 	private void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
-
-		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
-		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		
+		int xExtension = x;
+		int yExtension = y;
+		int zExtension = z;
+		
+		ArrayList<Integer> listId       = new ArrayList<Integer>();
+		ArrayList<Integer> listMetadata = new ArrayList<Integer>();
+		ArrayList<Integer> sizes        = new ArrayList<Integer>();
+		int size = lenghtOpened;
 		
 		
+		
+		/*
+		for (int i = 0; i < lenghtOpened; i++) {
+			
+			xExtension += Facing.offsetsXForSide[orientation];
+			yExtension += Facing.offsetsYForSide[orientation];
+			zExtension += Facing.offsetsZForSide[orientation];
+			
+			int id = world.getBlockId(xExtension, yExtension, zExtension);
+			
+			if (
+				id == 0 ||
+				Block.blocksList[id].getMobilityFlag() == 1 ||
+				Block.blocksList[id] instanceof BlockFluid ||
+				Block.blocksList[id] instanceof IFluidBlock
+			) {
+				listId.add(0);
+				listMetadata.add(0);
+				sizes.add(0);
+				size--;
+				if (size == 0) {
+					break;
+				}
+				
+			} else {
+				listId.      add(world.getBlockId       (xExtension, yExtension, zExtension));
+				listMetadata.add(world.getBlockMetadata (xExtension, yExtension, zExtension));
+				sizes       .add(size);
+			}
+		}*/
+		
+		
+//		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
+//		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
+//		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 		
 		//Déplace avec une animation l'extention du piston
 		ModMorePistons.log.debug("Create PistonMoving : "+xExtension+", "+yExtension+", "+zExtension+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
@@ -417,6 +533,8 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, orientation, 2);
 		TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension.blockID, metadata, orientation, true, false, lenghtOpened, true);
 		world.setBlockTileEntity(xExtension, yExtension, zExtension, teExtension);
+		
+		
 		
 	}
 	
