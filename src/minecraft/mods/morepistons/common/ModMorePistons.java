@@ -100,10 +100,13 @@ public class ModMorePistons {
 	public static Block blockSeptupleStickyPistonBase;
 	public static Block blockOctuplePistonBase;
 	public static Block blockOctupleStickyPistonBase;
+	
 	public static Block blockGravitationalPistonBase;
 	public static Block blockGravitationalStickyPistonBase;
-	public static Block blocksuperPistonBase;
-	public static Block blocksuperStickyPistonBase;
+	
+	public static Block blockSuperPistonBase;
+	public static Block blockSuperStickyPistonBase;
+	
 	public static Block blockRedStonePistonBase1;
 	public static Block blockRedStoneStickyPistonBase1;
 	public static Block blockRedStonePistonBase2;
@@ -217,7 +220,7 @@ public class ModMorePistons {
 		GameRegistry.registerBlock(this.blockOctupleStickyPistonBase  , this.blockOctupleStickyPistonBase  .getUnlocalizedName());
 		
 		// Nom des blocks
-		LanguageRegistry.addName(this.blockDoublePistonBase   , "Double Piston");
+		LanguageRegistry.addName(this.blockDoublePistonBase         , "Double Piston");
 		LanguageRegistry.addName(this.blockDoubleStickyPistonBase   , "Double Sticky Piston");
 		LanguageRegistry.addName(this.blockTriplePistonBase         , "Triple Piston");
 		LanguageRegistry.addName(this.blockTripleStickyPistonBase   , "Triple Sticky Piston");
