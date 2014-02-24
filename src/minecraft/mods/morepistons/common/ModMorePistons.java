@@ -153,14 +153,14 @@ public class ModMorePistons {
 		this.morePistonsTabs = new GollumCreativeTabs("Pistons");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.Pistons", "en_US", "Pistons");
 		
-		proxy.registerRenderers();
-		
-		
 		// Initialisation des blocks
 		this.initBlocks ();
-
+		
 		// Initialisation les TileEntities
 		this.initTileEntities ();
+		
+		// Initialisation du proxy
+		proxy.registerRenderers();
 		
 		// Place le piston normal dans le creative tab
 		Block.pistonBase.setCreativeTab(morePistonsTabs);
