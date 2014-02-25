@@ -62,8 +62,8 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 		int idPiston = world.getBlockId(x2, y2, z2);
 		if (idPiston != 0) {
 			Block block = Block.blocksList[idPiston];
-			if (block instanceof BlockMorePistonBase && !world.isRemote) {
-				((BlockMorePistonBase)block).updatePistonState(world, x2, y2, z2, true);
+			if (block instanceof BlockMorePistonsBase && !world.isRemote) {
+				((BlockMorePistonsBase)block).updatePistonState(world, x2, y2, z2, true);
 			}
 		}
 		
