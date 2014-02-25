@@ -217,13 +217,21 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		
 		// Si redstone eteinte et piston ouvert alors il faut fermer
 		if (!powered && extended) {
+			int max = this.getMaximalOpenedLenght(world, x, y, z, orientation);
+			if (max == -1) {
+				return;
+			}
 			world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 			world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
 		
 		// Si redstone active et piston fermer alors il faut ouvrir
 		} else if (powered && (!extended || forced)) {
+			int max = this.getMaximalOpenedLenght(world, x, y, z, orientation);
+			if (max == -1) {
+				return;
+			}
 			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
-			world.addBlockEvent(x, y, z, this.blockID, this.getMaximalOpenedLenght(world, x, y, z, orientation), orientation);
+			world.addBlockEvent(x, y, z, this.blockID, max, orientation);
 		}
 		
 	}
@@ -299,7 +307,10 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			
 			int id = world.getBlockId(x, y, z);
 			
-			if (!this.isEmptyBlockBlock(id) && !this.isRodInOrientation(id, world, x, y, z, orientation)) {
+			if (id == Block.pistonMoving.blockID) {
+				return -1;
+			}
+			if (! (this.isEmptyBlockBlock(id)) && !this.isRodInOrientation(id, world, x, y, z, orientation)) {
 				lenght += this.getMoveBlockOnDistance (length - i, world, id, x, y, z, orientation);
 				break;
 			}
@@ -659,10 +670,10 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			zExtension += Facing.offsetsZForSide[orientation];
 			
 			int id = world.getBlockId(xExtension, yExtension, zExtension);
+			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
 			
 			// Drop les élements légés (fleurs, leviers, herbes ..)
 			if (id != 0 && (Block.blocksList[id]).getMobilityFlag() == 1) {
-				int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
 				float chance = (Block.blocksList[id] instanceof BlockSnow ? -1.0f : 1.0f);
 				
 				Block.blocksList[id].dropBlockAsItemWithChance(world, xExtension, yExtension, zExtension, metadata, chance, 0);
@@ -678,9 +689,10 @@ public class BlockMorePistonBase extends BlockPistonBase {
 			} else if (!this.isMovableBlock(id, world, xExtension, yExtension, zExtension)) {
 				break;
 			} else {
-				listId.      add(world.getBlockId       (xExtension, yExtension, zExtension));
-				listMetadata.add(world.getBlockMetadata (xExtension, yExtension, zExtension));
+				listId.      add(id);
+				listMetadata.add(metadata);
 				sizes       .add(size);
+				world.setBlockToAir (xExtension, yExtension, zExtension);
 			}
 			
 		}
@@ -718,8 +730,6 @@ public class BlockMorePistonBase extends BlockPistonBase {
 		world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, orientation, 2);
 		TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension.blockID, metadata, orientation, true, false, lenghtOpened, true);
 		world.setBlockTileEntity(xExtension, yExtension, zExtension, teExtension);
-		
-		
 		
 	}
 	

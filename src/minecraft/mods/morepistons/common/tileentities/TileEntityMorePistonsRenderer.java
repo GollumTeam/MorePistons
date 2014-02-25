@@ -5,7 +5,9 @@ import org.lwjgl.opengl.GL11;
 import mods.morepistons.common.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBlaze;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
+import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -43,16 +46,13 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 			// Dans cette zone on va placer les pistons rods
 			if (tileEntityPiston.storedBlockID == ModMorePistons.blockPistonExtension.blockID && tileEntityPiston.isExtending ()) {
 				float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
-				tileEntityPiston.displayPistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)));
+				tileEntityPiston.displayPistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
 			}
 			
 			// On enleve au fur et a mesure les pistons rods
 			if (tileEntityPiston.isBlockPiston && !tileEntityPiston.isExtending ()) {
-				
-				ModMorePistons.log.debug("Retract remove rod : id="+tileEntityPiston.storedBlockID);
-				
 				float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
-				tileEntityPiston.removePistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)));
+				tileEntityPiston.removePistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
 			}
 			
 			tessellator.startDrawingQuads();
@@ -63,51 +63,69 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 			);
 			tessellator.setColorOpaque(1, 1, 1);
 			
+			float distance = MathHelper.abs(tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8));
+			float reste = tileEntityPiston.distance - distance;
+			
 			// Le block extention
-			if (block == Block.pistonExtension && tileEntityPiston.getProgress(par8) < 0.5F) {
+			if (block.blockID == ModMorePistons.blockPistonExtension.blockID) {
+				
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					block,
 					tileEntityPiston.xCoord,
 					tileEntityPiston.yCoord,
 					tileEntityPiston.zCoord,
-					false
+					reste > 0.5f
 				);
-			
-			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending()) {
 				
-				if (block instanceof BlockPistonBase) {
-						
-					Block.pistonExtension.setHeadTexture(((BlockPistonBase) block).getPistonExtensionTexture());
-					
-					this.blockRenderer.renderPistonExtensionAllFaces(
-						Block.pistonExtension,
-						tileEntityPiston.xCoord,
-						tileEntityPiston.yCoord,
-						tileEntityPiston.zCoord,
-						tileEntityPiston.getProgress(par8) < 0.5F
-					);
-					
-					Block.pistonExtension.clearHeadTexture();
+			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending() && (block instanceof BlockPistonBase)) {
+				
+				Block.pistonExtension.setHeadTexture(((BlockPistonBase) block).getPistonExtensionTexture());
+				
+				this.blockRenderer.renderPistonExtensionAllFaces(
+					Block.pistonExtension,
+					tileEntityPiston.xCoord,
+					tileEntityPiston.yCoord,
+					tileEntityPiston.zCoord,
+					distance > 0.5f
+				);
+				
+				((BlockPistonExtension)ModMorePistons.blockPistonExtension).clearHeadTexture();
+				
+				tessellator.setTranslation(
+					(double) ((float) x - (float) tileEntityPiston.xCoord),
+					(double) ((float) y - (float) tileEntityPiston.yCoord),
+					(double) ((float) z - (float) tileEntityPiston.zCoord)
+				);
+				
+				this.blockRenderer.renderPistonBaseAllFaces(
+					block,
+					tileEntityPiston.xCoord,
+					tileEntityPiston.yCoord,
+					tileEntityPiston.zCoord
+				);
+				
+				if (distance > 1.0f) {
 					
 					tessellator.setTranslation(
-						(double) ((float) x - (float) tileEntityPiston.xCoord),
-						(double) ((float) y - (float) tileEntityPiston.yCoord),
-						(double) ((float) z - (float) tileEntityPiston.zCoord)
+						(double) ((float) x - (float) tileEntityPiston.xCoord) + Facing.offsetsXForSide[tileEntityPiston.storedOrientation],
+						(double) ((float) y - (float) tileEntityPiston.yCoord) + Facing.offsetsYForSide[tileEntityPiston.storedOrientation],
+						(double) ((float) z - (float) tileEntityPiston.zCoord) + Facing.offsetsZForSide[tileEntityPiston.storedOrientation]
 					);
-					this.blockRenderer.renderPistonBaseAllFaces(
-						block,
-						tileEntityPiston.xCoord,
-						tileEntityPiston.yCoord,
-						tileEntityPiston.zCoord
-					);
-				} else {
 					this.blockRenderer.renderBlockAllFaces(
-						block,
+						ModMorePistons.blockPistonRod,
 						tileEntityPiston.xCoord,
 						tileEntityPiston.yCoord,
 						tileEntityPiston.zCoord
 					);
 				}
+				
+			} else {
+				this.blockRenderer.renderBlockAllFaces(
+					block,
+					tileEntityPiston.xCoord,
+					tileEntityPiston.yCoord,
+					tileEntityPiston.zCoord
+				);
 			}
 			
 			tessellator.setTranslation(0.0D, 0.0D, 0.0D);
