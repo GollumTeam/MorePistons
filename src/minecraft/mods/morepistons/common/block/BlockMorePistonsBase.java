@@ -689,7 +689,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 * @param orientation
 	 * @param lenghtOpened
 	 */
-	private void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
 		
 		int xExtension = x;
 		int yExtension = y;

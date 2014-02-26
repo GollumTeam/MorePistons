@@ -246,20 +246,16 @@ public class TileEntityMorePistons extends TileEntity {
 					double yE = entity.posY;
 					double zE = entity.posZ;
 					
-					double newX = this.xCoord + fX + par2 * fX;
-					double newY = this.yCoord + fY + par2 * fY;
-					double newZ = this.zCoord + fZ + par2 * fZ;
-					
 					switch (this.storedOrientation) {
 						case 0:
 						case 1:
-							yE = newY; break;
+							yE = this.yCoord + fY + par2 * fY; break;
 						case 2:
 						case 3:
-							zE = newZ; break;
+							zE = this.zCoord + fZ + par2 * fZ; break;
 						case 4:
 						case 5:
-							xE = newX; break;
+							xE = this.xCoord + fX + par2 * fX; break;
 					}
 					
 					if (this.worldObj.getBlockId(this.xCoord + fX, this.yCoord + fY, this.zCoord + fZ) != Block.pistonMoving.blockID) {
