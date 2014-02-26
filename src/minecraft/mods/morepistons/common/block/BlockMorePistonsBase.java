@@ -576,11 +576,16 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 					
 					int diff = currentOpened - lenghtOpened;
 					ModMorePistons.log.debug("Le piston se retract parielement : "+x+", "+y+", "+z+" diff="+diff);
-					
+
 					int x2 = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
 					int y2 = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
 					int z2 = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 					
+					int cX2 = x + Facing.offsetsXForSide[orientation] * currentOpened;
+					int cY2 = y + Facing.offsetsYForSide[orientation] * currentOpened;
+					int cZ2 = z + Facing.offsetsZForSide[orientation] * currentOpened;
+
+					world.setBlockToAir (cX2, cY2, cZ2);
 					world.setBlock(x2, y2, z2, Block.pistonMoving.blockID, orientation, 2);
 					TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension.blockID, orientation, orientation, true, false, -diff, false);
 					world.setBlockTileEntity(x2, y2, z2, teExtension);
@@ -608,7 +613,12 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 					if (tileentity instanceof TileEntityPiston) {
 						((TileEntityPiston)tileentity).clearPistonTileEntity();
 					}
-					
+
+					int cX2 = x + Facing.offsetsXForSide[orientation] * currentOpened;
+					int cY2 = y + Facing.offsetsYForSide[orientation] * currentOpened;
+					int cZ2 = z + Facing.offsetsZForSide[orientation] * currentOpened;
+
+					world.setBlockToAir (cX2, cY2, cZ2);
 					world.setBlock(x, y, z, Block.pistonMoving.blockID, orientation, 2);
 					world.setBlockTileEntity(x, y, z, new TileEntityMorePistons (this.blockID, orientation, orientation, false, true, currentOpened, true));
 					
@@ -681,6 +691,24 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	}
 	
 	/**
+	 * Drop les élemebnt avec la mobilité de 1
+	 * @param id
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	protected void dropMobilityFlag1 (int id, int metadata, World world, int x, int y, int z) {
+		// Drop les élements légés (fleurs, leviers, herbes ..)
+		if (id != 0 && (Block.blocksList[id]).getMobilityFlag() == 1) {
+			float chance = (Block.blocksList[id] instanceof BlockSnow ? -1.0f : 1.0f);
+			
+			Block.blocksList[id].dropBlockAsItemWithChance(world, x, y, z, metadata, chance, 0);
+			world.setBlockToAir(x, y, z);
+		}
+	}
+	
+	/**
 	 * Ouvr eun piston de la taille voulu
 	 * @param world
 	 * @param x
@@ -710,12 +738,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
 			
 			// Drop les élements légés (fleurs, leviers, herbes ..)
-			if (id != 0 && (Block.blocksList[id]).getMobilityFlag() == 1) {
-				float chance = (Block.blocksList[id] instanceof BlockSnow ? -1.0f : 1.0f);
-				
-				Block.blocksList[id].dropBlockAsItemWithChance(world, xExtension, yExtension, zExtension, metadata, chance, 0);
-				world.setBlockToAir(xExtension, yExtension, zExtension);
-			}
+			this.dropMobilityFlag1(id, metadata, world, xExtension, yExtension, zExtension);
 			
 			if (this.isEmptyBlockBlock(id)) {
 				listId.add(0);
