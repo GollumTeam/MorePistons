@@ -11,6 +11,7 @@ import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsGravitational;
 import mods.morepistons.common.block.BlockMorePistonsRedStone;
 import mods.morepistons.common.block.BlockMorePistonsRod;
+import mods.morepistons.common.block.BlockMorePistonsSuper;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -65,8 +66,8 @@ public class ModMorePistons {
 	@ConfigProp(group = "Blocks Ids")  public static int blockPistonExtensionID               = 4087;
 	@ConfigProp(group = "Blocks Ids")  public static int blockPistonRodID                     = 4086;
 	
-	@ConfigProp(group = "Blocks Ids")  public static int blockStrongPistonBaseID              = 4085;
-	@ConfigProp(group = "Blocks Ids")  public static int blockStrongStickyPistonBaseID        = 4084;
+	@ConfigProp(group = "Blocks Ids")  public static int blockSuperPistonBaseID               = 4085;
+	@ConfigProp(group = "Blocks Ids")  public static int blockSuperStickyPistonBaseID         = 4084;
 	
 	@ConfigProp(group = "Blocks Ids")  public static int blockRedStonePistonBase1ID           = 4075;
 	@ConfigProp(group = "Blocks Ids")  public static int blockRedStonePistonBase2ID           = 4074;
@@ -186,9 +187,11 @@ public class ModMorePistons {
 		// Création des blocks
 		this.blockPistonExtension = new BlockMorePistonsExtension(this.blockPistonExtensionID).setUnlocalizedName("MorePistonsExtension");
 		this.blockPistonRod       = new BlockMorePistonsRod      (this.blockPistonRodID)      .setUnlocalizedName("MorePistonsRod");
-
+		
 		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(this.blockGravitationalPistonBaseID      , false).setUnlocalizedName("GravitationalPistonBase");
 		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(this.blockGravitationalStickyPistonBaseID, true) .setUnlocalizedName("GravitationalStickyPistonBase");
+		this.blockSuperPistonBase               = new BlockMorePistonsSuper        (this.blockSuperPistonBaseID      , false).setUnlocalizedName("SuperPistonBase");
+		this.blockSuperStickyPistonBase         = new BlockMorePistonsSuper        (this.blockSuperStickyPistonBaseID, true) .setUnlocalizedName("SuperStickyPistonBase");
 		
 		this.blockDoublePistonBase           = (new BlockMorePistonsBase(this.blockDoublePistonBaseID      , false, "double_")).setLength (2).setUnlocalizedName("DoublePistonBase");
 		this.blockDoubleStickyPistonBase     = (new BlockMorePistonsBase(this.blockDoubleStickyPistonBaseID, true , "double_")).setLength (2).setUnlocalizedName("DoubleStikyPistonBase");
@@ -227,9 +230,11 @@ public class ModMorePistons {
 		// Enregistrement des blocks
 		GameRegistry.registerBlock(this.blockPistonExtension, this.blockPistonExtension.getUnlocalizedName());
 		GameRegistry.registerBlock(this.blockPistonRod      , this.blockPistonRod      .getUnlocalizedName());
-		
+
 		GameRegistry.registerBlock(this.blockGravitationalPistonBase        , this.blockGravitationalPistonBase      .getUnlocalizedName());
 		GameRegistry.registerBlock(this.blockGravitationalStickyPistonBase  , this.blockGravitationalStickyPistonBase.getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockSuperPistonBase                , this.blockSuperPistonBase              .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockSuperStickyPistonBase          , this.blockSuperStickyPistonBase        .getUnlocalizedName());
 		
 		GameRegistry.registerBlock(this.blockDoublePistonBase         , this.blockDoublePistonBase         .getUnlocalizedName());
 		GameRegistry.registerBlock(this.blockDoubleStickyPistonBase   , this.blockDoubleStickyPistonBase   .getUnlocalizedName());
@@ -266,6 +271,8 @@ public class ModMorePistons {
 		// Nom des blocks
 		LanguageRegistry.addName(this.blockGravitationalPistonBase      , "Gravitational Piston");
 		LanguageRegistry.addName(this.blockGravitationalStickyPistonBase, "Gravitational Sticky Piston");
+		LanguageRegistry.addName(this.blockSuperPistonBase              , "Super Piston");
+		LanguageRegistry.addName(this.blockSuperStickyPistonBase        , "Super Sticky Piston");
 		
 		LanguageRegistry.addName(this.blockDoublePistonBase         , "Double Piston");
 		LanguageRegistry.addName(this.blockDoubleStickyPistonBase   , "Double Sticky Piston");

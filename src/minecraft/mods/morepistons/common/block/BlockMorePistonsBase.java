@@ -293,10 +293,22 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	* @return int
 	*/
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
+		return this.getMaximalOpenedLenght(world, x, y, z, orientation, true, this.getLengthInWorld(world, x, y, z, orientation));
+	}
+	
+	
+	/**
+	* Caclcule la longueur d'ouverture d'un piston
+	* @param World world
+	* @param int x
+	* @param int y
+	* @param int z
+	* @param int orientation
+	* @return int
+	*/
+	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation, boolean detectMoving, int maxlenght) {
 		
-		int maxlenght = this.getLengthInWorld(world, x, y, z, orientation);
-		
-		ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
+		ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
 		
 		int lenght = 0;
 		
@@ -307,17 +319,21 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 			z += Facing.offsetsZForSide[orientation];
 			
 			if (y >= 255) {
-				ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " y>=255");
+				ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " y>=255");
 				break;
 			}
 			
 			int id = world.getBlockId(x, y, z);
 			
 			if (id == Block.pistonMoving.blockID) {
-				ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " find PistonMoving");
-				return -1;
+				ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " find PistonMoving");
+				if (detectMoving) {
+					return -1;
+				} else {
+					return lenght;
+				}
 			}
-			ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " id = "+id);
+			ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " id = "+id);
 			if (! (this.isEmptyBlockBlock(id)) && !this.isRodInOrientation(id, world, x, y, z, orientation)) {
 				lenght += this.getMoveBlockOnDistance (maxlenght - i, world, id, x, y, z, orientation);
 				break;

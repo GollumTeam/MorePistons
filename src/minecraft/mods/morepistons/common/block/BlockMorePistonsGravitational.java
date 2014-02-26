@@ -22,7 +22,7 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 	}
 	
 	/**
-	 * Ouvr eun piston de la taille voulu
+	 * Ouvre un piston de la taille voulu
 	 * @param world
 	 * @param x
 	 * @param y
