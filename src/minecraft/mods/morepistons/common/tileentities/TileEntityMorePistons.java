@@ -162,11 +162,11 @@ public class TileEntityMorePistons extends TileEntity {
 			
 			if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord) == Block.pistonMoving.blockID) {
 				
-				if (this.isBlockPiston && this.extending) {
+
+				if (this.distance < 0 || this.isBlockPiston && !this.extending) {
+					this.removePistonRod(Math.abs(this.distance));
+				} else if (this.isBlockPiston && this.extending) {
 					this.displayPistonRod(this.distance + 1);
-				}
-				if (this.isBlockPiston && !this.extending) {
-					this.removePistonRod(this.distance);
 				}
 				
 				this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlockID);
@@ -224,17 +224,13 @@ public class TileEntityMorePistons extends TileEntity {
 	 * @param y
 	 * @param z
 	 */
-	private void testCollisionWithOtherEntity(int x, int y, int z, float par1,
-			float par2) {
+	private void testCollisionWithOtherEntity(int x, int y, int z, float par1, float par2) {
 
-		AxisAlignedBB var3 = Block.pistonMoving.getAxisAlignedBB(this.worldObj,
-				x, y, z, this.storedBlockID, par1, this.storedOrientation);
+		AxisAlignedBB var3 = Block.pistonMoving.getAxisAlignedBB(this.worldObj, x, y, z, this.storedBlockID, par1, this.storedOrientation);
 
 		if (var3 != null) {
-			List var4 = this.worldObj.getEntitiesWithinAABBExcludingEntity(
-					(Entity) null, var3);
-
-			// Revoir la collision ici
+			List var4 = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, var3);
+			
 			if (!var4.isEmpty() && this.extending) {
 				this.pushedObjects.addAll(var4);
 				Iterator i = this.pushedObjects.iterator();
@@ -244,12 +240,30 @@ public class TileEntityMorePistons extends TileEntity {
 				int fZ = Facing.offsetsZForSide[this.storedOrientation];
 
 				while (i.hasNext()) {
-					Entity var6 = (Entity) i.next();
+					Entity entity = (Entity) i.next();
+
+					double xE = entity.posX;
+					double yE = entity.posY;
+					double zE = entity.posZ;
+					
 					double newX = this.xCoord + fX + par2 * fX;
 					double newY = this.yCoord + fY + par2 * fY;
 					double newZ = this.zCoord + fZ + par2 * fZ;
+					
+					switch (this.storedOrientation) {
+						case 0:
+						case 1:
+							yE = newY; break;
+						case 2:
+						case 3:
+							zE = newZ; break;
+						case 4:
+						case 5:
+							xE = newX; break;
+					}
+					
 					if (this.worldObj.getBlockId(this.xCoord + fX, this.yCoord + fY, this.zCoord + fZ) != Block.pistonMoving.blockID) {
-						var6.setPosition(newX, newY, newZ);
+						entity.setPosition(xE, yE, zE);
 					}
 				}
 

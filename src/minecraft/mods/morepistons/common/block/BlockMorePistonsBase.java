@@ -294,27 +294,32 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	*/
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
 		
-		int maxlengt = this.getLengthInWorld(world, x, y, z, orientation);
+		int maxlenght = this.getLengthInWorld(world, x, y, z, orientation);
+		
+		ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
 		
 		int lenght = 0;
 		
-		for (int i = 0; i < maxlengt; i++) {
+		for (int i = 0; i < maxlenght; i++) {
 			
 			x += Facing.offsetsXForSide[orientation];
 			y += Facing.offsetsYForSide[orientation];
 			z += Facing.offsetsZForSide[orientation];
 			
 			if (y >= 255) {
+				ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " y>=255");
 				break;
 			}
 			
 			int id = world.getBlockId(x, y, z);
 			
 			if (id == Block.pistonMoving.blockID) {
+				ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " find PistonMoving");
 				return -1;
 			}
+			ModMorePistons.log.debug("getLengthInWorld : "+x+", "+y+", "+z+ " id = "+id);
 			if (! (this.isEmptyBlockBlock(id)) && !this.isRodInOrientation(id, world, x, y, z, orientation)) {
-				lenght += this.getMoveBlockOnDistance (length - i, world, id, x, y, z, orientation);
+				lenght += this.getMoveBlockOnDistance (maxlenght - i, world, id, x, y, z, orientation);
 				break;
 			}
 			lenght++;
@@ -355,6 +360,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	private int getMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation, int nbMoved) {
 		
 		if (nbMoved == this.MAX_BLOCK_MOVE || !this.isMovableBlock(id, world, x, y, z)) {
+			ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
 			return 0;
 		}
 		
@@ -367,19 +373,23 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 			
 
 			if (y >= 255) {
-				return walking;
+				ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
+				break;
 			}
 			
 			int idNext = world.getBlockId(x, y, z);
+			ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " idNext="+idNext);
 			
 			if (this.isEmptyBlockBlock(idNext)) {
 				walking++;
 			} else {
 				int moving = this.getMoveBlockOnDistance(distance - i, world, idNext, x, y, z, orientation, nbMoved + 1);
-				return walking + moving;
+				walking += moving;
+				break;
 			}
 		}
 		
+		ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
 		return walking;
 	}
 	
@@ -537,6 +547,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 				// Si le piston est ouvert mais n'a pas atteint la longueur max on continue l'ouverture (obstaclque qui génait la place)
 				
 				if (currentOpened == lenghtOpened) {
+					
 					ModMorePistons.log.debug("Les piston ne change pas de taille : "+x+", "+y+", "+z);
 					this.ignoreUpdates = false;
 					return true;
@@ -550,6 +561,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 				
 				// Le piston s'ouvre plus
 				} else if (currentOpened < lenghtOpened) {
+					
 					ModMorePistons.log.debug("Le piston s'ouvre plus : "+x+", "+y+", "+z);
 					
 					int x2 = x + Facing.offsetsXForSide[orientation] * currentOpened;
@@ -562,10 +574,8 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 				// On retracte le piston partielement
 				} else {
 					
-					// TODO Marche pas
-					
-					ModMorePistons.log.debug("Le piston se retract parielement : "+x+", "+y+", "+z);
 					int diff = currentOpened - lenghtOpened;
+					ModMorePistons.log.debug("Le piston se retract parielement : "+x+", "+y+", "+z+" diff="+diff);
 					
 					int x2 = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
 					int y2 = y + Facing.offsetsYForSide[orientation] * lenghtOpened;

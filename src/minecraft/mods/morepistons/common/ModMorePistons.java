@@ -8,6 +8,7 @@ import mods.gollum.core.log.Logger;
 import mods.gollum.core.version.VersionChecker;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
+import mods.morepistons.common.block.BlockMorePistonsGravitational;
 import mods.morepistons.common.block.BlockMorePistonsRedStone;
 import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
@@ -125,7 +126,7 @@ public class ModMorePistons {
 	public static Block blockRedStonePistonBase8;
 	public static Block blockRedStoneStickyPistonBase8;
 	public static Block blockPistonExtension;
-	public static Block blockPistonRod; 
+	public static Block blockPistonRod;
 	
 	/**
 	 * Path des texture du mod
@@ -185,6 +186,9 @@ public class ModMorePistons {
 		// Création des blocks
 		this.blockPistonExtension = new BlockMorePistonsExtension(this.blockPistonExtensionID).setUnlocalizedName("MorePistonsExtension");
 		this.blockPistonRod       = new BlockMorePistonsRod      (this.blockPistonRodID)      .setUnlocalizedName("MorePistonsRod");
+
+		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(this.blockGravitationalPistonBaseID      , false).setUnlocalizedName("GravitationalPistonBase");
+		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(this.blockGravitationalStickyPistonBaseID, true) .setUnlocalizedName("GravitationalStickyPistonBase");
 		
 		this.blockDoublePistonBase           = (new BlockMorePistonsBase(this.blockDoublePistonBaseID      , false, "double_")).setLength (2).setUnlocalizedName("DoublePistonBase");
 		this.blockDoubleStickyPistonBase     = (new BlockMorePistonsBase(this.blockDoubleStickyPistonBaseID, true , "double_")).setLength (2).setUnlocalizedName("DoubleStikyPistonBase");
@@ -221,8 +225,11 @@ public class ModMorePistons {
 
 		
 		// Enregistrement des blocks
-		GameRegistry.registerBlock(this.blockPistonExtension          , this.blockPistonExtension          .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockPistonRod                , this.blockPistonRod                .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockPistonExtension, this.blockPistonExtension.getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockPistonRod      , this.blockPistonRod      .getUnlocalizedName());
+		
+		GameRegistry.registerBlock(this.blockGravitationalPistonBase        , this.blockGravitationalPistonBase      .getUnlocalizedName());
+		GameRegistry.registerBlock(this.blockGravitationalStickyPistonBase  , this.blockGravitationalStickyPistonBase.getUnlocalizedName());
 		
 		GameRegistry.registerBlock(this.blockDoublePistonBase         , this.blockDoublePistonBase         .getUnlocalizedName());
 		GameRegistry.registerBlock(this.blockDoubleStickyPistonBase   , this.blockDoubleStickyPistonBase   .getUnlocalizedName());
@@ -257,6 +264,9 @@ public class ModMorePistons {
 		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase8, this.blockRedStoneStickyPistonBase8.getUnlocalizedName());
 		
 		// Nom des blocks
+		LanguageRegistry.addName(this.blockGravitationalPistonBase      , "Gravitational Piston");
+		LanguageRegistry.addName(this.blockGravitationalStickyPistonBase, "Gravitational Sticky Piston");
+		
 		LanguageRegistry.addName(this.blockDoublePistonBase         , "Double Piston");
 		LanguageRegistry.addName(this.blockDoubleStickyPistonBase   , "Double Sticky Piston");
 		LanguageRegistry.addName(this.blockTriplePistonBase         , "Triple Piston");

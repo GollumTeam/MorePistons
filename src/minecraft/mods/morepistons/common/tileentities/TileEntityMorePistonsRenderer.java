@@ -43,16 +43,18 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 				GL11.glShadeModel(GL11.GL_FLAT);
 			}
 			
-			// Dans cette zone on va placer les pistons rods
-			if (tileEntityPiston.storedBlockID == ModMorePistons.blockPistonExtension.blockID && tileEntityPiston.isExtending ()) {
-				float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
-				tileEntityPiston.displayPistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
-			}
-			
-			// On enleve au fur et a mesure les pistons rods
-			if (tileEntityPiston.isBlockPiston && !tileEntityPiston.isExtending ()) {
-				float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
-				tileEntityPiston.removePistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
+			if (tileEntityPiston.distance >= 0) {
+				// Dans cette zone on va placer les pistons rods
+				if (tileEntityPiston.storedBlockID == ModMorePistons.blockPistonExtension.blockID && tileEntityPiston.isExtending ()) {
+					float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
+					tileEntityPiston.displayPistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
+				}
+				
+				// On enleve au fur et a mesure les pistons rods
+				if (tileEntityPiston.isBlockPiston && !tileEntityPiston.isExtending ()) {
+					float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
+					tileEntityPiston.removePistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
+				}
 			}
 			
 			tessellator.startDrawingQuads();
@@ -66,8 +68,34 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 			float distance = MathHelper.abs(tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8));
 			float reste = tileEntityPiston.distance - distance;
 			
+			// Le block extention mais en négatif
+			if (tileEntityPiston.distance < 0) {
+				
+				this.blockRenderer.renderPistonExtensionAllFaces(
+					Block.pistonExtension,
+					tileEntityPiston.xCoord,
+					tileEntityPiston.yCoord,
+					tileEntityPiston.zCoord,
+					distance > 0.5f
+				);
+				
+				((BlockPistonExtension)ModMorePistons.blockPistonExtension).clearHeadTexture();
+				
+				tessellator.setTranslation(
+					(double) ((float) x - (float) tileEntityPiston.xCoord),
+					(double) ((float) y - (float) tileEntityPiston.yCoord),
+					(double) ((float) z - (float) tileEntityPiston.zCoord)
+				);
+				
+				this.blockRenderer.renderBlockAllFaces(
+					ModMorePistons.blockPistonRod,
+					tileEntityPiston.xCoord,
+					tileEntityPiston.yCoord,
+					tileEntityPiston.zCoord
+				);
+			
 			// Le block extention
-			if (block.blockID == ModMorePistons.blockPistonExtension.blockID) {
+			} else if (block.blockID == ModMorePistons.blockPistonExtension.blockID) {
 				
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					block,
