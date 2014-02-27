@@ -4,11 +4,17 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import mods.morepistons.common.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockLever;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.BlockTripWire;
+import net.minecraft.block.BlockTripWireSource;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
@@ -31,17 +37,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		return 41;
 	}
 	
-	
-	/**
-	 * Ouvre un piston de la taille voulu
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param orientation
-	 * @param lenghtOpened
-	 */
-	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+	protected ArrayList<EMoveInfosExtend> getListOrigin (World world, int x, int y, int z, int orientation, int lenghtOpened) {
 		
 		int xExtension = x;
 		int yExtension = y;
@@ -68,6 +64,15 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			blocksOrigin.add (new EMoveInfosExtend(xExtension, yExtension, zExtension, size));
 		}
 		Collections.reverse (blocksOrigin);
+		
+		return blocksOrigin;
+	}
+	
+	protected ArrayList<EMoveInfosExtend> getListUpBlocks (ArrayList<EMoveInfosExtend> blocksOrigin, World world, int x, int y, int z, int orientation, int lenghtOpened) {
+
+		int xExtension = x;
+		int yExtension = y;
+		int zExtension = z;
 		
 		ArrayList<EMoveInfosExtend> blocksTop = new ArrayList<EMoveInfosExtend>();
 		
@@ -149,6 +154,91 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			
 		}
 		
+		return blocksTop;
+	}
+	
+	protected ArrayList<EMoveInfosExtend> getListNextBlocks (ArrayList<EMoveInfosExtend> blocksOrigin, World world, int x, int y, int z, int orientation, int lenghtOpened) {
+		
+		int xExtension = x;
+		int yExtension = y;
+		int zExtension = z;
+		
+		ArrayList<EMoveInfosExtend> blocksList = new ArrayList<EMoveInfosExtend>();
+		
+		for (EMoveInfosExtend blockOrigin : blocksOrigin) {
+			
+			int xBlock;
+			int yBlock;
+			int zBlock;
+			
+			// On aprcour les 4 coins
+			for (int o = 2; o <= 5; o++) {
+				
+				if (o == orientation || o == Facing.oppositeSide[orientation]) {
+					continue;
+				}
+				
+				
+				xBlock = blockOrigin.x + Facing.offsetsXForSide[o];
+				yBlock = blockOrigin.y;
+				zBlock = blockOrigin.z + Facing.offsetsZForSide[o];
+				
+				int id       = world.getBlockId(xBlock, yBlock, zBlock);
+				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
+				
+				// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
+				if (id != 0 && this.isEmptyBlockBlock(id) && this.isAttachOnNext (id, metadata, o)) {
+					
+					int moveBlock = 0;
+					xExtension = xBlock;
+					yExtension = yBlock;
+					zExtension = zBlock;
+					for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
+						xExtension += Facing.offsetsXForSide[orientation];
+						yExtension += Facing.offsetsYForSide[orientation];
+						zExtension += Facing.offsetsZForSide[orientation];
+						if (world.getBlockId(xExtension, yExtension, zExtension) != 0) {
+							break;
+						}
+					}
+					
+					// Si le mouvement ne peux etre complet alors on drop l'element
+					if (moveBlock != blockOrigin.move) {
+						// Drop les élements légés (fleurs, leviers, herbes ..)
+						this.dropMobilityFlag1(id, metadata, world, xBlock, yBlock, zBlock);
+					} else {
+						world.setBlockToAir(xBlock, yBlock, zBlock);
+						
+						xExtension = xBlock + Facing.offsetsXForSide[orientation]*moveBlock;
+						yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
+						zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
+						
+						blocksList.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
+					}
+				}
+			}
+			
+		}
+		
+		return blocksList;
+	}
+	
+	/**
+	 * Ouvre un piston de la taille voulu
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @param lenghtOpened
+	 */
+	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+		
+		
+		ArrayList<EMoveInfosExtend> blocksOrigin = this.getListOrigin(world, x, y, z, orientation, lenghtOpened);
+		ArrayList<EMoveInfosExtend> blocksTop    = this.getListUpBlocks(blocksOrigin, world, x, y, z, orientation, lenghtOpened);
+		ArrayList<EMoveInfosExtend> blocksNext   = this.getListNextBlocks(blocksOrigin, world, x, y, z, orientation, lenghtOpened);
+		
 		super.extend(world, x, y, z, orientation, lenghtOpened);
 		
 		// Dépalcement des élement Top
@@ -156,6 +246,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			world.setBlock(blockTop.x, blockTop.y, blockTop.z, Block.pistonMoving.blockID, blockTop.metadata, 2);
 			TileEntity teBlock = new TileEntityMorePistons (blockTop.id, blockTop.metadata, orientation, true, false, blockTop.move, false);
 			world.setBlockTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
+		}
+		// Dépalcement des élement a coté
+		for (EMoveInfosExtend blockNext : blocksNext) {
+			world.setBlock(blockNext.x, blockNext.y, blockNext.z, Block.pistonMoving.blockID, blockNext.metadata, 2);
+			TileEntity teBlock = new TileEntityMorePistons (blockNext.id, blockNext.metadata, orientation, true, false, blockNext.move, false);
+			world.setBlockTileEntity(blockNext.x, blockNext.y, blockNext.z, teBlock);
 		}
 		
 		
@@ -174,9 +270,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		
 		Block block = Block.blocksList[id];
 		if (
+			(block instanceof BlockSkull) ||                                   // Les tête
 			(block instanceof BlockLadder) ||                                  // Les echelles
+			(block instanceof BlockButton) ||                                  // Les boutons
+			(block instanceof BlockTripWireSource) ||                          // Les piège
 			(block instanceof BlockTorch && metadata != 5)||                   // Les Torches charbons et Redstones
-			(block instanceof BlockLever && metadata != 5 && metadata != 6) // Les leviers
+			(block instanceof BlockLever && metadata != 5 && metadata != 6)    // Les leviers
 			
 		) {
 			return false;
@@ -184,5 +283,60 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		
 		return true;
 	}
+
+	protected int convertOrientationFromTorch (int o) {
+		switch (o) {
+			case 1: return 5;
+			case 2: return 4;
+			case 3: return 3;
+			case 4: return 2;
+			default: return 0;
+		}
+	}
 	
+	protected int convertOrientationFromTripe (int o) {
+		switch (o) {
+			case 0: return 3;
+			case 1: return 4;
+			case 2: return 2;
+			case 3: return 5;
+			default: return 0;
+		}
+	}
+	
+	
+	/**
+	 * @param id
+	 * @param metadata
+	 * @return
+	 */
+	protected boolean isAttachOnNext (int id, int metadata, int orientation) {
+		
+		if (id == 0) {
+			return false;
+		}
+
+		ModMorePistons.log.debug("======================================================");
+		ModMorePistons.log.debug("metadata  : "+metadata);
+		ModMorePistons.log.debug("metadataO : "+(metadata & 0x3));
+		ModMorePistons.log.debug("this.convertOrientationFromTripe (metadata) : "+this.convertOrientationFromTripe (metadata & 0x3));
+		ModMorePistons.log.debug("orientation : "+orientation);
+		ModMorePistons.log.debug("======================================================");
+		
+		Block block = Block.blocksList[id];
+		if (
+			(block instanceof BlockLadder          && metadata == orientation) ||                                    // Les echelles
+			(block instanceof BlockTripWireSource  && this.convertOrientationFromTripe (metadata)       == orientation) || // Les piège
+			(block instanceof BlockButton          && this.convertOrientationFromTorch (metadata)       == orientation) || // Les boutons
+			(block instanceof BlockTorch           && this.convertOrientationFromTorch (metadata)       == orientation) || // Les Torches charbons et Redstones
+			(block instanceof BlockLever           && this.convertOrientationFromTorch (metadata)       == orientation) || // Les leviers
+			(block instanceof BlockTrapDoor        && this.convertOrientationFromTripe (metadata & 0x3) == orientation) || // Les leviers
+			false
+			
+		) {
+			return true;
+		}
+		
+		return false;
+	}
 }
