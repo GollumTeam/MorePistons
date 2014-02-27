@@ -2,6 +2,7 @@ package mods.morepistons.common.block;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
@@ -14,11 +15,22 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	
-	public static int MAX_BLOCK_MOVE = 41;
-	
 	public BlockMorePistonsSuper(int id, boolean isSticky) {
-		super(id, isSticky, "super_");
+		this(id, isSticky, "");
 	}
+	public BlockMorePistonsSuper(int id, boolean isSticky, String texturePrefixe) {
+		super(id, isSticky, "super_"+texturePrefixe);
+	}
+	
+
+	/**
+	 * Block maximal que peux pouser le piston
+	 * @return
+	 */
+	public int getMaxBlockMove () {
+		return 41;
+	}
+	
 	
 	/**
 	 * Ouvre un piston de la taille voulu
@@ -35,13 +47,10 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		int yExtension = y;
 		int zExtension = z;
 		
-		ArrayList<Integer> listX = new ArrayList<Integer>();
-		ArrayList<Integer> listY = new ArrayList<Integer>();
-		ArrayList<Integer> listZ = new ArrayList<Integer>();
-		ArrayList<Integer> listSize = new ArrayList<Integer>();
+		ArrayList<EMoveInfosExtend> blocksOrigin = new ArrayList<EMoveInfosExtend>();
 		int size = lenghtOpened;
 		
-		for (int i = 0; i < (lenghtOpened + this.MAX_BLOCK_MOVE) && size > 0; i++) {
+		for (int i = 0; i < (lenghtOpened + this.getMaxBlockMove ()) && size > 0; i++) {
 			
 			xExtension += Facing.offsetsXForSide[orientation];
 			yExtension += Facing.offsetsYForSide[orientation];
@@ -56,19 +65,13 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			} else if (!this.isMovableBlock(id, world, xExtension, yExtension, zExtension)) {
 				break;
 			}
-			listX.add (xExtension);
-			listY.add (yExtension);
-			listZ.add (zExtension);
-			listSize.add (size);
+			blocksOrigin.add (new EMoveInfosExtend(xExtension, yExtension, zExtension, size));
 		}
+		Collections.reverse (blocksOrigin);
 		
-		super.extend(world, x, y, z, orientation, lenghtOpened);
+		ArrayList<EMoveInfosExtend> blocksTop = new ArrayList<EMoveInfosExtend>();
 		
-		for (int i = listX.size()-1; i >= 0; i--) {
-			int xOrigin    = listX.get(i);
-			int yOrigin    = listY.get(i);
-			int zOrigin    = listZ.get(i);
-			int sizeOrigin = listSize.get(i);
+		for (EMoveInfosExtend blockOrigin : blocksOrigin) {
 			int xBlock;
 			int yBlock;
 			int zBlock;
@@ -76,9 +79,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			// Si on est à l'orizontal
 			if (orientation != 0 && orientation != 1) {
 
-				xBlock = xOrigin;
-				yBlock = yOrigin + 1;
-				zBlock = zOrigin;
+				xBlock = blockOrigin.x;
+				yBlock = blockOrigin.y + 1;
+				zBlock = blockOrigin.z;
 				
 				int id       = world.getBlockId(xBlock, yBlock, zBlock);
 				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
@@ -88,7 +91,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					if (!this.isEmptyBlockBlock(id)) {
 						int moveBlock = 0;
 						if (this.isMovableBlock(id, world, xBlock, yBlock, zBlock)) {
-							moveBlock = this.getMaximalOpenedLenght(world, xBlock, yBlock, zBlock, orientation, false, sizeOrigin);
+							moveBlock = this.getMaximalOpenedLenght(world, xBlock, yBlock, zBlock, orientation, false, blockOrigin.move);
 						}
 						if (moveBlock > 0) {
 							world.setBlockToAir(xBlock, yBlock, zBlock);
@@ -102,16 +105,13 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								zExtension += Facing.offsetsZForSide[orientation];
 								int idNext = world.getBlockId(xExtension, yExtension, zExtension);
 								if (idNext != 0) {
-									int metadataNext = world.getBlockMetadata(xBlock, yBlock, zBlock);
+									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									this.dropMobilityFlag1(idNext, metadataNext, world, xExtension, yExtension, zExtension);
 								}
 							}
 							
-							//Déplace avec une animation les blocks
-							world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, metadata, 2);
-							TileEntity teBlock = new TileEntityMorePistons (id, metadata, orientation, true, false, moveBlock, false);
-							world.setBlockTileEntity(xExtension, yExtension, zExtension, teBlock);
+							blocksTop.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
 						}
 					} else {
 						// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
@@ -120,7 +120,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							xExtension = xBlock;
 							yExtension = yBlock;
 							zExtension = zBlock;
-							for (moveBlock = 0; moveBlock < sizeOrigin; moveBlock++) {
+							for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
 								xExtension += Facing.offsetsXForSide[orientation];
 								yExtension += Facing.offsetsYForSide[orientation];
 								zExtension += Facing.offsetsZForSide[orientation];
@@ -130,7 +130,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							}
 							
 							// Si le mouvement ne peux etre complet alors on drop l'element
-							if (moveBlock != sizeOrigin) {
+							if (moveBlock != blockOrigin.move) {
 								// Drop les élements légés (fleurs, leviers, herbes ..)
 								this.dropMobilityFlag1(id, metadata, world, xBlock, yBlock, zBlock);
 							} else {
@@ -140,18 +140,25 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
 								zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
 								
-								//Déplace avec une animation les blocks
-								world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, metadata, 2);
-								TileEntity teBlock = new TileEntityMorePistons (id, metadata, orientation, true, false, moveBlock, false);
-								world.setBlockTileEntity(xExtension, yExtension, zExtension, teBlock);
+								blocksTop.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
 							}
 						}
 					}
 				}
-				
 			}
 			
 		}
+		
+		super.extend(world, x, y, z, orientation, lenghtOpened);
+		
+		// Dépalcement des élement Top
+		for (EMoveInfosExtend blockTop : blocksTop) {
+			world.setBlock(blockTop.x, blockTop.y, blockTop.z, Block.pistonMoving.blockID, blockTop.metadata, 2);
+			TileEntity teBlock = new TileEntityMorePistons (blockTop.id, blockTop.metadata, orientation, true, false, blockTop.move, false);
+			world.setBlockTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
+		}
+		
+		
 	}
 	
 	/**
@@ -169,8 +176,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		if (
 			(block instanceof BlockLadder) ||                                  // Les echelles
 			(block instanceof BlockTorch && metadata != 5)||                   // Les Torches charbons et Redstones
-			(block instanceof BlockLever && metadata != 5 && metadata != 6) || // Les leviers
-			(id == Block.signWall.blockID)                                     // Les panneaux murals
+			(block instanceof BlockLever && metadata != 5 && metadata != 6) // Les leviers
 			
 		) {
 			return false;

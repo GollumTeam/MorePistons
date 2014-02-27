@@ -26,8 +26,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsBase extends BlockPistonBase {
-
-	public static int MAX_BLOCK_MOVE = 12;
 	
 	private boolean ignoreUpdates = false;
 	private int length = 1;
@@ -69,6 +67,13 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 		return this.length;
 	}
 	
+	/**
+	 * Block maximal que peux pouser le piston
+	 * @return
+	 */
+	public int getMaxBlockMove () {
+		return 12;
+	}
 	
 	//////////////////////////
 	// Gestion des textures //
@@ -375,7 +380,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 */
 	private int getMoveBlockOnDistance (int distance, World world, int id, int x, int y, int z, int orientation, int nbMoved) {
 		
-		if (nbMoved == this.MAX_BLOCK_MOVE || !this.isMovableBlock(id, world, x, y, z)) {
+		if (nbMoved == this.getMaxBlockMove () || !this.isMovableBlock(id, world, x, y, z)) {
 			ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
 			return 0;
 		}
@@ -724,27 +729,50 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 		}
 	}
 	
-	/**
-	 * Ouvr eun piston de la taille voulu
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param orientation
-	 * @param lenghtOpened
-	 */
-	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+	class EMoveInfosExtend {
+		
+		public int id = 0;
+		public int metadata = 0;
+		public int move = 0;
+		public int x = 0;
+		public int y = 0;
+		public int z = 0;
+		public EMoveInfosExtend() {}
+		
+		public EMoveInfosExtend(int id, int metadata, int move) {
+			this.id       = id;
+			this.metadata = metadata;
+			this.move     = move;
+		}
+
+		public EMoveInfosExtend(int x, int y, int z, int move) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
+			this.move = move;
+		}
+
+		public EMoveInfosExtend(int id, int metadata, int x, int y, int z, int move) {
+			this.id       = id;
+			this.metadata = metadata;
+			this.x = x;
+			this.y = y;
+			this.z = z;
+			this.move     = move;
+		}
+	}
+	
+	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int lenghtOpened) {
 		
 		int xExtension = x;
 		int yExtension = y;
 		int zExtension = z;
 		
-		ArrayList<Integer> listId       = new ArrayList<Integer>();
-		ArrayList<Integer> listMetadata = new ArrayList<Integer>();
-		ArrayList<Integer> sizes        = new ArrayList<Integer>();
+		ArrayList<EMoveInfosExtend> infosExtend = new ArrayList<EMoveInfosExtend>();
+		
 		int size = lenghtOpened;
 		
-		for (int i = 0; i < (lenghtOpened + this.MAX_BLOCK_MOVE) && size > 0; i++) {
+		for (int i = 0; i < (lenghtOpened + this.getMaxBlockMove ()) && size > 0; i++) {
 			
 			xExtension += Facing.offsetsXForSide[orientation];
 			yExtension += Facing.offsetsYForSide[orientation];
@@ -757,40 +785,37 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 			this.dropMobilityFlag1(id, metadata, world, xExtension, yExtension, zExtension);
 			
 			if (this.isEmptyBlockBlock(id)) {
-				listId.add(0);
-				listMetadata.add(0);
-				sizes.add(0);
+				
+				infosExtend.add(new EMoveInfosExtend());
 				size--;
 				
 			} else if (!this.isMovableBlock(id, world, xExtension, yExtension, zExtension)) {
 				break;
 			} else {
-				listId.      add(id);
-				listMetadata.add(metadata);
-				sizes       .add(size);
+				infosExtend.add(new EMoveInfosExtend(id, metadata, size));
 				world.setBlockToAir (xExtension, yExtension, zExtension);
 			}
 			
 		}
+		return infosExtend;
+	}
+	
+	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int lenghtOpened) {
 		
-		xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-		yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
-		zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
+		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
+		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 		
-		for (int i = 0; i < listId.size(); i++) {
+		for (EMoveInfosExtend infos : infosExtend) {
 			
-			int id = listId.get(i);
-			int meta = listMetadata.get(i);
-			int length = sizes.get(i);
-			
-			if (id != 0 && id != Block.pistonMoving.blockID) {
+			if (infos.id != 0 && infos.id != Block.pistonMoving.blockID) {
 				xExtension += Facing.offsetsXForSide[orientation];
 				yExtension += Facing.offsetsYForSide[orientation];
 				zExtension += Facing.offsetsZForSide[orientation];
 				
 				//Déplace avec une animation les blocks
-				world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, meta, 2);
-				TileEntity teBlock = new TileEntityMorePistons (id, meta, orientation, true, false, length, false);
+				world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, infos.metadata, 2);
+				TileEntity teBlock = new TileEntityMorePistons (infos.id, infos.metadata, orientation, true, false, infos.move, false);
 				world.setBlockTileEntity(xExtension, yExtension, zExtension, teBlock);
 			}
 		}
@@ -806,6 +831,21 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 		world.setBlock(xExtension, yExtension, zExtension, Block.pistonMoving.blockID, orientation, 2);
 		TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension.blockID, metadata, orientation, true, false, lenghtOpened, true);
 		world.setBlockTileEntity(xExtension, yExtension, zExtension, teExtension);
+	}
+	
+	/**
+	 * Ouvr eun piston de la taille voulu
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @param lenghtOpened
+	 */
+	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+		
+		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, lenghtOpened);
+		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, lenghtOpened);
 		
 	}
 	

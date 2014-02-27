@@ -38,7 +38,7 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 		
 		boolean sandEntity = false;
 		int posEntity = 0;
-		while (posEntity < (lenghtOpened + this.MAX_BLOCK_MOVE)) {
+		while (posEntity < (lenghtOpened + this.getMaxBlockMove ())) {
 			x2 += Facing.offsetsXForSide[orientation];
 			y2 += Facing.offsetsYForSide[orientation];
 			z2 += Facing.offsetsZForSide[orientation];
