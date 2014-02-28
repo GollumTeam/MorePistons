@@ -93,7 +93,13 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				
 				// Déplacement des block standare au dessus
 				if (id != 0) {
-					if (!this.isEmptyBlockBlock(id)) {
+					
+					Block block = Block.blocksList[id];
+					
+					if (
+						!this.isEmptyBlockBlock(id) &&
+						!(block instanceof BlockTrapDoor)
+					) {
 						int moveBlock = 0;
 						if (this.isMovableBlock(id, world, xBlock, yBlock, zBlock)) {
 							moveBlock = this.getMaximalOpenedLenght(world, xBlock, yBlock, zBlock, orientation, false, blockOrigin.move);
@@ -185,9 +191,16 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				
 				int id       = world.getBlockId(xBlock, yBlock, zBlock);
 				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
+				Block block  = (id != 0) ? Block.blocksList[id] : null;
 				
 				// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
-				if (id != 0 && this.isEmptyBlockBlock(id) && this.isAttachOnNext (id, metadata, o)) {
+				if (
+					id != 0 &&
+					(	this.isEmptyBlockBlock(id) ||
+						block instanceof BlockTrapDoor
+					)
+					&& this.isAttachOnNext (id, metadata, o)
+				) {
 					
 					int moveBlock = 0;
 					xExtension = xBlock;
@@ -274,7 +287,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			(block instanceof BlockLadder) ||                                  // Les echelles
 			(block instanceof BlockButton) ||                                  // Les boutons
 			(block instanceof BlockTripWireSource) ||                          // Les piège
-			(block instanceof BlockTorch && metadata != 5)||                   // Les Torches charbons et Redstones
+			(block instanceof BlockTorch && metadata != 5) ||                  // Les Torches charbons et Redstones
+			(block instanceof BlockTrapDoor && (metadata & 0x8) == 0x8) ||     // Les Trappe
 			(block instanceof BlockLever && metadata != 5 && metadata != 6)    // Les leviers
 			
 		) {
@@ -304,7 +318,6 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		}
 	}
 	
-	
 	/**
 	 * @param id
 	 * @param metadata
@@ -315,13 +328,13 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		if (id == 0) {
 			return false;
 		}
-
-		ModMorePistons.log.debug("======================================================");
-		ModMorePistons.log.debug("metadata  : "+metadata);
-		ModMorePistons.log.debug("metadataO : "+(metadata & 0x3));
-		ModMorePistons.log.debug("this.convertOrientationFromTripe (metadata) : "+this.convertOrientationFromTripe (metadata & 0x3));
-		ModMorePistons.log.debug("orientation : "+orientation);
-		ModMorePistons.log.debug("======================================================");
+//		
+//		ModMorePistons.log.debug("======================================================");
+//		ModMorePistons.log.debug("metadata  : "+metadata);
+//		ModMorePistons.log.debug("metadataO : "+(metadata & 0x3));
+//		ModMorePistons.log.debug("this.convertOrientationFromTripe (metadata) : "+this.convertOrientationFromTripe (metadata & 0x3));
+//		ModMorePistons.log.debug("orientation : "+orientation);
+//		ModMorePistons.log.debug("======================================================");
 		
 		Block block = Block.blocksList[id];
 		if (
@@ -330,7 +343,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			(block instanceof BlockButton          && this.convertOrientationFromTorch (metadata)       == orientation) || // Les boutons
 			(block instanceof BlockTorch           && this.convertOrientationFromTorch (metadata)       == orientation) || // Les Torches charbons et Redstones
 			(block instanceof BlockLever           && this.convertOrientationFromTorch (metadata)       == orientation) || // Les leviers
-			(block instanceof BlockTrapDoor        && this.convertOrientationFromTripe (metadata & 0x3) == orientation) || // Les leviers
+			(block instanceof BlockTrapDoor        && ((metadata & 0x3) + 2 == orientation)) || // Les leviers
 			false
 			
 		) {
