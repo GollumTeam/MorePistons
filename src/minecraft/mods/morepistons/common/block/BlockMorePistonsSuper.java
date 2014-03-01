@@ -7,7 +7,9 @@ import java.util.Collections;
 import mods.morepistons.common.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockButton;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockSkull;
@@ -102,7 +104,23 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					) {
 						int moveBlock = 0;
 						if (this.isMovableBlock(id, world, xBlock, yBlock, zBlock)) {
-							moveBlock = this.getMaximalOpenedLenght(world, xBlock, yBlock, zBlock, orientation, false, blockOrigin.move);
+							xExtension = xBlock;
+							yExtension = yBlock;
+							zExtension = zBlock;
+							for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
+								xExtension += Facing.offsetsXForSide[orientation];
+								yExtension += Facing.offsetsYForSide[orientation];
+								zExtension += Facing.offsetsZForSide[orientation];
+								int idNext = world.getBlockId(xExtension, yExtension, zExtension);
+								if (!this.isEmptyBlockBlock(idNext)) {
+									break;
+								}
+								if (idNext != 0) {
+									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
+									// Drop les élements légés (fleurs, leviers, herbes ..)
+									this.dropMobilityFlag1(idNext, metadataNext, world, xExtension, yExtension, zExtension);
+								}
+							}
 						}
 						if (moveBlock > 0) {
 							world.setBlockToAir(xBlock, yBlock, zBlock);
@@ -124,6 +142,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							
 							blocksTop.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
 						}
+					} else if (
+						block instanceof BlockDoor ||
+						block instanceof BlockBed
+					) {
+						// Drop les élements légés (fleurs, leviers, herbes ..)
+						this.dropMobilityFlag1(id, metadata, world, xBlock, yBlock, zBlock);
 					} else {
 						// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
 						if (this.isAttachOnTop (id, metadata)) {
@@ -193,6 +217,16 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
 				Block block  = (id != 0) ? Block.blocksList[id] : null;
 				
+				if (
+					id != 0 &&
+					(
+						block instanceof BlockDoor ||
+						block instanceof BlockBed
+					)
+				) {
+					continue;
+				}
+				
 				// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
 				if (
 					id != 0 &&
@@ -201,7 +235,6 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					)
 					&& this.isAttachOnNext (id, metadata, o)
 				) {
-					
 					int moveBlock = 0;
 					xExtension = xBlock;
 					yExtension = yBlock;
@@ -234,6 +267,47 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		}
 		
 		return blocksList;
+	}
+	
+	
+	/**
+	 * Retracte le block qui ets collé au piston si le piston est un sticky
+	 * piston
+	 * 
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param length
+	 */
+	protected void retracSticky(World world, int x, int y, int z, int orientation, int length) {
+		if (this.isSticky) {
+
+			int x2 = x + Facing.offsetsXForSide[orientation] * (length + 1);
+			int y2 = y + Facing.offsetsYForSide[orientation] * (length + 1);
+			int z2 = z + Facing.offsetsZForSide[orientation] * (length + 1);
+			
+			ArrayList<EMoveInfosExtend> blocksOrigin = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
+			blocksOrigin.add(new EMoveInfosExtend(x2, y2, z2, length));
+			
+			ArrayList<EMoveInfosExtend> blocksTop    = this.getListUpBlocks(blocksOrigin, world, x, y, z, Facing.oppositeSide[orientation], length);
+			ArrayList<EMoveInfosExtend> blocksNext   = this.getListNextBlocks(blocksOrigin, world, x, y, z, Facing.oppositeSide[orientation], length);
+			
+			// Dépalcement des élement Top
+			for (EMoveInfosExtend blockTop : blocksTop) {
+				world.setBlock(blockTop.x, blockTop.y, blockTop.z, Block.pistonMoving.blockID, blockTop.metadata, 2);
+				TileEntity teBlock = new TileEntityMorePistons (blockTop.id, blockTop.metadata, Facing.oppositeSide[orientation], true, false, blockTop.move, false);
+				world.setBlockTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
+			}
+			// Dépalcement des élement a coté
+			for (EMoveInfosExtend blockNext : blocksNext) {
+				world.setBlock(blockNext.x, blockNext.y, blockNext.z, Block.pistonMoving.blockID, blockNext.metadata, 2);
+				TileEntity teBlock = new TileEntityMorePistons (blockNext.id, blockNext.metadata, Facing.oppositeSide[orientation], true, false, blockNext.move, false);
+				world.setBlockTileEntity(blockNext.x, blockNext.y, blockNext.z, teBlock);
+			}
+			
+		}
+		super.retracSticky(world, x, y, z, orientation, length);
 	}
 	
 	/**
