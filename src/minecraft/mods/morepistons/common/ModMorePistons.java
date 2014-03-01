@@ -309,8 +309,8 @@ public class ModMorePistons {
 	}
 	
 	/**
-	* // Nom des TileEntities
-	*/
+	 * Initialisation des TileEntities
+	 */
 	private void initTileEntities () {
 		GameRegistry.registerTileEntity(TileEntityMorePistons.class , "MorePistons");
 	}
