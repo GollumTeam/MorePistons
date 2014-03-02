@@ -1,10 +1,8 @@
 package mods.morepistons.common.block;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import mods.morepistons.common.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -15,8 +13,8 @@ import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockTripWire;
-import net.minecraft.block.BlockTripWireSource;
+import net.minecraft.block.BlockTripWireHook;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
@@ -27,7 +25,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		this(id, isSticky, "");
 	}
 	public BlockMorePistonsSuper(int id, boolean isSticky, String texturePrefixe) {
-		super(id, isSticky, "super_"+texturePrefixe);
+		super(isSticky, "super_"+texturePrefixe);
 	}
 	
 
@@ -54,13 +52,13 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			yExtension += Facing.offsetsYForSide[orientation];
 			zExtension += Facing.offsetsZForSide[orientation];
 			
-			int id = world.getBlockId(xExtension, yExtension, zExtension);
+			Block block = world.getBlock(xExtension, yExtension, zExtension);
 			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
 			
-			if (this.isEmptyBlockBlock(id)) {
+			if (this.isEmptyBlock(block)) {
 				size--;
 				continue;
-			} else if (!this.isMovableBlock(id, world, xExtension, yExtension, zExtension)) {
+			} else if (!this.isMovableBlock(block, world, xExtension, yExtension, zExtension)) {
 				break;
 			}
 			blocksOrigin.add (new EMoveInfosExtend(xExtension, yExtension, zExtension, size));
@@ -90,20 +88,18 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				yBlock = blockOrigin.y + 1;
 				zBlock = blockOrigin.z;
 				
-				int id       = world.getBlockId(xBlock, yBlock, zBlock);
+				Block block       = world.getBlock(xBlock, yBlock, zBlock);
 				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
 				
 				// Déplacement des block standare au dessus
-				if (id != 0) {
-					
-					Block block = Block.blocksList[id];
+				if (block != null && block != Blocks.air) {
 					
 					if (
-						!this.isEmptyBlockBlock(id) &&
+						!this.isEmptyBlock(block) &&
 						!(block instanceof BlockTrapDoor)
 					) {
 						int moveBlock = 0;
-						if (this.isMovableBlock(id, world, xBlock, yBlock, zBlock)) {
+						if (this.isMovableBlock(block, world, xBlock, yBlock, zBlock)) {
 							xExtension = xBlock;
 							yExtension = yBlock;
 							zExtension = zBlock;
@@ -111,14 +107,14 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation];
 								yExtension += Facing.offsetsYForSide[orientation];
 								zExtension += Facing.offsetsZForSide[orientation];
-								int idNext = world.getBlockId(xExtension, yExtension, zExtension);
-								if (!this.isEmptyBlockBlock(idNext)) {
+								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+								if (!this.isEmptyBlock(blockNext)) {
 									break;
 								}
-								if (idNext != 0) {
+								if (blockNext != null && blockNext != Blocks.air) {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
-									this.dropMobilityFlag1(idNext, metadataNext, world, xExtension, yExtension, zExtension);
+									this.dropMobilityFlag1(blockNext, metadataNext, world, xExtension, yExtension, zExtension);
 								}
 							}
 						}
@@ -132,25 +128,25 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation];
 								yExtension += Facing.offsetsYForSide[orientation];
 								zExtension += Facing.offsetsZForSide[orientation];
-								int idNext = world.getBlockId(xExtension, yExtension, zExtension);
-								if (idNext != 0) {
+								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+								if (blockNext != null && block != Blocks.air) {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
-									this.dropMobilityFlag1(idNext, metadataNext, world, xExtension, yExtension, zExtension);
+									this.dropMobilityFlag1(blockNext, metadataNext, world, xExtension, yExtension, zExtension);
 								}
 							}
 							
-							blocksTop.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, xExtension, yExtension, zExtension, moveBlock));
 						}
 					} else if (
 						block instanceof BlockDoor ||
 						block instanceof BlockBed
 					) {
 						// Drop les élements légés (fleurs, leviers, herbes ..)
-						this.dropMobilityFlag1(id, metadata, world, xBlock, yBlock, zBlock);
+						this.dropMobilityFlag1(block, metadata, world, xBlock, yBlock, zBlock);
 					} else {
 						// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
-						if (this.isAttachOnTop (id, metadata)) {
+						if (this.isAttachOnTop (block, metadata)) {
 							int moveBlock = 0;
 							xExtension = xBlock;
 							yExtension = yBlock;
@@ -159,7 +155,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation];
 								yExtension += Facing.offsetsYForSide[orientation];
 								zExtension += Facing.offsetsZForSide[orientation];
-								if (world.getBlockId(xExtension, yExtension, zExtension) != 0) {
+								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+								if (blockNext != null && blockNext != Blocks.air) {
 									break;
 								}
 							}
@@ -167,7 +164,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							// Si le mouvement ne peux etre complet alors on drop l'element
 							if (moveBlock != blockOrigin.move) {
 								// Drop les élements légés (fleurs, leviers, herbes ..)
-								this.dropMobilityFlag1(id, metadata, world, xBlock, yBlock, zBlock);
+								this.dropMobilityFlag1(block, metadata, world, xBlock, yBlock, zBlock);
 							} else {
 								world.setBlockToAir(xBlock, yBlock, zBlock);
 								
@@ -175,7 +172,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
 								zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
 								
-								blocksTop.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
+								blocksTop.add(new EMoveInfosExtend(block, metadata, xExtension, yExtension, zExtension, moveBlock));
 							}
 						}
 					}
@@ -213,12 +210,11 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				yBlock = blockOrigin.y;
 				zBlock = blockOrigin.z + Facing.offsetsZForSide[o];
 				
-				int id       = world.getBlockId(xBlock, yBlock, zBlock);
+				Block block       = world.getBlock(xBlock, yBlock, zBlock);
 				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
-				Block block  = (id != 0) ? Block.blocksList[id] : null;
 				
 				if (
-					id != 0 &&
+					block != null &&
 					(
 						block instanceof BlockDoor ||
 						block instanceof BlockBed
@@ -229,11 +225,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				
 				// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
 				if (
-					id != 0 &&
-					(	this.isEmptyBlockBlock(id) ||
+					block != null && 
+					block != Blocks.air &&
+					(	this.isEmptyBlock(block) ||
 						block instanceof BlockTrapDoor
 					)
-					&& this.isAttachOnNext (id, metadata, o)
+					&& this.isAttachOnNext (block, metadata, o)
 				) {
 					int moveBlock = 0;
 					xExtension = xBlock;
@@ -243,7 +240,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 						xExtension += Facing.offsetsXForSide[orientation];
 						yExtension += Facing.offsetsYForSide[orientation];
 						zExtension += Facing.offsetsZForSide[orientation];
-						if (world.getBlockId(xExtension, yExtension, zExtension) != 0) {
+						Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+						if (blockNext != null && blockNext != Blocks.air) {
 							break;
 						}
 					}
@@ -251,7 +249,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					// Si le mouvement ne peux etre complet alors on drop l'element
 					if (moveBlock != blockOrigin.move) {
 						// Drop les élements légés (fleurs, leviers, herbes ..)
-						this.dropMobilityFlag1(id, metadata, world, xBlock, yBlock, zBlock);
+						this.dropMobilityFlag1(block, metadata, world, xBlock, yBlock, zBlock);
 					} else {
 						world.setBlockToAir(xBlock, yBlock, zBlock);
 						
@@ -259,7 +257,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 						yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
 						zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
 						
-						blocksList.add(new EMoveInfosExtend(id, metadata, xExtension, yExtension, zExtension, moveBlock));
+						blocksList.add(new EMoveInfosExtend(block, metadata, xExtension, yExtension, zExtension, moveBlock));
 					}
 				}
 			}
@@ -295,15 +293,15 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			
 			// Dépalcement des élement Top
 			for (EMoveInfosExtend blockTop : blocksTop) {
-				world.setBlock(blockTop.x, blockTop.y, blockTop.z, Block.pistonMoving.blockID, blockTop.metadata, 2);
-				TileEntity teBlock = new TileEntityMorePistons (blockTop.id, blockTop.metadata, Facing.oppositeSide[orientation], true, false, blockTop.move, false);
-				world.setBlockTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
+				world.setBlock(blockTop.x, blockTop.y, blockTop.z, Blocks.piston_extension, blockTop.metadata, 2);
+				TileEntity teBlock = new TileEntityMorePistons (blockTop.block, blockTop.metadata, Facing.oppositeSide[orientation], true, false, blockTop.move, false);
+				world.setTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
 			}
 			// Dépalcement des élement a coté
 			for (EMoveInfosExtend blockNext : blocksNext) {
-				world.setBlock(blockNext.x, blockNext.y, blockNext.z, Block.pistonMoving.blockID, blockNext.metadata, 2);
-				TileEntity teBlock = new TileEntityMorePistons (blockNext.id, blockNext.metadata, Facing.oppositeSide[orientation], true, false, blockNext.move, false);
-				world.setBlockTileEntity(blockNext.x, blockNext.y, blockNext.z, teBlock);
+				world.setBlock(blockNext.x, blockNext.y, blockNext.z, Blocks.piston_extension, blockNext.metadata, 2);
+				TileEntity teBlock = new TileEntityMorePistons (blockNext.block, blockNext.metadata, Facing.oppositeSide[orientation], true, false, blockNext.move, false);
+				world.setTileEntity(blockNext.x, blockNext.y, blockNext.z, teBlock);
 			}
 			
 		}
@@ -330,15 +328,15 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		
 		// Dépalcement des élement Top
 		for (EMoveInfosExtend blockTop : blocksTop) {
-			world.setBlock(blockTop.x, blockTop.y, blockTop.z, Block.pistonMoving.blockID, blockTop.metadata, 2);
-			TileEntity teBlock = new TileEntityMorePistons (blockTop.id, blockTop.metadata, orientation, true, false, blockTop.move, false);
-			world.setBlockTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
+			world.setBlock(blockTop.x, blockTop.y, blockTop.z, Blocks.piston_extension, blockTop.metadata, 2);
+			TileEntity teBlock = new TileEntityMorePistons (blockTop.block, blockTop.metadata, orientation, true, false, blockTop.move, false);
+			world.setTileEntity(blockTop.x, blockTop.y, blockTop.z, teBlock);
 		}
 		// Dépalcement des élement a coté
 		for (EMoveInfosExtend blockNext : blocksNext) {
-			world.setBlock(blockNext.x, blockNext.y, blockNext.z, Block.pistonMoving.blockID, blockNext.metadata, 2);
-			TileEntity teBlock = new TileEntityMorePistons (blockNext.id, blockNext.metadata, orientation, true, false, blockNext.move, false);
-			world.setBlockTileEntity(blockNext.x, blockNext.y, blockNext.z, teBlock);
+			world.setBlock(blockNext.x, blockNext.y, blockNext.z, Blocks.piston_extension, blockNext.metadata, 2);
+			TileEntity teBlock = new TileEntityMorePistons (blockNext.block, blockNext.metadata, orientation, true, false, blockNext.move, false);
+			world.setTileEntity(blockNext.x, blockNext.y, blockNext.z, teBlock);
 		}
 		
 		
@@ -349,18 +347,17 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	 * @param metadata
 	 * @return
 	 */
-	protected boolean isAttachOnTop (int id, int metadata) {
+	protected boolean isAttachOnTop (Block block, int metadata) {
 		
-		if (id == 0) {
+		if (block == null || block == Blocks.air) {
 			return false;
 		}
 		
-		Block block = Block.blocksList[id];
 		if (
 			(block instanceof BlockSkull) ||                                   // Les tête
 			(block instanceof BlockLadder) ||                                  // Les echelles
 			(block instanceof BlockButton) ||                                  // Les boutons
-			(block instanceof BlockTripWireSource) ||                          // Les piège
+			(block instanceof BlockTripWireHook) ||                            // Les piège
 			(block instanceof BlockTorch && metadata != 5) ||                  // Les Torches charbons et Redstones
 			(block instanceof BlockTrapDoor && (metadata & 0x8) == 0x8) ||     // Les Trappe
 			(block instanceof BlockLever && metadata != 5 && metadata != 6)    // Les leviers
@@ -397,27 +394,19 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	 * @param metadata
 	 * @return
 	 */
-	protected boolean isAttachOnNext (int id, int metadata, int orientation) {
+	protected boolean isAttachOnNext (Block block, int metadata, int orientation) {
 		
-		if (id == 0) {
+		if (block == null || block == Blocks.air) {
 			return false;
 		}
 //		
-//		ModMorePistons.log.debug("======================================================");
-//		ModMorePistons.log.debug("metadata  : "+metadata);
-//		ModMorePistons.log.debug("metadataO : "+(metadata & 0x3));
-//		ModMorePistons.log.debug("this.convertOrientationFromTripe (metadata) : "+this.convertOrientationFromTripe (metadata & 0x3));
-//		ModMorePistons.log.debug("orientation : "+orientation);
-//		ModMorePistons.log.debug("======================================================");
-		
-		Block block = Block.blocksList[id];
 		if (
-			(block instanceof BlockLadder          && metadata == orientation) ||                                    // Les echelles
-			(block instanceof BlockTripWireSource  && this.convertOrientationFromTripe (metadata)       == orientation) || // Les piège
-			(block instanceof BlockButton          && this.convertOrientationFromTorch (metadata)       == orientation) || // Les boutons
-			(block instanceof BlockTorch           && this.convertOrientationFromTorch (metadata)       == orientation) || // Les Torches charbons et Redstones
-			(block instanceof BlockLever           && this.convertOrientationFromTorch (metadata)       == orientation) || // Les leviers
-			(block instanceof BlockTrapDoor        && ((metadata & 0x3) + 2 == orientation)) || // Les leviers
+			(block instanceof BlockLadder       && metadata == orientation) ||                                    // Les echelles
+			(block instanceof BlockTripWireHook && this.convertOrientationFromTripe (metadata)       == orientation) || // Les piège
+			(block instanceof BlockButton       && this.convertOrientationFromTorch (metadata)       == orientation) || // Les boutons
+			(block instanceof BlockTorch        && this.convertOrientationFromTorch (metadata)       == orientation) || // Les Torches charbons et Redstones
+			(block instanceof BlockLever        && this.convertOrientationFromTorch (metadata)       == orientation) || // Les leviers
+			(block instanceof BlockTrapDoor     && ((metadata & 0x3) + 2 == orientation)) || // Les leviers
 			false
 			
 		) {

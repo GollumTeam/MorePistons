@@ -2,9 +2,10 @@ package mods.morepistons.common.block;
 
 import mods.morepistons.common.ModMorePistons;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonExtension; //aob;
+import net.minecraft.block.BlockPistonExtension;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.Facing;
-import net.minecraft.world.World; // yc;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -13,24 +14,24 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 	public boolean upDown = false;
 
 	public BlockMorePistonsExtension(int id) {
-		super(id);
-		setStepSound(soundStoneFootstep);
+		super();
+//		setStepSound(soundStoneFootstep);
 		setHardness(0.5F);
 	}
 	
 	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
 		
 		int direction = this.getDirectionFromMetadata (metadata);
-		int id = ModMorePistons.blockPistonRod.blockID;
-		while (id  == ModMorePistons.blockPistonRod.blockID) {
+		Block block = ModMorePistons.blockPistonRod;
+		while (block instanceof BlockMorePistonsRod) {
 			x -= Facing.offsetsXForSide[direction];
 			y -= Facing.offsetsYForSide[direction];
 			z -= Facing.offsetsZForSide[direction];
 			
-			id = world.getBlockId(x, y, z);
+			block = world.getBlock(x, y, z);
 			
-			if (id  == ModMorePistons.blockPistonRod.blockID) {
-				world.destroyBlock(x, y, z, false);
+			if (block instanceof BlockMorePistonsRod) {
+				world.func_147480_a(x, y, z, false);
 			}
 			
 		}
@@ -48,22 +49,21 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 		int x2 = x;
 		int y2 = y;
 		int z2 = z;
-		int id2 = 0;
+		Block block2 = null;
 		
 		
 		do {
 			x2 -= Facing.offsetsXForSide[orientation];
 			y2 -= Facing.offsetsYForSide[orientation];
 			z2 -= Facing.offsetsZForSide[orientation];
-			id2 = world.getBlockId(x2, y2, z2);
+			block2 = world.getBlock(x2, y2, z2);
 			
-		} while (id2 == ModMorePistons.blockPistonRod.blockID);
+		} while (block2 == ModMorePistons.blockPistonRod);
 		
-		int idPiston = world.getBlockId(x2, y2, z2);
-		if (idPiston != 0) {
-			Block block = Block.blocksList[idPiston];
-			if (block instanceof BlockMorePistonsBase && !world.isRemote) {
-				((BlockMorePistonsBase)block).updatePistonState(world, x2, y2, z2, true);
+		Block blockPiston = world.getBlock(x2, y2, z2);
+		if (blockPiston != null && blockPiston != Blocks.air) {
+			if (blockPiston instanceof BlockMorePistonsBase && !world.isRemote) {
+				((BlockMorePistonsBase)blockPiston).updatePistonState(world, x2, y2, z2, true);
 			}
 		}
 		

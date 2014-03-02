@@ -5,10 +5,11 @@ import java.util.List;
 
 import mods.morepistons.common.ModMorePistons;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityFallingSand;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
@@ -18,7 +19,7 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 	public double power = 1.5D;
 	
 	public BlockMorePistonsGravitational(int id, boolean isSticky) {
-		super(id, isSticky, "gravi_");
+		super(isSticky, "gravi_");
 	}
 	
 	/**
@@ -43,11 +44,11 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 			y2 += Facing.offsetsYForSide[orientation];
 			z2 += Facing.offsetsZForSide[orientation];
 
-			int id = world.getBlockId(x2, y2, z2);
+			Block block = world.getBlock(x2, y2, z2);
 			posEntity++;
-			if (this.isEmptyBlockBlock (id)) {
+			if (this.isEmptyBlock (block)) {
 				int metadata = world.getBlockMetadata (x2, y2, z2);
-				this.dropMobilityFlag1(id, metadata, world, x2, y2, z2);
+				this.dropMobilityFlag1(block, metadata, world, x2, y2, z2);
 				break;
 			}
 		}
@@ -57,21 +58,21 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 			int xSand = x2 - Facing.offsetsXForSide[orientation];
 			int ySand = y2 - Facing.offsetsYForSide[orientation];
 			int zSand = z2 - Facing.offsetsZForSide[orientation];
-			int id = world.getBlockId(xSand, ySand, zSand);
+			Block block = world.getBlock(xSand, ySand, zSand);
 			double i = 0;
-			while (orientation == 1 && id != 0  && Block.blocksList[id] instanceof BlockSand) {
+			while (orientation == 1 && block instanceof BlockFalling) {
 				
-				world.setBlock (xSand, ySand, zSand, 0);
+				world.setBlockToAir(xSand, ySand, zSand);
 				world.setBlockMetadataWithNotify(xSand, ySand, zSand, 0, 2);
-				EntityFallingSand entityfallingsand = new EntityFallingSand(world, x2 + 0.5F, y2 + 0.5F, z2 + 0.5F, id);
-				entityfallingsand.motionY += this.power-1.5 + (((double)i)*0.1);
-				entityfallingsand.fallTime = 1;
-				world.spawnEntityInWorld(entityfallingsand);
+				EntityFallingBlock entityFallingBlock = new EntityFallingBlock(world, x2 + 0.5F, y2 + 0.5F, z2 + 0.5F, block);
+				entityFallingBlock.motionY += this.power-1.5 + (((double)i)*0.1);
+				entityFallingBlock.field_145812_b = 1;
+				world.spawnEntityInWorld(entityFallingBlock);
 
 				xSand -= Facing.offsetsXForSide[orientation];
 				ySand -= Facing.offsetsYForSide[orientation];
 				zSand -= Facing.offsetsZForSide[orientation];
-				id = world.getBlockId(xSand, ySand, zSand);
+				block = world.getBlock(xSand, ySand, zSand);
 				
 				i++;
 			}

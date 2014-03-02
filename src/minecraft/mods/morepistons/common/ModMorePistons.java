@@ -1,6 +1,8 @@
 package mods.morepistons.common;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import mods.gollum.core.config.ConfigLoader;
@@ -22,13 +24,14 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "MorePistons", name = "More Pistons", version = "1.5.0 [Build Smeagol]", acceptedMinecraftVersions = "1.6.4")
-@NetworkMod(clientSideRequired = true, serverSideRequired = true)
+@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = "1.5.0 [Build Smeagol]", acceptedMinecraftVersions = "1.6.4")
 public class ModMorePistons {
+
+	public static final String MODID = "MorePistons";
+	public static final String MODNAME = "MorePistons";
 	
 	@Instance("ModMorePistons")
 	public static ModMorePistons instance;
@@ -199,11 +202,11 @@ public class ModMorePistons {
 		proxy.registerRenderers();
 		
 		// Place le piston normal dans le creative tab
-		Block.pistonBase.setCreativeTab(morePistonsTabs);
-		Block.pistonStickyBase.setCreativeTab(morePistonsTabs);
+		Blocks.piston.setCreativeTab(morePistonsTabs);
+		Blocks.sticky_piston.setCreativeTab(morePistonsTabs);
 		
 		// Set de l'icon du tab creative
-		this.morePistonsTabs.setIcon(Block.pistonBase);
+		this.morePistonsTabs.setIcon(Blocks.piston);
 	}
 
 	/** 3 **/
@@ -218,60 +221,60 @@ public class ModMorePistons {
 	public void initBlocks() {
 		
 		// Création des blocks
-		this.blockPistonExtension = new BlockMorePistonsExtension(this.blockPistonExtensionID).setUnlocalizedName("MorePistonsExtension");
-		this.blockPistonRod       = new BlockMorePistonsRod      (this.blockPistonRodID)      .setUnlocalizedName("MorePistonsRod");
+		this.blockPistonExtension = new BlockMorePistonsExtension(this.blockPistonExtensionID).setBlockName("MorePistonsExtension");
+		this.blockPistonRod       = new BlockMorePistonsRod      (this.blockPistonRodID)      .setBlockName("MorePistonsRod");
 		
-		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(this.blockGravitationalPistonBaseID      , false).setUnlocalizedName("GravitationalPistonBase");
-		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(this.blockGravitationalStickyPistonBaseID, true) .setUnlocalizedName("GravitationalStickyPistonBase");
+		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(this.blockGravitationalPistonBaseID      , false).setBlockName("GravitationalPistonBase");
+		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(this.blockGravitationalStickyPistonBaseID, true) .setBlockName("GravitationalStickyPistonBase");
 		
-		this.blockDoublePistonBase           = (new BlockMorePistonsBase(this.blockDoublePistonBaseID      , false, "double_")).setLength (2).setUnlocalizedName("DoublePistonBase");
-		this.blockDoubleStickyPistonBase     = (new BlockMorePistonsBase(this.blockDoubleStickyPistonBaseID, true , "double_")).setLength (2).setUnlocalizedName("DoubleStikyPistonBase");
-		this.blockTriplePistonBase           = (new BlockMorePistonsBase(this.blockTriplePistonBaseID      , false, "triple_")).setLength (3).setUnlocalizedName("TriplePistonBase");
-		this.blockTripleStickyPistonBase     = (new BlockMorePistonsBase(this.blockTripleStickyPistonBaseID, true , "triple_")).setLength (3).setUnlocalizedName("TripleStikyPistonBase");
-		this.blockQuadruplePistonBase        = (new BlockMorePistonsBase(this.blockQuadPistonBaseID        , false, "quad_"  )).setLength (4).setUnlocalizedName("QuadruplePistonBase");
-		this.blockQuadrupleStickyPistonBase  = (new BlockMorePistonsBase(this.blockQuadStickyPistonBaseID  , true , "quad_"  )).setLength (4).setUnlocalizedName("QuadrupleStikyPistonBase");
-		this.blockQuintuplePistonBase        = (new BlockMorePistonsBase(this.blockQuintPistonBaseID       , false, "quint_" )).setLength (5).setUnlocalizedName("QuintuplePistonBase");
-		this.blockQuintupleStickyPistonBase  = (new BlockMorePistonsBase(this.blockQuintStickyPistonBaseID , true , "quint_" )).setLength (5).setUnlocalizedName("QuintupleStikyPistonBase");
-		this.blockSextuplePistonBase         = (new BlockMorePistonsBase(this.blockSextPistonBaseID        , false, "sext_"  )).setLength (6).setUnlocalizedName("SextuplePistonBase");
-		this.blockSextupleStickyPistonBase   = (new BlockMorePistonsBase(this.blockSextStickyPistonBaseID  , true , "sext_"  )).setLength (6).setUnlocalizedName("SextupleStikyPistonBase");
-		this.blockSeptuplePistonBase         = (new BlockMorePistonsBase(this.blockSeptPistonBaseID        , false, "sept_"  )).setLength (7).setUnlocalizedName("SeptuplePistonBase");
-		this.blockSeptupleStickyPistonBase   = (new BlockMorePistonsBase(this.blockSeptStickyPistonBaseID  , true , "sept_"  )).setLength (7).setUnlocalizedName("SeptupleStikyPistonBase");
-		this.blockOctuplePistonBase          = (new BlockMorePistonsBase(this.blockOctPistonBaseID         , false, "oct_"   )).setLength (8).setUnlocalizedName("OctuplePistonBase");
-		this.blockOctupleStickyPistonBase    = (new BlockMorePistonsBase(this.blockOctStickyPistonBaseID   , true , "oct_"   )).setLength (8).setUnlocalizedName("OctupleStikyPistonBase");
+		this.blockDoublePistonBase           = (new BlockMorePistonsBase(false, "double_")).setLength (2).setBlockName("DoublePistonBase");
+		this.blockDoubleStickyPistonBase     = (new BlockMorePistonsBase(true , "double_")).setLength (2).setBlockName("DoubleStikyPistonBase");
+		this.blockTriplePistonBase           = (new BlockMorePistonsBase(false, "triple_")).setLength (3).setBlockName("TriplePistonBase");
+		this.blockTripleStickyPistonBase     = (new BlockMorePistonsBase(true , "triple_")).setLength (3).setBlockName("TripleStikyPistonBase");
+		this.blockQuadruplePistonBase        = (new BlockMorePistonsBase(false, "quad_"  )).setLength (4).setBlockName("QuadruplePistonBase");
+		this.blockQuadrupleStickyPistonBase  = (new BlockMorePistonsBase(true , "quad_"  )).setLength (4).setBlockName("QuadrupleStikyPistonBase");
+		this.blockQuintuplePistonBase        = (new BlockMorePistonsBase(false, "quint_" )).setLength (5).setBlockName("QuintuplePistonBase");
+		this.blockQuintupleStickyPistonBase  = (new BlockMorePistonsBase(true , "quint_" )).setLength (5).setBlockName("QuintupleStikyPistonBase");
+		this.blockSextuplePistonBase         = (new BlockMorePistonsBase(false, "sext_"  )).setLength (6).setBlockName("SextuplePistonBase");
+		this.blockSextupleStickyPistonBase   = (new BlockMorePistonsBase(true , "sext_"  )).setLength (6).setBlockName("SextupleStikyPistonBase");
+		this.blockSeptuplePistonBase         = (new BlockMorePistonsBase(false, "sept_"  )).setLength (7).setBlockName("SeptuplePistonBase");
+		this.blockSeptupleStickyPistonBase   = (new BlockMorePistonsBase(true , "sept_"  )).setLength (7).setBlockName("SeptupleStikyPistonBase");
+		this.blockOctuplePistonBase          = (new BlockMorePistonsBase(false, "oct_"   )).setLength (8).setBlockName("OctuplePistonBase");
+		this.blockOctupleStickyPistonBase    = (new BlockMorePistonsBase(true , "oct_"   )).setLength (8).setBlockName("OctupleStikyPistonBase");
 
-		this.blockSuperPistonBase                = (new BlockMorePistonsSuper(this.blockSuperPistonBaseID      , false)).setUnlocalizedName("SuperPistonBase");
-		this.blockSuperStickyPistonBase          = (new BlockMorePistonsSuper(this.blockSuperStickyPistonBaseID, true)) .setUnlocalizedName("SuperStickyPistonBase");
-		this.blockSuperDoublePistonBase          = (new BlockMorePistonsSuper(this.blockSuperDoublePistonBaseID      , false, "double_")).setLength (2).setUnlocalizedName("SuperDoublePistonBase");
-		this.blockSuperDoubleStickyPistonBase    = (new BlockMorePistonsSuper(this.blockSuperDoubleStickyPistonBaseID, true , "double_")).setLength (2).setUnlocalizedName("SuperDoubleStikyPistonBase");
-		this.blockSuperTriplePistonBase          = (new BlockMorePistonsSuper(this.blockSuperTriplePistonBaseID      , false, "triple_")).setLength (3).setUnlocalizedName("SuperTriplePistonBase");
-		this.blockSuperTripleStickyPistonBase    = (new BlockMorePistonsSuper(this.blockSuperTripleStickyPistonBaseID, true , "triple_")).setLength (3).setUnlocalizedName("SuperTripleStikyPistonBase");
-		this.blockSuperQuadruplePistonBase       = (new BlockMorePistonsSuper(this.blockSuperQuadPistonBaseID        , false, "quad_"  )).setLength (4).setUnlocalizedName("SuperQuadruplePistonBase");
-		this.blockSuperQuadrupleStickyPistonBase = (new BlockMorePistonsSuper(this.blockSuperQuadStickyPistonBaseID  , true , "quad_"  )).setLength (4).setUnlocalizedName("SuperQuadrupleStikyPistonBase");
-		this.blockSuperQuintuplePistonBase       = (new BlockMorePistonsSuper(this.blockSuperQuintPistonBaseID       , false, "quint_" )).setLength (5).setUnlocalizedName("SuperQuintuplePistonBase");
-		this.blockSuperQuintupleStickyPistonBase = (new BlockMorePistonsSuper(this.blockSuperQuintStickyPistonBaseID , true , "quint_" )).setLength (5).setUnlocalizedName("SuperQuintupleStikyPistonBase");
-		this.blockSuperSextuplePistonBase        = (new BlockMorePistonsSuper(this.blockSuperSextPistonBaseID        , false, "sext_"  )).setLength (6).setUnlocalizedName("SuperSextuplePistonBase");
-		this.blockSuperSextupleStickyPistonBase  = (new BlockMorePistonsSuper(this.blockSuperSextStickyPistonBaseID  , true , "sext_"  )).setLength (6).setUnlocalizedName("SuperSextupleStikyPistonBase");
-		this.blockSuperSeptuplePistonBase        = (new BlockMorePistonsSuper(this.blockSuperSeptPistonBaseID        , false, "sept_"  )).setLength (7).setUnlocalizedName("SuperSeptuplePistonBase");
-		this.blockSuperSeptupleStickyPistonBase  = (new BlockMorePistonsSuper(this.blockSuperSeptStickyPistonBaseID  , true , "sept_"  )).setLength (7).setUnlocalizedName("SuperSeptupleStikyPistonBase");
-		this.blockSuperOctuplePistonBase         = (new BlockMorePistonsSuper(this.blockSuperOctPistonBaseID         , false, "oct_"   )).setLength (8).setUnlocalizedName("SuperOctuplePistonBase");
-		this.blockSuperOctupleStickyPistonBase   = (new BlockMorePistonsSuper(this.blockSuperOctStickyPistonBaseID   , true , "oct_"   )).setLength (8).setUnlocalizedName("SuperOctupleStikyPistonBase");
+		this.blockSuperPistonBase                = (new BlockMorePistonsSuper(this.blockSuperPistonBaseID      , false)).setBlockName("SuperPistonBase");
+		this.blockSuperStickyPistonBase          = (new BlockMorePistonsSuper(this.blockSuperStickyPistonBaseID, true)) .setBlockName("SuperStickyPistonBase");
+		this.blockSuperDoublePistonBase          = (new BlockMorePistonsSuper(this.blockSuperDoublePistonBaseID      , false, "double_")).setLength (2).setBlockName("SuperDoublePistonBase");
+		this.blockSuperDoubleStickyPistonBase    = (new BlockMorePistonsSuper(this.blockSuperDoubleStickyPistonBaseID, true , "double_")).setLength (2).setBlockName("SuperDoubleStikyPistonBase");
+		this.blockSuperTriplePistonBase          = (new BlockMorePistonsSuper(this.blockSuperTriplePistonBaseID      , false, "triple_")).setLength (3).setBlockName("SuperTriplePistonBase");
+		this.blockSuperTripleStickyPistonBase    = (new BlockMorePistonsSuper(this.blockSuperTripleStickyPistonBaseID, true , "triple_")).setLength (3).setBlockName("SuperTripleStikyPistonBase");
+		this.blockSuperQuadruplePistonBase       = (new BlockMorePistonsSuper(this.blockSuperQuadPistonBaseID        , false, "quad_"  )).setLength (4).setBlockName("SuperQuadruplePistonBase");
+		this.blockSuperQuadrupleStickyPistonBase = (new BlockMorePistonsSuper(this.blockSuperQuadStickyPistonBaseID  , true , "quad_"  )).setLength (4).setBlockName("SuperQuadrupleStikyPistonBase");
+		this.blockSuperQuintuplePistonBase       = (new BlockMorePistonsSuper(this.blockSuperQuintPistonBaseID       , false, "quint_" )).setLength (5).setBlockName("SuperQuintuplePistonBase");
+		this.blockSuperQuintupleStickyPistonBase = (new BlockMorePistonsSuper(this.blockSuperQuintStickyPistonBaseID , true , "quint_" )).setLength (5).setBlockName("SuperQuintupleStikyPistonBase");
+		this.blockSuperSextuplePistonBase        = (new BlockMorePistonsSuper(this.blockSuperSextPistonBaseID        , false, "sext_"  )).setLength (6).setBlockName("SuperSextuplePistonBase");
+		this.blockSuperSextupleStickyPistonBase  = (new BlockMorePistonsSuper(this.blockSuperSextStickyPistonBaseID  , true , "sext_"  )).setLength (6).setBlockName("SuperSextupleStikyPistonBase");
+		this.blockSuperSeptuplePistonBase        = (new BlockMorePistonsSuper(this.blockSuperSeptPistonBaseID        , false, "sept_"  )).setLength (7).setBlockName("SuperSeptuplePistonBase");
+		this.blockSuperSeptupleStickyPistonBase  = (new BlockMorePistonsSuper(this.blockSuperSeptStickyPistonBaseID  , true , "sept_"  )).setLength (7).setBlockName("SuperSeptupleStikyPistonBase");
+		this.blockSuperOctuplePistonBase         = (new BlockMorePistonsSuper(this.blockSuperOctPistonBaseID         , false, "oct_"   )).setLength (8).setBlockName("SuperOctuplePistonBase");
+		this.blockSuperOctupleStickyPistonBase   = (new BlockMorePistonsSuper(this.blockSuperOctStickyPistonBaseID   , true , "oct_"   )).setLength (8).setBlockName("SuperOctupleStikyPistonBase");
 		
-		ModMorePistons.blockRedStonePistonBase1       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase1ID      , false, "redstonepiston_")).setMultiplicateur(1).setUnlocalizedName("RedStonePistonBase")      .setCreativeTab(ModMorePistons.morePistonsTabs);
-		ModMorePistons.blockRedStoneStickyPistonBase1 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase1ID, true , "redstonepiston_")).setMultiplicateur(1).setUnlocalizedName("RedStoneStickyPistonBase").setCreativeTab(ModMorePistons.morePistonsTabs);
-		ModMorePistons.blockRedStonePistonBase2       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase2ID      , false, "redstonepiston_")).setMultiplicateur(2).setUnlocalizedName("RedStonePistonBase2");
-		ModMorePistons.blockRedStoneStickyPistonBase2 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase2ID, true , "redstonepiston_")).setMultiplicateur(2).setUnlocalizedName("RedStoneStickyPistonBase2");
-		ModMorePistons.blockRedStonePistonBase3       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase3ID      , false, "redstonepiston_")).setMultiplicateur(3).setUnlocalizedName("RedStonePistonBase3");
-		ModMorePistons.blockRedStoneStickyPistonBase3 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase3ID, true , "redstonepiston_")).setMultiplicateur(3).setUnlocalizedName("RedStoneStickyPistonBase3");
-		ModMorePistons.blockRedStonePistonBase4       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase4ID      , false, "redstonepiston_")).setMultiplicateur(4).setUnlocalizedName("RedStonePistonBase4");
-		ModMorePistons.blockRedStoneStickyPistonBase4 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase4ID, true , "redstonepiston_")).setMultiplicateur(4).setUnlocalizedName("RedStoneStickyPistonBase4");
-		ModMorePistons.blockRedStonePistonBase5       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase5ID      , false, "redstonepiston_")).setMultiplicateur(5).setUnlocalizedName("RedStonePistonBase5");
-		ModMorePistons.blockRedStoneStickyPistonBase5 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase5ID, true , "redstonepiston_")).setMultiplicateur(5).setUnlocalizedName("RedStoneStickyPistonBase5");
-		ModMorePistons.blockRedStonePistonBase6       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase6ID      , false, "redstonepiston_")).setMultiplicateur(6).setUnlocalizedName("RedStonePistonBase6");
-		ModMorePistons.blockRedStoneStickyPistonBase6 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase6ID, true , "redstonepiston_")).setMultiplicateur(6).setUnlocalizedName("RedStoneStickyPistonBase6");
-		ModMorePistons.blockRedStonePistonBase7       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase7ID      , false, "redstonepiston_")).setMultiplicateur(7).setUnlocalizedName("RedStonePistonBase7");
-		ModMorePistons.blockRedStoneStickyPistonBase7 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase7ID, true , "redstonepiston_")).setMultiplicateur(7).setUnlocalizedName("RedStoneStickyPistonBase7");
-		ModMorePistons.blockRedStonePistonBase8       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase8ID      , false, "redstonepiston_")).setMultiplicateur(8).setUnlocalizedName("RedStonePistonBase8");
-		ModMorePistons.blockRedStoneStickyPistonBase8 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase8ID, true , "redstonepiston_")).setMultiplicateur(8).setUnlocalizedName("RedStoneStickyPistonBase8");
+		ModMorePistons.blockRedStonePistonBase1       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase1ID      , false, "redstonepiston_")).setMultiplicateur(1).setBlockName("RedStonePistonBase")      .setCreativeTab(ModMorePistons.morePistonsTabs);
+		ModMorePistons.blockRedStoneStickyPistonBase1 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase1ID, true , "redstonepiston_")).setMultiplicateur(1).setBlockName("RedStoneStickyPistonBase").setCreativeTab(ModMorePistons.morePistonsTabs);
+		ModMorePistons.blockRedStonePistonBase2       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase2ID      , false, "redstonepiston_")).setMultiplicateur(2).setBlockName("RedStonePistonBase2");
+		ModMorePistons.blockRedStoneStickyPistonBase2 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase2ID, true , "redstonepiston_")).setMultiplicateur(2).setBlockName("RedStoneStickyPistonBase2");
+		ModMorePistons.blockRedStonePistonBase3       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase3ID      , false, "redstonepiston_")).setMultiplicateur(3).setBlockName("RedStonePistonBase3");
+		ModMorePistons.blockRedStoneStickyPistonBase3 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase3ID, true , "redstonepiston_")).setMultiplicateur(3).setBlockName("RedStoneStickyPistonBase3");
+		ModMorePistons.blockRedStonePistonBase4       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase4ID      , false, "redstonepiston_")).setMultiplicateur(4).setBlockName("RedStonePistonBase4");
+		ModMorePistons.blockRedStoneStickyPistonBase4 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase4ID, true , "redstonepiston_")).setMultiplicateur(4).setBlockName("RedStoneStickyPistonBase4");
+		ModMorePistons.blockRedStonePistonBase5       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase5ID      , false, "redstonepiston_")).setMultiplicateur(5).setBlockName("RedStonePistonBase5");
+		ModMorePistons.blockRedStoneStickyPistonBase5 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase5ID, true , "redstonepiston_")).setMultiplicateur(5).setBlockName("RedStoneStickyPistonBase5");
+		ModMorePistons.blockRedStonePistonBase6       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase6ID      , false, "redstonepiston_")).setMultiplicateur(6).setBlockName("RedStonePistonBase6");
+		ModMorePistons.blockRedStoneStickyPistonBase6 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase6ID, true , "redstonepiston_")).setMultiplicateur(6).setBlockName("RedStoneStickyPistonBase6");
+		ModMorePistons.blockRedStonePistonBase7       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase7ID      , false, "redstonepiston_")).setMultiplicateur(7).setBlockName("RedStonePistonBase7");
+		ModMorePistons.blockRedStoneStickyPistonBase7 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase7ID, true , "redstonepiston_")).setMultiplicateur(7).setBlockName("RedStoneStickyPistonBase7");
+		ModMorePistons.blockRedStonePistonBase8       = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStonePistonBase8ID      , false, "redstonepiston_")).setMultiplicateur(8).setBlockName("RedStonePistonBase8");
+		ModMorePistons.blockRedStoneStickyPistonBase8 = (new BlockMorePistonsRedStone(ModMorePistons.blockRedStoneStickyPistonBase8ID, true , "redstonepiston_")).setMultiplicateur(8).setBlockName("RedStoneStickyPistonBase8");
 
 
 		
@@ -398,33 +401,33 @@ public class ModMorePistons {
 	 */
 	private void initRecipes () {
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), Block.pistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockDoubleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockDoublePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockDoubleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), Block.pistonStickyBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), Blocks.piston });
+		GameRegistry.addRecipe(new ItemStack(this.blockDoubleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockDoublePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockDoubleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), Blocks.sticky_piston });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockTriplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockDoublePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockTripleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockTriplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockTripleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockDoubleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockTriplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockDoublePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockTripleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockTriplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockTripleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockDoubleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockQuadruplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockTriplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockQuadrupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockQuadruplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockQuadrupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockTripleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockQuadruplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockTriplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockQuadrupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockQuadruplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockQuadrupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockTripleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockQuintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockQuadruplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockQuintupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockQuintuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockQuintupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockQuadrupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockQuintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockQuadruplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockQuintupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockQuintuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockQuintupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockQuadrupleStickyPistonBase });
 	
-		GameRegistry.addRecipe(new ItemStack(this.blockSextuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockQuintuplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSextupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSextuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSextupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockQuintupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSextuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockQuintuplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSextupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSextuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSextupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockQuintupleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSeptuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSextuplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSeptupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSeptuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSeptupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSextupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSeptuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSextuplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSeptupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSeptuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSeptupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSextupleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSeptuplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockOctuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSeptupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSeptuplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockOctuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSeptupleStickyPistonBase });
 		
 		GameRegistry.addRecipe(
 			new ItemStack(this.blockRedStonePistonBase1, 1), 
@@ -432,10 +435,10 @@ public class ModMorePistons {
 				"XXX",
 				"DRE",
 				" Y ",
-				Character.valueOf('X'), Block.planks,
-				Character.valueOf('D'), Item.diamond,
-				Character.valueOf('E'), Item.emerald,
-				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('X'), Blocks.planks,
+				Character.valueOf('D'), Items.diamond,
+				Character.valueOf('E'), Items.emerald,
+				Character.valueOf('R'), Items.repeater,
 				Character.valueOf('Y'), this.blockOctuplePistonBase
 			}
 		);
@@ -445,10 +448,10 @@ public class ModMorePistons {
 				"XXX",
 				"ERD",
 				" Y ",
-				Character.valueOf('X'), Block.planks,
-				Character.valueOf('D'), Item.diamond,
-				Character.valueOf('E'), Item.emerald,
-				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('X'), Blocks.planks,
+				Character.valueOf('D'), Items.diamond,
+				Character.valueOf('E'), Items.emerald,
+				Character.valueOf('R'), Items.repeater,
 				Character.valueOf('Y'), this.blockOctuplePistonBase
 			}
 		);
@@ -458,10 +461,10 @@ public class ModMorePistons {
 				"XXX",
 				"ERD",
 				" Y ",
-				Character.valueOf('X'), Block.planks,
-				Character.valueOf('D'), Item.diamond,
-				Character.valueOf('E'), Item.emerald,
-				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('X'), Blocks.planks,
+				Character.valueOf('D'), Items.diamond,
+				Character.valueOf('E'), Items.emerald,
+				Character.valueOf('R'), Items.repeater,
 				Character.valueOf('Y'), this.blockOctupleStickyPistonBase
 			}
 		);
@@ -471,48 +474,48 @@ public class ModMorePistons {
 				"XXX",
 				"DRE",
 				" Y ",
-				Character.valueOf('X'), Block.planks,
-				Character.valueOf('D'), Item.diamond,
-				Character.valueOf('E'), Item.emerald,
-				Character.valueOf('R'), Item.redstoneRepeater,
+				Character.valueOf('X'), Blocks.planks,
+				Character.valueOf('D'), Items.diamond,
+				Character.valueOf('E'), Items.emerald,
+				Character.valueOf('R'), Items.repeater,
 				Character.valueOf('Y'), this.blockOctupleStickyPistonBase
 			}
 		);
-		GameRegistry.addRecipe(new ItemStack(this.blockRedStoneStickyPistonBase1, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockRedStonePistonBase1, Character.valueOf('Y'), Item.slimeBall });
+		GameRegistry.addRecipe(new ItemStack(this.blockRedStoneStickyPistonBase1, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockRedStonePistonBase1, Character.valueOf('Y'), Items.slime_ball });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockGravitationalPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), Block.pistonBase, Character.valueOf('Y'), Block.tnt });
-		GameRegistry.addRecipe(new ItemStack(this.blockGravitationalStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockGravitationalPistonBase, Character.valueOf('Y'), Item.slimeBall });
+		GameRegistry.addRecipe(new ItemStack(this.blockGravitationalPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), Blocks.piston, Character.valueOf('Y'), Blocks.tnt });
+		GameRegistry.addRecipe(new ItemStack(this.blockGravitationalStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockGravitationalPistonBase, Character.valueOf('Y'), Items.slime_ball });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperPistonBase, 1), new Object[] { "WWW", "CIC", "ORO", Character.valueOf('W'), Block.planks, Character.valueOf('C'), Block.cobblestone, Character.valueOf('I'), Item.ingotIron, Character.valueOf('O'), Block.obsidian, Character.valueOf('R'), Item.redstone });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperStickyPistonBase, 1), new Object[] { "S", "P", Character.valueOf('S'), Item.slimeBall, Character.valueOf('P'), this.blockSuperPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperPistonBase, 1), new Object[] { "WWW", "CIC", "ORO", Character.valueOf('W'), Blocks.planks, Character.valueOf('C'), Blocks.cobblestone, Character.valueOf('I'), Items.iron_ingot, Character.valueOf('O'), Blocks.obsidian, Character.valueOf('R'), Items.redstone });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperStickyPistonBase, 1), new Object[] { "S", "P", Character.valueOf('S'), Items.slime_ball, Character.valueOf('P'), this.blockSuperPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperPistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperDoubleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperDoublePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperDoubleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperDoubleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperDoublePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperDoubleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperTriplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperDoublePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperTripleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperTriplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperTripleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperDoubleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperTriplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperDoublePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperTripleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperTriplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperTripleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperDoubleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuadruplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperTriplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuadrupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperQuadruplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuadrupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperTripleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuadruplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperTriplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuadrupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperQuadruplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuadrupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperTripleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperQuadruplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuintupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperQuintuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuintupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperQuadrupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperQuadruplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuintupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperQuintuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperQuintupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperQuadrupleStickyPistonBase });
 	
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperSextuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperQuintuplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperSextupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperSextuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperSextupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperQuintupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperSextuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperQuintuplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperSextupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperSextuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperSextupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperQuintupleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperSeptuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperSextuplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperSeptupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperSeptuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperSeptupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperSextupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperSeptuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperSextuplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperSeptupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperSeptuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperSeptupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperSextupleStickyPistonBase });
 		
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperSeptuplePistonBase });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperOctuplePistonBase, Character.valueOf('Y'), Item.slimeBall });
-		GameRegistry.addRecipe(new ItemStack(this.blockSuperOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), this.blockSuperSeptupleStickyPistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperSeptuplePistonBase });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), this.blockSuperOctuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
+		GameRegistry.addRecipe(new ItemStack(this.blockSuperOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), this.blockSuperSeptupleStickyPistonBase });
 		
 	}
 	

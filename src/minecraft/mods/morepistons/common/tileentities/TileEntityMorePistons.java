@@ -8,10 +8,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.morepistons.common.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
+import mods.morepistons.common.block.BlockMorePistonsRod;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonMoving;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -19,7 +22,7 @@ import net.minecraft.util.Facing;
 
 public class TileEntityMorePistons extends TileEntity {
 	
-	public int storedBlockID = 0;
+	public Block storedBlock = null;
 	private int storedMetadata = 0;
 	public int storedOrientation = 0;
 	private boolean extending = false;
@@ -38,8 +41,8 @@ public class TileEntityMorePistons extends TileEntity {
 	public TileEntityMorePistons () {
 	}
 	
-	public TileEntityMorePistons(int id, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isBlockPiston) {
-		this.storedBlockID        = id;
+	public TileEntityMorePistons(Block block, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isBlockPiston) {
+		this.storedBlock          = block;
 		this.storedMetadata       = metadata;
 		this.storedOrientation    = orientation;
 		this.extending            = extending;
@@ -85,9 +88,16 @@ public class TileEntityMorePistons extends TileEntity {
 			x += Facing.offsetsXForSide[this.storedOrientation];
 			y += Facing.offsetsYForSide[this.storedOrientation];
 			z += Facing.offsetsZForSide[this.storedOrientation];
-			int id = this.worldObj.getBlockId(x, y, z);
-			if (id == 0 || (!(Block.blocksList[id] instanceof BlockPistonBase) && !(Block.blocksList[id] instanceof BlockPistonMoving))) {
-				this.worldObj.setBlock (x, y, z, ModMorePistons.blockPistonRod.blockID, this.storedOrientation, 2);
+			Block block = this.worldObj.getBlock(x, y, z);
+			if (
+				block == null || 
+				block instanceof BlockAir || 
+				(
+					!(block instanceof BlockPistonBase) && 
+					!(block instanceof BlockPistonMoving)
+				)
+			) {
+				this.worldObj.setBlock (x, y, z, ModMorePistons.blockPistonRod, this.storedOrientation, 2);
 			}
 		}
 	}
@@ -117,9 +127,12 @@ public class TileEntityMorePistons extends TileEntity {
 			x -= Facing.offsetsXForSide[this.storedOrientation];
 			y -= Facing.offsetsYForSide[this.storedOrientation];
 			z -= Facing.offsetsZForSide[this.storedOrientation];
-			int id = this.worldObj.getBlockId(x, y, z);
-			if (id == ModMorePistons.blockPistonRod.blockID || id == ModMorePistons.blockPistonExtension.blockID) {
-				this.worldObj.setBlock (x, y, z, 0, this.storedOrientation, 2);
+			Block block = this.worldObj.getBlock(x, y, z);
+			if (
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsExtension
+			) {
+				this.worldObj.setBlockToAir (x, y, z);
 			}
 		}
 	}
@@ -157,10 +170,10 @@ public class TileEntityMorePistons extends TileEntity {
 			updatePushedObjects(1.0F, 0.25F);
 			// Fin du mouvement
 			
-			this.worldObj.removeBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
+			this.worldObj.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
 			invalidate ();
 			
-			if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord) == Block.pistonMoving.blockID) {
+			if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof  BlockPistonMoving) {
 				
 
 				if (this.distance < 0 || this.isBlockPiston && !this.extending) {
@@ -169,15 +182,14 @@ public class TileEntityMorePistons extends TileEntity {
 					this.displayPistonRod(this.distance + 1);
 				}
 				
-				this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlockID);
+				this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
 				this.worldObj.setBlockMetadataWithNotify(this.xCoord, this.yCoord, this.zCoord, this.storedMetadata, 2);
 				
-				if (this.storedBlockID != 0) {
-					Block block = Block.blocksList[this.storedBlockID];
-					if (block instanceof BlockMorePistonsExtension ||
-						block instanceof BlockPistonBase
+				if (this.storedBlock != null) {
+					if (this.storedBlock instanceof BlockMorePistonsExtension ||
+						this.storedBlock instanceof BlockPistonBase
 					) {
-						block.onNeighborBlockChange(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlockID);
+						this.storedBlock.onNeighborBlockChange(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
 					}
 				}
 			}
@@ -226,7 +238,7 @@ public class TileEntityMorePistons extends TileEntity {
 	 */
 	private void testCollisionWithOtherEntity(int x, int y, int z, float par1, float par2) {
 
-		AxisAlignedBB var3 = Block.pistonMoving.getAxisAlignedBB(this.worldObj, x, y, z, this.storedBlockID, par1, this.storedOrientation);
+		AxisAlignedBB var3 = Blocks.piston_extension.func_149964_a(this.worldObj, x, y, z, this.storedBlock, par1, this.storedOrientation);
 
 		if (var3 != null) {
 			List var4 = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, var3);
@@ -258,7 +270,7 @@ public class TileEntityMorePistons extends TileEntity {
 							xE = this.xCoord + fX + par2 * fX; break;
 					}
 					
-					if (this.worldObj.getBlockId(this.xCoord + fX, this.yCoord + fY, this.zCoord + fZ) != Block.pistonMoving.blockID) {
+					if (!(this.worldObj.getBlock(this.xCoord + fX, this.yCoord + fY, this.zCoord + fZ) instanceof BlockPistonMoving)) {
 						entity.setPosition(xE, yE, zE);
 					}
 				}
@@ -272,7 +284,7 @@ public class TileEntityMorePistons extends TileEntity {
 		super.readFromNBT(par1NBTTagCompound);
 		try {
 			
-			this.storedBlockID     = par1NBTTagCompound.getInteger("blockId");
+			this.storedBlock       = Block.getBlockById(par1NBTTagCompound.getInteger("blockId"));
 			this.storedMetadata    = par1NBTTagCompound.getInteger("blockData");
 			this.storedOrientation = par1NBTTagCompound.getInteger("facing");
 			this.extending         = par1NBTTagCompound.getBoolean("extending");
@@ -289,7 +301,7 @@ public class TileEntityMorePistons extends TileEntity {
 
 	public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
 		super.writeToNBT(par1NBTTagCompound);
-		par1NBTTagCompound.setInteger("blockId"  , this.storedBlockID);
+		par1NBTTagCompound.setInteger("blockId"  , Block.getIdFromBlock(this.storedBlock));
 		par1NBTTagCompound.setInteger("blockData", this.storedMetadata);
 		par1NBTTagCompound.setInteger("facing"   , this.storedOrientation);
 		par1NBTTagCompound.setBoolean("extending", this.extending);

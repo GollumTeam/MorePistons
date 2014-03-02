@@ -6,28 +6,28 @@ import java.util.Random;
 import mods.morepistons.common.ModMorePistons;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.material.Material; // agi;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity; // lq;
 import net.minecraft.util.AxisAlignedBB; // aoe;
 import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess; // ym;
 import net.minecraft.world.World; // yc;
 
 public class BlockMorePistonsRod extends Block {
 	//private int headTexture;
 	
-	private Icon textureFileV;
-	private Icon textureFileH;
-	private Icon textureFileTop;
+	private IIcon textureFileV;
+	private IIcon textureFileH;
+	private IIcon textureFileTop;
 	public boolean northSouth = false;
 	public boolean upDown = false;
 	
 	//
 	public BlockMorePistonsRod(int id) {
-		super(id, Material.grass);
+		super(Material.grass);
 		//this.headTexture = -1;
-		setStepSound(soundStoneFootstep);
+//		setStepSound(soundStoneFootstep); TODO
 		setHardness(0.3F);
 	}
 	
@@ -42,7 +42,7 @@ public class BlockMorePistonsRod extends Block {
 	 * @param key
 	 * @return
 	 */
-	public Icon loadTexture(IconRegister iconRegister, String key) {
+	public IIcon loadTexture(IIconRegister iconRegister, String key) {
 		ModMorePistons.log.debug("Register icon More Piston :\"" + key + "\"");
 		return iconRegister.registerIcon(key);
 	}
@@ -51,12 +51,13 @@ public class BlockMorePistonsRod extends Block {
 	 * Enregistre les textures Depuis la 1.5 on est obligé de charger les
 	 * texture fichier par fichier
 	 */
-	public void registerIcons(IconRegister iconRegister) {
+	@Override
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "rod_v");
 		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "rod_h");
 	}
 	
-	public Icon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {
+	public IIcon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {
 		
 		if ((side == 1 || side == 0) && this.northSouth) {
 			return this.textureFileV;
@@ -73,7 +74,7 @@ public class BlockMorePistonsRod extends Block {
 		return this.textureFileV;
 	}
 
-	public Icon getIcon(int i, int j) {
+	public IIcon getIcon(int i, int j) {
 		int k = getDirectionMeta(j);
 		return i != Facing.oppositeSide[k] ? this.textureFileV : this.textureFileH;
 	}
@@ -184,38 +185,38 @@ public class BlockMorePistonsRod extends Block {
 		int zz= z;
 		
 		int orientation = this.getDirectionMeta(metadata);
-		int id = ModMorePistons.blockPistonRod.blockID;
-		while (id  == ModMorePistons.blockPistonRod.blockID) {
+		Block block = ModMorePistons.blockPistonRod;
+		while (block instanceof BlockMorePistonsRod) {
 			
 			x += Facing.offsetsXForSide[orientation];
 			y += Facing.offsetsYForSide[orientation];
 			z += Facing.offsetsZForSide[orientation];
 			
-			id = world.getBlockId(x, y, z);
+			block = world.getBlock(x, y, z);
 
 			if (
-				id  == ModMorePistons.blockPistonRod.blockID ||
-				id  == ModMorePistons.blockPistonExtension.blockID
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsExtension
 			) {
-				world.destroyBlock(x, y, z, false);
+				world.func_147480_a(x, y, z, false);
 			}
 			
 		}
 		
-		id = ModMorePistons.blockPistonRod.blockID;
-		while (id  == ModMorePistons.blockPistonRod.blockID) {
+		block = ModMorePistons.blockPistonRod;
+		while (block instanceof BlockMorePistonsRod) {
 			
 			xx -= Facing.offsetsXForSide[orientation];
 			yy -= Facing.offsetsYForSide[orientation];
 			zz -= Facing.offsetsZForSide[orientation];
 			
-			id = world.getBlockId(xx, yy, zz);
+			block = world.getBlock(xx, yy, zz);
 
 			if (
-				id  == ModMorePistons.blockPistonRod.blockID ||
-				id  == ModMorePistons.blockPistonExtension.blockID
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsExtension
 			) {
-				world.destroyBlock(xx, yy, zz, false);
+				world.func_147480_a(xx, yy, zz, false);
 			}
 			
 		}

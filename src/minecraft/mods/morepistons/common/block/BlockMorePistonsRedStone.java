@@ -3,9 +3,11 @@ package mods.morepistons.common.block;
 import java.util.Random;
 
 import mods.morepistons.common.ModMorePistons;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Icon;
+import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
@@ -13,14 +15,14 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	private boolean ignoreUpdates = false;
 	public  int maxBlockMove = 12;
 	
-	private Icon textureFileSide1;
-	private Icon textureFileSide2;
-	private Icon textureFileSide3;
-	private Icon textureFileSide4;
-	private Icon textureFileSide5;
-	private Icon textureFileSide6;
-	private Icon textureFileSide7;
-	private Icon textureFileSide8;
+	private IIcon textureFileSide1;
+	private IIcon textureFileSide2;
+	private IIcon textureFileSide3;
+	private IIcon textureFileSide4;
+	private IIcon textureFileSide5;
+	private IIcon textureFileSide6;
+	private IIcon textureFileSide7;
+	private IIcon textureFileSide8;
 	
 	private int mutiplicateur = 1;
 	
@@ -31,7 +33,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 * @param texturePrefixe
 	 */
 	public BlockMorePistonsRedStone(int id, boolean flag, String texturePrefixe) {
-		super(id, flag, texturePrefixe);
+		super(flag, texturePrefixe);
 		
 		setCreativeTab(null);
 	}
@@ -40,9 +42,10 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		this.mutiplicateur = mutiplicateur;
 		return this;
 	}
-
-	public int idDropped(int par1, Random par2Random, int par3) {
-		return ModMorePistons.blockRedStonePistonBase1.blockID;
+	
+	@Override
+	public Item getItemDropped(int par1, Random par2Random, int par3) {
+		return Item.getItemFromBlock(ModMorePistons.blockRedStonePistonBase1);
 	}
 	
 	//////////////////////////
@@ -55,7 +58,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 * Depuis la 1.5 on est obligé de charger les texture fichier par fichier
 	 */
 	@Override
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "top");
 		this.textureFileTopSticky = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "top_sticky");
 		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "top");
@@ -73,7 +76,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	}
 	
 	
-	public Icon getIcon (int i, int j) {
+	public IIcon getIcon (int i, int j) {
 		
 		switch (this.getMutiplicateur ()) {
 			case 1: this.textureFileSide     = this.textureFileSide1;  break;
@@ -142,7 +145,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 				default: newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase1;  break;
 			}
 		}
-		world.setBlock(x, y, z, newBlock.blockID);
+		world.setBlock(x, y, z, newBlock);
 		world.setBlockMetadataWithNotify(x, y, z, metadata, 2);
 		
 		newBlock.updatePistonState(world, x, y, z, true);
@@ -178,7 +181,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 */
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int faceClicked, float par7, float par8, float par9)  {
 		int metadata = world.getBlockMetadata(x, y, z);
-		int orientation = this.getOrientation(metadata);
+		int orientation = this.getPistonOrientation(metadata);
 		if (faceClicked == orientation) {
 			return false;
 		}
