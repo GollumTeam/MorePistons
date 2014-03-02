@@ -345,9 +345,9 @@ public class ModMorePistons {
 		LanguageRegistry.addName(this.blockQuintupleStickyPistonBase, "Quintuple Sticky Piston");
 		LanguageRegistry.addName(this.blockSextuplePistonBase       , "Sextuple Piston");
 		LanguageRegistry.addName(this.blockSextupleStickyPistonBase , "Sextuple Sticky Piston");
-		LanguageRegistry.addName(this.blockSeptuplePistonBase       , "Septuple Sticky Piston");
-		LanguageRegistry.addName(this.blockSeptupleStickyPistonBase , "Septuple Piston");
-		LanguageRegistry.addName(this.blockOctuplePistonBase        , "Octuple Sticky Piston");
+		LanguageRegistry.addName(this.blockSeptuplePistonBase       , "Septuple Piston");
+		LanguageRegistry.addName(this.blockSeptupleStickyPistonBase , "Septuple Sticky Piston");
+		LanguageRegistry.addName(this.blockOctuplePistonBase        , "Octuple Piston");
 		LanguageRegistry.addName(this.blockOctupleStickyPistonBase  , "Octuple Sticky Piston");
 
 		LanguageRegistry.addName(this.blockSuperPistonBase               , "Super Piston");
@@ -362,16 +362,16 @@ public class ModMorePistons {
 		LanguageRegistry.addName(this.blockSuperQuintupleStickyPistonBase, "Super Quintuple Sticky Piston");
 		LanguageRegistry.addName(this.blockSuperSextuplePistonBase       , "Super Sextuple Piston");
 		LanguageRegistry.addName(this.blockSuperSextupleStickyPistonBase , "Super Sextuple Sticky Piston");
-		LanguageRegistry.addName(this.blockSuperSeptuplePistonBase       , "Super Septuple Sticky Piston");
-		LanguageRegistry.addName(this.blockSuperSeptupleStickyPistonBase , "Super Septuple Piston");
-		LanguageRegistry.addName(this.blockSuperOctuplePistonBase        , "Super Octuple Sticky Piston");
+		LanguageRegistry.addName(this.blockSuperSeptuplePistonBase       , "Super Septuple Piston");
+		LanguageRegistry.addName(this.blockSuperSeptupleStickyPistonBase , "Super Septuple Sticky Piston");
+		LanguageRegistry.addName(this.blockSuperOctuplePistonBase        , "Super Octuple Piston");
 		LanguageRegistry.addName(this.blockSuperOctupleStickyPistonBase  , "Super Octuple Sticky Piston");
 
 		LanguageRegistry.addName(this.blockRedStonePistonBase1      , "Redstone Piston");
 		LanguageRegistry.addName(this.blockRedStoneStickyPistonBase1, "Redstone Sticky Piston");
 		LanguageRegistry.addName(this.blockRedStonePistonBase2      , "Redstone Piston");
 		LanguageRegistry.addName(this.blockRedStoneStickyPistonBase2, "Redstone Sticky Piston");
-		LanguageRegistry.addName(this.blockRedStonePistonBase3, "Redstone Piston");
+		LanguageRegistry.addName(this.blockRedStonePistonBase3,       "Redstone Piston");
 		LanguageRegistry.addName(this.blockRedStoneStickyPistonBase3, "Redstone Sticky Piston");
 		LanguageRegistry.addName(this.blockRedStonePistonBase4      , "Redstone Piston");
 		LanguageRegistry.addName(this.blockRedStoneStickyPistonBase4, "Redstone Sticky Piston");
