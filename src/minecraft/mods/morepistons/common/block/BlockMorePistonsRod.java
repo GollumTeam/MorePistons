@@ -24,7 +24,7 @@ public class BlockMorePistonsRod extends Block {
 	public boolean upDown = false;
 	
 	//
-	public BlockMorePistonsRod(int id) {
+	public BlockMorePistonsRod() {
 		super(Material.grass);
 		//this.headTexture = -1;
 //		setStepSound(soundStoneFootstep); TODO

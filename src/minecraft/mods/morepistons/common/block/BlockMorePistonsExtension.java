@@ -13,9 +13,9 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 	public boolean northSouth = false;
 	public boolean upDown = false;
 
-	public BlockMorePistonsExtension(int id) {
+	public BlockMorePistonsExtension() {
 		super();
-//		setStepSound(soundStoneFootstep);
+//		setStepSound(soundStoneFootstep); TODO
 		setHardness(0.5F);
 	}
 	

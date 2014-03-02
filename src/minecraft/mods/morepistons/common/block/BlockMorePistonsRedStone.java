@@ -32,7 +32,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 * @param flag
 	 * @param texturePrefixe
 	 */
-	public BlockMorePistonsRedStone(int id, boolean flag, String texturePrefixe) {
+	public BlockMorePistonsRedStone(boolean flag, String texturePrefixe) {
 		super(flag, texturePrefixe);
 		
 		setCreativeTab(null);
