@@ -31,7 +31,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class ModMorePistons {
 
 	public static final String MODID = "MorePistons";
-	public static final String MODNAME = "MorePistons";
+	public static final String MODNAME = "More Pistons";
 	
 	@Instance("ModMorePistons")
 	public static ModMorePistons instance;
@@ -131,7 +131,6 @@ public class ModMorePistons {
 		
 		
 		this.morePistonsTabs = new GollumCreativeTabs("Pistons");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.Pistons", "en_US", "Pistons");
 		
 		// Initialisation des blocks
 		this.initBlocks ();

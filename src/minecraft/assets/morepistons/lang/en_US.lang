@@ -1,3 +1,5 @@
+tile.itemGroup.Pistons=Pistons
+
 tile.GravitationalPistonBase.name=Gravitational Piston
 tile.GravitationalStickyPistonBase.name=Gravitational Sticky Piston
 
@@ -33,8 +35,8 @@ tile.SuperSeptupleStickyPistonBase.name=Super Sticky Septuple Piston
 tile.SuperOctuplePistonBase.name=Super Octuple Piston
 tile.SuperOctupleStickyPistonBase.name=Super Octuple Sticky Piston
 
-tile.RedStonePistonBase1.name=Redstone Piston
-tile.RedStoneStickyPistonBase1.name=Redstone Sticky Piston
+tile.RedStonePistonBase.name=Redstone Piston
+tile.RedStoneStickyPistonBase.name=Redstone Sticky Piston
 tile.RedStonePistonBase2.name=Redstone Piston
 tile.RedStoneStickyPistonBase2.name=Redstone Sticky Piston
 tile.RedStonePistonBase3.name=Redstone Piston
