@@ -1,4 +1,4 @@
-tile.itemGroup.Pistons=Pistons
+itemGroup.Pistons=Pistons
 
 tile.GravitationalPistonBase.name=Gravitational Piston
 tile.GravitationalStickyPistonBase.name=Gravitational Sticky Piston
