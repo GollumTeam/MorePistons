@@ -26,9 +26,14 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "MorePistons", name = "More Pistons", version = "1.5.0 [Build Smeagol]", acceptedMinecraftVersions = "1.6.4")
+@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = ModMorePistons.VERSION, acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons {
+
+	public final static String MODID = "MorePistons";
+	public final static String MODNAME = "More Pistons";
+	public final static String VERSION = "1.5.0 [Build Smeagol]";
+	public final static String MINECRAFT_VERSION = "1.6.4";
 	
 	@Instance("ModMorePistons")
 	public static ModMorePistons instance;
