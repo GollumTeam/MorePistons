@@ -27,11 +27,13 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = "1.5.0 [Build Smeagol]", acceptedMinecraftVersions = "1.6.4")
+@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = ModMorePistons.VERSION, acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION)
 public class ModMorePistons {
 
-	public static final String MODID = "MorePistons";
-	public static final String MODNAME = "More Pistons";
+	public final static String MODID = "MorePistons";
+	public final static String MODNAME = "More Pistons";
+	public final static String VERSION = "1.5.0 [Build Smeagol]";
+	public final static String MINECRAFT_VERSION = "1.7.2";
 	
 	@Instance("ModMorePistons")
 	public static ModMorePistons instance;
@@ -218,8 +220,6 @@ public class ModMorePistons {
 		ModMorePistons.blockRedStoneStickyPistonBase7 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(7).setBlockName("RedStoneStickyPistonBase7");
 		ModMorePistons.blockRedStonePistonBase8       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(8).setBlockName("RedStonePistonBase8");
 		ModMorePistons.blockRedStoneStickyPistonBase8 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(8).setBlockName("RedStoneStickyPistonBase8");
-
-
 		
 		// Enregistrement des blocks
 		GameRegistry.registerBlock(this.blockPistonExtension, this.blockPistonExtension.getUnlocalizedName());
@@ -276,6 +276,7 @@ public class ModMorePistons {
 		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase7, this.blockRedStoneStickyPistonBase7.getUnlocalizedName());
 		GameRegistry.registerBlock(this.blockRedStonePistonBase8      , this.blockRedStonePistonBase8      .getUnlocalizedName());
 		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase8, this.blockRedStoneStickyPistonBase8.getUnlocalizedName());
+		
 	}
 	
 	/**

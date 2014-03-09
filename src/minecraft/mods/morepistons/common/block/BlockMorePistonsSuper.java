@@ -291,6 +291,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			ArrayList<EMoveInfosExtend> blocksTop    = this.getListUpBlocks(blocksOrigin, world, x, y, z, Facing.oppositeSide[orientation], length);
 			ArrayList<EMoveInfosExtend> blocksNext   = this.getListNextBlocks(blocksOrigin, world, x, y, z, Facing.oppositeSide[orientation], length);
 			
+			super.retracSticky(world, x, y, z, orientation, length);
+			
 			// Dépalcement des élement Top
 			for (EMoveInfosExtend blockTop : blocksTop) {
 				world.setBlock(blockTop.x, blockTop.y, blockTop.z, Blocks.piston_extension, blockTop.metadata, 2);
@@ -305,7 +307,6 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			}
 			
 		}
-		super.retracSticky(world, x, y, z, orientation, length);
 	}
 	
 	/**

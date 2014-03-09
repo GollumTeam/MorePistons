@@ -127,12 +127,14 @@ public class TileEntityMorePistons extends TileEntity {
 			x -= Facing.offsetsXForSide[this.storedOrientation];
 			y -= Facing.offsetsYForSide[this.storedOrientation];
 			z -= Facing.offsetsZForSide[this.storedOrientation];
+			
 			Block block = this.worldObj.getBlock(x, y, z);
 			if (
 				block instanceof BlockMorePistonsRod ||
 				block instanceof BlockMorePistonsExtension
 			) {
 				this.worldObj.setBlockToAir (x, y, z);
+				this.worldObj.setBlockMetadataWithNotify(x, y, z, 0, 2);
 			}
 		}
 	}
