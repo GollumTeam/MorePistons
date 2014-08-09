@@ -6,7 +6,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;

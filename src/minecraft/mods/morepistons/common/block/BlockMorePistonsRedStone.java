@@ -2,7 +2,7 @@ package mods.morepistons.common.block;
 
 import java.util.Random;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Icon;
@@ -12,15 +12,6 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	
 	private boolean ignoreUpdates = false;
 	public  int maxBlockMove = 12;
-	
-	private Icon textureFileSide1;
-	private Icon textureFileSide2;
-	private Icon textureFileSide3;
-	private Icon textureFileSide4;
-	private Icon textureFileSide5;
-	private Icon textureFileSide6;
-	private Icon textureFileSide7;
-	private Icon textureFileSide8;
 	
 	private int mutiplicateur = 1;
 	
@@ -56,40 +47,11 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 */
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "top");
-		this.textureFileTopSticky = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "top_sticky");
-		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "top");
-		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "bottom");
-		this.textureFileSide1     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_1");
-		this.textureFileSide2     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_2");
-		this.textureFileSide3     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_3");
-		this.textureFileSide4     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_4");
-		this.textureFileSide5     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_5");
-		this.textureFileSide6     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_6");
-		this.textureFileSide7     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_7");
-		this.textureFileSide8     = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side_8");
-		
-		this.textureFileSide     = this.textureFileSide1;
+		this.textureFileTop    = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + "top" + (this.isSticky ? "_sticky" : ""));
+		this.textureFileOpen   = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "top");
+		this.textureFileBottom = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "bottom");
+		this.textureFileSide   = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "side_"+this.mutiplicateur);
 	}
-	
-	
-	public Icon getIcon (int i, int j) {
-		
-		switch (this.getMutiplicateur ()) {
-			case 1: this.textureFileSide     = this.textureFileSide1;  break;
-			case 2: this.textureFileSide     = this.textureFileSide2;  break;
-			case 3: this.textureFileSide     = this.textureFileSide3;  break;
-			case 4: this.textureFileSide     = this.textureFileSide4;  break;
-			case 5: this.textureFileSide     = this.textureFileSide5;  break;
-			case 6: this.textureFileSide     = this.textureFileSide6;  break;
-			case 7: this.textureFileSide     = this.textureFileSide7;  break;
-			case 8: this.textureFileSide     = this.textureFileSide8;  break;
-			default: this.textureFileSide     = this.textureFileSide1; break;
-		}
-		
-		return super.getIcon(i, j);
-	}
-	
 	
 	///////////////////////////////////
 	// Gestion du signal de redstone //
@@ -145,7 +107,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		world.setBlock(x, y, z, newBlock.blockID);
 		world.setBlockMetadataWithNotify(x, y, z, metadata, 2);
 		
-		newBlock.updatePistonState(world, x, y, z, true);
+		newBlock.updatePistonState(world, x, y, z);
 		
 	}
 

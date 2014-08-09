@@ -4,7 +4,7 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;

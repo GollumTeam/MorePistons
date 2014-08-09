@@ -3,7 +3,7 @@ package mods.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -52,8 +52,8 @@ public class BlockMorePistonsRod extends Block {
 	 * texture fichier par fichier
 	 */
 	public void registerIcons(IconRegister iconRegister) {
-		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "rod_v");
-		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "rod_h");
+		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_v");
+		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_h");
 	}
 	
 	public Icon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {

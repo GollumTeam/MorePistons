@@ -1,6 +1,6 @@
 package mods.morepistons.common.block;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonExtension; //aob;
 import net.minecraft.util.Facing;
@@ -63,7 +63,7 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 		if (idPiston != 0) {
 			Block block = Block.blocksList[idPiston];
 			if (block instanceof BlockMorePistonsBase && !world.isRemote) {
-				((BlockMorePistonsBase)block).updatePistonState(world, x2, y2, z2, true);
+				((BlockMorePistonsBase)block).updatePistonState(world, x2, y2, z2);
 			}
 		}
 		

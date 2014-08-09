@@ -2,7 +2,7 @@ package mods.morepistons.common.tileentities;
 
 import org.lwjgl.opengl.GL11;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;

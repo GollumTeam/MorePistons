@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.common.util.concurrent.MoreExecutors;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFluid;
@@ -33,7 +33,6 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	
 	protected String texturePrefixe;
 	protected Icon textureFileTop;
-	protected Icon textureFileTopSticky;
 	protected Icon textureFileOpen;
 	protected Icon textureFileSide;
 	protected Icon textureFileBottom;
@@ -98,24 +97,23 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 */
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "top");
-		this.textureFileTopSticky = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "top_sticky");
-		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "top");
-		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "bottom");
-		this.textureFileSide      = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + this.texturePrefixe + "side");
+		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + "top" + (this.isSticky ? "_sticky" : ""));
+		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "top");
+		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "bottom");
+		this.textureFileSide      = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "side");
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getPistonExtensionTexture() {
-		return this.isSticky ? this.textureFileTopSticky : this.textureFileTop;
+		return this.textureFileTop;
 	}
 	
 	@Override
 	public Icon getIcon(int i, int j) {
 		int k = getOrientation(j);
 		if (k > 5) {
-			return this.textureFileTopSticky;
+			return this.textureFileTop;
 		}
 		if (i == k) {
 			if (
@@ -126,7 +124,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 				return this.textureFileOpen;
 			}
 			
-			return this.isSticky ? this.textureFileTopSticky : this.textureFileTop;
+			return this.textureFileTop;
 		}
 		
 		return i != Facing.oppositeSide[k] ? this.textureFileSide : this.textureFileBottom;
@@ -136,7 +134,8 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-	
+
+	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 
 		int orientation = this.getOrientation(metadata);
@@ -160,6 +159,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 * Called when the block is placed in the world. Envoie un event qunad on
 	 * place un block sur le monde
 	 */
+	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack itemStack) {
 		
 		int orientation = determineOrientation(world, x, y, z, entityLiving);
@@ -176,6 +176,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
 	 * their own) Args: x, y, z, neighbor blockID
 	 */
+	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
 		
 		ModMorePistons.log.debug("onNeighborBlockChange : "+x+", "+y+", "+z);
@@ -188,6 +189,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	/**
 	 * Called whenever the block is added into the world. Args: world, x, y, z
 	 */
+	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
 		return;
 	}
@@ -196,18 +198,11 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	// Ouverture du piston //
 	/////////////////////////
 	
+	
 	/**
 	 * handles attempts to extend or retract the piston.
 	 */
 	public void updatePistonState(World world, int x, int y, int z) {
-		this.updatePistonState(world, x, y, z, false);
-	}
-	
-	
-	/**
-	 * handles attempts to extend or retract the piston.
-	 */
-	public void updatePistonState(World world, int x, int y, int z, boolean forced) {
 		int metadata    = world.getBlockMetadata(x, y, z);
 		int orientation = getOrientation(metadata);
 
@@ -231,7 +226,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 			world.addBlockEvent(x, y, z, this.blockID, 0, orientation);
 		
 		// Si redstone active et piston fermer alors il faut ouvrir
-		} else if (powered && (!extended || forced)) {
+		} else if (powered) {
 			int max = this.getMaximalOpenedLenght(world, x, y, z, orientation);
 			if (max <= 0) {
 				ModMorePistons.log.debug("Piston en court de mouvement ou bloqué");
