@@ -1,4 +1,4 @@
-package mods.morepistons.common;
+package mods.morepistons;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -8,8 +8,10 @@ import net.minecraft.item.ItemStack;
 import mods.gollum.core.config.ConfigLoader;
 import mods.gollum.core.config.ConfigProp;
 import mods.gollum.core.creativetab.GollumCreativeTabs;
+import mods.gollum.core.facory.BlockFactory;
 import mods.gollum.core.log.Logger;
 import mods.gollum.core.version.VersionChecker;
+import mods.morepistons.common.CommonProxyMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsGravitational;
@@ -27,13 +29,14 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = ModMorePistons.VERSION, acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION)
+@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = ModMorePistons.VERSION, acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION, dependencies = ModMorePistons.DEPENDENCIES)
 public class ModMorePistons {
 
 	public final static String MODID = "MorePistons";
 	public final static String MODNAME = "More Pistons";
 	public final static String VERSION = "1.5.1 [Build Smeagol]";
-	public final static String MINECRAFT_VERSION = "1.7.2";
+	public final static String MINECRAFT_VERSION = "1.7.10";
+	public final static String DEPENDENCIES = "required-after:GollumCoreLib";
 	
 	@Instance("ModMorePistons")
 	public static ModMorePistons instance;
@@ -54,6 +57,10 @@ public class ModMorePistons {
 	/////////////////////
 	// Liste des blocs //
 	/////////////////////
+	
+	public static Block blockPistonExtension;
+	public static Block blockPistonRod;
+	
 	public static Block blockDoublePistonBase;
 	public static Block blockDoubleStickyPistonBase;
 	public static Block blockTriplePistonBase;
@@ -105,31 +112,24 @@ public class ModMorePistons {
 	public static Block blockRedStoneStickyPistonBase7;
 	public static Block blockRedStonePistonBase8;
 	public static Block blockRedStoneStickyPistonBase8;
-	public static Block blockPistonExtension;
-	public static Block blockPistonRod;
-	
-	/**
-	 * Path des texture du mod
-	 */
-	public static final String PATH_TEXTURES = "morepistons:";
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		// Creation du logger
-		log = new Logger(event);
+		log = new Logger(this);
 		
 		// Charge la configuration
 		ConfigLoader configLoader = new ConfigLoader(this.getClass(), event);
 		configLoader.loadConfig();
 		
 		//Test la version du mod
-		VersionChecker.getInstance().check(this);
+		new VersionChecker(this);
 	}
 	
 	/** 2 **/
 	@EventHandler
-	public void load(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event) {
 		
 		
 		this.morePistonsTabs = new GollumCreativeTabs("Pistons");
@@ -165,117 +165,64 @@ public class ModMorePistons {
 	 */
 	public void initBlocks() {
 		
+		BlockFactory factory = new BlockFactory ();
+		
 		// Création des blocks
-		this.blockPistonExtension = new BlockMorePistonsExtension().setBlockName("MorePistonsExtension");
-		this.blockPistonRod       = new BlockMorePistonsRod      ().setBlockName("MorePistonsRod");
+		this.blockPistonExtension = factory.create (new BlockMorePistonsExtension(), "MorePistonsExtension");
+		this.blockPistonRod       = factory.create (new BlockMorePistonsRod      ()      , "MorePistonsRod");
 		
-		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(false).setBlockName("GravitationalPistonBase");
-		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(true) .setBlockName("GravitationalStickyPistonBase");
+		this.blockGravitationalPistonBase       = factory.create (new BlockMorePistonsGravitational(false), "GravitationalPistonBase");
+		this.blockGravitationalStickyPistonBase = factory.create (new BlockMorePistonsGravitational(true) ,"GravitationalStickyPistonBase");
 		
-		this.blockDoublePistonBase           = (new BlockMorePistonsBase(false, "double_")).setLength (2).setBlockName("DoublePistonBase");
-		this.blockDoubleStickyPistonBase     = (new BlockMorePistonsBase(true , "double_")).setLength (2).setBlockName("DoubleStickyPistonBase");
-		this.blockTriplePistonBase           = (new BlockMorePistonsBase(false, "triple_")).setLength (3).setBlockName("TriplePistonBase");
-		this.blockTripleStickyPistonBase     = (new BlockMorePistonsBase(true , "triple_")).setLength (3).setBlockName("TripleStickyPistonBase");
-		this.blockQuadruplePistonBase        = (new BlockMorePistonsBase(false, "quad_"  )).setLength (4).setBlockName("QuadruplePistonBase");
-		this.blockQuadrupleStickyPistonBase  = (new BlockMorePistonsBase(true , "quad_"  )).setLength (4).setBlockName("QuadrupleStickyPistonBase");
-		this.blockQuintuplePistonBase        = (new BlockMorePistonsBase(false, "quint_" )).setLength (5).setBlockName("QuintuplePistonBase");
-		this.blockQuintupleStickyPistonBase  = (new BlockMorePistonsBase(true , "quint_" )).setLength (5).setBlockName("QuintupleStickyPistonBase");
-		this.blockSextuplePistonBase         = (new BlockMorePistonsBase(false, "sext_"  )).setLength (6).setBlockName("SextuplePistonBase");
-		this.blockSextupleStickyPistonBase   = (new BlockMorePistonsBase(true , "sext_"  )).setLength (6).setBlockName("SextupleStickyPistonBase");
-		this.blockSeptuplePistonBase         = (new BlockMorePistonsBase(false, "sept_"  )).setLength (7).setBlockName("SeptuplePistonBase");
-		this.blockSeptupleStickyPistonBase   = (new BlockMorePistonsBase(true , "sept_"  )).setLength (7).setBlockName("SeptupleStickyPistonBase");
-		this.blockOctuplePistonBase          = (new BlockMorePistonsBase(false, "oct_"   )).setLength (8).setBlockName("OctuplePistonBase");
-		this.blockOctupleStickyPistonBase    = (new BlockMorePistonsBase(true , "oct_"   )).setLength (8).setBlockName("OctupleStickyPistonBase");
+		this.blockDoublePistonBase           = factory.create (new BlockMorePistonsBase(false, "double_").setLength (2), "DoublePistonBase");
+		this.blockDoubleStickyPistonBase     = factory.create (new BlockMorePistonsBase(true , "double_").setLength (2), "DoubleStickyPistonBase");
+		this.blockTriplePistonBase           = factory.create (new BlockMorePistonsBase(false, "triple_").setLength (3), "TriplePistonBase");
+		this.blockTripleStickyPistonBase     = factory.create (new BlockMorePistonsBase(true , "triple_").setLength (3), "TripleStickyPistonBase");
+		this.blockQuadruplePistonBase        = factory.create (new BlockMorePistonsBase(false, "quad_"  ).setLength (4), "QuadruplePistonBase");
+		this.blockQuadrupleStickyPistonBase  = factory.create (new BlockMorePistonsBase(true , "quad_"  ).setLength (4), "QuadrupleStickyPistonBase");
+		this.blockQuintuplePistonBase        = factory.create (new BlockMorePistonsBase(false, "quint_" ).setLength (5), "QuintuplePistonBase");
+		this.blockQuintupleStickyPistonBase  = factory.create (new BlockMorePistonsBase(true , "quint_" ).setLength (5), "QuintupleStickyPistonBase");
+		this.blockSextuplePistonBase         = factory.create (new BlockMorePistonsBase(false, "sext_"  ).setLength (6), "SextuplePistonBase");
+		this.blockSextupleStickyPistonBase   = factory.create (new BlockMorePistonsBase(true , "sext_"  ).setLength (6), "SextupleStickyPistonBase");
+		this.blockSeptuplePistonBase         = factory.create (new BlockMorePistonsBase(false, "sept_"  ).setLength (7), "SeptuplePistonBase");
+		this.blockSeptupleStickyPistonBase   = factory.create (new BlockMorePistonsBase(true , "sept_"  ).setLength (7), "SeptupleStickyPistonBase");
+		this.blockOctuplePistonBase          = factory.create (new BlockMorePistonsBase(false, "oct_"   ).setLength (8), "OctuplePistonBase");
+		this.blockOctupleStickyPistonBase    = factory.create (new BlockMorePistonsBase(true , "oct_"   ).setLength (8), "OctupleStickyPistonBase");
 
-		this.blockSuperPistonBase                = (new BlockMorePistonsSuper(false)).setBlockName("SuperPistonBase");
-		this.blockSuperStickyPistonBase          = (new BlockMorePistonsSuper(true) ).setBlockName("SuperStickyPistonBase");
-		this.blockSuperDoublePistonBase          = (new BlockMorePistonsSuper(false, "double_")).setLength (2).setBlockName("SuperDoublePistonBase");
-		this.blockSuperDoubleStickyPistonBase    = (new BlockMorePistonsSuper(true , "double_")).setLength (2).setBlockName("SuperDoubleStickyPistonBase");
-		this.blockSuperTriplePistonBase          = (new BlockMorePistonsSuper(false, "triple_")).setLength (3).setBlockName("SuperTriplePistonBase");
-		this.blockSuperTripleStickyPistonBase    = (new BlockMorePistonsSuper(true , "triple_")).setLength (3).setBlockName("SuperTripleStickyPistonBase");
-		this.blockSuperQuadruplePistonBase       = (new BlockMorePistonsSuper(false, "quad_"  )).setLength (4).setBlockName("SuperQuadruplePistonBase");
-		this.blockSuperQuadrupleStickyPistonBase = (new BlockMorePistonsSuper(true , "quad_"  )).setLength (4).setBlockName("SuperQuadrupleStickyPistonBase");
-		this.blockSuperQuintuplePistonBase       = (new BlockMorePistonsSuper(false, "quint_" )).setLength (5).setBlockName("SuperQuintuplePistonBase");
-		this.blockSuperQuintupleStickyPistonBase = (new BlockMorePistonsSuper(true , "quint_" )).setLength (5).setBlockName("SuperQuintupleStickyPistonBase");
-		this.blockSuperSextuplePistonBase        = (new BlockMorePistonsSuper(false, "sext_"  )).setLength (6).setBlockName("SuperSextuplePistonBase");
-		this.blockSuperSextupleStickyPistonBase  = (new BlockMorePistonsSuper(true , "sext_"  )).setLength (6).setBlockName("SuperSextupleStickyPistonBase");
-		this.blockSuperSeptuplePistonBase        = (new BlockMorePistonsSuper(false, "sept_"  )).setLength (7).setBlockName("SuperSeptuplePistonBase");
-		this.blockSuperSeptupleStickyPistonBase  = (new BlockMorePistonsSuper(true , "sept_"  )).setLength (7).setBlockName("SuperSeptupleStickyPistonBase");
-		this.blockSuperOctuplePistonBase         = (new BlockMorePistonsSuper(false, "oct_"   )).setLength (8).setBlockName("SuperOctuplePistonBase");
-		this.blockSuperOctupleStickyPistonBase   = (new BlockMorePistonsSuper(true , "oct_"   )).setLength (8).setBlockName("SuperOctupleStickyPistonBase");
+		this.blockSuperPistonBase                = factory.create (new BlockMorePistonsSuper(false), "SuperPistonBase");
+		this.blockSuperStickyPistonBase          = factory.create (new BlockMorePistonsSuper(true ), "SuperStickyPistonBase");
 		
-		ModMorePistons.blockRedStonePistonBase1       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(1).setBlockName("RedStonePistonBase")      .setCreativeTab(ModMorePistons.morePistonsTabs);
-		ModMorePistons.blockRedStoneStickyPistonBase1 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(1).setBlockName("RedStoneStickyPistonBase").setCreativeTab(ModMorePistons.morePistonsTabs);
-		ModMorePistons.blockRedStonePistonBase2       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(2).setBlockName("RedStonePistonBase2");
-		ModMorePistons.blockRedStoneStickyPistonBase2 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(2).setBlockName("RedStoneStickyPistonBase2");
-		ModMorePistons.blockRedStonePistonBase3       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(3).setBlockName("RedStonePistonBase3");
-		ModMorePistons.blockRedStoneStickyPistonBase3 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(3).setBlockName("RedStoneStickyPistonBase3");
-		ModMorePistons.blockRedStonePistonBase4       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(4).setBlockName("RedStonePistonBase4");
-		ModMorePistons.blockRedStoneStickyPistonBase4 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(4).setBlockName("RedStoneStickyPistonBase4");
-		ModMorePistons.blockRedStonePistonBase5       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(5).setBlockName("RedStonePistonBase5");
-		ModMorePistons.blockRedStoneStickyPistonBase5 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(5).setBlockName("RedStoneStickyPistonBase5");
-		ModMorePistons.blockRedStonePistonBase6       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(6).setBlockName("RedStonePistonBase6");
-		ModMorePistons.blockRedStoneStickyPistonBase6 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(6).setBlockName("RedStoneStickyPistonBase6");
-		ModMorePistons.blockRedStonePistonBase7       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(7).setBlockName("RedStonePistonBase7");
-		ModMorePistons.blockRedStoneStickyPistonBase7 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(7).setBlockName("RedStoneStickyPistonBase7");
-		ModMorePistons.blockRedStonePistonBase8       = (new BlockMorePistonsRedStone(false, "redstonepiston_")).setMultiplicateur(8).setBlockName("RedStonePistonBase8");
-		ModMorePistons.blockRedStoneStickyPistonBase8 = (new BlockMorePistonsRedStone(true , "redstonepiston_")).setMultiplicateur(8).setBlockName("RedStoneStickyPistonBase8");
+		this.blockSuperDoublePistonBase          = factory.create (new BlockMorePistonsSuper(false, "double_").setLength (2), "SuperDoublePistonBase");
+		this.blockSuperDoubleStickyPistonBase    = factory.create (new BlockMorePistonsSuper(true , "double_").setLength (2), "SuperDoubleStickyPistonBase");
+		this.blockSuperTriplePistonBase          = factory.create (new BlockMorePistonsSuper(false, "triple_").setLength (3), "SuperTriplePistonBase");
+		this.blockSuperTripleStickyPistonBase    = factory.create (new BlockMorePistonsSuper(true , "triple_").setLength (3), "SuperTripleStickyPistonBase");
+		this.blockSuperQuadruplePistonBase       = factory.create (new BlockMorePistonsSuper(false, "quad_"  ).setLength (4), "SuperQuadruplePistonBase");
+		this.blockSuperQuadrupleStickyPistonBase = factory.create (new BlockMorePistonsSuper(true , "quad_"  ).setLength (4), "SuperQuadrupleStickyPistonBase");
+		this.blockSuperQuintuplePistonBase       = factory.create (new BlockMorePistonsSuper(false, "quint_" ).setLength (5), "SuperQuintuplePistonBase");
+		this.blockSuperQuintupleStickyPistonBase = factory.create (new BlockMorePistonsSuper(true , "quint_" ).setLength (5), "SuperQuintupleStickyPistonBase");
+		this.blockSuperSextuplePistonBase        = factory.create (new BlockMorePistonsSuper(false, "sext_"  ).setLength (6), "SuperSextuplePistonBase");
+		this.blockSuperSextupleStickyPistonBase  = factory.create (new BlockMorePistonsSuper(true , "sext_"  ).setLength (6), "SuperSextupleStickyPistonBase");
+		this.blockSuperSeptuplePistonBase        = factory.create (new BlockMorePistonsSuper(false, "sept_"  ).setLength (7), "SuperSeptuplePistonBase");
+		this.blockSuperSeptupleStickyPistonBase  = factory.create (new BlockMorePistonsSuper(true , "sept_"  ).setLength (7), "SuperSeptupleStickyPistonBase");
+		this.blockSuperOctuplePistonBase         = factory.create (new BlockMorePistonsSuper(false, "oct_"   ).setLength (8), "SuperOctuplePistonBase");
+		this.blockSuperOctupleStickyPistonBase   = factory.create (new BlockMorePistonsSuper(true , "oct_"   ).setLength (8), "SuperOctupleStickyPistonBase");
 		
-		// Enregistrement des blocks
-		GameRegistry.registerBlock(this.blockPistonExtension, this.blockPistonExtension.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockPistonRod      , this.blockPistonRod      .getUnlocalizedName());
-
-		GameRegistry.registerBlock(this.blockGravitationalPistonBase      , this.blockGravitationalPistonBase      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockGravitationalStickyPistonBase, this.blockGravitationalStickyPistonBase.getUnlocalizedName());
-		
-		GameRegistry.registerBlock(this.blockDoublePistonBase         , this.blockDoublePistonBase         .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockDoubleStickyPistonBase   , this.blockDoubleStickyPistonBase   .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockTriplePistonBase         , this.blockTriplePistonBase         .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockTripleStickyPistonBase   , this.blockTripleStickyPistonBase   .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockQuadruplePistonBase      , this.blockQuadruplePistonBase      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockQuadrupleStickyPistonBase, this.blockQuadrupleStickyPistonBase.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockQuintuplePistonBase      , this.blockQuintuplePistonBase      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockQuintupleStickyPistonBase, this.blockQuintupleStickyPistonBase.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSextuplePistonBase       , this.blockSextuplePistonBase       .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSextupleStickyPistonBase , this.blockSextupleStickyPistonBase .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSeptuplePistonBase       , this.blockSeptuplePistonBase       .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSeptupleStickyPistonBase , this.blockSeptupleStickyPistonBase .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockOctuplePistonBase        , this.blockOctuplePistonBase        .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockOctupleStickyPistonBase  , this.blockOctupleStickyPistonBase  .getUnlocalizedName());
-
-		GameRegistry.registerBlock(this.blockSuperPistonBase               , this.blockSuperPistonBase               .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperStickyPistonBase         , this.blockSuperStickyPistonBase         .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperDoublePistonBase         , this.blockSuperDoublePistonBase         .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperDoubleStickyPistonBase   , this.blockSuperDoubleStickyPistonBase   .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperTriplePistonBase         , this.blockSuperTriplePistonBase         .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperTripleStickyPistonBase   , this.blockSuperTripleStickyPistonBase   .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperQuadruplePistonBase      , this.blockSuperQuadruplePistonBase      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperQuadrupleStickyPistonBase, this.blockSuperQuadrupleStickyPistonBase.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperQuintuplePistonBase      , this.blockSuperQuintuplePistonBase      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperQuintupleStickyPistonBase, this.blockSuperQuintupleStickyPistonBase.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperSextuplePistonBase       , this.blockSuperSextuplePistonBase       .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperSextupleStickyPistonBase , this.blockSuperSextupleStickyPistonBase .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperSeptuplePistonBase       , this.blockSuperSeptuplePistonBase       .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperSeptupleStickyPistonBase , this.blockSuperSeptupleStickyPistonBase .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperOctuplePistonBase        , this.blockSuperOctuplePistonBase        .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockSuperOctupleStickyPistonBase  , this.blockSuperOctupleStickyPistonBase  .getUnlocalizedName());
-		
-		GameRegistry.registerBlock(this.blockRedStonePistonBase1      , this.blockRedStonePistonBase1      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase1, this.blockRedStoneStickyPistonBase1.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase2      , this.blockRedStonePistonBase2      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase2, this.blockRedStoneStickyPistonBase2.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase3      , this.blockRedStonePistonBase3      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase3, this.blockRedStoneStickyPistonBase3.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase4      , this.blockRedStonePistonBase4      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase4, this.blockRedStoneStickyPistonBase4.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase5      , this.blockRedStonePistonBase5      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase5, this.blockRedStoneStickyPistonBase5.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase6      , this.blockRedStonePistonBase6      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase6, this.blockRedStoneStickyPistonBase6.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase7      , this.blockRedStonePistonBase7      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase7, this.blockRedStoneStickyPistonBase7.getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStonePistonBase8      , this.blockRedStonePistonBase8      .getUnlocalizedName());
-		GameRegistry.registerBlock(this.blockRedStoneStickyPistonBase8, this.blockRedStoneStickyPistonBase8.getUnlocalizedName());
+		ModMorePistons.blockRedStonePistonBase1       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(1),"RedStonePistonBase")       .setCreativeTab(ModMorePistons.morePistonsTabs);
+		ModMorePistons.blockRedStoneStickyPistonBase1 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(1),"RedStoneStickyPistonBase").setCreativeTab(ModMorePistons.morePistonsTabs);
+		ModMorePistons.blockRedStonePistonBase2       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(2),"RedStonePistonBase2");
+		ModMorePistons.blockRedStoneStickyPistonBase2 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(2),"RedStoneStickyPistonBase2");
+		ModMorePistons.blockRedStonePistonBase3       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(3),"RedStonePistonBase3");
+		ModMorePistons.blockRedStoneStickyPistonBase3 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(3),"RedStoneStickyPistonBase3");
+		ModMorePistons.blockRedStonePistonBase4       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(4),"RedStonePistonBase4");
+		ModMorePistons.blockRedStoneStickyPistonBase4 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(4),"RedStoneStickyPistonBase4");
+		ModMorePistons.blockRedStonePistonBase5       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(5),"RedStonePistonBase5");
+		ModMorePistons.blockRedStoneStickyPistonBase5 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(5),"RedStoneStickyPistonBase5");
+		ModMorePistons.blockRedStonePistonBase6       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(6),"RedStonePistonBase6");
+		ModMorePistons.blockRedStoneStickyPistonBase6 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(6),"RedStoneStickyPistonBase6");
+		ModMorePistons.blockRedStonePistonBase7       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(7),"RedStonePistonBase7");
+		ModMorePistons.blockRedStoneStickyPistonBase7 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(7),"RedStoneStickyPistonBase7");
+		ModMorePistons.blockRedStonePistonBase8       = factory.create (new BlockMorePistonsRedStone(false, "redstonepiston_").setMultiplicateur(8),"RedStonePistonBase8");
+		ModMorePistons.blockRedStoneStickyPistonBase8 = factory.create (new BlockMorePistonsRedStone(true , "redstonepiston_").setMultiplicateur(8),"RedStoneStickyPistonBase8");
 		
 	}
 	

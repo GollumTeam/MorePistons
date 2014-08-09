@@ -1,6 +1,6 @@
 package mods.morepistons.common.block;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.init.Blocks;
@@ -15,7 +15,7 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 
 	public BlockMorePistonsExtension() {
 		super();
-//		setStepSound(soundStoneFootstep); TODO
+		setStepSound(soundTypeStone);
 		setHardness(0.5F);
 	}
 	
@@ -41,7 +41,7 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
 	 * their own) Args: x, y, z, neighbor blockID
 	 */
-	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		
 		int metadata    = world.getBlockMetadata(x, y, z);
 		int orientation = this.getDirectionMeta(metadata);
@@ -63,7 +63,7 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 		Block blockPiston = world.getBlock(x2, y2, z2);
 		if (blockPiston != null && blockPiston != Blocks.air) {
 			if (blockPiston instanceof BlockMorePistonsBase && !world.isRemote) {
-				((BlockMorePistonsBase)blockPiston).updatePistonState(world, x2, y2, z2, true);
+				((BlockMorePistonsBase)blockPiston).updatePistonState(world, x2, y2, z2);
 			}
 		}
 		
@@ -71,10 +71,5 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 	
 	public static int getDirectionFromMetadata(int metadata) {
 		return metadata & 0x7;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public int onNeighborBlockChange(World par1World, int par2, int par3, int par4) {
-		return 0;
 	}
 }

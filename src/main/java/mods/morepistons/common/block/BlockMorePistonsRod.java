@@ -3,14 +3,18 @@ package mods.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity; // lq;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB; // aoe;
 import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess; // ym;
 import net.minecraft.world.World; // yc;
 
@@ -19,15 +23,14 @@ public class BlockMorePistonsRod extends Block {
 	
 	private IIcon textureFileV;
 	private IIcon textureFileH;
-	private IIcon textureFileTop;
 	public boolean northSouth = false;
 	public boolean upDown = false;
 	
 	//
 	public BlockMorePistonsRod() {
 		super(Material.grass);
-		//this.headTexture = -1;
-//		setStepSound(soundStoneFootstep); TODO
+//		this. headTexture = -1;
+		setStepSound(soundTypeStone);
 		setHardness(0.3F);
 	}
 	
@@ -53,30 +56,25 @@ public class BlockMorePistonsRod extends Block {
 	 */
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "rod_v");
-		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.PATH_TEXTURES + "rod_h");
+		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_v");
+		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_h");
 	}
 	
-	public IIcon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {
-		
-		if ((side == 1 || side == 0) && this.northSouth) {
-			return this.textureFileV;
-		}
-		if ((side == 4 || side == 5) && this.northSouth) {
-			return this.textureFileH;
-		}
-		if ((side == 0 || side == 1 || side == 2 || side == 3) && !this.northSouth && !this.upDown) {
-			return this.textureFileH;
-		}
-		if ((side == 2 || side == 3 || side == 4 || side == 5) && this.upDown == true) {
-			return this.textureFileV;
-		}
-		return this.textureFileV;
-	}
-
 	public IIcon getIcon(int i, int j) {
-		int k = getDirectionMeta(j);
-		return i != Facing.oppositeSide[k] ? this.textureFileV : this.textureFileH;
+		
+		int k = this.getDirectionMeta (j);
+		
+		if (this.upDown) {
+			return this.textureFileV;
+		}
+		
+		if (this.northSouth) {
+			if (i == 1 || i == 0) {
+				return this.textureFileV;
+			}
+		}
+		
+		return this.textureFileH;
 	}
 	
 	//////////////////////////////////
@@ -165,19 +163,23 @@ public class BlockMorePistonsRod extends Block {
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-	
+
+    @Override
 	public boolean canPlaceBlockAt(World world, int i, int j, int k) {
 		return false;
 	}
 
+    @Override
 	public boolean canPlaceBlockOnSide(World world, int i, int j, int k, int l) {
 		return false;
 	}
 
+    @Override
 	public int quantityDropped(Random random) {
 		return 0;
 	}
-	
+
+    @Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
 		int xx= x;
@@ -224,5 +226,21 @@ public class BlockMorePistonsRod extends Block {
 	
 	public static int getDirectionMeta(int i) {
 		return i & 0x7;
+	}
+	
+	/**
+     * Called when a user uses the creative pick block button on this block
+     *
+     * @param target The full target the player is looking at
+     * @return A ItemStack to add to the player's inventory, Null if nothing should be added.
+     */
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        return null;
+    }
+    
+    @Override
+	public Item getItemDropped(int par1, Random par2Random, int par3) {
+		return null;
 	}
 }

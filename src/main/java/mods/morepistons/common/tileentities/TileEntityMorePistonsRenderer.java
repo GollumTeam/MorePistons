@@ -2,7 +2,7 @@ package mods.morepistons.common.tileentities;
 
 import org.lwjgl.opengl.GL11;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
@@ -109,8 +109,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 				
 			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending() && (block instanceof BlockPistonBase)) {
 				
-				// TODO
-				//Blocks.piston_head.setHeadTexture(((BlockPistonBase) block).getPistonExtensionTexture());
+				Blocks.piston_head.func_150086_a(((BlockPistonBase) block).getPistonExtensionTexture());
 				
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					Blocks.piston_head,
@@ -170,8 +169,9 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 	 * nether travel) due to using one renderer per tile entity type, rather
 	 * than instance
 	 */
-	public void onWorldChange(World par1World) {
-		this.blockRenderer = new RenderBlocks(par1World);
+//	public void onWorldChange(World world) {
+	public void func_147496_a(World world) {
+		this.blockRenderer = new RenderBlocks(world);
 	}
 	
 	@Override

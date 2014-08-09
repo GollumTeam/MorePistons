@@ -3,7 +3,7 @@ package mods.morepistons.common.block;
 import java.util.Iterator;
 import java.util.List;
 
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockSand;

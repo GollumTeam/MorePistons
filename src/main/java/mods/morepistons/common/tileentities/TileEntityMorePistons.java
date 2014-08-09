@@ -6,7 +6,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.morepistons.common.ModMorePistons;
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsRod;
 import net.minecraft.block.Block;
@@ -42,6 +42,11 @@ public class TileEntityMorePistons extends TileEntity {
 	}
 	
 	public TileEntityMorePistons(Block block, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isBlockPiston) {
+		
+		if (block == null) {
+			ModMorePistons.log.severe ("Block strorage in null in creation TileEntiry");
+		}
+		
 		this.storedBlock          = block;
 		this.storedMetadata       = metadata;
 		this.storedOrientation    = orientation;
@@ -83,6 +88,8 @@ public class TileEntityMorePistons extends TileEntity {
 		int x = this.xCoord - (Facing.offsetsXForSide[this.storedOrientation] * lenght);
 		int y = this.yCoord - (Facing.offsetsYForSide[this.storedOrientation] * lenght);
 		int z = this.zCoord - (Facing.offsetsZForSide[this.storedOrientation] * lenght);
+		
+		ModMorePistons.log.debug("displayPistonRod : "+x+", "+y+", "+z+" nb="+nb+" lenght="+lenght);
 		
 		for (int i = 0; i < nb; i++) {
 			x += Facing.offsetsXForSide[this.storedOrientation];
@@ -219,14 +226,22 @@ public class TileEntityMorePistons extends TileEntity {
 		int x = this.xCoord;
 		int y = this.yCoord;
 		int z = this.zCoord;
-		for (int i = 0; i <= this.distance; i++) {
+		
+		if (this.storedBlock == null) {
 			
-			this.testCollisionWithOtherEntity(x, y, z, par1, par2);
+			ModMorePistons.log.severe("Block Stored in TilEntity is null");
 			
-			x -= Facing.offsetsXForSide[this.storedOrientation];
-			y -= Facing.offsetsYForSide[this.storedOrientation];
-			z -= Facing.offsetsZForSide[this.storedOrientation];
-
+		} else {
+			for (int i = 0; i <= this.distance; i++) {
+				
+				this.testCollisionWithOtherEntity(x, y, z, par1, par2);
+				
+				x -= Facing.offsetsXForSide[this.storedOrientation];
+				y -= Facing.offsetsYForSide[this.storedOrientation];
+				z -= Facing.offsetsZForSide[this.storedOrientation];
+	
+			}
+			
 		}
 
 	}
@@ -239,7 +254,12 @@ public class TileEntityMorePistons extends TileEntity {
 	 * @param z
 	 */
 	private void testCollisionWithOtherEntity(int x, int y, int z, float par1, float par2) {
-
+		
+		if (this.storedBlock == null) {
+			ModMorePistons.log.severe ("Block strorage in null in creation TileEntiry");
+			return;
+		}
+		
 		AxisAlignedBB var3 = Blocks.piston_extension.func_149964_a(this.worldObj, x, y, z, this.storedBlock, par1, this.storedOrientation);
 
 		if (var3 != null) {
@@ -303,7 +323,14 @@ public class TileEntityMorePistons extends TileEntity {
 
 	public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
 		super.writeToNBT(par1NBTTagCompound);
-		par1NBTTagCompound.setInteger("blockId"  , Block.getIdFromBlock(this.storedBlock));
+		
+		if (this.storedBlock == null) {
+			ModMorePistons.log.severe ("Strored Block strored in null in TileEntiry");
+			par1NBTTagCompound.setInteger("blockId"  , Block.getIdFromBlock(Blocks.air));
+		} else {
+			par1NBTTagCompound.setInteger("blockId"  , Block.getIdFromBlock(this.storedBlock));
+		}
+		
 		par1NBTTagCompound.setInteger("blockData", this.storedMetadata);
 		par1NBTTagCompound.setInteger("facing"   , this.storedOrientation);
 		par1NBTTagCompound.setBoolean("extending", this.extending);
