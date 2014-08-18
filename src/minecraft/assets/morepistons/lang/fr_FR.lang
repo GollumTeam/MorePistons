@@ -1,0 +1,53 @@
+itemGroup.Pistons=Pistons
+
+tile.GravitationalPistonBase.name=Gravitational Piston
+tile.GravitationalStickyPistonBase.name=Gravitational Piston Collant
+
+tile.DoublePistonBase.name=Double Piston
+tile.DoubleStickyPistonBase.name=Double Piston Collant
+tile.TriplePistonBase.name=Triple Piston
+tile.TripleStickyPistonBase.name=Triple Piston Collant
+tile.QuadruplePistonBase.name=Quadruple Piston
+tile.QuadrupleStickyPistonBase.name=Quadruple Piston Collant
+tile.QuintuplePistonBase.name=Quintuple Piston
+tile.QuintupleStickyPistonBase.name=Quintuple Piston Collant
+tile.SextuplePistonBase.name=Sextuple Piston
+tile.SextupleStickyPistonBase.name=Sextuple Piston Collant
+tile.SeptuplePistonBase.name=Septuple Piston
+tile.SeptupleStickyPistonBase.name=Septuple Piston Collant
+tile.OctuplePistonBase.name=Octuple Piston
+tile.OctupleStickyPistonBase.name=Octuple Piston Collant
+
+tile.SuperPistonBase.name=Super Piston
+tile.SuperStickyPistonBase.name=Super Piston Collant
+tile.SuperDoublePistonBase.name=Super Double Piston
+tile.SuperDoubleStickyPistonBase.name=Super Double Piston Collant
+tile.SuperTriplePistonBase.name=Super Triple Piston
+tile.SuperTripleStickyPistonBase.name=Super Triple Piston Collant
+tile.SuperQuadruplePistonBase.name=Super Quadruple Piston
+tile.SuperQuadrupleStickyPistonBase.name=Super Quadruple Piston Collant
+tile.SuperQuintuplePistonBase.name=Super Quintuple Piston
+tile.SuperQuintupleStickyPistonBase.name=Super Quintuple Piston Collant
+tile.SuperSextuplePistonBase.name=Super Sextuple Piston
+tile.SuperSextupleStickyPistonBase.name=Super Sextuple Piston Collant
+tile.SuperSeptuplePistonBase.name=Super Septuple Piston
+tile.SuperSeptupleStickyPistonBase.name=Super Sticky Septuple Piston
+tile.SuperOctuplePistonBase.name=Super Octuple Piston
+tile.SuperOctupleStickyPistonBase.name=Super Octuple Piston Collant
+
+tile.RedStonePistonBase.name=Redstone Piston
+tile.RedStoneStickyPistonBase.name=Redstone Piston Collant
+tile.RedStonePistonBase2.name=Redstone Piston
+tile.RedStoneStickyPistonBase2.name=Redstone Piston Collant
+tile.RedStonePistonBase3.name=Redstone Piston
+tile.RedStoneStickyPistonBase3.name=Redstone Piston Collant
+tile.RedStonePistonBase4.name=Redstone Piston
+tile.RedStoneStickyPistonBase4.name=Redstone Piston Collant
+tile.RedStonePistonBase5.name=Redstone Piston
+tile.RedStoneStickyPistonBase5.name=Redstone Piston Collant
+tile.RedStonePistonBase6.name=Redstone Piston
+tile.RedStoneStickyPistonBase6.name=Redstone Piston Collant
+tile.RedStonePistonBase7.name=Redstone Piston
+tile.RedStoneStickyPistonBase7.name=Redstone Piston Collant
+tile.RedStonePistonBase8.name=Redstone Piston
+tile.RedStoneStickyPistonBase8.name=Redstone Piston Collant
