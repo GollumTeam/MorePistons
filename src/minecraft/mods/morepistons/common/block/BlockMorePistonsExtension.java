@@ -1,6 +1,6 @@
 package mods.morepistons.common.block;
 
-import mods.gollum.core.helper.blocks.BlockPistonExtension;
+import mods.gollum.core.helper.blocks.HBlockPistonExtension;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.util.Facing;
@@ -8,7 +8,7 @@ import net.minecraft.world.World; // yc;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockMorePistonsExtension extends BlockPistonExtension {
+public class BlockMorePistonsExtension extends HBlockPistonExtension {
 	public boolean northSouth = false;
 	public boolean upDown = false;
 

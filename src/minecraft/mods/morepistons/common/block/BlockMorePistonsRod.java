@@ -3,7 +3,7 @@ package mods.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
-import mods.gollum.core.helper.blocks.Block;
+import mods.gollum.core.helper.blocks.HBlock;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -14,7 +14,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockMorePistonsRod extends Block {
+public class BlockMorePistonsRod extends HBlock {
 	//private int headTexture;
 	
 	private Icon iconV;

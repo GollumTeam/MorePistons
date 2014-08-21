@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.common.util.concurrent.MoreExecutors;
 
-import mods.gollum.core.helper.blocks.BlockPistonBase;
+import mods.gollum.core.helper.blocks.HBlockPistonBase;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
@@ -25,7 +25,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockMorePistonsBase extends BlockPistonBase {
+public class BlockMorePistonsBase extends HBlockPistonBase {
 	
 	private boolean ignoreUpdates = false;
 	private int length = 1;
@@ -408,7 +408,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 		
 		boolean isPistonClosed = BlockMorePistonsBase.isPiston (id);
 		if (isPistonClosed) {
-			BlockPistonBase block = (BlockPistonBase) Block.blocksList[id];
+			HBlockPistonBase block = (HBlockPistonBase) Block.blocksList[id];
 			isPistonClosed = !block.isExtended(world.getBlockMetadata(x, y, z));
 		}
 		
@@ -432,7 +432,7 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 * @return
 	 */
 	public static boolean isPiston (int id) {
-		return Block.blocksList[id] instanceof BlockPistonBase;
+		return Block.blocksList[id] instanceof HBlockPistonBase;
 	}
 	
 	/**
