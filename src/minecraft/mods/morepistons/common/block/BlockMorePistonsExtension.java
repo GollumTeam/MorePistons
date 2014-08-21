@@ -17,7 +17,7 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 		setStepSound(soundStoneFootstep);
 		setHardness(0.5F);
 		
-		this.logic.naturalTexture = true;
+		this.helper.naturalTexture = true;
 	}
 	
 	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {

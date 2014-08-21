@@ -39,8 +39,8 @@ public class BlockMorePistonsRod extends Block {
 	 * texture fichier par fichier
 	 */
 	public void registerIcons(IconRegister iconRegister) {
-		this.iconV = this.logic.loadTexture(iconRegister, "_v");
-		this.iconH = this.logic.loadTexture(iconRegister, "_h");
+		this.iconV = this.helper.loadTexture(iconRegister, "_v");
+		this.iconH = this.helper.loadTexture(iconRegister, "_h");
 	}
 	
 	public Icon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {

@@ -81,10 +81,10 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 */
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		this.iconTop    = logic.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true);
-		this.iconOpen   = logic.loadTexture(iconRegister, suffixOpen);
-		this.iconBottom = logic.loadTexture(iconRegister, suffixBotom);
-		this.iconSide   = logic.loadTexture(iconRegister, suffixSide);
+		this.iconTop    = helper.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true);
+		this.iconOpen   = helper.loadTexture(iconRegister, suffixOpen);
+		this.iconBottom = helper.loadTexture(iconRegister, suffixBotom);
+		this.iconSide   = helper.loadTexture(iconRegister, suffixSide);
 	}
 	
 	////////////////////////
