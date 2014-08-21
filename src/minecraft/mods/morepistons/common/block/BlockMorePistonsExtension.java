@@ -1,8 +1,8 @@
 package mods.morepistons.common.block;
 
+import mods.gollum.core.helper.blocks.BlockPistonExtension;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonExtension; //aob;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World; // yc;
 import cpw.mods.fml.relauncher.Side;
@@ -12,10 +12,12 @@ public class BlockMorePistonsExtension extends BlockPistonExtension {
 	public boolean northSouth = false;
 	public boolean upDown = false;
 
-	public BlockMorePistonsExtension(int id) {
-		super(id);
+	public BlockMorePistonsExtension(int id, String registerName) {
+		super(id, registerName);
 		setStepSound(soundStoneFootstep);
 		setHardness(0.5F);
+		
+		this.logic.naturalTexture = true;
 	}
 	
 	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {

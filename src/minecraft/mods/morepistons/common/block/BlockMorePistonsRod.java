@@ -3,29 +3,28 @@ package mods.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
+import mods.gollum.core.helper.blocks.Block;
 import mods.morepistons.ModMorePistons;
-import net.minecraft.block.Block; // world.getBlockMetadata;
-import net.minecraft.block.material.Material; // agi;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.Entity; // lq;
-import net.minecraft.util.AxisAlignedBB; // aoe;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
 import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess; // ym;
-import net.minecraft.world.World; // yc;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public class BlockMorePistonsRod extends Block {
 	//private int headTexture;
 	
-	private Icon textureFileV;
-	private Icon textureFileH;
-	private Icon textureFileTop;
+	private Icon iconV;
+	private Icon iconH;
 	public boolean northSouth = false;
 	public boolean upDown = false;
 	
 	//
-	public BlockMorePistonsRod(int id) {
-		super(id, Material.grass);
+	public BlockMorePistonsRod(int id, String registerName) {
+		super(id, registerName, Material.grass);
 		//this.headTexture = -1;
 		setStepSound(soundStoneFootstep);
 		setHardness(0.3F);
@@ -36,46 +35,34 @@ public class BlockMorePistonsRod extends Block {
 	// ////////////////////////
 	
 	/**
-	 * Charge une texture et affiche dans le log
-	 * 
-	 * @param iconRegister
-	 * @param key
-	 * @return
-	 */
-	public Icon loadTexture(IconRegister iconRegister, String key) {
-		ModMorePistons.log.debug("Register icon More Piston :\"" + key + "\"");
-		return iconRegister.registerIcon(key);
-	}
-
-	/**
 	 * Enregistre les textures Depuis la 1.5 on est obligé de charger les
 	 * texture fichier par fichier
 	 */
 	public void registerIcons(IconRegister iconRegister) {
-		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_v");
-		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_h");
+		this.iconV = this.logic.loadTexture(iconRegister, "_v");
+		this.iconH = this.logic.loadTexture(iconRegister, "_h");
 	}
 	
 	public Icon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {
 		
 		if ((side == 1 || side == 0) && this.northSouth) {
-			return this.textureFileV;
+			return this.iconV;
 		}
 		if ((side == 4 || side == 5) && this.northSouth) {
-			return this.textureFileH;
+			return this.iconH;
 		}
 		if ((side == 0 || side == 1 || side == 2 || side == 3) && !this.northSouth && !this.upDown) {
-			return this.textureFileH;
+			return this.iconH;
 		}
 		if ((side == 2 || side == 3 || side == 4 || side == 5) && this.upDown == true) {
-			return this.textureFileV;
+			return this.iconV;
 		}
-		return this.textureFileV;
+		return this.iconV;
 	}
 
 	public Icon getIcon(int i, int j) {
 		int k = getDirectionMeta(j);
-		return i != Facing.oppositeSide[k] ? this.textureFileV : this.textureFileH;
+		return i != Facing.oppositeSide[k] ? this.iconV : this.iconH;
 	}
 	
 	//////////////////////////////////

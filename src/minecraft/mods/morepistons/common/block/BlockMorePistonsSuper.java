@@ -23,11 +23,11 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	
-	public BlockMorePistonsSuper(int id, boolean isSticky) {
-		this(id, isSticky, "");
+	public BlockMorePistonsSuper(int id, String registerName, boolean isSticky) {
+		this(id, registerName, isSticky, "");
 	}
-	public BlockMorePistonsSuper(int id, boolean isSticky, String texturePrefixe) {
-		super(id, isSticky, "super_"+texturePrefixe);
+	public BlockMorePistonsSuper(int id, String registerName, boolean isSticky, String texturePrefixe) {
+		super(id, registerName, isSticky);
 	}
 	
 

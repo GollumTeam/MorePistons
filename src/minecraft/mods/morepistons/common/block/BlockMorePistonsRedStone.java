@@ -21,8 +21,8 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 * @param flag
 	 * @param texturePrefixe
 	 */
-	public BlockMorePistonsRedStone(int id, boolean flag, String texturePrefixe) {
-		super(id, flag, texturePrefixe);
+	public BlockMorePistonsRedStone(int id, String registerName, boolean isSticky) {
+		super(id, registerName, isSticky);
 		
 		setCreativeTab(null);
 	}
@@ -40,6 +40,17 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	// Gestion des textures //
 	//////////////////////////
 	
+	/**
+	 * Nom d'enregistrement du mod
+	 */
+	@Override
+	public String getTextureKey() {
+		
+		String ori = super.getTextureKey();
+		
+		// Charge toujour la meme texture quelque soit le reston
+		return ori.substring(0, ori.length() - 1);
+	}
 	
 	/**
 	 * Enregistre les textures
@@ -47,10 +58,8 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 */
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		this.textureFileTop    = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + "top" + (this.isSticky ? "_sticky" : ""));
-		this.textureFileOpen   = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "top");
-		this.textureFileBottom = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "bottom");
-		this.textureFileSide   = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "side_"+this.mutiplicateur);
+		this.suffixSide += "_"+this.mutiplicateur;
+		super.registerIcons(iconRegister);
 	}
 	
 	///////////////////////////////////

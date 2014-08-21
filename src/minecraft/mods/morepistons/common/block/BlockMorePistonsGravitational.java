@@ -17,8 +17,8 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 	
 	public double power = 1.5D;
 	
-	public BlockMorePistonsGravitational(int id, boolean isSticky) {
-		super(id, isSticky, "gravi_");
+	public BlockMorePistonsGravitational(int id, String registerName, boolean isSticky) {
+		super(id, registerName, isSticky);
 	}
 	
 	/**

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import com.google.common.util.concurrent.MoreExecutors;
 
+import mods.gollum.core.helper.blocks.BlockPistonBase;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFluid;
 import net.minecraft.block.BlockObsidian;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonMoving;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -29,21 +29,10 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	
 	private boolean ignoreUpdates = false;
 	private int length = 1;
-	protected boolean isSticky;
 	
-	protected String texturePrefixe;
-	protected Icon textureFileTop;
-	protected Icon textureFileOpen;
-	protected Icon textureFileSide;
-	protected Icon textureFileBottom;
-	
-	public BlockMorePistonsBase(int id, boolean isSticky, String texturePrefixe) {
-		super(id, isSticky);
+	public BlockMorePistonsBase(int id, String registerName, boolean isSticky) {
+		super(id, registerName, isSticky);
 		
-		ModMorePistons.log.info ("Create block id : " + id + " texturePrefixe : " + texturePrefixe);
-		
-		this.isSticky = isSticky;
-		this.texturePrefixe = texturePrefixe;
 		this.setCreativeTab(ModMorePistons.morePistonsTabs);
 	}
 
@@ -73,22 +62,17 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	public int getMaxBlockMove () {
 		return 12;
 	}
-	
+
 	//////////////////////////
 	// Gestion des textures //
 	//////////////////////////
 	
-	
 	/**
-	* Charge une texture et affiche dans le log
-	*
-	* @param iconRegister
-	* @param key
-	* @return
-	*/
-	public Icon loadTexture(IconRegister iconRegister, String key) {
-		ModMorePistons.log.debug ("Register icon More Piston :\"" + key + "\"");
-		return iconRegister.registerIcon(key);
+	 * Nom d'enregistrement du mod
+	 */
+	@Override
+	public String getTextureKey() {
+		return super.getTextureKey().replace("sticky", "");
 	}
 	
 	/**
@@ -97,39 +81,11 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	 */
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + "top" + (this.isSticky ? "_sticky" : ""));
-		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "top");
-		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "bottom");
-		this.textureFileSide      = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "side");
+		this.iconTop    = logic.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true);
+		this.iconOpen   = logic.loadTexture(iconRegister, suffixOpen);
+		this.iconBottom = logic.loadTexture(iconRegister, suffixBotom);
+		this.iconSide   = logic.loadTexture(iconRegister, suffixSide);
 	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Icon getPistonExtensionTexture() {
-		return this.textureFileTop;
-	}
-	
-	@Override
-	public Icon getIcon(int i, int j) {
-		int k = getOrientation(j);
-		if (k > 5) {
-			return this.textureFileTop;
-		}
-		if (i == k) {
-			if (
-				(isExtended(j)) ||
-				(this.minX > 0.0D) || (this.minY > 0.0D) || (this.minZ > 0.0D) ||
-				(this.maxX < 1.0D) || (this.maxY < 1.0D) || (this.maxZ < 1.0D)
-			) {
-				return this.textureFileOpen;
-			}
-			
-			return this.textureFileTop;
-		}
-		
-		return i != Facing.oppositeSide[k] ? this.textureFileSide : this.textureFileBottom;
-	}
-	
 	
 	////////////////////////
 	// Gestion des events //
@@ -295,7 +251,6 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
 		return this.getMaximalOpenedLenght(world, x, y, z, orientation, true, this.getLengthInWorld(world, x, y, z, orientation));
 	}
-	
 	
 	/**
 	* Caclcule la longueur d'ouverture d'un piston

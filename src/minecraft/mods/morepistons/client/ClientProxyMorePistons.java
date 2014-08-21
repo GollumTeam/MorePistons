@@ -1,5 +1,6 @@
-package mods.morepistons.common;
+package mods.morepistons.client;
 
+import mods.morepistons.common.CommonProxyMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistonsRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
