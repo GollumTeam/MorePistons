@@ -13,6 +13,8 @@ import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.block.BlockMorePistonsSuper;
 import mods.morepistons.common.config.ConfigMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
