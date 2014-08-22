@@ -34,7 +34,7 @@ public class ModMorePistons extends GollumMod {
 	public final static String MINECRAFT_VERSION = "1.6.4";
 	public final static String DEPENDENCIES = "required-after:GollumCoreLib";
 	
-	@Instance("ModMorePistons")
+	@Instance(ModMorePistons.MODID)
 	public static ModMorePistons instance;
 	
 	@SidedProxy(clientSide = "mods.morepistons.client.ClientProxyMorePistons", serverSide = "mods.morepistons.common.CommonProxyMorePistons")
