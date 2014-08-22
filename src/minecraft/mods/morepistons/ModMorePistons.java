@@ -48,7 +48,7 @@ public class ModMorePistons extends GollumMod {
 	/**
 	 * Onglet du mod
 	 */
-	public static GollumCreativeTabs morePistonsTabs;
+	public static GollumCreativeTabs morePistonsTabs = new GollumCreativeTabs("Pistons");
 	
 	/////////////////////
 	// Liste des blocs //
@@ -116,6 +116,9 @@ public class ModMorePistons extends GollumMod {
 		// Charge la configuration
 		this.config = new ConfigMorePistons();
 		
+		// Initialisation des blocks
+		this.initBlocks ();
+		
 		//Test la version du mod
 		new VersionChecker();
 	}
@@ -126,11 +129,6 @@ public class ModMorePistons extends GollumMod {
 		
 		// Initialisation du proxy
 		proxy.registerRenderers();
-		
-		this.morePistonsTabs = new GollumCreativeTabs("Pistons");
-		
-		// Initialisation des blocks
-		this.initBlocks ();
 		
 		// Initialisation les TileEntities
 		this.initTileEntities ();
