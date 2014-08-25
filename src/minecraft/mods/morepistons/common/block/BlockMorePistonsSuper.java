@@ -1,10 +1,8 @@
 package mods.morepistons.common.block;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -15,7 +13,6 @@ import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockTripWire;
 import net.minecraft.block.BlockTripWireSource;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;

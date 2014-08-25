@@ -6,7 +6,6 @@ import java.util.List;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockSnow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingSand;
 import net.minecraft.util.AxisAlignedBB;

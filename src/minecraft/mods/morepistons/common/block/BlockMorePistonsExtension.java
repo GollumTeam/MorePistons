@@ -1,6 +1,6 @@
 package mods.morepistons.common.block;
 
-import mods.gollum.core.helper.blocks.HBlockPistonExtension;
+import mods.gollum.core.tools.helper.blocks.HBlockPistonExtension;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.util.Facing;

@@ -5,7 +5,6 @@ import java.util.Random;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 public class BlockMorePistonsRedStone extends BlockMorePistonsBase {

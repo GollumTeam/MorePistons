@@ -2,9 +2,7 @@ package mods.morepistons.common.block;
 
 import java.util.ArrayList;
 
-import com.google.common.util.concurrent.MoreExecutors;
-
-import mods.gollum.core.helper.blocks.HBlockPistonBase;
+import mods.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
@@ -18,12 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.IFluidBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsBase extends HBlockPistonBase {
 	

@@ -1,23 +1,21 @@
 package mods.morepistons.common.tileentities;
 
-import org.lwjgl.opengl.GL11;
-
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBlaze;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import org.lwjgl.opengl.GL11;
 
 public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 	

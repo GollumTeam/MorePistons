@@ -3,7 +3,7 @@ package mods.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
-import mods.gollum.core.helper.blocks.HBlock;
+import mods.gollum.core.tools.helper.blocks.HBlock;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;

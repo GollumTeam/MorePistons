@@ -1,8 +1,8 @@
 package mods.morepistons;
 
-import mods.gollum.core.creativetab.GollumCreativeTabs;
-import mods.gollum.core.mod.GollumMod;
-import mods.gollum.core.version.VersionChecker;
+import mods.gollum.core.common.creativetab.GollumCreativeTabs;
+import mods.gollum.core.common.mod.GollumMod;
+import mods.gollum.core.common.version.VersionChecker;
 import mods.morepistons.common.CommonProxyMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
