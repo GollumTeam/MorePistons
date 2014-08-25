@@ -90,7 +90,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-
+	
 	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 

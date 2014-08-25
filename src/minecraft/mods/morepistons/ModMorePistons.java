@@ -20,6 +20,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -108,10 +109,14 @@ public class ModMorePistons extends GollumMod {
 	public static BlockMorePistonsExtension blockPistonExtension;
 	public static BlockMorePistonsRod blockPistonRod;
 	
-	@EventHandler
+	
+	@EventHandler public void handler(FMLPreInitializationEvent event)  { super.handler (event); }
+	@EventHandler public void handler(FMLInitializationEvent event)     { super.handler (event); }
+	@EventHandler public void handler(FMLPostInitializationEvent event) { super.handler (event); }
+	
+	/** 1 **/
+	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		
-		super.preInit(event);
 		
 		// Charge la configuration
 		this.config = new ConfigMorePistons();
@@ -124,7 +129,7 @@ public class ModMorePistons extends GollumMod {
 	}
 	
 	/** 2 **/
-	@EventHandler
+	@Override
 	public void init(FMLInitializationEvent event) {
 		
 		// Initialisation du proxy
@@ -142,6 +147,11 @@ public class ModMorePistons extends GollumMod {
 		
 		// Set de l'icon du tab creative
 		this.morePistonsTabs.setIcon(Block.pistonBase);
+	}
+	
+	/** 3 **/
+	@Override
+	public void postInit(FMLPostInitializationEvent event) {
 	}
 	
 	/**
