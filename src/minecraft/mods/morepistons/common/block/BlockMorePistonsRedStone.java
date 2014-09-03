@@ -57,7 +57,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 */
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		this.suffixSide += "_"+this.mutiplicateur;
+		this.suffixSide = "_side_"+this.mutiplicateur;
 		super.registerIcons(iconRegister);
 	}
 	
