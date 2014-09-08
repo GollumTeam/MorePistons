@@ -8,6 +8,7 @@ import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFluid;
 import net.minecraft.block.BlockObsidian;
+import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.block.BlockPistonMoving;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -413,7 +414,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				id != BlockObsidian.obsidian.blockID &&
 				Block.blocksList[id].getMobilityFlag() != 2 &&
 				!(Block.blocksList[id] instanceof BlockMorePistonsRod) &&
-				!(Block.blocksList[id] instanceof BlockMorePistonsExtension) &&
+				!(Block.blocksList[id] instanceof BlockPistonExtension) &&
 				!(Block.blocksList[id] instanceof BlockPistonMoving) &&
 				!world.blockHasTileEntity(x, y, z) &&
 				Block.blocksList[id].getBlockHardness(world, x, y, z) != -1.0F

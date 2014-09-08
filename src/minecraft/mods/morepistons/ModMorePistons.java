@@ -1,6 +1,8 @@
 package mods.morepistons;
 
 import mods.gollum.core.common.creativetab.GollumCreativeTabs;
+import mods.gollum.core.common.i18n.I18n;
+import mods.gollum.core.common.log.Logger;
 import mods.gollum.core.common.mod.GollumMod;
 import mods.gollum.core.common.version.VersionChecker;
 import mods.morepistons.common.CommonProxyMorePistons;
@@ -40,6 +42,16 @@ public class ModMorePistons extends GollumMod {
 	
 	@SidedProxy(clientSide = "mods.morepistons.client.ClientProxyMorePistons", serverSide = "mods.morepistons.common.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
+
+	/**
+	 * Gestion des logs
+	 */
+	public static Logger log;
+	
+	/**
+	 * Gestion de l'i18n
+	 */
+	public static I18n i18n;
 	
 	/**
 	 * La configuration
