@@ -35,8 +35,8 @@ tile.SuperSeptupleStickyPistonBase.name=Super Sticky Septuple Piston
 tile.SuperOctuplePistonBase.name=Super Octuple Piston
 tile.SuperOctupleStickyPistonBase.name=Super Octuple Piston Collant
 
-tile.RedStonePistonBase.name=Redstone Piston
-tile.RedStoneStickyPistonBase.name=Redstone Piston Collant
+tile.RedStonePistonBase1.name=Redstone Piston
+tile.RedStoneStickyPistonBase1.name=Redstone Piston Collant
 tile.RedStonePistonBase2.name=Redstone Piston
 tile.RedStoneStickyPistonBase2.name=Redstone Piston Collant
 tile.RedStonePistonBase3.name=Redstone Piston

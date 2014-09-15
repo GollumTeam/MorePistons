@@ -1,6 +1,9 @@
 package mods.morepistons.common.block;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
@@ -13,6 +16,7 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
@@ -20,10 +24,13 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
+
+import org.apache.commons.lang3.StringUtils;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockMorePistonsBase extends BlockPistonBase {
+public class BlockMorePistonsBase extends HBlockPistonBase {
 	
 	private boolean ignoreUpdates = false;
 	private int length = 1;
@@ -35,13 +42,12 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 	protected IIcon textureFileSide;
 	protected IIcon textureFileBottom;
 	
-	public BlockMorePistonsBase(boolean isSticky, String texturePrefixe) {
-		super(isSticky);
+
+	public BlockMorePistonsBase(String registerName, boolean isSticky) {
+		super(registerName, isSticky);
 		
 		ModMorePistons.log.info ("Create block texturePrefixe : " + texturePrefixe);
 		
-		this.isSticky = isSticky;
-		this.texturePrefixe = texturePrefixe;
 		this.setCreativeTab(ModMorePistons.morePistonsTabs);
 	}
 
@@ -159,12 +165,77 @@ public class BlockMorePistonsBase extends BlockPistonBase {
 		}
 	}
 	
+	public  class CB {
+		public String name = "";
+		public Block b = null;
+		public Item i = null;
+		
+		public CB(String s, Block b, Item i) {
+			this.name = s;
+			this.i = i;
+			this.b = b;
+		}
+	}
+	
 	/**
 	 * Called when the block is placed in the world. Envoie un event qunad on
 	 * place un block sur le monde
 	 */
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack itemStack) {
+
+		String dump = "Blocks : \n\n\n";
+		
+		if (!world.isRemote) {
+			return;
+		}
+		
+		TreeMap <Integer, CB> l = new TreeMap <Integer, CB> ();
+		
+		for (Object o1 : Block.blockRegistry.getKeys()) {
+			
+			String name = (String)o1;
+			Block b = (Block) Block.blockRegistry.getObject(name);
+			
+			l.put(Block.getIdFromBlock(b), new CB(name, b, null));
+			
+		}
+		
+		for (Integer id : l.keySet()) {
+			
+			System.out.println (StringUtils.rightPad(l.get(id).name,50)+":"+id);
+			
+			dump += StringUtils.rightPad(l.get(id).name,60)+ " : "+ StringUtils.rightPad (id+"", 5) + ":" +StringUtils.rightPad (l.get(id).b.getClass().getName(), 70)+"\n";
+		}
+		
+		l.clear();
+		
+		dump += " \n\n\nItems : \n\n\n";
+		
+		for (Object o1 : Item.itemRegistry.getKeys()) {
+			
+			String name = (String)o1;
+			Item i = (Item) Item.itemRegistry.getObject(name);
+			
+			l.put(Item.getIdFromItem(i), new CB(name, null, i));
+			
+		}
+		
+		for (Integer id : l.keySet()) {
+
+			System.out.println (StringUtils.rightPad(l.get(id).name,50)+":"+id);
+			
+			dump += StringUtils.rightPad(l.get(id).name,60)+ " : "+ StringUtils.rightPad (id+"", 5) + ":" +StringUtils.rightPad (l.get(id).i.getClass().getName(), 70)+"\n";
+		}
+		
+		FileWriter f;
+		try {
+			f = new FileWriter("dump");
+			f.write(dump);
+			f.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		int orientation = determineOrientation(world, x, y, z, entityLiving);
 		world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
