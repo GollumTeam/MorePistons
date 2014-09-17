@@ -15,34 +15,33 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockMorePistonsRod extends HBlock {
-	//private int headTexture;
 	
 	private Icon iconV;
 	private Icon iconH;
 	public boolean northSouth = false;
 	public boolean upDown = false;
 	
-	//
 	public BlockMorePistonsRod(int id, String registerName) {
 		super(id, registerName, Material.grass);
-		//this.headTexture = -1;
 		setStepSound(soundStoneFootstep);
 		setHardness(0.3F);
 	}
 	
-	// ////////////////////////
+	//////////////////////////
 	// Gestion des textures //
-	// ////////////////////////
+	//////////////////////////
 	
 	/**
 	 * Enregistre les textures Depuis la 1.5 on est obligé de charger les
 	 * texture fichier par fichier
 	 */
+	@Override
 	public void registerIcons(IconRegister iconRegister) {
 		this.iconV = this.helper.loadTexture(iconRegister, "_v");
 		this.iconH = this.helper.loadTexture(iconRegister, "_h");
 	}
-	
+
+	@Override
 	public Icon getBlockTexture (IBlockAccess iblockaccess, int x, int y, int z, int side) {
 		
 		if ((side == 1 || side == 0) && this.northSouth) {
@@ -59,7 +58,8 @@ public class BlockMorePistonsRod extends HBlock {
 		}
 		return this.iconV;
 	}
-
+	
+	@Override
 	public Icon getIcon(int i, int j) {
 		int k = getDirectionMeta(j);
 		return i != Facing.oppositeSide[k] ? this.iconV : this.iconH;
@@ -69,6 +69,7 @@ public class BlockMorePistonsRod extends HBlock {
 	// Gestion de la forme du block //
 	//////////////////////////////////
 	
+	@Override
 	public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		int l = par1World.getBlockMetadata(par2, par3, par4);
 		switch (getDirectionMeta(l)) {
@@ -96,10 +97,11 @@ public class BlockMorePistonsRod extends HBlock {
 			setBlockBounds(-0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
 		}
-
+		
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
-
+	
+	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
 		int l = iblockaccess.getBlockMetadata(i, j, k);
 		
@@ -136,14 +138,17 @@ public class BlockMorePistonsRod extends HBlock {
 		}
 	}
 	
+	@Override
 	public void setBlockBoundsForItemRender() {
 		setBlockBounds(0.375F, 0.0F, 0.375F, 0.625F, 1.0F, 0.625F);
 	}
 	
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
 	
+	@Override
 	public boolean renderAsNormalBlock() {
 		return true;
 	}
@@ -152,18 +157,22 @@ public class BlockMorePistonsRod extends HBlock {
 	// Gestion des events //
 	////////////////////////
 	
+	@Override
 	public boolean canPlaceBlockAt(World world, int i, int j, int k) {
 		return false;
 	}
-
+	
+	@Override
 	public boolean canPlaceBlockOnSide(World world, int i, int j, int k, int l) {
 		return false;
 	}
-
+	
+	@Override
 	public int quantityDropped(Random random) {
 		return 0;
 	}
 	
+	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
 		int xx= x;

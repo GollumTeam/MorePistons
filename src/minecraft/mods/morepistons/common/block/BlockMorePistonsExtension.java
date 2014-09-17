@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockMorePistonsExtension extends HBlockPistonExtension {
 	public boolean northSouth = false;
 	public boolean upDown = false;
-
+	
 	public BlockMorePistonsExtension(int id, String registerName) {
 		super(id, registerName);
 		setStepSound(soundStoneFootstep);

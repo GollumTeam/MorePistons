@@ -1,6 +1,7 @@
-package mods.morepistons.common.tileentities;
+package mods.morepistons.common.renderer;
 
 import mods.morepistons.ModMorePistons;
+import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
@@ -103,7 +104,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 					reste > 0.5f
 				);
 				
-			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending() && (block instanceof BlockPistonBase)) {
+			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending() && (block instanceof BlockPistonBase && tileEntityPiston.isBlockPiston)) {
 				
 				Block.pistonExtension.setHeadTexture(((BlockPistonBase) block).getPistonExtensionTexture());
 				

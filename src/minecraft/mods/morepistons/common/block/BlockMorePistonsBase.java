@@ -57,7 +57,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	public int getMaxBlockMove () {
 		return 12;
 	}
-
+	
 	//////////////////////////
 	// Gestion des textures //
 	//////////////////////////
