@@ -31,8 +31,8 @@ public class ModMorePistons extends GollumMod {
 
 	public final static String MODID = "MorePistons";
 	public final static String MODNAME = "More Pistons";
-	public final static String VERSION = "1.5.1 [Build Smeagol]";
-	public final static String MINECRAFT_VERSION = "1.7.10";
+	public final static String VERSION = "2.0.0 Beta 1.0";
+	public final static String MINECRAFT_VERSION = "1.7.2";
 	public final static String DEPENDENCIES = "required-after:GollumCoreLib";
 	
 	@Instance(ModMorePistons.MODID)
