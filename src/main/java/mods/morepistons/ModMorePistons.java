@@ -14,9 +14,8 @@ import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.block.BlockMorePistonsSuper;
 import mods.morepistons.common.config.ConfigMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -25,17 +24,15 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = ModMorePistons.VERSION, acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION, dependencies = ModMorePistons.DEPENDENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class ModMorePistons extends GollumMod {
 
 	public final static String MODID = "MorePistons";
 	public final static String MODNAME = "More Pistons";
 	public final static String VERSION = "1.5.1 [Build Smeagol]";
-	public final static String MINECRAFT_VERSION = "1.6.4";
+	public final static String MINECRAFT_VERSION = "1.7.10";
 	public final static String DEPENDENCIES = "required-after:GollumCoreLib";
 	
 	@Instance(ModMorePistons.MODID)
@@ -173,11 +170,11 @@ public class ModMorePistons extends GollumMod {
 	public void initBlocks() {
 		
 		// Création des blocks
-		this.blockPistonExtension = new BlockMorePistonsExtension(this.config.blockPistonExtensionID, "MorePistonsExtension");
-		this.blockPistonRod       = new BlockMorePistonsRod      (this.config.blockPistonRodID      , "MorePistonsRod");
+		this.blockPistonExtension = new BlockMorePistonsExtension("MorePistonsExtension");
+		this.blockPistonRod       = new BlockMorePistonsRod      ("MorePistonsRod");
 		
-		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(this.config.blockGravitationalPistonBaseID      , "GravitationalPistonBase"      , false);
-		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(this.config.blockGravitationalStickyPistonBaseID, "GravitationalStickyPistonBase", true);
+		this.blockGravitationalPistonBase       = new BlockMorePistonsGravitational("GravitationalPistonBase"      , false);
+		this.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational("GravitationalStickyPistonBase", true);
 		
 		this.blockDoublePistonBase           = new BlockMorePistonsBase("DoublePistonBase"         , false).setLength (2);
 		this.blockDoubleStickyPistonBase     = new BlockMorePistonsBase("DoubleStickyPistonBase"   , true ).setLength (2);

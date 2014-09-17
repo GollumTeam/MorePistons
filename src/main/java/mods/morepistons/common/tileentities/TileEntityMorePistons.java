@@ -204,7 +204,7 @@ public class TileEntityMorePistons extends TileEntity {
 			}
 		} else {
 
-			this.progress += 0.5F;
+			this.progress += 0.1F;
 
 			if (this.progress >= 1.0F) {
 				this.progress = 1.0F;

@@ -3,13 +3,13 @@ package mods.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
+import mods.gollum.core.tools.helper.blocks.HBlock;
 import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity; // lq;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB; // aoe;
 import net.minecraft.util.Facing;
@@ -18,69 +18,56 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess; // ym;
 import net.minecraft.world.World; // yc;
 
-public class BlockMorePistonsRod extends Block {
-	//private int headTexture;
+public class BlockMorePistonsRod extends HBlock {
 	
-	private IIcon textureFileV;
-	private IIcon textureFileH;
+	private IIcon iconV;
+	private IIcon iconH;
 	public boolean northSouth = false;
 	public boolean upDown = false;
 	
-	//
-	public BlockMorePistonsRod() {
-		super(Material.grass);
-//		this. headTexture = -1;
+	public BlockMorePistonsRod(String registerName) {
+		super(registerName, Material.grass);
 		setStepSound(soundTypeStone);
 		setHardness(0.3F);
 	}
 	
-	// ////////////////////////
+	//////////////////////////
 	// Gestion des textures //
-	// ////////////////////////
+	//////////////////////////
 	
-	/**
-	 * Charge une texture et affiche dans le log
-	 * 
-	 * @param iconRegister
-	 * @param key
-	 * @return
-	 */
-	public IIcon loadTexture(IIconRegister iconRegister, String key) {
-		ModMorePistons.log.debug("Register icon More Piston :\"" + key + "\"");
-		return iconRegister.registerIcon(key);
-	}
-
 	/**
 	 * Enregistre les textures Depuis la 1.5 on est obligé de charger les
 	 * texture fichier par fichier
 	 */
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.textureFileV = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_v");
-		this.textureFileH = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":rod_h");
+		this.iconV = this.helper.loadTexture(iconRegister, "_v");
+		this.iconH = this.helper.loadTexture(iconRegister, "_h");
 	}
 	
+	@Override
 	public IIcon getIcon(int i, int j) {
 		
 		int k = this.getDirectionMeta (j);
 		
 		if (this.upDown) {
-			return this.textureFileV;
+			return this.iconV;
 		}
 		
 		if (this.northSouth) {
 			if (i == 1 || i == 0) {
-				return this.textureFileV;
+				return this.iconV;
 			}
 		}
 		
-		return this.textureFileH;
+		return this.iconH;
 	}
 	
 	//////////////////////////////////
 	// Gestion de la forme du block //
 	//////////////////////////////////
 	
+	@Override
 	public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		int l = par1World.getBlockMetadata(par2, par3, par4);
 		switch (getDirectionMeta(l)) {
@@ -111,7 +98,8 @@ public class BlockMorePistonsRod extends Block {
 
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
-
+	
+	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
 		int l = iblockaccess.getBlockMetadata(i, j, k);
 		
@@ -148,14 +136,17 @@ public class BlockMorePistonsRod extends Block {
 		}
 	}
 	
+	@Override
 	public void setBlockBoundsForItemRender() {
 		setBlockBounds(0.375F, 0.0F, 0.375F, 0.625F, 1.0F, 0.625F);
 	}
 	
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
 	
+	@Override
 	public boolean renderAsNormalBlock() {
 		return true;
 	}
@@ -164,22 +155,22 @@ public class BlockMorePistonsRod extends Block {
 	// Gestion des events //
 	////////////////////////
 
-    @Override
+	@Override
 	public boolean canPlaceBlockAt(World world, int i, int j, int k) {
 		return false;
 	}
 
-    @Override
+	@Override
 	public boolean canPlaceBlockOnSide(World world, int i, int j, int k, int l) {
 		return false;
 	}
 
-    @Override
+	@Override
 	public int quantityDropped(Random random) {
 		return 0;
 	}
 
-    @Override
+	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
 		int xx= x;
@@ -229,17 +220,17 @@ public class BlockMorePistonsRod extends Block {
 	}
 	
 	/**
-     * Called when a user uses the creative pick block button on this block
-     *
-     * @param target The full target the player is looking at
-     * @return A ItemStack to add to the player's inventory, Null if nothing should be added.
-     */
-    @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        return null;
-    }
-    
-    @Override
+	 * Called when a user uses the creative pick block button on this block
+	 * 
+	 * @param target The full target the player is looking at
+	 * @return A ItemStack to add to the player's inventory, Null if nothing should be added.
+	 */
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return null;
+	}
+	
+	@Override
 	public Item getItemDropped(int par1, Random par2Random, int par3) {
 		return null;
 	}

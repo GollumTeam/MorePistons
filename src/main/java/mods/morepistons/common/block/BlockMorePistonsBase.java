@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import mods.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
@@ -34,19 +35,9 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	
 	private boolean ignoreUpdates = false;
 	private int length = 1;
-	protected boolean isSticky;
 	
-	protected String texturePrefixe;
-	protected IIcon textureFileTop;
-	protected IIcon textureFileOpen;
-	protected IIcon textureFileSide;
-	protected IIcon textureFileBottom;
-	
-
 	public BlockMorePistonsBase(String registerName, boolean isSticky) {
 		super(registerName, isSticky);
-		
-		ModMorePistons.log.info ("Create block texturePrefixe : " + texturePrefixe);
 		
 		this.setCreativeTab(ModMorePistons.morePistonsTabs);
 	}
@@ -82,17 +73,12 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	// Gestion des textures //
 	//////////////////////////
 	
-	
 	/**
-	* Charge une texture et affiche dans le log
-	*
-	* @param iconRegister
-	* @param key
-	* @return
-	*/
-	public IIcon loadTexture(IIconRegister iconRegister, String key) {
-		ModMorePistons.log.debug ("Register icon More Piston :\"" + key + "\"");
-		return iconRegister.registerIcon(key);
+	 * Nom d'enregistrement du mod
+	 */
+	@Override
+	public String getTextureKey() {
+		return super.getTextureKey().replace("sticky", "");
 	}
 	
 	/**
@@ -101,39 +87,11 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	 */
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.textureFileTop       = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + "top" + (this.isSticky ? "_sticky" : ""));
-		this.textureFileOpen      = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "top");
-		this.textureFileBottom    = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "bottom");
-		this.textureFileSide      = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "side");
+		this.iconTop    = helper.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true);
+		this.iconOpen   = helper.loadTexture(iconRegister, suffixOpen);
+		this.iconBottom = helper.loadTexture(iconRegister, suffixBotom);
+		this.iconSide   = helper.loadTexture(iconRegister, suffixSide);
 	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getPistonExtensionTexture() {
-		return this.textureFileTop;
-	}
-	
-	@Override
-	public IIcon getIcon(int i, int j) {
-		int k = getPistonOrientation(j);
-		if (k > 5) {
-			return this.textureFileTop;
-		}
-		if (i == k) {
-			if (
-				(isExtended(j)) ||
-				(this.minX > 0.0D) || (this.minY > 0.0D) || (this.minZ > 0.0D) ||
-				(this.maxX < 1.0D) || (this.maxY < 1.0D) || (this.maxZ < 1.0D)
-			) {
-				return this.textureFileOpen;
-			}
-			
-			return this.textureFileTop;
-		}
-		
-		return i != Facing.oppositeSide[k] ? this.textureFileSide : this.textureFileBottom;
-	}
-	
 	
 	////////////////////////
 	// Gestion des events //
@@ -165,77 +123,12 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		}
 	}
 	
-	public  class CB {
-		public String name = "";
-		public Block b = null;
-		public Item i = null;
-		
-		public CB(String s, Block b, Item i) {
-			this.name = s;
-			this.i = i;
-			this.b = b;
-		}
-	}
-	
 	/**
 	 * Called when the block is placed in the world. Envoie un event qunad on
 	 * place un block sur le monde
 	 */
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack itemStack) {
-
-		String dump = "Blocks : \n\n\n";
-		
-		if (!world.isRemote) {
-			return;
-		}
-		
-		TreeMap <Integer, CB> l = new TreeMap <Integer, CB> ();
-		
-		for (Object o1 : Block.blockRegistry.getKeys()) {
-			
-			String name = (String)o1;
-			Block b = (Block) Block.blockRegistry.getObject(name);
-			
-			l.put(Block.getIdFromBlock(b), new CB(name, b, null));
-			
-		}
-		
-		for (Integer id : l.keySet()) {
-			
-			System.out.println (StringUtils.rightPad(l.get(id).name,50)+":"+id);
-			
-			dump += StringUtils.rightPad(l.get(id).name,60)+ " : "+ StringUtils.rightPad (id+"", 5) + ":" +StringUtils.rightPad (l.get(id).b.getClass().getName(), 70)+"\n";
-		}
-		
-		l.clear();
-		
-		dump += " \n\n\nItems : \n\n\n";
-		
-		for (Object o1 : Item.itemRegistry.getKeys()) {
-			
-			String name = (String)o1;
-			Item i = (Item) Item.itemRegistry.getObject(name);
-			
-			l.put(Item.getIdFromItem(i), new CB(name, null, i));
-			
-		}
-		
-		for (Integer id : l.keySet()) {
-
-			System.out.println (StringUtils.rightPad(l.get(id).name,50)+":"+id);
-			
-			dump += StringUtils.rightPad(l.get(id).name,60)+ " : "+ StringUtils.rightPad (id+"", 5) + ":" +StringUtils.rightPad (l.get(id).i.getClass().getName(), 70)+"\n";
-		}
-		
-		FileWriter f;
-		try {
-			f = new FileWriter("dump");
-			f.write(dump);
-			f.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		int orientation = determineOrientation(world, x, y, z, entityLiving);
 		world.setBlockMetadataWithNotify(x, y, z, orientation, 2);

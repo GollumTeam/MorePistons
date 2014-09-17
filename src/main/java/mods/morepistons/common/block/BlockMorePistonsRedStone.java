@@ -3,11 +3,9 @@ package mods.morepistons.common.block;
 import java.util.Random;
 
 import mods.morepistons.ModMorePistons;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
@@ -23,8 +21,8 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 * @param flag
 	 * @param texturePrefixe
 	 */
-	public BlockMorePistonsRedStone(boolean flag, String texturePrefixe) {
-		super(flag, texturePrefixe);
+	public BlockMorePistonsRedStone(String registerName, boolean isSticky) {
+		super(registerName, isSticky);
 		
 		setCreativeTab(null);
 	}
@@ -43,6 +41,17 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	// Gestion des textures //
 	//////////////////////////
 	
+	/**
+	 * Nom d'enregistrement du mod
+	 */
+	@Override
+	public String getTextureKey() {
+		
+		String ori = super.getTextureKey();
+		
+		// Charge toujour la meme texture quelque soit le reston
+		return ori.substring(0, ori.length() - 1);
+	}
 	
 	/**
 	 * Enregistre les textures
@@ -50,14 +59,9 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 */
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.textureFileTop    = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + "top" + (this.isSticky ? "_sticky" : ""));
-		this.textureFileOpen   = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "top");
-		this.textureFileBottom = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "bottom");
-		this.textureFileSide   = this.loadTexture(iconRegister, ModMorePistons.MODID.toLowerCase() + ":" + this.texturePrefixe + "side_"+this.mutiplicateur);
+		this.suffixSide = "_side_"+this.mutiplicateur;
+		super.registerBlockIcons(iconRegister);
 	}
-	
-	
-	
 	
 	
 	///////////////////////////////////
