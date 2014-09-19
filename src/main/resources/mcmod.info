@@ -3,10 +3,20 @@
   "modid": "MorePistons",
   "name": "More Pistons",
   "description": "Add new Pistons",
-  "version": "1.5.1 [Build Smeagol]",
+  "version": "2.0.0",
   "updateUrl": "",
   "authors": ["SmeagolWorms4"],
   "screenshots": [],
   "dependencies": ["GollumCoreLib"]
+},
+{
+  "modid": "GollumCoreLib",
+  "name": "Gollum Core Lib",
+  "description": "",
+  "version": "2.0.0",
+  "updateUrl": "",
+  "authors": ["SmeagolWorms4"],
+  "screenshots": [],
+  "dependencies": []
 }
 ]
