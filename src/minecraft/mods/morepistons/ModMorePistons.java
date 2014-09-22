@@ -131,7 +131,7 @@ public class ModMorePistons extends GollumMod {
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		// Charge la configuration
-		this.config = new ConfigMorePistons();
+		this.config = new ConfigMorePistons().loadConfig();
 		
 		// Initialisation des blocks
 		this.initBlocks ();

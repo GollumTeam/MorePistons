@@ -3,7 +3,7 @@ package mods.morepistons.common.config;
 import mods.gollum.core.common.config.Config;
 import mods.gollum.core.common.config.ConfigProp;
 
-public class ConfigMorePistons extends Config {
+public class ConfigMorePistons extends Config<ConfigMorePistons> {
 	
 	@ConfigProp(group = "Blocks Ids") public int blockDoublePistonBaseID              = 4095;
 	@ConfigProp(group = "Blocks Ids") public int blockDoubleStickyPistonBaseID        = 4094;
