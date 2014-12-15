@@ -1,7 +1,5 @@
 package mods.morepistons.common.renderer;
 
-import org.lwjgl.opengl.GL11;
-
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
@@ -9,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBlaze;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -17,10 +14,11 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import org.lwjgl.opengl.GL11;
 
 public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 	
@@ -28,10 +26,11 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 	private RenderBlocks blockRenderer;
 	
 	public void renderPiston(TileEntityMorePistons tileEntityPiston, double x, double y, double z, float par8) {
-		
+
 		Block block = tileEntityPiston.storedBlock;
+		BlockPistonBase blockPison = tileEntityPiston.getBlockPiston();
 		
-		if (block != null && tileEntityPiston.getProgress(par8) < 1.0F) {
+		if (blockPison != null && block != null && tileEntityPiston.getProgress(par8) < 1.0F) {
 			
 			Tessellator tessellator = Tessellator.instance;
 			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
@@ -46,59 +45,32 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 				GL11.glShadeModel(GL11.GL_FLAT);
 			}
 			
-			if (tileEntityPiston.distance >= 0) {
-				// Dans cette zone on va placer les pistons rods
-				if (tileEntityPiston.storedBlock instanceof BlockMorePistonsExtension && tileEntityPiston.isExtending ()) {
-					float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
-					tileEntityPiston.displayPistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
-				}
-				
-				// On enleve au fur et a mesure les pistons rods
-				if (tileEntityPiston.isBlockPiston && !tileEntityPiston.isExtending ()) {
-					float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
-					tileEntityPiston.removePistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
-				}
+			// Dans cette zone on va placer les pistons rods
+			if (tileEntityPiston.storedBlock instanceof BlockMorePistonsExtension && tileEntityPiston.isExtending ()) {
+				float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
+				tileEntityPiston.displayPistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
+			}
+			
+			// On enleve au fur et a mesure les pistons rods
+			if (tileEntityPiston.isBlockPiston && !tileEntityPiston.isExtending ()) {
+				float distance = tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8);
+				tileEntityPiston.removePistonRod(tileEntityPiston.distance - MathHelper.ceiling_float_int(MathHelper.abs(distance)), tileEntityPiston.distance);
 			}
 			
 			tessellator.startDrawingQuads();
 			tessellator.setTranslation(
-				(double) ((float) x - (float) tileEntityPiston.xCoord + tileEntityPiston.getOffsetX(par8)),
-				(double) ((float) y - (float) tileEntityPiston.yCoord + tileEntityPiston.getOffsetY(par8)),
-				(double) ((float) z - (float) tileEntityPiston.zCoord + tileEntityPiston.getOffsetZ(par8))
+				x - (double) tileEntityPiston.xCoord + tileEntityPiston.getOffsetX(par8),
+				y - (double) tileEntityPiston.yCoord + tileEntityPiston.getOffsetY(par8),
+				z - (double) tileEntityPiston.zCoord + tileEntityPiston.getOffsetZ(par8)
 			);
 			tessellator.setColorOpaque(1, 1, 1);
 			
 			float distance = MathHelper.abs(tileEntityPiston.getOffsetX(par8) + tileEntityPiston.getOffsetY(par8) + tileEntityPiston.getOffsetZ(par8));
 			float reste = tileEntityPiston.distance - distance;
 			
-			// Le block extention mais en négatif
-			if (tileEntityPiston.distance < 0) {
-				
-				this.blockRenderer.renderPistonExtensionAllFaces(
-					Blocks.piston_head,
-					tileEntityPiston.xCoord,
-					tileEntityPiston.yCoord,
-					tileEntityPiston.zCoord,
-					distance > 0.5f
-				);
-				
-				((BlockPistonExtension)ModMorePistons.blockPistonExtension).func_150087_e();
-				
-				tessellator.setTranslation(
-					(double) ((float) x - (float) tileEntityPiston.xCoord),
-					(double) ((float) y - (float) tileEntityPiston.yCoord),
-					(double) ((float) z - (float) tileEntityPiston.zCoord)
-				);
-				
-				this.blockRenderer.renderBlockAllFaces(
-					ModMorePistons.blockPistonRod,
-					tileEntityPiston.xCoord,
-					tileEntityPiston.yCoord,
-					tileEntityPiston.zCoord
-				);
-			
-			// Le block extention
-			} else if (block instanceof BlockMorePistonsExtension) {
+			if (block instanceof BlockMorePistonsExtension) {
+					
+				Blocks.piston_head.func_150086_a(blockPison.getPistonExtensionTexture());
 				
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					block,
@@ -108,9 +80,11 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 					reste > 0.5f
 				);
 				
+				((BlockPistonExtension)ModMorePistons.blockPistonExtension).func_150087_e();
+				
 			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending() && (block instanceof BlockPistonBase) && tileEntityPiston.isBlockPiston) {
 				
-				Blocks.piston_head.func_150086_a(((BlockPistonBase) block).getPistonExtensionTexture());
+				Blocks.piston_head.func_150086_a(blockPison.getPistonExtensionTexture());
 				
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					Blocks.piston_head,

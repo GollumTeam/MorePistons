@@ -9,6 +9,7 @@ import mods.morepistons.common.CommonProxyMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsGravitational;
+import mods.morepistons.common.block.BlockMorePistonsMagnetic;
 import mods.morepistons.common.block.BlockMorePistonsRedStone;
 import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.block.BlockMorePistonsSuper;
@@ -98,7 +99,7 @@ public class ModMorePistons extends GollumMod {
 	public static BlockMorePistonsSuper blockSuperSeptupleStickyPistonBase;
 	public static BlockMorePistonsSuper blockSuperOctuplePistonBase;
 	public static BlockMorePistonsSuper blockSuperOctupleStickyPistonBase;
-	
+
 	public static BlockMorePistonsRedStone blockRedStonePistonBase1;
 	public static BlockMorePistonsRedStone blockRedStoneStickyPistonBase1;
 	public static BlockMorePistonsRedStone blockRedStonePistonBase2;
@@ -115,6 +116,23 @@ public class ModMorePistons extends GollumMod {
 	public static BlockMorePistonsRedStone blockRedStoneStickyPistonBase7;
 	public static BlockMorePistonsRedStone blockRedStonePistonBase8;
 	public static BlockMorePistonsRedStone blockRedStoneStickyPistonBase8;
+	
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase1;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase1;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase2;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase2;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase3;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase3;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase4;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase4;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase5;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase5;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase6;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase6;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase7;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase7;
+	public static BlockMorePistonsMagnetic blockMagneticPistonBase8;
+	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase8;
 	
 	public static BlockMorePistonsExtension blockPistonExtension;
 	public static BlockMorePistonsRod blockPistonRod;
@@ -187,7 +205,7 @@ public class ModMorePistons extends GollumMod {
 		this.blockSeptupleStickyPistonBase   = new BlockMorePistonsBase("SeptupleStickyPistonBase" , true ).setLength (7);
 		this.blockOctuplePistonBase          = new BlockMorePistonsBase("OctuplePistonBase"        , false).setLength (8);
 		this.blockOctupleStickyPistonBase    = new BlockMorePistonsBase("OctupleStickyPistonBase"  , true ).setLength (8);
-
+		
 		this.blockSuperPistonBase                = new BlockMorePistonsSuper("SuperPistonBase"      , false);
 		this.blockSuperStickyPistonBase          = new BlockMorePistonsSuper("SuperStickyPistonBase", true );
 		
@@ -205,7 +223,7 @@ public class ModMorePistons extends GollumMod {
 		this.blockSuperSeptupleStickyPistonBase  = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperSeptupleStickyPistonBase" , true ).setLength (7);
 		this.blockSuperOctuplePistonBase         = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperOctuplePistonBase"        , false).setLength (8);
 		this.blockSuperOctupleStickyPistonBase   = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperOctupleStickyPistonBase"  , true ).setLength (8);
-		
+
 		ModMorePistons.blockRedStonePistonBase1       = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStonePistonBase1"      , false).setMultiplicateur(1).setCreativeTab(ModMorePistons.morePistonsTabs);
 		ModMorePistons.blockRedStoneStickyPistonBase1 = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStoneStickyPistonBase1", true ).setMultiplicateur(1).setCreativeTab(ModMorePistons.morePistonsTabs);
 		ModMorePistons.blockRedStonePistonBase2       = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStonePistonBase2"      , false).setMultiplicateur(2);
@@ -222,6 +240,23 @@ public class ModMorePistons extends GollumMod {
 		ModMorePistons.blockRedStoneStickyPistonBase7 = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStoneStickyPistonBase7", true ).setMultiplicateur(7);
 		ModMorePistons.blockRedStonePistonBase8       = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStonePistonBase8"      , false).setMultiplicateur(8);
 		ModMorePistons.blockRedStoneStickyPistonBase8 = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStoneStickyPistonBase8", true ).setMultiplicateur(8);
+		
+		ModMorePistons.blockMagneticPistonBase1       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticPistonBase1"               , false);
+		ModMorePistons.blockMagneticStickyPistonBase1 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticStickyPistonBase1"         , true );
+		ModMorePistons.blockMagneticPistonBase2       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoublePistonBase2"         , false).setLength(2);
+		ModMorePistons.blockMagneticStickyPistonBase2 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoubleStickyPistonBase2"   , true ).setLength(2);
+		ModMorePistons.blockMagneticPistonBase3       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticTriplePistonBase3"         , false).setLength(3);
+		ModMorePistons.blockMagneticStickyPistonBase3 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticTripleStickyPistonBase3"   , true ).setLength(3);
+		ModMorePistons.blockMagneticPistonBase4       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuadruplePistonBase4"      , false).setLength(4);
+		ModMorePistons.blockMagneticStickyPistonBase4 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuadrupleStickyPistonBase4", true ).setLength(4);
+		ModMorePistons.blockMagneticPistonBase5       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuintuplePistonBase5"      , false).setLength(5);
+		ModMorePistons.blockMagneticStickyPistonBase5 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuintupleStickyPistonBase5", true ).setLength(5);
+		ModMorePistons.blockMagneticPistonBase6       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSextuplePistonBase6"       , false).setLength(6);
+		ModMorePistons.blockMagneticStickyPistonBase6 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSextupleStickyPistonBase6" , true ).setLength(6);
+		ModMorePistons.blockMagneticPistonBase7       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptuplePistonBase7"       , false).setLength(7);
+		ModMorePistons.blockMagneticStickyPistonBase7 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptupleStickyPistonBase7" , true ).setLength(7);
+		ModMorePistons.blockMagneticPistonBase8       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctuplePistonBase8"        , false).setLength(8);
+		ModMorePistons.blockMagneticStickyPistonBase8 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctupleStickyPistonBase8"  , true ).setLength(8);
 		
 	}
 	

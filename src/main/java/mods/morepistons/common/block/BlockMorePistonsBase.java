@@ -1,9 +1,8 @@
 package mods.morepistons.common.block;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import static mods.morepistons.ModMorePistons.log;
+
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import mods.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import mods.morepistons.ModMorePistons;
@@ -17,19 +16,14 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
-
-import org.apache.commons.lang3.StringUtils;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsBase extends HBlockPistonBase {
 	
@@ -104,7 +98,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
-		ModMorePistons.log.debug("onBlockDestroyedByPlayer : "+x+", "+y+", "+z);
+		log.debug("onBlockDestroyedByPlayer : "+x+", "+y+", "+z);
 		
 		int orientation = this.getPistonOrientation(metadata);
 		Block block = ModMorePistons.blockPistonRod;
@@ -133,7 +127,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		int orientation = determineOrientation(world, x, y, z, entityLiving);
 		world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 		
-		ModMorePistons.log.debug("onBlockPlacedBy : "+x+", "+y+", "+z);
+		log.debug("onBlockPlacedBy : "+x+", "+y+", "+z);
 		
 		if (!this.ignoreUpdates && !world.isRemote) {
 			this.updatePistonState(world, x, y, z);
@@ -147,7 +141,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		
-		ModMorePistons.log.debug("onNeighborBlockChange : "+x+", "+y+", "+z);
+		log.debug("onNeighborBlockChange : "+x+", "+y+", "+z);
 		
 		if (!this.ignoreUpdates && !world.isRemote) {
 			this.updatePistonState(world, x, y, z);
@@ -180,13 +174,13 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		boolean powered = this.isIndirectlyPowered(world, x, y, z, orientation);
 		boolean extended = isExtended(metadata);
 		
-		ModMorePistons.log.debug("updatePistonState : "+x+", "+y+", "+z+ ": powered="+powered+", extended="+extended);
+		log.debug("updatePistonState : "+x+", "+y+", "+z+ ": powered="+powered+", extended="+extended);
 		
 		// Si redstone eteinte et piston ouvert alors il faut fermer
 		if (!powered && extended) {
 			int max = this.getMaximalOpenedLenght(world, x, y, z, orientation);
 			if (max == -1) {
-				ModMorePistons.log.debug("Piston en court de mouvement");
+				log.debug("Piston en court de mouvement");
 				return;
 			}
 			world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
@@ -196,7 +190,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		} else if (powered) {
 			int max = this.getMaximalOpenedLenght(world, x, y, z, orientation);
 			if (max <= 0) {
-				ModMorePistons.log.debug("Piston en court de mouvement ou bloqué");
+				log.debug("Piston en court de mouvement ou bloqué");
 				return;
 			}
 			world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
@@ -275,7 +269,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	*/
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation, boolean detectMoving, int maxlenght) {
 		
-		ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
+		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
 		
 		int lenght = 0;
 		
@@ -286,21 +280,21 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 			z += Facing.offsetsZForSide[orientation];
 			
 			if (y >= 255) {
-				ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " y>=255");
+				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " y>=255");
 				break;
 			}
 			
 			Block block = world.getBlock(x, y, z);
 			
 			if (block instanceof BlockPistonMoving) {
-				ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " find PistonMoving");
+				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " find PistonMoving");
 				if (detectMoving) {
 					return -1;
 				} else {
 					return lenght;
 				}
 			}
-			ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z);
+			log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z);
 			if (! (this.isEmptyBlock(block)) && !this.isRodInOrientation(block, world, x, y, z, orientation)) {
 				lenght += this.getMoveBlockOnDistance (maxlenght - i, world, block, x, y, z, orientation);
 				break;
@@ -308,7 +302,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 			lenght++;
 		}
 		
-		ModMorePistons.log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " : lenght="+lenght);
+		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " : lenght="+lenght);
 		
 		return lenght;
 	}
@@ -343,7 +337,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	private int getMoveBlockOnDistance (int distance, World world, Block block, int x, int y, int z, int orientation, int nbMoved) {
 		
 		if (nbMoved == this.getMaxBlockMove () || !this.isMovableBlock(block, world, x, y, z)) {
-			ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
+			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
 			return 0;
 		}
 		
@@ -356,12 +350,12 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 			
 
 			if (y >= 255) {
-				ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
+				log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
 				break;
 			}
 			
 			Block blockNext = world.getBlock(x, y, z);
-			ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " blockNext="+blockNext);
+			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " blockNext="+blockNext);
 			
 			if (this.isEmptyBlock(blockNext)) {
 				walking++;
@@ -372,7 +366,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 			}
 		}
 		
-		ModMorePistons.log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
+		log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
 		return walking;
 	}
 	
@@ -386,7 +380,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	 * @param orientation
 	 * @return
 	 */
-	private static boolean isRodInOrientation (Block block, World world, int x, int y, int z, int orientation) {
+	private boolean isRodInOrientation (Block block, World world, int x, int y, int z, int orientation) {
 		
 		if (
 			block instanceof BlockMorePistonsExtension ||
@@ -403,7 +397,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	 * @param block
 	 * @return
 	 */
-	public static boolean isEmptyBlock(Block block) {
+	public boolean isEmptyBlock(Block block) {
 		return
 			block == null ||
 			block instanceof BlockAir ||
@@ -417,7 +411,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	 * @param id
 	 * @return
 	 */
-	public static boolean isMovableBlock(Block block, World world, int x, int y, int z) {
+	public boolean isMovableBlock(Block block, World world, int x, int y, int z) {
 		
 		boolean isPistonClosed = BlockMorePistonsBase.isPiston (block);
 		if (isPistonClosed) {
@@ -425,7 +419,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		}
 		
 		return
-			BlockMorePistonsBase.isEmptyBlock (block) ||
+			this.isEmptyBlock (block) ||
 			isPistonClosed ||
 			(
 				block != Blocks.obsidian &&
@@ -518,11 +512,11 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 			boolean extendClose = false;
 			
 			int currentOpened = this.getOpenedLenght (world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
-			ModMorePistons.log.debug("L'ouverture du piston : "+x+", "+y+", "+z+": currentOpened="+currentOpened+", lenghtOpened="+lenghtOpened);
+			log.debug("L'ouverture du piston : "+x+", "+y+", "+z+": currentOpened="+currentOpened+", lenghtOpened="+lenghtOpened);
 			
 			// Demande une ouverture du piston
 			if (lenghtOpened > 0) {
-				ModMorePistons.log.debug("demande d'ouverture : "+x+", "+y+", "+z);
+				log.debug("demande d'ouverture : "+x+", "+y+", "+z);
 
 				// Si le piston ne change pas de taille on ne fait rien
 				// Si le piston est fermer: on ouvre
@@ -531,13 +525,13 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				
 				if (currentOpened == lenghtOpened) {
 					
-					ModMorePistons.log.debug("Les piston ne change pas de taille : "+x+", "+y+", "+z);
+					log.debug("Les piston ne change pas de taille : "+x+", "+y+", "+z);
 					this.ignoreUpdates = false;
 					return true;
 				
 				//Le piston était fermer
 				} else if (currentOpened == 0) {
-					ModMorePistons.log.debug("Les piston était fermé : "+x+", "+y+", "+z);
+					log.debug("Les piston était fermé : "+x+", "+y+", "+z);
 					
 					this.extend(world, x, y, z, orientation, lenghtOpened);
 					extendOpen = true;
@@ -545,7 +539,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				// Le piston s'ouvre plus
 				} else if (currentOpened < lenghtOpened) {
 					
-					ModMorePistons.log.debug("Le piston s'ouvre plus : "+x+", "+y+", "+z);
+					log.debug("Le piston s'ouvre plus : "+x+", "+y+", "+z);
 					
 					int x2 = x + Facing.offsetsXForSide[orientation] * currentOpened;
 					int y2 = y + Facing.offsetsYForSide[orientation] * currentOpened;
@@ -558,7 +552,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				} else {
 					
 					int diff = currentOpened - lenghtOpened;
-					ModMorePistons.log.debug("Le piston se retract parielement : "+x+", "+y+", "+z+" diff="+diff);
+					log.debug("Le piston se retract parielement : "+x+", "+y+", "+z+" diff="+diff);
 
 					int x2 = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
 					int y2 = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
@@ -587,7 +581,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 					
 				} else {
 					
-					ModMorePistons.log.debug("demande de fermeture : "+x+", "+y+", "+z);
+					log.debug("demande de fermeture : "+x+", "+y+", "+z);
 					
 					// Debut de l'effet de fermeture adapter pour tous les pistons
 					// On calcule la taille du piston et on retacte se que l'on peu
@@ -650,17 +644,17 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 			int x2 = x + Facing.offsetsXForSide[orientation] * (length + 1);
 			int y2 = y + Facing.offsetsYForSide[orientation] * (length + 1);
 			int z2 = z + Facing.offsetsZForSide[orientation] * (length + 1);
-
+			
 			Block block = world.getBlock(x2, y2, z2);
-
+			
 			if (!isEmptyBlock(block) && isMovableBlock(block, world, x2, y2, z2)) {
-				ModMorePistons.log.debug("The sticky block : "+x2+", "+y2+", "+z2+" block="+block);
+				log.debug("The sticky block : "+x2+", "+y2+", "+z2+" block="+block);
 				int blockMeta = world.getBlockMetadata(x2, y2, z2);
-
+				
 				int xPlus1 = x + Facing.offsetsXForSide[orientation];
 				int yPlus1 = y + Facing.offsetsYForSide[orientation];
 				int zPlus1 = z + Facing.offsetsZForSide[orientation];
-
+				
 				world.setBlockToAir(x2, y2, z2);
 				
 				//Déplace avec une animation les blocks
@@ -700,7 +694,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		public EMoveInfosExtend() {}
 		
 		public EMoveInfosExtend(Block block, int metadata, int move) {
-			this.block       = block;
+			this.block    = block;
 			this.metadata = metadata;
 			this.move     = move;
 		}
@@ -753,6 +747,8 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				break;
 			} else {
 				infosExtend.add(new EMoveInfosExtend(block, metadata, size));
+				
+				world.setTileEntity(xExtension, yExtension, zExtension, null);
 				world.setBlockToAir (xExtension, yExtension, zExtension);
 			}
 			
@@ -774,8 +770,8 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				zExtension += Facing.offsetsZForSide[orientation];
 				
 				//Déplace avec une animation les blocks
-				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, infos.metadata, 2);
 				TileEntity teBlock = new TileEntityMorePistons (infos.block, infos.metadata, orientation, true, false, infos.move, false);
+				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, infos.metadata, 2);
 				world.setTileEntity(xExtension, yExtension, zExtension, teBlock);
 			}
 		}
@@ -785,7 +781,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 		
 		//Déplace avec une animation l'extention du piston
-		ModMorePistons.log.debug("Create PistonMoving : "+xExtension+", "+yExtension+", "+zExtension+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
+		log.debug("Create PistonMoving : "+xExtension+", "+yExtension+", "+zExtension+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
 		
 		int metadata = orientation | (this.isSticky ? 0x8 : 0);
 		world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);

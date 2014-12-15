@@ -10,9 +10,6 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	
-	private boolean ignoreUpdates = false;
-	public  int maxBlockMove = 12;
-	
 	private int mutiplicateur = 1;
 	
 	/**
@@ -92,27 +89,27 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		if (this.isSticky) {
 			
 			switch (multi) {
-				case 1:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase1;  break;
-				case 2:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase2;  break;
-				case 3:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase3;  break;
-				case 4:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase4;  break;
-				case 5:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase5;  break;
-				case 6:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase6;  break;
-				case 7:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase7;  break;
-				case 8:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase8;  break;
-				default: newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStoneStickyPistonBase1;  break;
+				case 1:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase1;  break;
+				case 2:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase2;  break;
+				case 3:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase3;  break;
+				case 4:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase4;  break;
+				case 5:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase5;  break;
+				case 6:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase6;  break;
+				case 7:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase7;  break;
+				case 8:  newBlock = ModMorePistons.blockRedStoneStickyPistonBase8;  break;
+				default: newBlock = ModMorePistons.blockRedStoneStickyPistonBase1;  break;
 			}
 		} else {
 			switch (multi) {
-				case 1:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase1;  break;
-				case 2:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase2;  break;
-				case 3:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase3;  break;
-				case 4:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase4;  break;
-				case 5:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase5;  break;
-				case 6:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase6;  break;
-				case 7:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase7;  break;
-				case 8:  newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase8;  break;
-				default: newBlock = (BlockMorePistonsRedStone) ModMorePistons.blockRedStonePistonBase1;  break;
+				case 1:  newBlock = ModMorePistons.blockRedStonePistonBase1;  break;
+				case 2:  newBlock = ModMorePistons.blockRedStonePistonBase2;  break;
+				case 3:  newBlock = ModMorePistons.blockRedStonePistonBase3;  break;
+				case 4:  newBlock = ModMorePistons.blockRedStonePistonBase4;  break;
+				case 5:  newBlock = ModMorePistons.blockRedStonePistonBase5;  break;
+				case 6:  newBlock = ModMorePistons.blockRedStonePistonBase6;  break;
+				case 7:  newBlock = ModMorePistons.blockRedStonePistonBase7;  break;
+				case 8:  newBlock = ModMorePistons.blockRedStonePistonBase8;  break;
+				default: newBlock = ModMorePistons.blockRedStonePistonBase1;  break;
 			}
 		}
 		world.setBlock(x, y, z, newBlock);
