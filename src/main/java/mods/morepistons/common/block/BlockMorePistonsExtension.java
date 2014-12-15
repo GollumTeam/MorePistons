@@ -1,7 +1,7 @@
 package mods.morepistons.common.block;
 
 import mods.gollum.core.tools.helper.blocks.HBlockPistonExtension;
-import mods.morepistons.ModMorePistons;
+import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.init.Blocks;
@@ -25,7 +25,7 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
 		
 		int direction = this.getDirectionFromMetadata (metadata);
-		Block block = ModMorePistons.blockPistonRod;
+		Block block = ModBlocks.blockPistonRod;
 		while (block instanceof BlockMorePistonsRod) {
 			x -= Facing.offsetsXForSide[direction];
 			y -= Facing.offsetsYForSide[direction];
@@ -61,7 +61,7 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 			z2 -= Facing.offsetsZForSide[orientation];
 			block2 = world.getBlock(x2, y2, z2);
 			
-		} while (block2 == ModMorePistons.blockPistonRod);
+		} while (block2 == ModBlocks.blockPistonRod);
 		
 		Block blockPiston = world.getBlock(x2, y2, z2);
 		if (blockPiston != null && blockPiston != Blocks.air) {

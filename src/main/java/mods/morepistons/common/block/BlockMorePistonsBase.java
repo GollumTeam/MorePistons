@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import mods.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
+import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
@@ -101,7 +102,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		log.debug("onBlockDestroyedByPlayer : "+x+", "+y+", "+z);
 		
 		int orientation = this.getPistonOrientation(metadata);
-		Block block = ModMorePistons.blockPistonRod;
+		Block block = ModBlocks.blockPistonRod;
 		while (block instanceof BlockMorePistonsRod) {
 			
 			x += Facing.offsetsXForSide[orientation];
@@ -564,7 +565,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 
 					world.setBlockToAir (cX2, cY2, cZ2);
 					world.setBlock(x2, y2, z2, Blocks.piston_extension, orientation, 2);
-					TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension, orientation, orientation, true, false, -diff, false);
+					TileEntity teExtension = new TileEntityMorePistons (ModBlocks.blockPistonExtension, orientation, orientation, true, false, -diff, false);
 					world.setTileEntity(x2, y2, z2, teExtension);
 					
 					this.retracSticky(world, x2, y2, z2, orientation, diff);
@@ -785,7 +786,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		
 		int metadata = orientation | (this.isSticky ? 0x8 : 0);
 		world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);
-		TileEntity teExtension = new TileEntityMorePistons (ModMorePistons.blockPistonExtension, metadata, orientation, true, false, lenghtOpened, true);
+		TileEntity teExtension = new TileEntityMorePistons (ModBlocks.blockPistonExtension, metadata, orientation, true, false, lenghtOpened, true);
 		world.setTileEntity(xExtension, yExtension, zExtension, teExtension);
 	}
 	

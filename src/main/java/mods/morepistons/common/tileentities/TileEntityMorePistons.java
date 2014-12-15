@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsRod;
+import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockPistonBase;
@@ -103,7 +103,7 @@ public class TileEntityMorePistons extends TileEntity {
 					!(block instanceof BlockPistonMoving)
 				)
 			) {
-				this.worldObj.setBlock (x, y, z, ModMorePistons.blockPistonRod, this.storedOrientation, 2);
+				this.worldObj.setBlock (x, y, z, ModBlocks.blockPistonRod, this.storedOrientation, 2);
 			}
 		}
 	}

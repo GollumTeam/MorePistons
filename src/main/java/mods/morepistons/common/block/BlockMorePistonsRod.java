@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.gollum.core.tools.helper.blocks.HBlock;
-import mods.morepistons.ModMorePistons;
+import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -178,7 +178,7 @@ public class BlockMorePistonsRod extends HBlock {
 		int zz= z;
 		
 		int orientation = this.getDirectionMeta(metadata);
-		Block block = ModMorePistons.blockPistonRod;
+		Block block = ModBlocks.blockPistonRod;
 		while (block instanceof BlockMorePistonsRod) {
 			
 			x += Facing.offsetsXForSide[orientation];
@@ -196,7 +196,7 @@ public class BlockMorePistonsRod extends HBlock {
 			
 		}
 		
-		block = ModMorePistons.blockPistonRod;
+		block = ModBlocks.blockPistonRod;
 		while (block instanceof BlockMorePistonsRod) {
 			
 			xx -= Facing.offsetsXForSide[orientation];

@@ -1,8 +1,8 @@
 package mods.morepistons.common.renderer;
 
-import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
+import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
@@ -80,7 +80,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 					reste > 0.5f
 				);
 				
-				((BlockPistonExtension)ModMorePistons.blockPistonExtension).func_150087_e();
+				((BlockPistonExtension)ModBlocks.blockPistonExtension).func_150087_e();
 				
 			} else if (tileEntityPiston.shouldRenderHead() && !tileEntityPiston.isExtending() && (block instanceof BlockPistonBase) && tileEntityPiston.isBlockPiston) {
 				
@@ -94,7 +94,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 					distance > 0.5f
 				);
 				
-				((BlockPistonExtension)ModMorePistons.blockPistonExtension).func_150087_e();
+				((BlockPistonExtension)ModBlocks.blockPistonExtension).func_150087_e();
 				
 				tessellator.setTranslation(
 					(double) ((float) x - (float) tileEntityPiston.xCoord),
@@ -117,7 +117,7 @@ public class TileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
 						(double) ((float) z - (float) tileEntityPiston.zCoord) + Facing.offsetsZForSide[tileEntityPiston.storedOrientation]
 					);
 					this.blockRenderer.renderBlockAllFaces(
-						ModMorePistons.blockPistonRod,
+						ModBlocks.blockPistonRod,
 						tileEntityPiston.xCoord,
 						tileEntityPiston.yCoord,
 						tileEntityPiston.zCoord
