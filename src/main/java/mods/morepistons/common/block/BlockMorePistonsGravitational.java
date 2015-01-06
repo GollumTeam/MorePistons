@@ -16,8 +16,6 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 	
-	public double power = 1.5D;
-	
 	public BlockMorePistonsGravitational(String registerName, boolean isSticky) {
 		super(registerName, isSticky);
 	}
@@ -65,7 +63,7 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 				world.setBlockToAir(xSand, ySand, zSand);
 				world.setBlockMetadataWithNotify(xSand, ySand, zSand, 0, 2);
 				EntityFallingBlock entityFallingBlock = new EntityFallingBlock(world, x2 + 0.5F, y2 + 0.5F, z2 + 0.5F, block);
-				entityFallingBlock.motionY += this.power-1.5 + (((double)i)*0.1);
+				entityFallingBlock.motionY += ModMorePistons.config.powerGravitationalPistons-1.5 + (((double)i)*0.1);
 				entityFallingBlock.field_145812_b = 1;
 				world.spawnEntityInWorld(entityFallingBlock);
 
@@ -90,9 +88,9 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 			Entity entity = (Entity) entityIterator.next();
 			ModMorePistons.log.debug("extend : "+x+", "+y+", "+z+" entity="+entity.getClass().getName());
 			
-			entity.motionX += Facing.offsetsXForSide[orientation] * this.power*7.0D;
-			entity.motionY += Facing.offsetsYForSide[orientation] * this.power;
-			entity.motionZ += Facing.offsetsZForSide[orientation] * this.power*7.0D;
+			entity.motionX += Facing.offsetsXForSide[orientation] * ModMorePistons.config.powerGravitationalPistons*7.0D;
+			entity.motionY += Facing.offsetsYForSide[orientation] * ModMorePistons.config.powerGravitationalPistons;
+			entity.motionZ += Facing.offsetsZForSide[orientation] * ModMorePistons.config.powerGravitationalPistons*7.0D;
 		}
 		
 		if (!world.isRemote) {

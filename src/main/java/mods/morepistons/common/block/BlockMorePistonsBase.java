@@ -61,7 +61,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	 * @return
 	 */
 	public int getMaxBlockMove () {
-		return 12;
+		return ModMorePistons.config.numberMovableBlockWithDefaultPiston;
 	}
 	
 	//////////////////////////

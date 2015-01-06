@@ -3,6 +3,7 @@ package mods.morepistons.common.block;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -25,13 +26,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		super(registerName, isSticky);
 	}
 	
-
 	/**
 	 * Block maximal que peux pouser le piston
 	 * @return
 	 */
 	public int getMaxBlockMove () {
-		return 41;
+		return ModMorePistons.config.numberMovableBlockWithSuperPiston;
 	}
 	
 	protected ArrayList<EMoveInfosExtend> getListOrigin (World world, int x, int y, int z, int orientation, int lenghtOpened) {
