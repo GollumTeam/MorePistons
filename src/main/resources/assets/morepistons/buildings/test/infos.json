@@ -1,0 +1,16 @@
+{
+	"height":-1,
+	"color" : [
+		{ "block": "minecraft:grass" },
+		{ "block": "minecraft:redstone_wire" },
+		{ "block": "minecraft:lever", "orientation": "bottom_vertical" },
+		{ "block": "minecraft:repeater", "orientation": "down"  },
+		{ "block": "minecraft:repeater", "orientation": "left" },
+		{ "block": "minecraft:repeater", "orientation": "right" }
+	],
+	
+	"sets": {
+
+		"0x2x3":  { "block": "minecraft:grass" }
+	}
+}
