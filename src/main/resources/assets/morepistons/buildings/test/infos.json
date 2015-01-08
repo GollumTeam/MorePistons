@@ -4,13 +4,64 @@
 		{ "block": "minecraft:grass" },
 		{ "block": "minecraft:redstone_wire" },
 		{ "block": "minecraft:lever", "orientation": "bottom_vertical" },
-		{ "block": "minecraft:repeater", "orientation": "down"  },
-		{ "block": "minecraft:repeater", "orientation": "left" },
-		{ "block": "minecraft:repeater", "orientation": "right" }
+		{ "block": "minecraft:unpowered_repeater", "orientation": "right"  },
+		{ "block": "minecraft:unpowered_repeater", "orientation": "down" },
+		{ "block": "minecraft:unpowered_repeater", "orientation": "left" },
+		{ "block": "minecraft:planks" }
 	],
 	
 	"sets": {
-
-		"0x2x3":  { "block": "minecraft:grass" }
+		"8x1x18": { "block": "MorePistons:GravitationalPistonBase", "metadata":1 },
+		
+		"8x1x16": { "block": "MorePistons:SuperOctupleStickyPistonBase"  , "orientation": "left" },
+		"8x1x15": { "block": "MorePistons:SuperSeptupleStickyPistonBase" , "orientation": "left" },
+		"8x1x14": { "block": "MorePistons:SuperSextupleStickyPistonBase" , "orientation": "left" },
+		"8x1x13": { "block": "MorePistons:SuperQuintupleStickyPistonBase", "orientation": "left" },
+		"8x1x12": { "block": "MorePistons:SuperQuadrupleStickyPistonBase", "orientation": "left" },
+		"8x1x11": { "block": "MorePistons:SuperTripleStickyPistonBase"   , "orientation": "left" },
+		"8x1x10": { "block": "MorePistons:SuperDoubleStickyPistonBase"   , "orientation": "left" },
+		"8x1x9":  { "block": "MorePistons:SuperStickyPistonBase"         , "orientation": "left" },
+		 
+		"8x1x7":  { "block": "MorePistons:OctupleStickyPistonBase"  , "orientation": "left" },
+		"8x1x6":  { "block": "MorePistons:SeptupleStickyPistonBase" , "orientation": "left" },
+		"8x1x5":  { "block": "MorePistons:SextupleStickyPistonBase" , "orientation": "left" },
+		"8x1x4":  { "block": "MorePistons:QuintupleStickyPistonBase", "orientation": "left" },
+		"8x1x3":  { "block": "MorePistons:QuadrupleStickyPistonBase", "orientation": "left" },
+		"8x1x2":  { "block": "MorePistons:TripleStickyPistonBase"   , "orientation": "left" },
+		"8x1x1":  { "block": "MorePistons:DoubleStickyPistonBase"   , "orientation": "left" },
+		
+		"2x1x16": { "block": "MorePistons:SuperOctuplePistonBase"  , "metadata": 1 },
+		"2x1x15": { "block": "MorePistons:SuperSeptuplePistonBase" , "metadata": 1 },
+		"2x1x14": { "block": "MorePistons:SuperSextuplePistonBase" , "metadata": 1 },
+		"2x1x13": { "block": "MorePistons:SuperQuintuplePistonBase", "metadata": 1 },
+		"2x1x12": { "block": "MorePistons:SuperQuadruplePistonBase", "metadata": 1 },
+		"2x1x11": { "block": "MorePistons:SuperTriplePistonBase"   , "metadata": 1 },
+		"2x1x10": { "block": "MorePistons:SuperDoublePistonBase"   , "metadata": 1 },
+		"2x1x9":  { "block": "MorePistons:SuperPistonBase"         , "metadata": 1 },
+		
+		"2x1x7":  { "block": "MorePistons:OctuplePistonBase"  , "metadata": 1 },
+		"2x1x6":  { "block": "MorePistons:SeptuplePistonBase" , "metadata": 1 },
+		"2x1x5":  { "block": "MorePistons:SextuplePistonBase" , "metadata": 1 },
+		"2x1x4":  { "block": "MorePistons:QuintuplePistonBase", "metadata": 1 },
+		"2x1x3":  { "block": "MorePistons:QuadruplePistonBase", "metadata": 1 },
+		"2x1x2":  { "block": "MorePistons:TriplePistonBase"   , "metadata": 1 },
+		"2x1x1":  { "block": "MorePistons:DoublePistonBase"   , "metadata": 1 },
+		
+		"4x1x24":  { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"6x1x24":  { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"8x1x24":  { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"10x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"12x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"14x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"16x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"18x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"20x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"22x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"24x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"26x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"28x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"30x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"32x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" },
+		"34x1x24": { "block": "MorePistons:RedStonePistonBase1", "orientation": "down" }
 	}
 }
