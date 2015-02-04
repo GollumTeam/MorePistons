@@ -82,10 +82,6 @@ public class ModMorePistons extends GollumMod {
 		// Ajout des recettes
 		ModRecipes.init ();
 		
-		// Place le piston normal dans le creative tab
-		Blocks.piston.setCreativeTab(morePistonsTabs);
-		Blocks.sticky_piston.setCreativeTab(morePistonsTabs);
-		
 		// Set de l'icon du tab creative
 		this.morePistonsTabs.setIcon(Blocks.piston);
 	}

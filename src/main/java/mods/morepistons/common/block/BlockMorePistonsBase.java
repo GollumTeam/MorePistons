@@ -79,9 +79,13 @@ public class BlockMorePistonsBase extends HBlockContainer {
 	public int getLengthInWorld(World world, int x, int y, int z, int orientation) {
 		return this.length;
 	}
-	
+
 	public float getSpeedInWorld(World world, int x, int y, int z, int orientation) {
 		return this.speed;
+	}
+	
+	public boolean isSticky() {
+		return this.isSticky;
 	}
 	
 	/**
