@@ -104,22 +104,26 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		return super.getTextureKey().replace("sticky", "");
 	}
 	
-	/**
-	 * Enregistre les textures
-	 * Depuis la 1.5 on est obligé de charger les texture fichier par fichier
-	 */
-	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.iconTop    = helper.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true);
-		this.iconOpen   = helper.loadTexture(iconRegister, suffixOpen);
-		this.iconBottom = helper.loadTexture(iconRegister, suffixBottom);
-		this.iconSide   = helper.loadTexture(iconRegister, suffixSide);
+		
+		if (helper.vanillaTexture) {
+			super.registerBlockIcons(iconRegister);
+			return;
+		};
+		
+		this.registerBlockIconsTop   (iconRegister);
+		this.registerBlockIconsOpen  (iconRegister);
+		this.registerBlockIconsBottom(iconRegister);
+		this.registerBlockIconsSide  (iconRegister);
+		
 	}
+	protected void registerBlockIconsTop   (IIconRegister iconRegister) { this.iconTop    = helper.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true); }
+	protected void registerBlockIconsOpen  (IIconRegister iconRegister) { this.iconOpen   = helper.loadTexture(iconRegister, suffixOpen);   }
+	protected void registerBlockIconsBottom(IIconRegister iconRegister) { this.iconBottom = helper.loadTexture(iconRegister, suffixBottom); }
+	protected void registerBlockIconsSide  (IIconRegister iconRegister) { this.iconSide   = helper.loadTexture(iconRegister, suffixSide);   }
 	
 	@Override
 	public IIcon getIcon(int side, int metadata) {
-		
-		if (helper.vanillaTexture) return super.getIcon(side, metadata);
 		
 		int orientation = BlockPistonBase.getPistonOrientation(metadata);
 		if (orientation > 5) {
