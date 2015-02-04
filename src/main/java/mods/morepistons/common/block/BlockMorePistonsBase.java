@@ -175,6 +175,7 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		return super.getCollisionBoundingBoxFromPool(world, x, y, z);
 	}
 	
+	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
 		int metadata = world.getBlockMetadata(x, y, z);
 		
@@ -201,6 +202,11 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		} else {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		}
+	}
+	
+	@Override
+	public void setBlockBoundsForItemRender() {
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 	
 	////////////////////////
@@ -264,15 +270,17 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		int     orientation = BlockPistonBase.getPistonOrientation(metadata);
 		boolean powered     = this.isIndirectlyPowered(world, x, y, z, orientation);
 		
-		log.debug("updatePistonState : "+x+", "+y+", "+z+ ": powered="+powered);
+		log.debug("updatePistonState : ", x, y, z, "powered="+powered);
 		
 		if (metadata == 7) {
 			return;
 		}
 		
 		if (powered) {
+			world.setBlockMetadataWithNotify (x, y, z, orientation | 0x8, 2);
 			world.addBlockEvent(x, y, z, this, 5, orientation);
 		} else {
+			world.setBlockMetadataWithNotify (x, y, z, orientation, 2);
 			world.addBlockEvent(x, y, z, this, 0, orientation);
 		}
 	}
@@ -285,32 +293,34 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		
 		if (!this.ignoreUpdates) {
 			
-			log.debug("onBlockEventReceived : "+x+", "+y+", "+z+" remote="+world.isRemote + ", lenghtOpened="+lenghtOpened);
+			log.debug("onBlockEventReceived : ",x, y, z, "lenghtOpened="+lenghtOpened, "remote="+world.isRemote);
 			
 			this.ignoreUpdates = true;
 			
-			int currentOpened = this.getOpenedLenght (world, x, y, z, orientation); //On recupère l'ouverture actuel du piston
-			
-			if (currentOpened == 0) {
-				log.debug("Les piston était fermé : "+x+", "+y+", "+z);
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te instanceof TileEntityMorePistonsPiston) {
+				TileEntityMorePistonsPiston tileEntityPiston = (TileEntityMorePistonsPiston)te;
 				
-				int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-				int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
-				int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+				int currentOpened = tileEntityPiston.getCurrentOpened ();
 				
-				int metadata = orientation | (this.isSticky ? 0x8 : 0);
-//				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);
-//				TileEntity teExtension = new TileEntityMorePistons (ModBlocks.blockPistonExtension, metadata, orientation, lenghtOpened);
-//				TileEntity teExtension = new TileEntityMorePistonsMoving ();
-//				world.setTileEntity(xExtension, yExtension, zExtension, teExtension);
-				
-				
-				world.setBlockMetadataWithNotify (x, y, z, orientation | 0x8, 2);
-				
-			} else {
-
-//				world.setBlockMetadataWithNotify (x, y, z, orientation, 2);
-				
+				if (currentOpened == lenghtOpened) {
+					
+					log.debug("Le piston reste immobile : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
+					
+				} else if (currentOpened < lenghtOpened) {
+					
+					log.debug("Le piston s'ouvre : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
+					tileEntityPiston.setCurrentOpened(lenghtOpened); 
+					
+	//				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);
+	//				TileEntity teExtension = new TileEntityMorePistons (ModBlocks.blockPistonExtension, metadata, orientation, lenghtOpened);
+	//				TileEntity teExtension = new TileEntityMorePistonsMoving ();
+	//				world.setTileEntity(xExtension, yExtension, zExtension, teExtension);
+					
+				} else {
+					log.debug("Ls piston se ferme : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
+					tileEntityPiston.setCurrentOpened(lenghtOpened); 
+				}
 			}
 			
 			this.ignoreUpdates = false;
@@ -367,19 +377,4 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		return false;
 	}
 	
-	
-	/**
-	 * Recupère l'ouverture du piston
-	 * @param World world
-	 * @param int x
-	 * @param int y
-	 * @param int z
-	 * @param int orientation
-	 * @return int
-	 */
-	public int getOpenedLenght(World world, int x, int y, int z, int orientation) {
-		int length = 0;
-		
-		return length;
-	}
 }

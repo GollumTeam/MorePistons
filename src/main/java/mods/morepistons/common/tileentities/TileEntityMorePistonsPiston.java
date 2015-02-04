@@ -8,9 +8,8 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityMorePistonsPiston extends TileEntity {
 	
-	/**
-	 * Consstructeur vide obligatoire pour le reload de l'entité au chargement du terrain
-	 */
+	private int currentOpened = 1;
+	
 	public TileEntityMorePistonsPiston () {
 	}
 	
@@ -18,6 +17,16 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	public BlockMorePistonsBase getBlockPiston() {
 		return (BlockMorePistonsBase)this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
 	}
+	
+	public int getCurrentOpened() {
+		return this.currentOpened;
+	}
+	
+	public TileEntityMorePistonsPiston setCurrentOpened(int currentOpened) {
+		this.currentOpened = currentOpened;
+		return this;
+	}
+	
 	
 	public void updateEntity() {
 		super.updateEntity();
@@ -27,11 +36,24 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
+		
+		try {
+			
+			this.currentOpened = nbtTagCompound.getInteger("currentOpened");
+			
+		} catch (Exception e) {
+			log.severe("Not stored tile entity : "+this.xCoord+", "+this.yCoord+", "+this.zCoord);
+		}
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
 		super.writeToNBT(nbtTagCompound);
+		
+		nbtTagCompound.setInteger("currentOpened", this.currentOpened);
 	}
+
+
+	
 	
 }

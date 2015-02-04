@@ -40,10 +40,6 @@ public class TileEntityMorePistonsPistonRenderer extends TileEntitySpecialRender
 	
 	private RenderBlocks blockRenderer;
 	
-	public void renderPiston(BlockMorePistonsBase block) {
-		
-	}
-	
 	private void renderPiston(TileEntityMorePistonsPiston tileEntity, double posX, double posY, double posZ, boolean allFaces) {
 		
 		World                world       = tileEntity.getWorldObj();
@@ -192,7 +188,9 @@ public class TileEntityMorePistonsPistonRenderer extends TileEntitySpecialRender
 	
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
-		this.renderPiston((TileEntityMorePistonsPiston) tileEntity, x, y, z, false);
+		if (tileEntity != null) {
+			this.renderPiston((TileEntityMorePistonsPiston) tileEntity, x, y, z, false);
+		}
 	}
 	
 }

@@ -26,7 +26,6 @@ public class MorePistonsInventoryRenderer implements ISimpleBlockRenderingHandle
 		
 		block.setBlockBoundsForItemRender();
 		renderer.setRenderBoundsFromBlock(block);
-		renderer.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
 		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		
@@ -37,7 +36,7 @@ public class MorePistonsInventoryRenderer implements ISimpleBlockRenderingHandle
 		
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 1.0F, 0.0F);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, 0xF));
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadataDisplay));
 		tessellator.draw();
 		
 		tessellator.startDrawingQuads();

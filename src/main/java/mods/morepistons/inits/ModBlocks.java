@@ -7,6 +7,7 @@ import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsRod;
+import mods.morepistons.common.block.BlockMorePistonsVanilla;
 
 public class ModBlocks {
 
@@ -91,6 +92,9 @@ public class ModBlocks {
 	 * Initialisation des blocks
 	 */
 	public static void init() {
+		
+		new BlockMorePistonsVanilla(false);
+		new BlockMorePistonsVanilla(true);
 		
 		// Création des blocks
 		ModBlocks.blockPistonExtension = new BlockMorePistonsExtension("MorePistonsExtension");
