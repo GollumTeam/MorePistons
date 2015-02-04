@@ -18,5 +18,25 @@
   "authors": ["SmeagolWorms4"],
   "screenshots": [],
   "dependencies": []
+},
+{
+  "modid": "GollumAutoReplace",
+  "name": "Gollum Auto Replace",
+  "description": "",
+  "version": "1.0.0",
+  "updateUrl": "",
+  "authors": ["SmeagolWorms4"],
+  "screenshots": [],
+  "dependencies": []
+},
+{
+  "modid": "CastleDefenders",
+  "name": "Castle Defenders",
+  "description": "",
+  "version": "3.0.0",
+  "updateUrl": "",
+  "authors": ["SmeagolWorms4"],
+  "screenshots": [],
+  "dependencies": []
 }
 ]

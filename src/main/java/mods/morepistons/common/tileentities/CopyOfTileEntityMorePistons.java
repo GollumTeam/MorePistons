@@ -22,7 +22,7 @@ import net.minecraft.util.Facing;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityMorePistons extends TileEntity {
+public class CopyOfTileEntityMorePistons extends TileEntity {
 	
 	public Block storedBlock = null;
 	private int storedMetadata = 0;
@@ -40,10 +40,10 @@ public class TileEntityMorePistons extends TileEntity {
 	/**
 	 * Consstructeur vide obligatoire pour le reload de l'entité au chargement du terrain
 	 */
-	public TileEntityMorePistons () {
+	public CopyOfTileEntityMorePistons () {
 	}
 	
-	public TileEntityMorePistons(Block block, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isBlockPiston) {
+	public CopyOfTileEntityMorePistons(Block block, int metadata, int orientation, boolean extending, boolean shouldHeadBeRendered, int distance, boolean isBlockPiston) {
 		if (block == null) {
 			log.severe ("Block strorage in null in creation TileEntiry");
 		}

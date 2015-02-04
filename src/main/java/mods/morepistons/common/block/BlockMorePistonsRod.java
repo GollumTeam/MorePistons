@@ -170,50 +170,50 @@ public class BlockMorePistonsRod extends HBlock {
 		return 0;
 	}
 
-	@Override
-	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
-		
-		int xx= x;
-		int yy= y;
-		int zz= z;
-		
-		int orientation = this.getDirectionMeta(metadata);
-		Block block = ModBlocks.blockPistonRod;
-		while (block instanceof BlockMorePistonsRod) {
-			
-			x += Facing.offsetsXForSide[orientation];
-			y += Facing.offsetsYForSide[orientation];
-			z += Facing.offsetsZForSide[orientation];
-			
-			block = world.getBlock(x, y, z);
-
-			if (
-				block instanceof BlockMorePistonsRod ||
-				block instanceof BlockMorePistonsExtension
-			) {
-				world.func_147480_a(x, y, z, false);
-			}
-			
-		}
-		
-		block = ModBlocks.blockPistonRod;
-		while (block instanceof BlockMorePistonsRod) {
-			
-			xx -= Facing.offsetsXForSide[orientation];
-			yy -= Facing.offsetsYForSide[orientation];
-			zz -= Facing.offsetsZForSide[orientation];
-			
-			block = world.getBlock(xx, yy, zz);
-
-			if (
-				block instanceof BlockMorePistonsRod ||
-				block instanceof BlockMorePistonsExtension
-			) {
-				world.func_147480_a(xx, yy, zz, false);
-			}
-			
-		}
-	}
+//	@Override
+//	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+//		
+//		int xx= x;
+//		int yy= y;
+//		int zz= z;
+//		
+//		int orientation = this.getDirectionMeta(metadata);
+//		Block block = ModBlocks.blockPistonRod;
+//		while (block instanceof BlockMorePistonsRod) {
+//			
+//			x += Facing.offsetsXForSide[orientation];
+//			y += Facing.offsetsYForSide[orientation];
+//			z += Facing.offsetsZForSide[orientation];
+//			
+//			block = world.getBlock(x, y, z);
+//
+//			if (
+//				block instanceof BlockMorePistonsRod ||
+//				block instanceof BlockMorePistonsExtension
+//			) {
+//				world.func_147480_a(x, y, z, false);
+//			}
+//			
+//		}
+//		
+//		block = ModBlocks.blockPistonRod;
+//		while (block instanceof BlockMorePistonsRod) {
+//			
+//			xx -= Facing.offsetsXForSide[orientation];
+//			yy -= Facing.offsetsYForSide[orientation];
+//			zz -= Facing.offsetsZForSide[orientation];
+//			
+//			block = world.getBlock(xx, yy, zz);
+//
+//			if (
+//				block instanceof BlockMorePistonsRod ||
+//				block instanceof BlockMorePistonsExtension
+//			) {
+//				world.func_147480_a(xx, yy, zz, false);
+//			}
+//			
+//		}
+//	}
 	
 	public static int getDirectionMeta(int i) {
 		return i & 0x7;
