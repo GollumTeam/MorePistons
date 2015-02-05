@@ -105,29 +105,26 @@ public class ModBlocks {
 	 */
 	public static void init() {
 		
-		// Création des blocks
+		////////////////////
+		// Utility blocks //
+		////////////////////
 		ModBlocks.blockPistonExtension = new BlockMorePistonsExtension("MorePistonsExtension");
 		ModBlocks.blockPistonRod       = new BlockMorePistonsRod      ("MorePistonsRod");
 		
 //		ModBlocks.blockGravitationalPistonBase       = new BlockMorePistonsGravitational("GravitationalPistonBase"      , false);
 //		ModBlocks.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational("GravitationalStickyPistonBase", true);
 
-		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"               , false);
-		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase"         , true );
-
+		/////////////////////
+		// Vanilla pistons //
+		/////////////////////
+		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"      , false);
+		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase", true );
+		
 		BlockMorePistonsVanillaProxy proxy = new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
-		try {
-			Reflection.setFinalStatic(Blocks.class.getDeclaredField("piston"), proxy);
-			
-			FMLControlledNamespacedRegistry<Block> blockRegistry = GameData.getBlockRegistry();
-			Field f = RegistrySimple.class.getDeclaredField("registryObjects");
-			f.setAccessible(true);
-			Map registryObjects = (Map)f.get(blockRegistry);
-			registryObjects.put("minecraft:piston", proxy);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		//////////////////////
+		// Standard pistons //
+		//////////////////////
 		
 		ModBlocks.blockDoublePistonBase          = new BlockMorePistonsBase   ("DoublePistonBase"         , false).setLength (2);
 		ModBlocks.blockDoubleStickyPistonBase    = new BlockMorePistonsBase   ("DoubleStickyPistonBase"   , true ).setLength (2);
@@ -144,6 +141,11 @@ public class ModBlocks {
 //		ModBlocks.blockOctuplePistonBase         = new BlockMorePistonsBase   ("OctuplePistonBase"        , false).setLength (8);
 //		ModBlocks.blockOctupleStickyPistonBase   = new BlockMorePistonsBase   ("OctupleStickyPistonBase"  , true ).setLength (8);
 //		
+
+		///////////////////
+		// Super pistons //
+		///////////////////
+		
 //		ModBlocks.blockSuperPistonBase                = new BlockMorePistonsSuper("SuperPistonBase"      , false);
 //		ModBlocks.blockSuperStickyPistonBase          = new BlockMorePistonsSuper("SuperStickyPistonBase", true );
 //		
@@ -162,6 +164,10 @@ public class ModBlocks {
 //		ModBlocks.blockSuperOctuplePistonBase         = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperOctuplePistonBase"        , false).setLength (8);
 //		ModBlocks.blockSuperOctupleStickyPistonBase   = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperOctupleStickyPistonBase"  , true ).setLength (8);
 //
+//		//////////////////////
+//		// RedStone pistons //
+//		//////////////////////
+//		
 //		ModBlocks.blockRedStonePistonBase1       = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStonePistonBase1"      , false).setMultiplicateur(1).setCreativeTab(ModMorePistons.morePistonsTabs);
 //		ModBlocks.blockRedStoneStickyPistonBase1 = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStoneStickyPistonBase1", true ).setMultiplicateur(1).setCreativeTab(ModMorePistons.morePistonsTabs);
 //		ModBlocks.blockRedStonePistonBase2       = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStonePistonBase2"      , false).setMultiplicateur(2);
@@ -179,6 +185,10 @@ public class ModBlocks {
 //		ModBlocks.blockRedStonePistonBase8       = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStonePistonBase8"      , false).setMultiplicateur(8);
 //		ModBlocks.blockRedStoneStickyPistonBase8 = (BlockMorePistonsRedStone) new BlockMorePistonsRedStone("RedStoneStickyPistonBase8", true ).setMultiplicateur(8);
 //		
+//		//////////////////////
+//		// Magnetic pistons //
+//		//////////////////////
+		
 //		ModBlocks.blockMagneticPistonBase1       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticPistonBase1"               , false);
 //		ModBlocks.blockMagneticStickyPistonBase1 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticStickyPistonBase1"         , true );
 //		ModBlocks.blockMagneticPistonBase2       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoublePistonBase2"         , false).setLength(2);
