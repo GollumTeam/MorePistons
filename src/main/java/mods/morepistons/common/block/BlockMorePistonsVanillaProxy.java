@@ -30,7 +30,8 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 			this.vanillaPiston = Blocks.piston;
 		}
 		
-		helper.vanillaTexture = true;
+		helper.vanillaTexture  = true;
+		helper.vanillaRegister = true;
 	}
 	
 	////////////////////
@@ -41,7 +42,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	public void register() {
 		if (helper.vanillaRegister) return;
 		
-		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
+//		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
 	}
 	
 	////////////

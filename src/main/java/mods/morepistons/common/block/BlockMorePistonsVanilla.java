@@ -11,22 +11,6 @@ public class BlockMorePistonsVanilla extends BlockMorePistonsBase {
 	
 	public BlockMorePistonsVanilla(String registerName, boolean isSticky) {
 		super(registerName, isSticky);
-		
-		this.overrideVanillaPiston();
-	}
-	
-	public void overrideVanillaPiston () {
-		
-//		GameData.getBlockRegistry().
-		
-//		this.setBlockName(this.vanillaPiston.getUnlocalizedName().replace("tile.", ""));
-//
-//		log.message("Override "+(this.isSticky ? "sticky " : "")+"piston base by proxy.");
-//		this.proxy = new BlockMorePistonsVanillaProxy(this, this.isSticky);
-//		
-//		
-		// Place le piston normal dans le creative tab
-//		this.vanillaPiston.setCreativeTab(null);
 	}
 	
 	//////////////////////////
