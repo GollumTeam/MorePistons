@@ -8,8 +8,6 @@ import net.minecraft.init.Blocks;
 
 public class BlockMorePistonsVanilla extends BlockMorePistonsBase {
 	
-	public BlockPistonBase vanillaPiston;
-//	BlockMorePistonsVanillaProxy proxy;
 	
 	public BlockMorePistonsVanilla(String registerName, boolean isSticky) {
 		super(registerName, isSticky);
@@ -18,12 +16,6 @@ public class BlockMorePistonsVanilla extends BlockMorePistonsBase {
 	}
 	
 	public void overrideVanillaPiston () {
-		
-		if (this.isSticky) {
-			this.vanillaPiston = Blocks.piston;
-		} else {
-			this.vanillaPiston = Blocks.sticky_piston;
-		}
 		
 //		GameData.getBlockRegistry().
 		
