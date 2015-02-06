@@ -3,12 +3,16 @@ package mods.morepistons.inits;
 //import mods.morepistons.common.block.BlockMorePistonsGravitational;
 //import mods.morepistons.common.block.BlockMorePistonsMagnetic;
 //import mods.morepistons.common.block.BlockMorePistonsRedStone;
+import mods.gollum.core.tools.registered.RegisteredObjects;
 import mods.gollum.core.tools.registry.BlockRegistry;
+import mods.gollum.core.utils.reflection.Reflection;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.block.BlockMorePistonsVanilla;
 import mods.morepistons.common.block.BlockMorePistonsVanillaProxy;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 
 public class ModBlocks {
 
@@ -111,8 +115,8 @@ public class ModBlocks {
 		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"      , false);
 		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase", true );
 		
-		BlockMorePistonsVanillaProxy proxy = new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
-		BlockRegistry.instance().overrideRegistered(proxy.getRegisterName(), proxy);
+		BlockMorePistonsVanillaProxy proxy       = new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
+		BlockMorePistonsVanillaProxy proxySticky = new BlockMorePistonsVanillaProxy(ModBlocks.blockStickyPistonBase);
 		
 		//////////////////////
 		// Standard pistons //

@@ -4,11 +4,15 @@ import static mods.morepistons.ModMorePistons.log;
 import mods.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import mods.gollum.core.tools.registered.RegisteredObjects;
 import mods.gollum.core.tools.registry.BlockRegistry;
+import mods.gollum.core.tools.registry.ItemRegistry;
+import mods.morepistons.ModMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPiston;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -23,15 +27,15 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 			target.isSticky()
 		);
 		this.target = target;
-
+		
 		if (target.isSticky()) {
 			this.vanillaPiston = Blocks.sticky_piston;
 		} else {
 			this.vanillaPiston = Blocks.piston;
 		}
-		
-		helper.vanillaTexture  = true;
-		helper.vanillaRegister = true;
+		this.setCreativeTab(ModMorePistons.morePistonsTabs);
+		this.setBlockName(RegisteredObjects.instance().getRegisterName(this.vanillaPiston).replace("minecraft:", ""));
+		helper.vanillaTexture = true;
 	}
 	
 	////////////////////
@@ -42,7 +46,9 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	public void register() {
 		if (helper.vanillaRegister) return;
 		
-//		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
+		BlockRegistry.instance().overrideBlocksClassField(this.vanillaPiston, this);
+		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
+		ItemRegistry .instance().overrideRegistered(this.getRegisterName(), new ItemPiston(this));
 	}
 	
 	////////////
