@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mods.gollum.core.tools.helper.blocks.HBlockContainer;
+import mods.gollum.core.utils.math.Integer3d;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.client.ClientProxyMorePistons;
 import mods.morepistons.common.tileentities.TileEntityMorePistonsMoving;
@@ -70,7 +71,7 @@ public class BlockMorePistonsBase extends HBlockContainer {
 	
 	protected boolean isSticky;
 	private   int     length = 1;
-	private   float   speed  = 0.05F;
+	private   float   speed  = 0.5F;
 	protected boolean ignoreUpdates = false;
 	
 	protected IIcon iconTop;
@@ -733,7 +734,7 @@ public class BlockMorePistonsBase extends HBlockContainer {
 			z += Facing.offsetsZForSide[orientation];
 			
 			world.setBlock(x, y, z, Blocks.piston_extension, orientation, 2);
-			TileEntity teExtension = new TileEntityMorePistonsMoving(ModBlocks.blockPistonRod, metadata, orientation, true, lenghtOpened);
+			TileEntity teExtension = new TileEntityMorePistonsMoving(ModBlocks.blockPistonRod, metadata, orientation, true, lenghtOpened, new Integer3d(x, y, z));
 			world.setTileEntity(x, y, z, teExtension);
 		}
 		
@@ -741,7 +742,7 @@ public class BlockMorePistonsBase extends HBlockContainer {
 		log.debug("Create PistonMoving : "+x+", "+y+", "+z+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
 		
 		world.setBlock(x, y, z, Blocks.piston_extension, orientation, 2);
-		TileEntity teExtension = new TileEntityMorePistonsMoving(ModBlocks.blockPistonExtension, metadata, orientation, true, lenghtOpened);
+		TileEntity teExtension = new TileEntityMorePistonsMoving(ModBlocks.blockPistonExtension, metadata, orientation, true, lenghtOpened, new Integer3d(x, y, z));
 		world.setTileEntity(x, y, z, teExtension);
 	}
 }
