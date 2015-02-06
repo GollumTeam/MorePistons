@@ -18,6 +18,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -129,6 +130,8 @@ public class BlockMorePistonsBase extends HBlockContainer {
 	@Override
 	public IIcon getIcon(int side, int metadata) {
 		
+		if (helper.vanillaTexture) return super.getIcon(side, metadata);
+		
 		int orientation = BlockPistonBase.getPistonOrientation(metadata);
 		if (orientation > 5) {
 			return this.iconTop;
@@ -150,6 +153,7 @@ public class BlockMorePistonsBase extends HBlockContainer {
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getPistonExtensionTexture() {
+		if (helper.vanillaTexture) return this.isSticky ? Blocks.sticky_piston.getPistonExtensionTexture() : Blocks.piston.getPistonExtensionTexture();
 		return this.iconTop;
 	}
 	

@@ -6,8 +6,10 @@ import mods.gollum.core.tools.registered.RegisteredObjects;
 import mods.gollum.core.tools.registry.BlockRegistry;
 import mods.gollum.core.tools.registry.ItemRegistry;
 import mods.morepistons.ModMorePistons;
+import mods.morepistons.common.item.ItemMorePistonsProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,8 +20,8 @@ import net.minecraft.world.World;
 
 public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	
-	BlockMorePistonsVanilla target;
-	BlockPistonBase vanillaPiston;
+	public BlockMorePistonsVanilla target;
+	public BlockPistonBase vanillaPiston;
 	
 	public BlockMorePistonsVanillaProxy(BlockMorePistonsVanilla target) {
 		super(
@@ -27,16 +29,23 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 			target.isSticky()
 		);
 		this.target = target;
+		this.target.setCreativeTab(null);
+		this.setCreativeTab(ModMorePistons.morePistonsTabs);
 		
 		if (target.isSticky()) {
 			this.vanillaPiston = Blocks.sticky_piston;
 		} else {
 			this.vanillaPiston = Blocks.piston;
 		}
-		this.setCreativeTab(ModMorePistons.morePistonsTabs);
-		this.setBlockName(RegisteredObjects.instance().getRegisterName(this.vanillaPiston).replace("minecraft:", ""));
+		
+		this.setBlockName(this.vanillaPiston.getUnlocalizedName().replace("tile.", ""));
 		helper.vanillaTexture = true;
 	}
+	
+	@Override protected void registerBlockIconsTop   (IIconRegister iconRegister) { this.iconTop    = iconRegister.registerIcon(this.isSticky ? "piston_top_sticky" : "piston_top_normal"); }
+	@Override protected void registerBlockIconsOpen  (IIconRegister iconRegister) { this.iconOpen   = iconRegister.registerIcon("piston_inner");   }
+	@Override protected void registerBlockIconsBottom(IIconRegister iconRegister) { this.iconBottom = iconRegister.registerIcon("piston_bottom"); }
+	@Override protected void registerBlockIconsSide  (IIconRegister iconRegister) { this.iconSide   = iconRegister.registerIcon("piston_side");   }
 	
 	////////////////////
 	// Helper methods //
@@ -48,7 +57,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 		
 		BlockRegistry.instance().overrideBlocksClassField(this.vanillaPiston, this);
 		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
-		ItemRegistry .instance().overrideRegistered(this.getRegisterName(), new ItemPiston(this));
+		ItemRegistry .instance().overrideRegistered(this.getRegisterName(), new ItemMorePistonsProxy(Item.getItemFromBlock(this.vanillaPiston), this));
 	}
 	
 	////////////
@@ -59,7 +68,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
 		
 		log.debug("VanillaProxy replace onBlockActivated : ",x, y, z);
-//		world.setBlock(x, y, z, this.target, world.getBlockMetadata(x, y, z), 2);
+		world.setBlock(x, y, z, this.target, world.getBlockMetadata(x, y, z), 2);
 		
 		return false;
 	}
@@ -69,14 +78,14 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 		
 		log.debug("VanillaProxy replace onBlockPlacedBy : ",x, y, z);
 		world.setBlock(x, y, z, this.target);
-//		this.target.onBlockPlacedBy(world, x, y, z, entityLiving, itemStack);
+		this.target.onBlockPlacedBy(world, x, y, z, entityLiving, itemStack);
 	}
 	
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		
 		log.debug("VanillaProxy replace onNeighborBlockChange : ",x, y, z);
-//		world.setBlock(x, y, z, this.target, world.getBlockMetadata(x, y, z), 2);
+		world.setBlock(x, y, z, this.target, world.getBlockMetadata(x, y, z), 2);
 		
 	}
 	
@@ -84,7 +93,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	public void onBlockAdded(World world, int x, int y, int z) {
 		
 		log.debug("VanillaProxy replace onBlockAdded : ",x, y, z);
-//		world.setBlock(x, y, z, this.target, world.getBlockMetadata(x, y, z), 2);
+		world.setBlock(x, y, z, this.target, world.getBlockMetadata(x, y, z), 2);
 		
 	}
 	

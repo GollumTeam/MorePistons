@@ -6,6 +6,7 @@ package mods.morepistons.inits;
 import mods.gollum.core.tools.registered.RegisteredObjects;
 import mods.gollum.core.tools.registry.BlockRegistry;
 import mods.gollum.core.utils.reflection.Reflection;
+import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsRod;
@@ -112,11 +113,11 @@ public class ModBlocks {
 		/////////////////////
 		// Vanilla pistons //
 		/////////////////////
-		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"      , false);
-		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase", true );
+		if (ModMorePistons.config.overrideVanillaPiston)      ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"      , false);
+		if (ModMorePistons.config.overrideVanillaStickPiston) ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase", true );
 		
-		BlockMorePistonsVanillaProxy proxy       = new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
-		BlockMorePistonsVanillaProxy proxySticky = new BlockMorePistonsVanillaProxy(ModBlocks.blockStickyPistonBase);
+		if (ModMorePistons.config.overrideVanillaPiston)      new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
+		if (ModMorePistons.config.overrideVanillaStickPiston) new BlockMorePistonsVanillaProxy(ModBlocks.blockStickyPistonBase);
 		
 		//////////////////////
 		// Standard pistons //
