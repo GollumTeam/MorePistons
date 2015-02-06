@@ -1,7 +1,7 @@
 itemGroup.Pistons=Pistons
 
-tile.GravitationalPistonBase.name=Gravitational Piston
-tile.GravitationalStickyPistonBase.name=Gravitational Piston Collant
+tile.GravitationalPistonBase.name=Piston Gravitationnel
+tile.GravitationalStickyPistonBase.name=Piston Gravitationnel Collant
 
 tile.DoublePistonBase.name=Double Piston
 tile.DoubleStickyPistonBase.name=Double Piston Collant
