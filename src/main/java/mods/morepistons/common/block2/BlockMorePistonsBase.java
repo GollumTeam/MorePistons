@@ -192,7 +192,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 				} else if (currentOpened == 0) {
 					log.debug("Les piston était fermé : "+x+", "+y+", "+z);
 					
-//					this.extend(world, x, y, z, orientation, lenghtOpened);
+					this.extend(world, x, y, z, orientation, lenghtOpened);
 //					extendOpen = true;
 				
 				// Le piston s'ouvre plus
@@ -377,213 +377,213 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		
 		return false;
 	}
-//	
-//	/**
-//	* Caclcule la longueur d'ouverture d'un piston
-//	* @param World world
-//	* @param int x
-//	* @param int y
-//	* @param int z
-//	* @param int orientation
-//	* @return int
-//	*/
-//	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
-//		return this.getMaximalOpenedLenght(world, x, y, z, orientation, true, this.getLengthInWorld(world, x, y, z, orientation));
-//	}
-//	
-//	
-//	/**
-//	* Caclcule la longueur d'ouverture d'un piston
-//	* @param World world
-//	* @param int x
-//	* @param int y
-//	* @param int z
-//	* @param int orientation
-//	* @return int
-//	*/
-//	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation, boolean detectMoving, int maxlenght) {
-//		
-//		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
-//		
-//		int lenght = 0;
-//		
-//		for (int i = 0; i < maxlenght; i++) {
-//			
-//			x += Facing.offsetsXForSide[orientation];
-//			y += Facing.offsetsYForSide[orientation];
-//			z += Facing.offsetsZForSide[orientation];
-//			
-//			if (y >= 255) {
-//				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " y>=255");
-//				break;
-//			}
-//			
-//			Block block = world.getBlock(x, y, z);
-//			
-//			if (block instanceof BlockPistonMoving) {
-//				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " find PistonMoving");
-//				if (detectMoving) {
-//					return -1;
-//				} else {
-//					return lenght;
-//				}
-//			}
-//			log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z);
-//			if (! (this.isEmptyBlock(block)) && !this.isRodInOrientation(block, world, x, y, z, orientation)) {
-//				lenght += this.getMoveBlockOnDistance (maxlenght - i, world, block, x, y, z, orientation);
-//				break;
-//			}
-//			lenght++;
-//		}
-//		
-//		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " : lenght="+lenght);
-//		
-//		return lenght;
-//	}
-//
-//	/**
-//	 * Regarde si on peu déplacé un piston sur la distance voulu
-//	 * @param distance
-//	 * @param world
-//	 * @param block
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 * @param orientation
-//	 * @return
-//	 */
-//	private int getMoveBlockOnDistance (int distance, World world, Block block, int x, int y, int z, int orientation) {
-//		return this.getMoveBlockOnDistance(distance, world, block, x, y, z, orientation, 1);
-//	}
-//
-//	/**
-//	 * Regarde si on peu déplacé un piston sur la distance voulu
-//	 * @param distance
-//	 * @param world
-//	 * @param id
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 * @param orientation
-//	 * @param nbMoved
-//	 * @return
-//	 */
-//	private int getMoveBlockOnDistance (int distance, World world, Block block, int x, int y, int z, int orientation, int nbMoved) {
-//		
-//		if (nbMoved == this.getMaxBlockMove () || !this.isMovableBlock(block, world, x, y, z)) {
-//			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
-//			return 0;
-//		}
-//		
-//		int walking = 0;
-//		
-//		for (int i = 0; i < distance; i++) {
-//			x += Facing.offsetsXForSide[orientation];
-//			y += Facing.offsetsYForSide[orientation];
-//			z += Facing.offsetsZForSide[orientation];
-//			
-//
-//			if (y >= 255) {
-//				log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
-//				break;
-//			}
-//			
-//			Block blockNext = world.getBlock(x, y, z);
-//			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " blockNext="+blockNext);
-//			
-//			if (this.isEmptyBlock(blockNext)) {
-//				walking++;
-//			} else {
-//				int moving = this.getMoveBlockOnDistance(distance - i, world, blockNext, x, y, z, orientation, nbMoved + 1);
-//				walking += moving;
-//				break;
-//			}
-//		}
-//		
-//		log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
-//		return walking;
-//	}
-//	
-//	/**
-//	 * Test si le block n'est pas un route de piston et dans l 'orientation 
-//	 * @param id
-//	 * @param world
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 * @param orientation
-//	 * @return
-//	 */
-//	private boolean isRodInOrientation (Block block, World world, int x, int y, int z, int orientation) {
-//		
-//		if (
+	
+	/**
+	* Caclcule la longueur d'ouverture d'un piston
+	* @param World world
+	* @param int x
+	* @param int y
+	* @param int z
+	* @param int orientation
+	* @return int
+	*/
+	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation) {
+		return this.getMaximalOpenedLenght(world, x, y, z, orientation, true, this.getLengthInWorld(world, x, y, z, orientation));
+	}
+	
+	
+	/**
+	* Caclcule la longueur d'ouverture d'un piston
+	* @param World world
+	* @param int x
+	* @param int y
+	* @param int z
+	* @param int orientation
+	* @return int
+	*/
+	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation, boolean detectMoving, int maxlenght) {
+		
+		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
+		
+		int lenght = 0;
+		
+		for (int i = 0; i < maxlenght; i++) {
+			
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			if (y >= 255) {
+				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " y>=255");
+				break;
+			}
+			
+			Block block = world.getBlock(x, y, z);
+			
+			if (block instanceof BlockPistonMoving) {
+				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " find PistonMoving");
+				if (detectMoving) {
+					return -1;
+				} else {
+					return lenght;
+				}
+			}
+			log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z);
+			if (! (this.isEmptyBlock(block)) && !this.isRodInOrientation(block, world, x, y, z, orientation)) {
+				lenght += this.getMoveBlockOnDistance (maxlenght - i, world, block, x, y, z, orientation);
+				break;
+			}
+			lenght++;
+		}
+		
+		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " : lenght="+lenght);
+		
+		return lenght;
+	}
+
+	/**
+	 * Regarde si on peu déplacé un piston sur la distance voulu
+	 * @param distance
+	 * @param world
+	 * @param block
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @return
+	 */
+	private int getMoveBlockOnDistance (int distance, World world, Block block, int x, int y, int z, int orientation) {
+		return this.getMoveBlockOnDistance(distance, world, block, x, y, z, orientation, 1);
+	}
+
+	/**
+	 * Regarde si on peu déplacé un piston sur la distance voulu
+	 * @param distance
+	 * @param world
+	 * @param id
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @param nbMoved
+	 * @return
+	 */
+	private int getMoveBlockOnDistance (int distance, World world, Block block, int x, int y, int z, int orientation, int nbMoved) {
+		
+		if (nbMoved == this.getMaxBlockMove () || !this.isMovableBlock(block, world, x, y, z)) {
+			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
+			return 0;
+		}
+		
+		int walking = 0;
+		
+		for (int i = 0; i < distance; i++) {
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+
+			if (y >= 255) {
+				log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
+				break;
+			}
+			
+			Block blockNext = world.getBlock(x, y, z);
+			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " blockNext="+blockNext);
+			
+			if (this.isEmptyBlock(blockNext)) {
+				walking++;
+			} else {
+				int moving = this.getMoveBlockOnDistance(distance - i, world, blockNext, x, y, z, orientation, nbMoved + 1);
+				walking += moving;
+				break;
+			}
+		}
+		
+		log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
+		return walking;
+	}
+	
+	/**
+	 * Test si le block n'est pas un route de piston et dans l 'orientation 
+	 * @param id
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @return
+	 */
+	private boolean isRodInOrientation (Block block, World world, int x, int y, int z, int orientation) {
+		
+		if (
 //			block instanceof BlockMorePistonsExtension ||
 //			block instanceof BlockMorePistonsRod ||
-//			block instanceof BlockPistonMoving
-//		) {
-//			return orientation == BlockMorePistonsBase.getPistonOrientation(world.getBlockMetadata(x, y, z));
-//		}
-//		return false;
-//	}
-//	
-//	/**
-//	 * Test if this block is movable
-//	 * @param block
-//	 * @return
-//	 */
-//	public boolean isEmptyBlock(Block block) {
-//		return
-//			block == null ||
-//			block instanceof BlockAir ||
-//			block.getMobilityFlag() == 1 ||
-//			block instanceof BlockLiquid ||
-//			block instanceof IFluidBlock;
-//	}
-//	
-//	/**
-//	 * Test if this block is movable
-//	 * @param id
-//	 * @return
-//	 */
-//	public boolean isMovableBlock(Block block, World world, int x, int y, int z) {
-//		
-//		boolean isPistonClosed = BlockMorePistonsBase.isPiston (block);
-//		if (isPistonClosed) {
-//			isPistonClosed = !((BlockPistonBase) block).isExtended(world.getBlockMetadata(x, y, z));
-//		}
-//		
-//		return
-//			this.isEmptyBlock (block) ||
-//			isPistonClosed ||
-//			(
-//				block != Blocks.obsidian &&
-//				block.getMobilityFlag() != 2 &&
+			block instanceof BlockPistonMoving
+		) {
+			return orientation == BlockMorePistonsBase.getPistonOrientation(world.getBlockMetadata(x, y, z));
+		}
+		return false;
+	}
+	
+	/**
+	 * Test if this block is movable
+	 * @param block
+	 * @return
+	 */
+	public boolean isEmptyBlock(Block block) {
+		return
+			block == null ||
+			block instanceof BlockAir ||
+			block.getMobilityFlag() == 1 ||
+			block instanceof BlockLiquid ||
+			block instanceof IFluidBlock;
+	}
+	
+	/**
+	 * Test if this block is movable
+	 * @param id
+	 * @return
+	 */
+	public boolean isMovableBlock(Block block, World world, int x, int y, int z) {
+		
+		boolean isPistonClosed = BlockMorePistonsBase.isPiston (block);
+		if (isPistonClosed) {
+			isPistonClosed = !((BlockPistonBase) block).isExtended(world.getBlockMetadata(x, y, z));
+		}
+		
+		return
+			this.isEmptyBlock (block) ||
+			isPistonClosed ||
+			(
+				block != Blocks.obsidian &&
+				block.getMobilityFlag() != 2 &&
 //				!(block instanceof BlockMorePistonsRod) &&
 //				!(block instanceof BlockMorePistonsExtension) &&
-//				!(block instanceof BlockPistonMoving) &&
-//				world.getTileEntity(x, y, z) == null &&
-//				block.getBlockHardness(world, x, y, z) != -1.0F
-//			);
-//	}
-//	
-//	/**
-//	 * Test si on a un piston
-//	 * @param id
-//	 * @return
-//	 */
-//	public static boolean isPiston (Block block) {
-//		return block instanceof BlockPistonBase;
-//	}
-//	
-//	/**
-//	 * Recupère l'ouverture du piston
-//	 * @param World world
-//	 * @param int x
-//	 * @param int y
-//	 * @param int z
-//	 * @param int orientation
-//	 * @return int
-//	 */
+				!(block instanceof BlockPistonMoving) &&
+				world.getTileEntity(x, y, z) == null &&
+				block.getBlockHardness(world, x, y, z) != -1.0F
+			);
+	}
+	
+	/**
+	 * Test si on a un piston
+	 * @param id
+	 * @return
+	 */
+	public static boolean isPiston (Block block) {
+		return block instanceof BlockPistonBase;
+	}
+	
+	/**
+	 * Recupère l'ouverture du piston
+	 * @param World world
+	 * @param int x
+	 * @param int y
+	 * @param int z
+	 * @param int orientation
+	 * @return int
+	 */
 	public int getOpenedLenght(World world, int x, int y, int z, int orientation) {
 //
 		int lenght = -1;
@@ -634,182 +634,192 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		return lenght;
 	}
 	
-//	
-//	/**
-//	 * Retracte le block qui ets collé au piston si le piston est un sticky
-//	 * piston
-//	 * 
-//	 * @param world
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 * @param length
-//	 */
-//	protected void retracSticky(World world, int x, int y, int z, int orientation, int length) {
-//		if (this.isSticky) {
-//
-//			int x2 = x + Facing.offsetsXForSide[orientation] * (length + 1);
-//			int y2 = y + Facing.offsetsYForSide[orientation] * (length + 1);
-//			int z2 = z + Facing.offsetsZForSide[orientation] * (length + 1);
-//			
-//			Block block = world.getBlock(x2, y2, z2);
-//			
-//			if (!isEmptyBlock(block) && isMovableBlock(block, world, x2, y2, z2)) {
-//				log.debug("The sticky block : "+x2+", "+y2+", "+z2+" block="+block);
-//				int blockMeta = world.getBlockMetadata(x2, y2, z2);
-//				
-//				int xPlus1 = x + Facing.offsetsXForSide[orientation];
-//				int yPlus1 = y + Facing.offsetsYForSide[orientation];
-//				int zPlus1 = z + Facing.offsetsZForSide[orientation];
-//				
-//				world.setBlockToAir(x2, y2, z2);
-//				
-//				//Déplace avec une animation les blocks
-//				world.setBlock(xPlus1, yPlus1, zPlus1, Blocks.piston_extension, blockMeta, 2);
+	
+	/**
+	 * Retracte le block qui ets collé au piston si le piston est un sticky
+	 * piston
+	 * 
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param length
+	 */
+	protected void retracSticky(World world, int x, int y, int z, int orientation, int length) {
+		if (this.isSticky) {
+
+			int x2 = x + Facing.offsetsXForSide[orientation] * (length + 1);
+			int y2 = y + Facing.offsetsYForSide[orientation] * (length + 1);
+			int z2 = z + Facing.offsetsZForSide[orientation] * (length + 1);
+			
+			Block block = world.getBlock(x2, y2, z2);
+			
+			if (!isEmptyBlock(block) && isMovableBlock(block, world, x2, y2, z2)) {
+				log.debug("The sticky block : "+x2+", "+y2+", "+z2+" block="+block);
+				int blockMeta = world.getBlockMetadata(x2, y2, z2);
+				
+				int xPlus1 = x + Facing.offsetsXForSide[orientation];
+				int yPlus1 = y + Facing.offsetsYForSide[orientation];
+				int zPlus1 = z + Facing.offsetsZForSide[orientation];
+				
+				world.setBlockToAir(x2, y2, z2);
+				
+				//Déplace avec une animation les blocks
+				world.setBlock(xPlus1, yPlus1, zPlus1, Blocks.piston_extension, blockMeta, 2);
 //				TileEntity teBlock = new TileEntityMorePistons (block, blockMeta, orientation, false, true, length, false);
 //				world.setTileEntity(xPlus1, yPlus1, zPlus1, teBlock);
-//			}
-//		}
-//	}
-//	
-//	/**
-//	 * Drop les élemebnt avec la mobilité de 1
-//	 * @param id
-//	 * @param world
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 */
-//	protected void dropMobilityFlag1 (Block block, int metadata, World world, int x, int y, int z) {
-//		// Drop les élements légés (fleurs, leviers, herbes ..)
-//		if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-//			float chance = (block instanceof BlockSnow ? -1.0f : 1.0f);
-//			
-//			block.dropBlockAsItemWithChance(world, x, y, z, metadata, chance, 0);
-//			world.setBlockToAir(x, y, z);
-//		}
-//	}
-//	
-//	class EMoveInfosExtend {
-//		
-//		public Block block = null;
-//		public int metadata = 0;
-//		public int move = 0;
-//		public int x = 0;
-//		public int y = 0;
-//		public int z = 0;
-//		public EMoveInfosExtend() {}
-//		
-//		public EMoveInfosExtend(Block block, int metadata, int move) {
-//			this.block    = block;
-//			this.metadata = metadata;
-//			this.move     = move;
-//		}
-//
-//		public EMoveInfosExtend(int x, int y, int z, int move) {
-//			this.x = x;
-//			this.y = y;
-//			this.z = z;
-//			this.move = move;
-//		}
-//
-//		public EMoveInfosExtend(Block block, int metadata, int x, int y, int z, int move) {
-//			this.block = block;
-//			this.metadata = metadata;
-//			this.x = x;
-//			this.y = y;
-//			this.z = z;
-//			this.move     = move;
-//		}
-//	}
-//	
-//	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int lenghtOpened) {
-//		
-//		int xExtension = x;
-//		int yExtension = y;
-//		int zExtension = z;
-//		
-//		ArrayList<EMoveInfosExtend> infosExtend = new ArrayList<EMoveInfosExtend>();
-//		
-//		int size = lenghtOpened;
-//		
-//		for (int i = 0; i < (lenghtOpened + this.getMaxBlockMove ()) && size > 0; i++) {
-//			
-//			xExtension += Facing.offsetsXForSide[orientation];
-//			yExtension += Facing.offsetsYForSide[orientation];
-//			zExtension += Facing.offsetsZForSide[orientation];
-//			
-//			Block block = world.getBlock(xExtension, yExtension, zExtension);
-//			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
-//			
-//			// Drop les élements légés (fleurs, leviers, herbes ..)
-//			this.dropMobilityFlag1(block, metadata, world, xExtension, yExtension, zExtension);
-//			
-//			if (this.isEmptyBlock(block)) {
-//				
-//				infosExtend.add(new EMoveInfosExtend());
-//				size--;
-//				
-//			} else if (!this.isMovableBlock(block, world, xExtension, yExtension, zExtension)) {
-//				break;
-//			} else {
-//				infosExtend.add(new EMoveInfosExtend(block, metadata, size));
-//				
-//				world.setTileEntity(xExtension, yExtension, zExtension, null);
-//				world.setBlockToAir (xExtension, yExtension, zExtension);
-//			}
-//			
-//		}
-//		return infosExtend;
-//	}
-//	
-//	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int lenghtOpened) {
-//		
-//		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-//		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
-//		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
-//		
-//		for (EMoveInfosExtend infos : infosExtend) {
-//			
-//			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
-//				xExtension += Facing.offsetsXForSide[orientation];
-//				yExtension += Facing.offsetsYForSide[orientation];
-//				zExtension += Facing.offsetsZForSide[orientation];
-//				
-//				//Déplace avec une animation les blocks
+			}
+		}
+	}
+	
+	/**
+	 * Drop les élemebnt avec la mobilité de 1
+	 * @param id
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	protected void dropMobilityFlag1 (Block block, int metadata, World world, int x, int y, int z) {
+		// Drop les élements légés (fleurs, leviers, herbes ..)
+		if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
+			float chance = (block instanceof BlockSnow ? -1.0f : 1.0f);
+			
+			block.dropBlockAsItemWithChance(world, x, y, z, metadata, chance, 0);
+			world.setBlockToAir(x, y, z);
+		}
+	}
+	
+	class EMoveInfosExtend {
+		
+		public Block block = null;
+		public int metadata = 0;
+		public int move = 0;
+		public int x = 0;
+		public int y = 0;
+		public int z = 0;
+		public EMoveInfosExtend() {}
+		
+		public EMoveInfosExtend(Block block, int metadata, int move) {
+			this.block    = block;
+			this.metadata = metadata;
+			this.move     = move;
+		}
+
+		public EMoveInfosExtend(int x, int y, int z, int move) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
+			this.move = move;
+		}
+
+		public EMoveInfosExtend(Block block, int metadata, int x, int y, int z, int move) {
+			this.block = block;
+			this.metadata = metadata;
+			this.x = x;
+			this.y = y;
+			this.z = z;
+			this.move     = move;
+		}
+	}
+	
+	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int lenghtOpened) {
+		
+		int xExtension = x;
+		int yExtension = y;
+		int zExtension = z;
+		
+		ArrayList<EMoveInfosExtend> infosExtend = new ArrayList<EMoveInfosExtend>();
+		
+		int size = lenghtOpened;
+		
+		for (int i = 0; i < (lenghtOpened + this.getMaxBlockMove ()) && size > 0; i++) {
+			
+			xExtension += Facing.offsetsXForSide[orientation];
+			yExtension += Facing.offsetsYForSide[orientation];
+			zExtension += Facing.offsetsZForSide[orientation];
+			
+			Block block = world.getBlock(xExtension, yExtension, zExtension);
+			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
+			
+			// Drop les élements légés (fleurs, leviers, herbes ..)
+			this.dropMobilityFlag1(block, metadata, world, xExtension, yExtension, zExtension);
+			
+			if (this.isEmptyBlock(block)) {
+				
+				infosExtend.add(new EMoveInfosExtend());
+				size--;
+				
+			} else if (!this.isMovableBlock(block, world, xExtension, yExtension, zExtension)) {
+				break;
+			} else {
+				infosExtend.add(new EMoveInfosExtend(block, metadata, size));
+				
+				world.setTileEntity(xExtension, yExtension, zExtension, null);
+				world.setBlockToAir (xExtension, yExtension, zExtension);
+			}
+			
+		}
+		return infosExtend;
+	}
+	
+	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int lenghtOpened) {
+		
+		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
+		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
+		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		
+		for (EMoveInfosExtend infos : infosExtend) {
+			
+			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
+				xExtension += Facing.offsetsXForSide[orientation];
+				yExtension += Facing.offsetsYForSide[orientation];
+				zExtension += Facing.offsetsZForSide[orientation];
+				
+				//Déplace avec une animation les blocks
 //				TileEntity teBlock = new TileEntityMorePistons (infos.block, infos.metadata, orientation, true, false, infos.move, false);
 //				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, infos.metadata, 2);
 //				world.setTileEntity(xExtension, yExtension, zExtension, teBlock);
-//			}
-//		}
-//
+			}
+		}
+
 //		xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
 //		yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
 //		zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
-//		
-//		//Déplace avec une animation l'extention du piston
-//		log.debug("Create PistonMoving : "+xExtension+", "+yExtension+", "+zExtension+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
-//		
-//		int metadata = orientation | (this.isSticky ? 0x8 : 0);
-//		world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);
+		
+		int metadata = orientation | (this.isSticky ? 0x8 : 0);
+		
+		for (int i = 0; i < lenghtOpened; i++) {
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			world.setBlock(x, y, z, Blocks.piston_extension, orientation, 2);
+		}
+
+		log.debug("Create PistonMoving : "+x+", "+y+", "+z+" orientation="+orientation+", lenghtOpened="+lenghtOpened);
+		world.setBlock(x, y, z, Blocks.piston_extension, orientation, 2);
+		
+		//Déplace avec une animation l'extention du piston
+		
 //		TileEntity teExtension = new TileEntityMorePistons (ModBlocks.blockPistonExtension, metadata, orientation, true, false, lenghtOpened, true);
 //		world.setTileEntity(xExtension, yExtension, zExtension, teExtension);
-//	}
-//	
-//	/**
-//	 * Ouvr eun piston de la taille voulu
-//	 * @param world
-//	 * @param x
-//	 * @param y
-//	 * @param z
-//	 * @param orientation
-//	 * @param lenghtOpened
-//	 */
-//	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
-//		
-//		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, lenghtOpened);
-//		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, lenghtOpened);
-//		
-//	}
-//	
+	}
+	
+	/**
+	 * Ouvr eun piston de la taille voulu
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param orientation
+	 * @param lenghtOpened
+	 */
+	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+		
+		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, lenghtOpened);
+		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, lenghtOpened);
+		
+	}
+	
 }

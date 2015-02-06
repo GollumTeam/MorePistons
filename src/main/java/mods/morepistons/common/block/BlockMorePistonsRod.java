@@ -6,6 +6,7 @@ import java.util.Random;
 import mods.gollum.core.tools.helper.blocks.HBlock;
 import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block; // world.getBlockMetadata;
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity; // lq;
@@ -46,16 +47,16 @@ public class BlockMorePistonsRod extends HBlock {
 	}
 	
 	@Override
-	public IIcon getIcon(int i, int j) {
+	public IIcon getIcon(int side, int metadata) {
 		
-		int k = this.getDirectionMeta (j);
+		int orientation = BlockPistonBase.getPistonOrientation(metadata);
 		
 		if (this.upDown) {
 			return this.iconV;
 		}
 		
 		if (this.northSouth) {
-			if (i == 1 || i == 0) {
+			if (side == 1 || side == 0) {
 				return this.iconV;
 			}
 		}
@@ -68,42 +69,42 @@ public class BlockMorePistonsRod extends HBlock {
 	//////////////////////////////////
 	
 	@Override
-	public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
-		int l = par1World.getBlockMetadata(par2, par3, par4);
-		switch (getDirectionMeta(l)) {
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
+		int metadata = world.getBlockMetadata(x, y, z);
+		switch (BlockPistonBase.getPistonOrientation(metadata)) {
 			case 0:
 				setBlockBounds(0.375F, 0.25F, 0.375F, 0.625F, 1.25F, 0.625F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
 				break;
 		case 1:
 			setBlockBounds(0.375F, -0.25F, 0.375F, 0.625F, 0.75F, 0.625F);
-			super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
 			break;
 		case 2:
 			setBlockBounds(0.25F, 0.25F, 0.25F, 0.75F, 0.625F, 1.25F);
-			super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
 			break;
 		case 3:
 			setBlockBounds(0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F);
-			super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
 			break;
 		case 4:
 			setBlockBounds(-0.25F, 0.25F, 0.25F, 1.25F, 0.75F, 0.75F);
-			super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
 			break;
 		case 5:
 			setBlockBounds(-0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F);
-			super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
 		}
 
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 	
 	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
-		int l = iblockaccess.getBlockMetadata(i, j, k);
+	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+		int metadata = world.getBlockMetadata(x, y, z);
 		
-		switch (getDirectionMeta(l)) {
+		switch (BlockPistonBase.getPistonOrientation(metadata)) {
 			case 0:
 				this.upDown = true;
 				this.northSouth = false;
@@ -170,8 +171,8 @@ public class BlockMorePistonsRod extends HBlock {
 		return 0;
 	}
 
-//	@Override
-//	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+	@Override
+	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 //		
 //		int xx= x;
 //		int yy= y;
@@ -213,10 +214,6 @@ public class BlockMorePistonsRod extends HBlock {
 //			}
 //			
 //		}
-//	}
-	
-	public static int getDirectionMeta(int i) {
-		return i & 0x7;
 	}
 	
 	/**

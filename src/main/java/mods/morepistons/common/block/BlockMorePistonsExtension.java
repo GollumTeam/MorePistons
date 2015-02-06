@@ -22,7 +22,7 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 		this.helper.vanillaTexture = true;
 	}
 	
-//	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
+	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
 //		
 //		int direction = this.getDirectionFromMetadata (metadata);
 //		Block block = ModBlocks.blockPistonRod;
@@ -38,13 +38,13 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 //			}
 //			
 //		}
-//	}
-//	
-//	/**
-//	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
-//	 * their own) Args: x, y, z, neighbor blockID
-//	 */
-//	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+	}
+	
+	/**
+	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
+	 * their own) Args: x, y, z, neighbor blockID
+	 */
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 //		
 //		int metadata    = world.getBlockMetadata(x, y, z);
 //		int orientation = this.getDirectionMeta(metadata);
@@ -70,9 +70,5 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 //			}
 //		}
 //		
-//	}
-//	
-//	public static int getDirectionFromMetadata(int metadata) {
-//		return metadata & 0x7;
-//	}
+	}
 }
