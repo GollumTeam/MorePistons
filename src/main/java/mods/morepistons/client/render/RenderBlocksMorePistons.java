@@ -143,26 +143,53 @@ public class RenderBlocksMorePistons extends RenderBlocks {
 				this.uvRotateSouth = 3;
 				this.uvRotateNorth = 3;
 				this.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D);
-				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y + 0.25F), (double)((float)y + 0.25F + f3), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.8F, d0);
-				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y + 0.25F), (double)((float)y + 0.25F + f3), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.8F, d0);
-				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y + 0.25F), (double)((float)y + 0.25F + f3), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 0.6F, d0);
-				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y + 0.25F), (double)((float)y + 0.25F + f3), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.6F, d0);
+				
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y + 0.25F + f3 - progress), (double)((float)y + 0.25F + f3           ), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.8F, 0.0F           , 16.0F * progress);
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y + 0.25F                ), (double)((float)y + 0.25F + f3 - progress), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.8F, 16.0F * progress, 16.0F          );
+				
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y + 0.25F + f3 - progress), (double)((float)y + 0.25F + f3           ), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.8F, 0.0F           , 16.0F * progress);
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y + 0.25F                ), (double)((float)y + 0.25F + f3 - progress), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.8F, 16.0F * progress, 16.0F          );
+				
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y + 0.25F + f3 - progress), (double)((float)y + 0.25F + f3           ), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 0.6F, 0.0F           , 16.0F * progress);
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y + 0.25F                ), (double)((float)y + 0.25F + f3 - progress), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 0.6F, 16.0F * progress, 16.0F          );
+				
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y + 0.25F + f3 - progress), (double)((float)y + 0.25F + f3           ), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.6F, 0.0F           , 16.0F * progress);
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y + 0.25F                ), (double)((float)y + 0.25F + f3 - progress), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.6F, 16.0F * progress, 16.0F          );
+				
 				break;
 			case 1:
 				this.setRenderBounds(0.0D, 0.75D, 0.0D, 1.0D, 1.0D, 1.0D);
-				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y - 0.25F + 1.0F - f3), (double)((float)y - 0.25F + 1.0F), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.8F, d0);
-				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y - 0.25F + 1.0F - f3), (double)((float)y - 0.25F + 1.0F), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.8F, d0);
-				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y - 0.25F + 1.0F - f3), (double)((float)y - 0.25F + 1.0F), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 0.6F, d0);
-				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y - 0.25F + 1.0F - f3), (double)((float)y - 0.25F + 1.0F), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.6F, d0);
+				
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y - 0.25F + 1.0F - f3                   ), (double)((float)y - 0.25F + 1.0F - progress), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.8F, 16.0F * progress, 16.0F          );
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y - 0.25F + 1.0F - f3  + 1.0F - progress), (double)((float)y - 0.25F + 1.0F           ), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.8F, 0.0F           , 16.0F * progress);
+				
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y - 0.25F + 1.0F - f3                   ), (double)((float)y - 0.25F + 1.0F - progress), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.8F, 16.0F * progress, 16.0F          );
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y - 0.25F + 1.0F - f3  + 1.0F - progress), (double)((float)y - 0.25F + 1.0F           ), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.8F, 0.0F           , 16.0F * progress);
+				
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y - 0.25F + 1.0F - f3                   ), (double)((float)y - 0.25F + 1.0F - progress), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 0.6F, 16.0F * progress, 16.0F          );
+				this.renderPistonRodUD((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y - 0.25F + 1.0F - f3  + 1.0F - progress), (double)((float)y - 0.25F + 1.0F           ), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 0.6F, 0.0F           , 16.0F * progress);
+				
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y - 0.25F + 1.0F - f3                   ), (double)((float)y - 0.25F + 1.0F - progress), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.6F, 16.0F * progress, 16.0F          );
+				this.renderPistonRodUD((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y - 0.25F + 1.0F - f3  + 1.0F - progress), (double)((float)y - 0.25F + 1.0F           ), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.6F, 0.0F           , 16.0F * progress);
+				
 				break;
 			case 2:
 				this.uvRotateSouth = 1;
 				this.uvRotateNorth = 2;
 				this.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.25D);
-				this.renderPistonRodSN((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y + 0.625F), (double)((float)y + 0.375F), (double)((float)z + 0.25F), (double)((float)z + 0.25F + f3), 0.6F, d0);
-				this.renderPistonRodSN((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y + 0.375F), (double)((float)y + 0.625F), (double)((float)z + 0.25F), (double)((float)z + 0.25F + f3), 0.6F, d0);
-				this.renderPistonRodSN((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y + 0.375F), (double)((float)y + 0.375F), (double)((float)z + 0.25F), (double)((float)z + 0.25F + f3), 0.5F, d0);
-				this.renderPistonRodSN((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y + 0.625F), (double)((float)y + 0.625F), (double)((float)z + 0.25F), (double)((float)z + 0.25F + f3), 1.0F, d0);
+				
+				this.renderPistonRodSN((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y + 0.625F), (double)((float)y + 0.375F), (double)((float)z + 0.25F + f3 - progress), (double)((float)z + 0.25F + f3           ), 0.6F, 0.0F            , 16.0F * progress);
+				this.renderPistonRodSN((double)((float)x + 0.375F), (double)((float)x + 0.375F), (double)((float)y + 0.625F), (double)((float)y + 0.375F), (double)((float)z + 0.25F                ), (double)((float)z + 0.25F + f3 - progress), 0.6F, 16.0F * progress, 16.0F           );
+//				
+				this.renderPistonRodSN((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y + 0.375F), (double)((float)y + 0.625F), (double)((float)z + 0.25F + f3 - progress), (double)((float)z + 0.25F + f3           ), 0.6F, 0.0F            , 16.0F * progress);
+				this.renderPistonRodSN((double)((float)x + 0.625F), (double)((float)x + 0.625F), (double)((float)y + 0.375F), (double)((float)y + 0.625F), (double)((float)z + 0.25F                ), (double)((float)z + 0.25F + f3 - progress), 0.6F, 16.0F * progress, 16.0F           );
+				
+				this.renderPistonRodSN((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y + 0.375F), (double)((float)y + 0.375F), (double)((float)z + 0.25F + f3 - progress), (double)((float)z + 0.25F + f3           ), 0.5F, 0.0F            , 16.0F * progress);
+				this.renderPistonRodSN((double)((float)x + 0.375F), (double)((float)x + 0.625F), (double)((float)y + 0.375F), (double)((float)y + 0.375F), (double)((float)z + 0.25F                ), (double)((float)z + 0.25F + f3 - progress), 0.5F, 16.0F * progress, 16.0F           );
+				
+				this.renderPistonRodSN((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y + 0.625F), (double)((float)y + 0.625F), (double)((float)z + 0.25F + f3 - progress), (double)((float)z + 0.25F + f3           ), 1.0F, 0.0F            , 16.0F * progress);
+				this.renderPistonRodSN((double)((float)x + 0.625F), (double)((float)x + 0.375F), (double)((float)y + 0.625F), (double)((float)y + 0.625F), (double)((float)z + 0.25F                ), (double)((float)z + 0.25F + f3 - progress), 1.0F, 16.0F * progress, 16.0F           );
+				
 				break;
 			case 3:
 				this.uvRotateSouth = 2;
@@ -210,11 +237,19 @@ public class RenderBlocksMorePistons extends RenderBlocks {
 				this.uvRotateTop = 1;
 				this.uvRotateBottom = 2;
 				this.setRenderBounds(0.75D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F), (double)((float)y + 0.375F), (double)((float)y + 0.375F), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.5F, d0);
-				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F), (double)((float)y + 0.625F), (double)((float)y + 0.625F), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 1.0F, d0);
-				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F), (double)((float)y + 0.375F), (double)((float)y + 0.625F), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.6F, d0);
-				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F), (double)((float)y + 0.625F), (double)((float)y + 0.375F), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.6F, d0);
-		}
+				
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.375F), (double)((float)y + 0.375F), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.5F, 16.0F * progress, 16.0F        );
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F     ), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.375F), (double)((float)y + 0.375F), (double)((float)z + 0.625F), (double)((float)z + 0.375F), 0.5F, 16.0F - 16.0F * progress, 16.0F);
+				
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.625F), (double)((float)y + 0.625F), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 1.0F, 16.0F * progress, 16.0F        );
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F     ), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.625F), (double)((float)y + 0.625F), (double)((float)z + 0.375F), (double)((float)z + 0.625F), 1.0F, 16.0F - 16.0F * progress, 16.0F);
+				
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.375F), (double)((float)y + 0.625F), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.6F, 16.0F * progress, 16.0F        );
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F     ), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.375F), (double)((float)y + 0.625F), (double)((float)z + 0.375F), (double)((float)z + 0.375F), 0.6F, 16.0F - 16.0F * progress, 16.0F);
+				
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F - f3), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.625F), (double)((float)y + 0.375F), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.6F, 16.0F * progress, 16.0F        );
+				this.renderPistonRodEW((double)((float)x - 0.25F + 1.0F     ), (double)((float)x - 0.25F + 1.0F - progress), (double)((float)y + 0.625F), (double)((float)y + 0.375F), (double)((float)z + 0.625F), (double)((float)z + 0.625F), 0.6F, 16.0F - 16.0F * progress, 16.0F);
+			}
 		
 		this.uvRotateEast = 0;
 		this.uvRotateWest = 0;
@@ -225,7 +260,7 @@ public class RenderBlocksMorePistons extends RenderBlocks {
 		this.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
 	}
 	
-	public void renderPistonRodUD(double p_147763_1_, double p_147763_3_, double p_147763_5_, double p_147763_7_, double p_147763_9_, double p_147763_11_, float p_147763_13_, double p_147763_14_) {
+	public void renderPistonRodUD(double x1, double x2, double y1, double y2, double z1, double z2, float alpha, double start, double end) {
 		IIcon iicon = BlockPistonBase.getPistonBaseIcon("piston_side");
 		
 		if (this.hasOverrideBlockTexture()) {
@@ -233,15 +268,15 @@ public class RenderBlocksMorePistons extends RenderBlocks {
 		}
 		
 		Tessellator tessellator = Tessellator.instance;
-		double d7 = (double)iicon.getMinU();
+		double d7 = (double)iicon.getInterpolatedU(start);
 		double d8 = (double)iicon.getMinV();
-		double d9 = (double)iicon.getInterpolatedU(p_147763_14_);
+		double d9 = (double)iicon.getInterpolatedU(end);
 		double d10 = (double)iicon.getInterpolatedV(4.0D);
-		tessellator.setColorOpaque_F(p_147763_13_, p_147763_13_, p_147763_13_);
-		tessellator.addVertexWithUV(p_147763_1_, p_147763_7_, p_147763_9_, d9, d8);
-		tessellator.addVertexWithUV(p_147763_1_, p_147763_5_, p_147763_9_, d7, d8);
-		tessellator.addVertexWithUV(p_147763_3_, p_147763_5_, p_147763_11_, d7, d10);
-		tessellator.addVertexWithUV(p_147763_3_, p_147763_7_, p_147763_11_, d9, d10);
+		tessellator.setColorOpaque_F(alpha, alpha, alpha);
+		tessellator.addVertexWithUV(x1, y2, z1, d9, d8);
+		tessellator.addVertexWithUV(x1, y1, z1, d7, d8);
+		tessellator.addVertexWithUV(x2, y1, z2, d7, d10);
+		tessellator.addVertexWithUV(x2, y2, z2, d9, d10);
 	}
 	
 	public void renderPistonRodSN(double x1, double x2, double y1, double y2, double z1, double z2, float alpha, double start, double end) {
