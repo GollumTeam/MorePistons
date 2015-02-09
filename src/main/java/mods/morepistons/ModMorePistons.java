@@ -84,6 +84,8 @@ public class ModMorePistons extends GollumMod {
 		
 		// Set de l'icon du tab creative
 		this.morePistonsTabs.setIcon(Blocks.piston);
+		Blocks.piston       .setCreativeTab(null);
+		Blocks.sticky_piston.setCreativeTab(null);
 	}
 	
 	/** 3 **/

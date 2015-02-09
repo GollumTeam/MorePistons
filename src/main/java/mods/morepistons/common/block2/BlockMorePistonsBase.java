@@ -769,19 +769,19 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
 		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 		
-		for (EMoveInfosExtend infos : infosExtend) {
+//		for (EMoveInfosExtend infos : infosExtend) {
 			
-			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
-				xExtension += Facing.offsetsXForSide[orientation];
-				yExtension += Facing.offsetsYForSide[orientation];
-				zExtension += Facing.offsetsZForSide[orientation];
-				
+//			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
+//				xExtension += Facing.offsetsXForSide[orientation];
+//				yExtension += Facing.offsetsYForSide[orientation];
+//				zExtension += Facing.offsetsZForSide[orientation];
+//				
 				//Déplace avec une animation les blocks
 //				TileEntity teBlock = new TileEntityMorePistons (infos.block, infos.metadata, orientation, true, false, infos.move, false);
 //				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, infos.metadata, 2);
 //				world.setTileEntity(xExtension, yExtension, zExtension, teBlock);
-			}
-		}
+//			}
+//		}
 
 //		xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
 //		yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;

@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 import mods.gollum.core.tools.helper.blocks.HBlock;
+import mods.gollum.core.tools.helper.blocks.HBlockContainer;
+import mods.morepistons.client.ClientProxyMorePistons;
+import mods.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import mods.morepistons.common.tileentities.TileEntityMorePistonsRod;
 import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.BlockPistonBase;
@@ -12,14 +16,15 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity; // lq;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB; // aoe;
-import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess; // ym;
 import net.minecraft.world.World; // yc;
+// world.getBlockMetadata;
 
-public class BlockMorePistonsRod extends HBlock {
+public class BlockMorePistonsRod extends HBlockContainer {
 	
 	private IIcon iconV;
 	private IIcon iconH;
@@ -30,6 +35,11 @@ public class BlockMorePistonsRod extends HBlock {
 		super(registerName, Material.grass);
 		setStepSound(soundTypeStone);
 		setHardness(0.3F);
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World world, int metadata) {
+		return new TileEntityMorePistonsRod();
 	}
 	
 	//////////////////////////
@@ -64,45 +74,27 @@ public class BlockMorePistonsRod extends HBlock {
 		return this.iconH;
 	}
 	
+	@Override
+	public int getRenderType() {
+		return -1;
+	}
+	
 	//////////////////////////////////
 	// Gestion de la forme du block //
 	//////////////////////////////////
 	
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
-		int metadata = world.getBlockMetadata(x, y, z);
-		switch (BlockPistonBase.getPistonOrientation(metadata)) {
-			case 0:
-				setBlockBounds(0.375F, 0.25F, 0.375F, 0.625F, 1.25F, 0.625F);
-				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-				break;
-		case 1:
-			setBlockBounds(0.375F, -0.25F, 0.375F, 0.625F, 0.75F, 0.625F);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			break;
-		case 2:
-			setBlockBounds(0.25F, 0.25F, 0.25F, 0.75F, 0.625F, 1.25F);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			break;
-		case 3:
-			setBlockBounds(0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			break;
-		case 4:
-			setBlockBounds(-0.25F, 0.25F, 0.25F, 1.25F, 0.75F, 0.75F);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			break;
-		case 5:
-			setBlockBounds(-0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-		}
-
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-	}
+		this.setBlockBoundsBasedOnState(world.getBlockMetadata(x, y, z));
+		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+ 	}
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		int metadata = world.getBlockMetadata(x, y, z);
+		this.setBlockBoundsBasedOnState(world.getBlockMetadata(x, y, z));
+	}
+	
+	public void setBlockBoundsBasedOnState(int metadata) {
 		
 		switch (BlockPistonBase.getPistonOrientation(metadata)) {
 			case 0:
@@ -149,7 +141,7 @@ public class BlockMorePistonsRod extends HBlock {
 	
 	@Override
 	public boolean renderAsNormalBlock() {
-		return true;
+		return false;
 	}
 	
 	////////////////////////

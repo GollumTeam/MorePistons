@@ -92,7 +92,7 @@ public class ModBlocks {
 //	public static BlockMorePistonsMagnetic blockMagneticPistonBase8;
 //	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase8;
 //	
-	public static BlockMorePistonsExtension blockPistonExtension;
+	public static BlockMorePistonsExtension blockPistonExtention;
 	public static BlockMorePistonsRod blockPistonRod;
 	
 
@@ -104,7 +104,7 @@ public class ModBlocks {
 		////////////////////
 		// Utility blocks //
 		////////////////////
-		ModBlocks.blockPistonExtension = new BlockMorePistonsExtension("MorePistonsExtension");
+		ModBlocks.blockPistonExtention = new BlockMorePistonsExtension("MorePistonsExtension");
 		ModBlocks.blockPistonRod       = new BlockMorePistonsRod      ("MorePistonsRod");
 		
 //		ModBlocks.blockGravitationalPistonBase       = new BlockMorePistonsGravitational("GravitationalPistonBase"      , false);
@@ -113,8 +113,8 @@ public class ModBlocks {
 		/////////////////////
 		// Vanilla pistons //
 		/////////////////////
-		if (ModMorePistons.config.overrideVanillaPiston)      ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"      , false);
-		if (ModMorePistons.config.overrideVanillaStickPiston) ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase", true );
+		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla("PistonBase"      , false);
+		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla("StickyPistonBase", true );
 		
 		if (ModMorePistons.config.overrideVanillaPiston)      new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
 		if (ModMorePistons.config.overrideVanillaStickPiston) new BlockMorePistonsVanillaProxy(ModBlocks.blockStickyPistonBase);
@@ -125,19 +125,19 @@ public class ModBlocks {
 		
 		ModBlocks.blockDoublePistonBase          = new BlockMorePistonsBase   ("DoublePistonBase"         , false).setLength (2);
 		ModBlocks.blockDoubleStickyPistonBase    = new BlockMorePistonsBase   ("DoubleStickyPistonBase"   , true ).setLength (2);
-//		ModBlocks.blockTriplePistonBase          = new BlockMorePistonsBase   ("TriplePistonBase"         , false).setLength (3);
-//		ModBlocks.blockTripleStickyPistonBase    = new BlockMorePistonsBase   ("TripleStickyPistonBase"   , true ).setLength (3);
-//		ModBlocks.blockQuadruplePistonBase       = new BlockMorePistonsBase   ("QuadruplePistonBase"      , false).setLength (4);
-//		ModBlocks.blockQuadrupleStickyPistonBase = new BlockMorePistonsBase   ("QuadrupleStickyPistonBase", true ).setLength (4);
-//		ModBlocks.blockQuintuplePistonBase       = new BlockMorePistonsBase   ("QuintuplePistonBase"      , false).setLength (5);
-//		ModBlocks.blockQuintupleStickyPistonBase = new BlockMorePistonsBase   ("QuintupleStickyPistonBase", true ).setLength (5);
-//		ModBlocks.blockSextuplePistonBase        = new BlockMorePistonsBase   ("SextuplePistonBase"       , false).setLength (6);
-//		ModBlocks.blockSextupleStickyPistonBase  = new BlockMorePistonsBase   ("SextupleStickyPistonBase" , true ).setLength (6);
-//		ModBlocks.blockSeptuplePistonBase        = new BlockMorePistonsBase   ("SeptuplePistonBase"       , false).setLength (7);
-//		ModBlocks.blockSeptupleStickyPistonBase  = new BlockMorePistonsBase   ("SeptupleStickyPistonBase" , true ).setLength (7);
-//		ModBlocks.blockOctuplePistonBase         = new BlockMorePistonsBase   ("OctuplePistonBase"        , false).setLength (8);
-//		ModBlocks.blockOctupleStickyPistonBase   = new BlockMorePistonsBase   ("OctupleStickyPistonBase"  , true ).setLength (8);
-//		
+		ModBlocks.blockTriplePistonBase          = new BlockMorePistonsBase   ("TriplePistonBase"         , false).setLength (3);
+		ModBlocks.blockTripleStickyPistonBase    = new BlockMorePistonsBase   ("TripleStickyPistonBase"   , true ).setLength (3);
+		ModBlocks.blockQuadruplePistonBase       = new BlockMorePistonsBase   ("QuadruplePistonBase"      , false).setLength (4);
+		ModBlocks.blockQuadrupleStickyPistonBase = new BlockMorePistonsBase   ("QuadrupleStickyPistonBase", true ).setLength (4);
+		ModBlocks.blockQuintuplePistonBase       = new BlockMorePistonsBase   ("QuintuplePistonBase"      , false).setLength (5);
+		ModBlocks.blockQuintupleStickyPistonBase = new BlockMorePistonsBase   ("QuintupleStickyPistonBase", true ).setLength (5);
+		ModBlocks.blockSextuplePistonBase        = new BlockMorePistonsBase   ("SextuplePistonBase"       , false).setLength (6);
+		ModBlocks.blockSextupleStickyPistonBase  = new BlockMorePistonsBase   ("SextupleStickyPistonBase" , true ).setLength (6);
+		ModBlocks.blockSeptuplePistonBase        = new BlockMorePistonsBase   ("SeptuplePistonBase"       , false).setLength (7);
+		ModBlocks.blockSeptupleStickyPistonBase  = new BlockMorePistonsBase   ("SeptupleStickyPistonBase" , true ).setLength (7);
+		ModBlocks.blockOctuplePistonBase         = new BlockMorePistonsBase   ("OctuplePistonBase"        , false).setLength (8);
+		ModBlocks.blockOctupleStickyPistonBase   = new BlockMorePistonsBase   ("OctupleStickyPistonBase"  , true ).setLength (8);
+		
 
 		///////////////////
 		// Super pistons //

@@ -7,15 +7,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 
-public class TileEntityMorePistonsPiston extends TileEntity {
+public class TileEntityMorePistonsRod extends TileEntity {
 	
-	public  int       currentOpened = 0;
-	public  boolean   running       = false;
 	public  Integer3d extentionPos  = new Integer3d();
-	
-	public TileEntityMorePistonsPiston () {
+
+	public TileEntityMorePistonsRod () {
 	}
 	
+	public TileEntityMorePistonsRod (Integer3d extentionPos) {
+		this.extentionPos = extentionPos;
+	}
 	
 	public BlockMorePistonsBase getBlockPiston() {
 		return (BlockMorePistonsBase)this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
@@ -24,13 +25,19 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	public void updateEntity() {
 		super.updateEntity();
 	}
+
+	public TileEntityMorePistonsMoving getTileEntityMoving() {
+		TileEntity te = this.worldObj.getTileEntity(this.extentionPos.x, this.extentionPos.y, this.extentionPos.z);
+		if (te instanceof TileEntityMorePistonsMoving) {
+			return (TileEntityMorePistonsMoving)te;
+		}
+		return null;
+	}
 	
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
-		this.currentOpened  = nbtTagCompound.getInteger("currentOpened");
-		this.running        = nbtTagCompound.getBoolean("running");
 		this.extentionPos.x = nbtTagCompound.getInteger("extentionPosX");
 		this.extentionPos.y = nbtTagCompound.getInteger("extentionPosY");
 		this.extentionPos.z = nbtTagCompound.getInteger("extentionPosZ");
@@ -38,15 +45,10 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
-		nbtTagCompound.setInteger("currentOpened", this.currentOpened);
-		nbtTagCompound.setBoolean("running"      , this.running);
 		nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
 		nbtTagCompound.setInteger("extentionPosY", this.extentionPos.y);
 		nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.z);
 		super.writeToNBT(nbtTagCompound);
 	}
-
-
-	
 	
 }
