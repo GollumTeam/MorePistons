@@ -16,8 +16,6 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 
 	public BlockMorePistonsExtension(String registerName) {
 		super(registerName);
-		setStepSound(soundTypeStone);
-		setHardness(0.5F);
 		
 		this.helper.vanillaTexture = true;
 	}

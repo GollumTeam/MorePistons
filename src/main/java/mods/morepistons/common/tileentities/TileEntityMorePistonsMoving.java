@@ -1,20 +1,23 @@
 package mods.morepistons.common.tileentities;
 
 import static mods.morepistons.ModMorePistons.log;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import mods.gollum.core.utils.math.Integer3d;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
+import mods.morepistons.common.block.BlockMorePistonsMoving;
 import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonMoving;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class TileEntityMorePistonsMoving extends TileEntity {
@@ -22,12 +25,14 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public  Block     storedBlock       = null;
 	private int       storedMetadata    = 0;
 	public  int       storedOrientation = 0;
-	private boolean   extending         = false;
+	public  boolean   extending         = false;
 	public  int       distance          = 0;
 	private Integer3d positionPiston    = new Integer3d();
 	
 	private float progress     = 0;
 	private float lastProgress = 0;
+	
+	private boolean isInit = false;
 	
 	/**
 	 * Consstructeur vide obligatoire pour le reload de l'entité au chargement du terrain
@@ -47,11 +52,16 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.extending            = extending;
 		this.distance             = distance;
 		this.positionPiston       = positionPiston;
+		this.isInit               = true;
 		
 	}
 	
 	public void updateEntity() {
 		super.updateEntity();
+		
+		if (!this.isInit) {
+			return;
+		}
 		
 		BlockMorePistonsBase piston = this.pistonOrigin();
 		if (piston == null) {
@@ -101,7 +111,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		return null;
 	}
 	
-	private void setBlockFinalMove() {
+	public void setBlockFinalMove() {
 		
 		log.debug("TE setBlockFinalMove");
 		
@@ -135,18 +145,11 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		if (this.progress >= 1.0F) { // TODO is finish
 			this.progress = 1.0F;
 		}
-		
-//		this.lastProgress = 0.46f;
-//		this.progress = 0.46f;
-
-		int x = this.xCoord - Facing.offsetsXForSide[this.storedOrientation];
-		int y = this.yCoord - Facing.offsetsYForSide[this.storedOrientation];
-		int z = this.zCoord - Facing.offsetsZForSide[this.storedOrientation];
+		this.lastProgress = 0.88F;
+		this.progress = 0.88F;
 		
 		if (this.storedBlock instanceof BlockMorePistonsExtension) {
-			
 			this.displayPistonRod((int) Math.floor((float)this.distance * this.progress));
-			
 		}
 	}
 	
@@ -165,8 +168,8 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 				block == null || 
 				block instanceof BlockAir || 
 				(
-					!(block instanceof BlockPistonBase) && 
-					!(block instanceof BlockPistonMoving)
+					!(block instanceof BlockMorePistonsBase) && 
+					!(block instanceof BlockMorePistonsMoving)
 				)
 			) {
 				this.worldObj.setBlock (x, y, z, ModBlocks.blockPistonRod, this.storedOrientation, 2);
@@ -182,39 +185,27 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		return this.lastProgress + (this.progress - this.lastProgress) * f;
 	}
+	
+	public float getProgressWithDistance (float f) {
+		if (this.extending) {
+			return this.getProgress(f) * distance - distance;
+		}
+		return distance - this.getProgress(f) * distance;
+	}
 
 	@SideOnly(Side.CLIENT)
 	public float getOffsetX(float f) {
-		
-		float distance = (float)this.distance;
-		
-		if (this.extending) { 
-			return (this.getProgress(f) * distance - distance) * Facing.offsetsXForSide[this.storedOrientation]; 
-		}
-		return (distance - this.getProgress(f) * distance) * Facing.offsetsXForSide[this.storedOrientation];
+		return this.getProgressWithDistance(f) * Facing.offsetsXForSide[this.storedOrientation];
 	}
 
 	@SideOnly(Side.CLIENT)
 	public float getOffsetY(float f) {
-		
-		float distance = (float)this.distance;
-		
-		if (this.extending) {
-			return (this.getProgress(f) * distance - distance) * Facing.offsetsYForSide[this.storedOrientation];
-		}
-		return (distance - this.getProgress(f) * distance) * Facing.offsetsYForSide[this.storedOrientation];
+		return this.getProgressWithDistance(f) * Facing.offsetsYForSide[this.storedOrientation];
 	}
 
 	@SideOnly(Side.CLIENT)
 	public float getOffsetZ(float f) {
-		
-		float distance = (float)this.distance;
-		
-		if (this.extending) {
-			return (this.getProgress(f) * distance - distance) * Facing.offsetsZForSide[this.storedOrientation];
-		} else {
-			return (distance - this.getProgress(f) * distance) * Facing.offsetsZForSide[this.storedOrientation];
-		}
+		return this.getProgressWithDistance(f) * Facing.offsetsZForSide[this.storedOrientation];
 	}
 	
 	
@@ -224,30 +215,49 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		this.storedBlock       = Block.getBlockById(nbtTagCompound.getInteger("blockId"));
 		this.storedMetadata    = nbtTagCompound.getInteger("blockData");
-		this.storedOrientation = nbtTagCompound.getInteger("facing");
+		this.storedOrientation = nbtTagCompound.getInteger("orientation");
 		this.extending         = nbtTagCompound.getBoolean("extending");
 		this.distance          = nbtTagCompound.getInteger("distance");
-		this.progress          = nbtTagCompound.getInteger("progress");
-		this.lastProgress      = nbtTagCompound.getInteger("progress");
+		this.progress          = nbtTagCompound.getFloat  ("progress");
+		this.lastProgress      = nbtTagCompound.getFloat  ("lastProgress");
 		
 		this.positionPiston.x = nbtTagCompound.getInteger("pistonX");
 		this.positionPiston.y = nbtTagCompound.getInteger("pistonY");
 		this.positionPiston.z = nbtTagCompound.getInteger("pistonZ");
+		
+		this.isInit = true;
+		
+		log.debug ("this.progress", this.progress);
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
 		
-		nbtTagCompound.setInteger("blockData", this.storedMetadata);
-		nbtTagCompound.setInteger("facing"   , this.storedOrientation);
-		nbtTagCompound.setBoolean("extending", this.extending);
-		nbtTagCompound.setInteger("distance" , this.distance);
-		nbtTagCompound.setFloat  ("progress" , this.lastProgress);
-
+		super.writeToNBT(nbtTagCompound);
+		
+		nbtTagCompound.setInteger("blockId"     , Block.getIdFromBlock(this.storedBlock));
+		nbtTagCompound.setInteger("blockData"   , this.storedMetadata);
+		nbtTagCompound.setInteger("orientation" , this.storedOrientation);
+		nbtTagCompound.setBoolean("extending"   , this.extending);
+		nbtTagCompound.setInteger("distance"    , this.distance);
+		nbtTagCompound.setFloat  ("progress"    , this.progress);
+		nbtTagCompound.setFloat  ("lastProgress", this.lastProgress);
+		
 		nbtTagCompound.setInteger("pistonX", this.positionPiston.x);
 		nbtTagCompound.setInteger("pistonY", this.positionPiston.y);
 		nbtTagCompound.setInteger("pistonZ", this.positionPiston.z);
 		
-		super.writeToNBT(nbtTagCompound);
+	}
+	
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+		this.writeToNBT(nbttagcompound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord,this.zCoord, 0, nbttagcompound);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		this.readFromNBT(pkt.func_148857_g());
 	}
 }

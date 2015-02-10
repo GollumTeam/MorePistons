@@ -36,7 +36,7 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 		
 		Block                block       = tileEntityMoving.storedBlock;
 		BlockMorePistonsBase blockPiston = tileEntityMoving.pistonOrigin();
-
+		
 		Tessellator tessellator = this.startRender(tileEntityMoving, x, y, z);
 		
 		tessellator.addTranslation(
@@ -73,7 +73,6 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 	 * nether travel) due to using one renderer per tile entity type, rather
 	 * than instance
 	 */
-	
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 		this.renderMoving((TileEntityMorePistonsMoving) tileentity, x, y, z, f);

@@ -814,7 +814,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		//Déplace avec une animation l'extention du piston
 		log.debug("Create PistonMoving : "+xExtension, yExtension, zExtension, "orientation="+orientation, "lenghtOpened="+lenghtOpened);
 		
-		world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);
+		world.setBlock(xExtension, yExtension, zExtension, ModBlocks.blockPistonMoving, orientation, 2);
 		TileEntity teExtension = new TileEntityMorePistonsMoving(ModBlocks.blockPistonExtention, metadata, orientation, true, lenghtOpened, new Integer3d(x, y, z));
 		world.setTileEntity(xExtension, yExtension, zExtension, teExtension);
 	}

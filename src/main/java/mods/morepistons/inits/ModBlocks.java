@@ -9,6 +9,7 @@ import mods.gollum.core.utils.reflection.Reflection;
 import mods.morepistons.ModMorePistons;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
+import mods.morepistons.common.block.BlockMorePistonsMoving;
 import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.common.block.BlockMorePistonsVanilla;
 import mods.morepistons.common.block.BlockMorePistonsVanillaProxy;
@@ -93,7 +94,8 @@ public class ModBlocks {
 //	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase8;
 //	
 	public static BlockMorePistonsExtension blockPistonExtention;
-	public static BlockMorePistonsRod blockPistonRod;
+	public static BlockMorePistonsRod       blockPistonRod;
+	public static BlockMorePistonsMoving    blockPistonMoving;
 	
 
 	/**
@@ -106,6 +108,7 @@ public class ModBlocks {
 		////////////////////
 		ModBlocks.blockPistonExtention = new BlockMorePistonsExtension("MorePistonsExtension");
 		ModBlocks.blockPistonRod       = new BlockMorePistonsRod      ("MorePistonsRod");
+		ModBlocks.blockPistonMoving    = new BlockMorePistonsMoving   ("MorePistonsMoving");
 		
 //		ModBlocks.blockGravitationalPistonBase       = new BlockMorePistonsGravitational("GravitationalPistonBase"      , false);
 //		ModBlocks.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational("GravitationalStickyPistonBase", true);

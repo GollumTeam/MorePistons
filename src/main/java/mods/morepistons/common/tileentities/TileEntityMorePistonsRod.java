@@ -4,6 +4,9 @@ import static mods.morepistons.ModMorePistons.log;
 import mods.gollum.core.utils.math.Integer3d;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 
@@ -45,10 +48,22 @@ public class TileEntityMorePistonsRod extends TileEntity {
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
+		super.writeToNBT(nbtTagCompound);
+		
 		nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
 		nbtTagCompound.setInteger("extentionPosY", this.extentionPos.y);
 		nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.z);
-		super.writeToNBT(nbtTagCompound);
 	}
 	
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+		this.writeToNBT(nbttagcompound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord,this.zCoord, 0, nbttagcompound);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		this.readFromNBT(pkt.func_148857_g());
+	}
 }

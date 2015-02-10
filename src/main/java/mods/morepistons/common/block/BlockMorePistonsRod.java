@@ -147,12 +147,12 @@ public class BlockMorePistonsRod extends HBlockContainer {
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-
+	
 	@Override
 	public boolean canPlaceBlockAt(World world, int i, int j, int k) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean canPlaceBlockOnSide(World world, int i, int j, int k, int l) {
 		return false;
