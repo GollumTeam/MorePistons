@@ -84,6 +84,13 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 				);
 				ModBlocks.blockPistonExtention.func_150087_e();
 				
+			} else {
+				this.blockRenderer.renderBlockAllFaces(
+					block,
+					tileEntityMoving.xCoord,
+					tileEntityMoving.yCoord,
+					tileEntityMoving.zCoord
+				);
 			}
 		}
 		
