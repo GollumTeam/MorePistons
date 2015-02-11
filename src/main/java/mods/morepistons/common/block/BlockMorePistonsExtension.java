@@ -43,7 +43,7 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 	 * their own) Args: x, y, z, neighbor blockID
 	 */
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-//		
+		
 //		int metadata    = world.getBlockMetadata(x, y, z);
 //		int orientation = this.getDirectionMeta(metadata);
 //		
@@ -51,7 +51,6 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 //		int y2 = y;
 //		int z2 = z;
 //		Block block2 = null;
-//		
 //		
 //		do {
 //			x2 -= Facing.offsetsXForSide[orientation];

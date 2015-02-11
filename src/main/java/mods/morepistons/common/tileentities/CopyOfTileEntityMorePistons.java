@@ -216,11 +216,11 @@ public class CopyOfTileEntityMorePistons extends TileEntity {
 	}
 	
 	private void updatePushedObjects(float par1, float par2) {
-		if (this.extending) {
-			par1 = 1.0F - par1;
-		} else {
-			par1 -= 1.0F;
-		}
+//		if (this.extending) {
+//			par1 = 1.0F - par1;
+//		} else {
+//			par1 -= 1.0F;
+//		}
 
 		int x = this.xCoord;
 		int y = this.yCoord;

@@ -39,20 +39,42 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 		
 		Tessellator tessellator = this.startRender(tileEntityMoving, x, y, z);
 		
-		tessellator.addTranslation(
-			tileEntityMoving.getOffsetX(f),
-			tileEntityMoving.getOffsetY(f),
-			tileEntityMoving.getOffsetZ(f)
-		);
-		
 		float distance = MathHelper.abs(tileEntityMoving.getOffsetX(f) + tileEntityMoving.getOffsetY(f) + tileEntityMoving.getOffsetZ(f));
 		float reste = tileEntityMoving.distance - distance;
 		
 		if (blockPiston != null && block != null) {
+
+			if (tileEntityMoving.root && block instanceof BlockMorePistonsBase) {
+				this.blockRenderer.renderPistonBase(
+					block,
+					tileEntityMoving.xCoord,
+					tileEntityMoving.yCoord,
+					tileEntityMoving.zCoord,
+					true
+				);
+			}
 			
-			if (block instanceof BlockMorePistonsExtension) {
+			tessellator.addTranslation(
+				tileEntityMoving.getOffsetX(f),
+				tileEntityMoving.getOffsetY(f),
+				tileEntityMoving.getOffsetZ(f)
+			);
+			
+			if (tileEntityMoving.root) {
 				
-				Blocks.piston_head.func_150086_a(blockPiston.getPistonExtensionTexture());
+				ModBlocks.blockPistonExtention.func_150086_a(blockPiston.getPistonExtensionTexture());
+				this.blockRenderer.renderPistonExtensionAllFaces(
+					ModBlocks.blockPistonExtention,
+					tileEntityMoving.xCoord,
+					tileEntityMoving.yCoord,
+					tileEntityMoving.zCoord,
+					distance > 0.5f
+				);
+				ModBlocks.blockPistonExtention.func_150087_e();
+				
+			} else if (block instanceof BlockMorePistonsExtension) {
+				
+				ModBlocks.blockPistonExtention.func_150086_a(blockPiston.getPistonExtensionTexture());
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					block,
 					tileEntityMoving.xCoord,
@@ -60,7 +82,7 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 					tileEntityMoving.zCoord,
 					reste > 0.5f
 				);
-				((BlockPistonExtension)ModBlocks.blockPistonExtention).func_150087_e();
+				ModBlocks.blockPistonExtention.func_150087_e();
 				
 			}
 		}

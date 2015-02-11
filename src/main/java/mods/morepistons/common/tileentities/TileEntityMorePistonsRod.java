@@ -12,27 +12,34 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityMorePistonsRod extends TileEntity {
 	
-	public  Integer3d extentionPos  = new Integer3d();
+	public  Integer3d pistonPos  = new Integer3d();
 
 	public TileEntityMorePistonsRod () {
 	}
 	
 	public TileEntityMorePistonsRod (Integer3d extentionPos) {
-		this.extentionPos = extentionPos;
+		this.pistonPos = (Integer3d)extentionPos.clone();
 	}
-	
-	public BlockMorePistonsBase getBlockPiston() {
-		return (BlockMorePistonsBase)this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
-	}	
 	
 	public void updateEntity() {
 		super.updateEntity();
 	}
 
-	public TileEntityMorePistonsMoving getTileEntityMoving() {
-		TileEntity te = this.worldObj.getTileEntity(this.extentionPos.x, this.extentionPos.y, this.extentionPos.z);
+	public TileEntityMorePistonsPiston getTileEntityPiston() {
+		TileEntity te = this.worldObj.getTileEntity(this.pistonPos.x, this.pistonPos.y, this.pistonPos.z);
+		if (te instanceof TileEntityMorePistonsPiston) {
+			return (TileEntityMorePistonsPiston)te;
+		}
 		if (te instanceof TileEntityMorePistonsMoving) {
-			return (TileEntityMorePistonsMoving)te;
+			return ((TileEntityMorePistonsMoving) te).getPistonOriginTE();
+		}
+		return null;
+	}
+	
+	public TileEntityMorePistonsMoving getTileEntityMoving() {
+		TileEntityMorePistonsPiston te = this.getTileEntityPiston();
+		if (te != null) {
+			return te.getTileEntityMoving();
 		}
 		return null;
 	}
@@ -41,18 +48,18 @@ public class TileEntityMorePistonsRod extends TileEntity {
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
-		this.extentionPos.x = nbtTagCompound.getInteger("extentionPosX");
-		this.extentionPos.y = nbtTagCompound.getInteger("extentionPosY");
-		this.extentionPos.z = nbtTagCompound.getInteger("extentionPosZ");
+		this.pistonPos.x = nbtTagCompound.getInteger("extentionPosX");
+		this.pistonPos.y = nbtTagCompound.getInteger("extentionPosY");
+		this.pistonPos.z = nbtTagCompound.getInteger("extentionPosZ");
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
 		super.writeToNBT(nbtTagCompound);
 		
-		nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
-		nbtTagCompound.setInteger("extentionPosY", this.extentionPos.y);
-		nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.z);
+		nbtTagCompound.setInteger("pistonPosX", this.pistonPos.x);
+		nbtTagCompound.setInteger("pistonPosY", this.pistonPos.y);
+		nbtTagCompound.setInteger("pistonPosZ", this.pistonPos.z);
 	}
 	
 	@Override

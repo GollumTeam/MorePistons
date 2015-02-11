@@ -1,33 +1,43 @@
 package mods.morepistons.common.tileentities;
 
 import static mods.morepistons.ModMorePistons.log;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import mods.gollum.core.utils.math.Integer3d;
 import mods.morepistons.common.block.BlockMorePistonsBase;
 import mods.morepistons.common.block.BlockMorePistonsExtension;
 import mods.morepistons.common.block.BlockMorePistonsMoving;
+import mods.morepistons.common.block.BlockMorePistonsRod;
 import mods.morepistons.inits.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockPistonBase;
-import net.minecraft.block.BlockPistonMoving;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class TileEntityMorePistonsMoving extends TileEntity {
 
-	public  Block     storedBlock       = null;
-	private int       storedMetadata    = 0;
-	public  int       storedOrientation = 0;
-	public  boolean   extending         = false;
-	public  int       distance          = 0;
-	private Integer3d positionPiston    = new Integer3d();
+	public  Block      storedBlock       = null;
+	private int        storedMetadata    = 0;
+	public  int        storedOrientation = 0;
+	public  boolean    extending         = false;
+	public  int        distance          = 0;
+	private Integer3d  positionPiston    = new Integer3d();
+	public  boolean    root              = false;
+	public  TileEntity subTe             = null;
 	
 	private float progress     = 0;
 	private float lastProgress = 0;
@@ -41,7 +51,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	}
 	
 	
-	public TileEntityMorePistonsMoving(Block block, int metadata, int orientation, boolean extending, int distance, Integer3d positionPiston) {
+	public TileEntityMorePistonsMoving(Block block, int metadata, int orientation, boolean extending, int distance, Integer3d positionPiston, boolean root) {
 		if (block == null) {
 			log.severe ("Block strorage in null in creation TileEntiry");
 		}
@@ -51,7 +61,8 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.storedOrientation    = orientation;
 		this.extending            = extending;
 		this.distance             = distance;
-		this.positionPiston       = positionPiston;
+		this.positionPiston       = (Integer3d)positionPiston.clone();
+		this.root                 = root;
 		this.isInit               = true;
 		
 	}
@@ -73,21 +84,10 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.lastProgress = this.progress;
 		
 		if (this.lastProgress >= 1.0F) {
-//			this.setBlockFinalMove();
+			this.setBlockFinalMove();
 		} else {
 			this.upgradeProgess ();
 		}
-	}
-	
-	
-	public float getSpeed () {
-		
-		float speed = 0.5F;
-		BlockMorePistonsBase piston = this.pistonOrigin();
-		if (piston != null) {
-			speed = piston.getSpeedInWorld(this.worldObj, this.positionPiston.x, this.positionPiston.y, this.positionPiston.z, this.storedOrientation);
-		}
-		return speed;
 	}
 
 	public BlockMorePistonsBase pistonOrigin() {
@@ -95,14 +95,45 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		if (b instanceof BlockMorePistonsBase) {
 			return (BlockMorePistonsBase)b;
 		}
+		if (b instanceof BlockMorePistonsMoving) {
+			TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+			if (te instanceof TileEntityMorePistonsMoving) {
+				TileEntityMorePistonsMoving teM = (TileEntityMorePistonsMoving)te;
+				if (teM.storedBlock instanceof BlockMorePistonsBase) {
+					return (BlockMorePistonsBase)teM.storedBlock;
+				}
+			}
+		}
 		return null;
 	}
 	
 	public int pistonOriginMetadata() {
+		Block b = this.worldObj.getBlock(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+		if (b instanceof BlockMorePistonsMoving) {
+			TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+			if (te instanceof TileEntityMorePistonsMoving) {
+				TileEntityMorePistonsMoving teM = (TileEntityMorePistonsMoving)te;
+				if (teM.storedBlock instanceof BlockMorePistonsBase) {
+					return teM.storedMetadata;
+				}
+			}
+		}
 		return this.worldObj.getBlockMetadata(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
 	}
 	
 	public TileEntityMorePistonsPiston getPistonOriginTE() {
+		
+		Block b = this.worldObj.getBlock(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+		if (b instanceof BlockMorePistonsMoving) {
+			TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+			if (te instanceof TileEntityMorePistonsMoving) {
+				TileEntityMorePistonsMoving teM = (TileEntityMorePistonsMoving)te;
+				if (teM.subTe != null && teM.subTe instanceof TileEntityMorePistonsPiston) {
+					return (TileEntityMorePistonsPiston)teM.subTe;
+				}
+			}
+		}
+		
 		TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
 		if (te instanceof TileEntityMorePistonsPiston) {
 			return ((TileEntityMorePistonsPiston)te);
@@ -113,20 +144,32 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	
 	public void setBlockFinalMove() {
 		
-		log.debug("TE setBlockFinalMove");
 		
-		TileEntityMorePistonsPiston te = getPistonOriginTE();
-		if (te != null){
-			te.running = false;
+//		this.updatePushedObjects(1.0F, 0.25F);
+		
+		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
+			if (this.extending) {
+				this.displayPistonRod(this.distance - 1);
+			} else {
+				this.removePistonRod(this.distance - 1);
+			}
 		}
 		
-		// TODO move entity
-		this.worldObj.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
-		invalidate ();
+		TileEntityMorePistonsPiston te = getPistonOriginTE();
 		
-		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof  BlockPistonMoving) {
+		this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.blockType);
+		this.invalidate ();
+		this.worldObj.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
+		if (te != null) {
+			te.extentionPos = null;
+		}
+		
+		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
 			
 			this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedMetadata, 3);
+			if (this.worldObj != null) {
+				this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+			}
 			this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
 			
 		}
@@ -135,23 +178,28 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	private void upgradeProgess() {
 
 		TileEntityMorePistonsPiston te = getPistonOriginTE();
-		if (te != null){
-			te.running = true;
-		}
 		
-		float speed = this.getSpeed();
-		this.progress += speed;
+		this.progress += 0.5;
 		
-		if (this.progress >= 1.0F) { // TODO is finish
+		if (this.progress >= 1.0F) {
 			this.progress = 1.0F;
 		}
-		this.lastProgress = 0.88F;
-		this.progress = 0.88F;
 		
-		if (this.storedBlock instanceof BlockMorePistonsExtension) {
-			this.displayPistonRod((int) Math.floor((float)this.distance * this.progress));
+		if (this.extending) {
+//			this.upjdatePushedObjects(this.progress, 0.0625F);
 		}
+		
+		if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
+			if (this.extending) {
+				this.displayPistonRod((int) Math.ceil((float)this.distance * this.progress) - 1);
+			} else {
+				this.removePistonRod((int) Math.ceil((float)this.distance * this.progress) - 1);
+			}
+		}
+		
+		
 	}
+	
 	
 	public void displayPistonRod(int nb) {
 		
@@ -167,13 +215,38 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 			if (
 				block == null || 
 				block instanceof BlockAir || 
-				(
-					!(block instanceof BlockMorePistonsBase) && 
-					!(block instanceof BlockMorePistonsMoving)
-				)
+				!(block instanceof BlockMorePistonsMoving)
 			) {
+				
 				this.worldObj.setBlock (x, y, z, ModBlocks.blockPistonRod, this.storedOrientation, 2);
-				this.worldObj.setTileEntity(x, y, z, new TileEntityMorePistonsRod(new Integer3d(this.xCoord, this.yCoord, this.zCoord)));
+				this.worldObj.setTileEntity(x, y, z, new TileEntityMorePistonsRod(this.positionPiston));
+			}
+		}
+	}
+
+	/**
+	 * Remove les pistons rod
+	 * 
+	 * @param nb
+	 */
+	public void removePistonRod(int nb) {
+		
+		int x = this.xCoord + Facing.offsetsXForSide[this.storedOrientation] * (this.distance + 1);
+		int y = this.yCoord + Facing.offsetsYForSide[this.storedOrientation] * (this.distance + 1);
+		int z = this.zCoord + Facing.offsetsZForSide[this.storedOrientation] * (this.distance + 1);
+		
+		for (int i = 0; i <= nb; i++) {
+			x -= Facing.offsetsXForSide[this.storedOrientation];
+			y -= Facing.offsetsYForSide[this.storedOrientation];
+			z -= Facing.offsetsZForSide[this.storedOrientation];
+			
+			Block block = this.worldObj.getBlock(x, y, z);
+			if (
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsExtension
+			) {
+				this.worldObj.setBlockToAir (x, y, z);
+				this.worldObj.setBlockMetadataWithNotify(x, y, z, 0, 2);
 			}
 		}
 	}
@@ -225,6 +298,17 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.positionPiston.y = nbtTagCompound.getInteger("pistonY");
 		this.positionPiston.z = nbtTagCompound.getInteger("pistonZ");
 		
+		this.subTe = null;
+		if (nbtTagCompound.hasKey("subTe")) {
+			NBTTagCompound subNBT = nbtTagCompound.getCompoundTag("subTe");
+			try {
+				this.subTe = TileEntity.createAndLoadEntity(subNBT);
+				this.subTe.setWorldObj(this.worldObj);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		this.isInit = true;
 		
 		log.debug ("this.progress", this.progress);
@@ -247,6 +331,11 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		nbtTagCompound.setInteger("pistonY", this.positionPiston.y);
 		nbtTagCompound.setInteger("pistonZ", this.positionPiston.z);
 		
+		if (this.subTe != null) {
+			NBTTagCompound subNBT = new NBTTagCompound();
+			this.subTe.writeToNBT(subNBT);
+			nbtTagCompound.setTag("subTe", subNBT);
+		}
 	}
 	
 	@Override

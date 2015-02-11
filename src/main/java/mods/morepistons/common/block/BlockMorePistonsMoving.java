@@ -1,25 +1,23 @@
 package mods.morepistons.common.block;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import mods.gollum.core.tools.helper.blocks.HBlockContainer;
+import mods.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import mods.gollum.core.tools.helper.blocks.HBlockContainer;
-import mods.morepistons.ModMorePistons;
-import mods.morepistons.common.tileentities.TileEntityMorePistonsMoving;
-import mods.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 
 public class BlockMorePistonsMoving extends HBlockContainer {
 
@@ -91,27 +89,26 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
 		TileEntity te = world.getTileEntity(x, y, z);
-		TileEntityMorePistonsMoving tileentitypiston = null;
+		TileEntityMorePistonsMoving tileEntityMoving = null;
 		if (te instanceof TileEntityMorePistonsMoving) {
-			tileentitypiston = (TileEntityMorePistonsMoving) te;
+			tileEntityMoving = (TileEntityMorePistonsMoving) te;
 		}
 
-		if (tileentitypiston == null) {
+		if (tileEntityMoving == null) {
 			return null;
 		} else {
-			float f = tileentitypiston.getProgressWithDistance(0.0F);
-			if (tileentitypiston.extending) {
-				f = -f;
+			float f = -tileEntityMoving.getProgressWithDistance(0.0F);
+			if (tileEntityMoving.root) {
+				f = 0;
 			}
-			
-			return this.getAxisAlignedBB(world, x, y, z, tileentitypiston.storedBlock, f, tileentitypiston.storedOrientation);
+			return this.getAxisAlignedBB(world, x, y, z, tileEntityMoving.storedBlock, f, tileEntityMoving.storedOrientation);
 		}
 	}
 	
 	public AxisAlignedBB getAxisAlignedBB(World world, int x, int y, int z, Block block, float progress, int p_149964_7_) {
 		if (block != null && block != this && block.getMaterial() != Material.air) {
 			AxisAlignedBB axisalignedbb = block.getCollisionBoundingBoxFromPool(world, x, y, z);
-
+			
 			if (axisalignedbb == null) {
 				return null;
 			} else {
@@ -126,13 +123,13 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 				} else {
 					axisalignedbb.maxY -= (double) ((float) Facing.offsetsYForSide[p_149964_7_] * progress);
 				}
-
+				
 				if (Facing.offsetsZForSide[p_149964_7_] < 0) {
 					axisalignedbb.minZ -= (double) ((float) Facing.offsetsZForSide[p_149964_7_] * progress);
 				} else {
 					axisalignedbb.maxZ -= (double) ((float) Facing.offsetsZForSide[p_149964_7_] * progress);
 				}
-
+				
 				return axisalignedbb;
 			}
 		} else {
@@ -142,40 +139,34 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 	
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
 		TileEntity te = world.getTileEntity(x, y, z);
-		TileEntityMorePistonsMoving tileentitypiston = null;
+		TileEntityMorePistonsMoving tileEntityMoving = null;
 		if (te instanceof TileEntityMorePistonsMoving) {
-			tileentitypiston = (TileEntityMorePistonsMoving) te;
+			tileEntityMoving = (TileEntityMorePistonsMoving) te;
 		}
 		
-		if (tileentitypiston != null) {
-			Block block = tileentitypiston.storedBlock;
+		if (tileEntityMoving != null) {
+			Block block = tileEntityMoving.storedBlock;
 
 			if (block == null || block == this || block.getMaterial() == Material.air) {
 				return;
 			}
 
 			block.setBlockBoundsBasedOnState(world, x, y, z);
-			float f = tileentitypiston.getProgressWithDistance(0.0F);
-			if (tileentitypiston.extending) {
-				f = - f;
+			float f = -tileEntityMoving.getProgressWithDistance(0.0F);
+			if (tileEntityMoving.root) {
+				f = 0;
 			}
 			
-			int l = tileentitypiston.storedOrientation;
+			int l = tileEntityMoving.storedOrientation;
 			this.minX = block.getBlockBoundsMinX() - (double) ((float) Facing.offsetsXForSide[l] * f);
 			this.minY = block.getBlockBoundsMinY() - (double) ((float) Facing.offsetsYForSide[l] * f);
 			this.minZ = block.getBlockBoundsMinZ() - (double) ((float) Facing.offsetsZForSide[l] * f);
 			this.maxX = block.getBlockBoundsMaxX() - (double) ((float) Facing.offsetsXForSide[l] * f);
 			this.maxY = block.getBlockBoundsMaxY() - (double) ((float) Facing.offsetsYForSide[l] * f);
 			this.maxZ = block.getBlockBoundsMaxZ() - (double) ((float) Facing.offsetsZForSide[l] * f);
-
-//			this.minX = block.getBlockBoundsMinX();
-//			this.minY = block.getBlockBoundsMinY();
-//			this.minZ = block.getBlockBoundsMinZ();
-//			this.maxX = block.getBlockBoundsMaxX();
-//			this.maxY = block.getBlockBoundsMaxY();
-//			this.maxZ = block.getBlockBoundsMaxZ();
 		}
 	}
+	
 	////////////////////////
 	// Gestion des events //
 	////////////////////////

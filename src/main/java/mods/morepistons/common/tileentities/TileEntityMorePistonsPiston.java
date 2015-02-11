@@ -13,8 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityMorePistonsPiston extends TileEntity {
 	
 	public  int       currentOpened = 0;
-	public  boolean   running       = false;
-	public  Integer3d extentionPos  = new Integer3d();
+	public  Integer3d extentionPos  = null;
 	
 	public TileEntityMorePistonsPiston () {
 	}
@@ -28,15 +27,31 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 		super.updateEntity();
 	}
 	
+	public TileEntityMorePistonsMoving getTileEntityMoving() {
+		if (this.extentionPos != null) {
+			TileEntity te = this.worldObj.getTileEntity(this.extentionPos.x, this.extentionPos.y, this.extentionPos.z);
+			if (te instanceof TileEntityMorePistonsMoving) {
+				return (TileEntityMorePistonsMoving)te;
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
 		this.currentOpened  = nbtTagCompound.getInteger("currentOpened");
-		this.running        = nbtTagCompound.getBoolean("running");
-		this.extentionPos.x = nbtTagCompound.getInteger("extentionPosX");
-		this.extentionPos.y = nbtTagCompound.getInteger("extentionPosY");
-		this.extentionPos.z = nbtTagCompound.getInteger("extentionPosZ");
+		
+		if (
+			nbtTagCompound.hasKey("extentionPosX") &&
+			nbtTagCompound.hasKey("extentionPosX") &&
+			nbtTagCompound.hasKey("extentionPosX")
+		) {
+			this.extentionPos = new Integer3d();
+			this.extentionPos.x = nbtTagCompound.getInteger("extentionPosX");
+			this.extentionPos.y = nbtTagCompound.getInteger("extentionPosY");
+			this.extentionPos.z = nbtTagCompound.getInteger("extentionPosZ");
+		}
 	}
 	
 	@Override
@@ -44,10 +59,12 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 		super.writeToNBT(nbtTagCompound);
 		
 		nbtTagCompound.setInteger("currentOpened", this.currentOpened);
-		nbtTagCompound.setBoolean("running"      , this.running);
-		nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
-		nbtTagCompound.setInteger("extentionPosY", this.extentionPos.y);
-		nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.z);
+		
+		if (this.extentionPos != null) {
+			nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
+			nbtTagCompound.setInteger("extentionPosY", this.extentionPos.y);
+			nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.z);
+		}
 	}
 	
 	@Override
@@ -61,6 +78,7 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.func_148857_g());
 	}
-	
+
+
 	
 }
