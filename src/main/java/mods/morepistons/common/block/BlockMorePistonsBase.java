@@ -655,7 +655,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 				block.getMobilityFlag() != 2 &&
 				!(block instanceof BlockMorePistonsRod) &&
 				!(block instanceof BlockMorePistonsExtension) &&
-				!(block instanceof BlockPistonMoving) &&
+				!(block instanceof BlockMorePistonsMoving) &&
 				world.getTileEntity(x, y, z) == null &&
 				block.getBlockHardness(world, x, y, z) != -1.0F
 			);
@@ -802,45 +802,56 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	
 	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int lenghtOpened) {
 		
-////		
-//		for (EMoveInfosExtend infos : infosExtend) {
-//			
-//			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
-//				xExtension += Facing.offsetsXForSide[orientation];
-//				yExtension += Facing.offsetsYForSide[orientation];
-//				zExtension += Facing.offsetsZForSide[orientation];
-//				
-//				//Déplace avec une animation les blocks
-////				TileEntity teBlock = new TileEntityMorePistons (infos.block, infos.metadata, orientation, true, false, infos.move, false);
-////				world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, infos.metadata, 2);
-////				world.setTileEntity(xExtension, yExtension, zExtension, teBlock);
-//			}
-//		}
+		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
+		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
+		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		
+		for (EMoveInfosExtend infos : infosExtend) {
+			
+			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
+				xExtension += Facing.offsetsXForSide[orientation];
+				yExtension += Facing.offsetsYForSide[orientation];
+				zExtension += Facing.offsetsZForSide[orientation];
+				
+				//Déplace avec une animation les blocks
+				this.createMoving(
+					world,
+					new Integer3d(x, y, z),
+					new Integer3d(xExtension, yExtension, zExtension),
+					infos.block,
+					infos.metadata,
+					orientation, 
+					infos.move,
+					true,
+					false
+				);
+			}
+		}
 //
-//		xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-//		yExtension = y + Facing.offsetsYForSide[orientation] * lenghtint x, int y, int zOpened;
-//		zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
+		yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
+		zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
 //		
 		log.debug("moveBlockExtend : ", x, y, z, "orientation="+orientation, "remote="+world.isRemote);
 		
-		int xExtension = x;
-		int yExtension = y;
-		int zExtension = z;
-		
-		//Déplace avec une animation la route du piston
-		for (int i = 0; i < lenghtOpened - 1; i++) {
-			xExtension += Facing.offsetsXForSide[orientation];
-			yExtension += Facing.offsetsYForSide[orientation];
-			zExtension += Facing.offsetsZForSide[orientation];
+//		xExtension = x;
+//		yExtension = y;
+//		zExtension = z;
+//		
+//		//Déplace avec une animation la route du piston
+//		for (int i = 0; i < lenghtOpened - 1; i++) {
+//			xExtension += Facing.offsetsXForSide[orientation];
+//			yExtension += Facing.offsetsYForSide[orientation];
+//			zExtension += Facing.offsetsZForSide[orientation];
 			
 //			world.setBlock(xExtension, yExtension, zExtension, Blocks.piston_extension, orientation, 2);
 //			TileEntity teExtension = new TileEntityMorePistonsMoving(ModBlocks.blockPistonRod, metadata, orientation, true, lenghtOpened, new Integer3d(x, y, z));
 //			world.setTileEntity(xExtension, yExtension, zExtension, teExtension);
-		}
+//		}
 		
-		xExtension += Facing.offsetsXForSide[orientation];
-		yExtension += Facing.offsetsYForSide[orientation];
-		zExtension += Facing.offsetsZForSide[orientation];
+//		xExtension += Facing.offsetsXForSide[orientation];
+//		yExtension += Facing.offsetsYForSide[orientation];
+//		zExtension += Facing.offsetsZForSide[orientation];
 		
 		//Déplace avec une animation l'extention du piston
 		log.debug("Create PistonMoving : "+xExtension, yExtension, zExtension, "orientation="+orientation, "lenghtOpened="+lenghtOpened);

@@ -148,10 +148,12 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 //		this.updatePushedObjects(1.0F, 0.25F);
 		
 		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
-			if (this.extending) {
-				this.displayPistonRod(this.distance - 1);
-			} else {
-				this.removePistonRod(this.distance - 1);
+			if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
+				if (this.extending) {
+					this.displayPistonRod(this.distance - 1);
+				} else {
+					this.removePistonRod(this.distance - 1);
+				}
 			}
 		}
 		
