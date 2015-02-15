@@ -1,6 +1,6 @@
 package com.gollum.morepistons.common.item;
 
-import static com.gollum.autoreplace.ModGollumAutoReplace.log;
+import static com.gollum.morepistons.ModMorePistons.log;
 
 import com.gollum.autoreplace.common.blocks.BlockAutoReplace;
 import com.gollum.autoreplace.common.blocks.BlockAutoReplace.ReplaceBlock;

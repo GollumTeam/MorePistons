@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.block.BlockPistonMoving;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.material.Material;
@@ -550,6 +551,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		if (
 			block instanceof BlockMorePistonsExtension ||
+			block instanceof BlockPistonExtension ||
 			block instanceof BlockMorePistonsRod ||
 			block instanceof BlockPistonMoving
 		) {
@@ -655,6 +657,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 				block != Blocks.obsidian &&
 				block.getMobilityFlag() != 2 &&
 				!(block instanceof BlockMorePistonsRod) &&
+				!(block instanceof BlockPistonExtension) &&
 				!(block instanceof BlockMorePistonsExtension) &&
 				!(block instanceof BlockMorePistonsMoving) &&
 				world.getTileEntity(x, y, z) == null &&
