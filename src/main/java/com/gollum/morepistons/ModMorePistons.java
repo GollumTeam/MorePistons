@@ -32,7 +32,7 @@ public class ModMorePistons extends GollumMod {
 	@Instance(ModMorePistons.MODID)
 	public static ModMorePistons instance;
 	
-	@SidedProxy(clientSide = "mods.morepistons.client.ClientProxyMorePistons", serverSide = "mods.morepistons.common.CommonProxyMorePistons")
+	@SidedProxy(clientSide = "com.gollum.morepistons.client.ClientProxyMorePistons", serverSide = "com.gollum.morepistons.common.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
 
 	/**
