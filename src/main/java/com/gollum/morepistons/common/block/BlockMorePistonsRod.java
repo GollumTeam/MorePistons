@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB; // aoe;
+import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess; // ym;
@@ -166,47 +167,47 @@ public class BlockMorePistonsRod extends HBlockContainer {
 
 	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
-//		
-//		int xx= x;
-//		int yy= y;
-//		int zz= z;
-//		
-//		int orientation = this.getDirectionMeta(metadata);
-//		Block block = ModBlocks.blockPistonRod;
-//		while (block instanceof BlockMorePistonsRod) {
-//			
-//			x += Facing.offsetsXForSide[orientation];
-//			y += Facing.offsetsYForSide[orientation];
-//			z += Facing.offsetsZForSide[orientation];
-//			
-//			block = world.getBlock(x, y, z);
-//
-//			if (
-//				block instanceof BlockMorePistonsRod ||
-//				block instanceof BlockMorePistonsExtension
-//			) {
-//				world.func_147480_a(x, y, z, false);
-//			}
-//			
-//		}
-//		
-//		block = ModBlocks.blockPistonRod;
-//		while (block instanceof BlockMorePistonsRod) {
-//			
-//			xx -= Facing.offsetsXForSide[orientation];
-//			yy -= Facing.offsetsYForSide[orientation];
-//			zz -= Facing.offsetsZForSide[orientation];
-//			
-//			block = world.getBlock(xx, yy, zz);
-//
-//			if (
-//				block instanceof BlockMorePistonsRod ||
-//				block instanceof BlockMorePistonsExtension
-//			) {
-//				world.func_147480_a(xx, yy, zz, false);
-//			}
-//			
-//		}
+		
+		int xx= x;
+		int yy= y;
+		int zz= z;
+		
+		int orientation = BlockPistonBase.getPistonOrientation(metadata);
+		Block block = ModBlocks.blockPistonRod;
+		while (block instanceof BlockMorePistonsRod) {
+			
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			block = world.getBlock(x, y, z);
+
+			if (
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsExtension
+			) {
+				world.func_147480_a(x, y, z, false);
+			}
+			
+		}
+		
+		block = ModBlocks.blockPistonRod;
+		while (block instanceof BlockMorePistonsRod) {
+			
+			xx -= Facing.offsetsXForSide[orientation];
+			yy -= Facing.offsetsYForSide[orientation];
+			zz -= Facing.offsetsZForSide[orientation];
+			
+			block = world.getBlock(xx, yy, zz);
+
+			if (
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsBase
+			) {
+				world.func_147480_a(xx, yy, zz, block instanceof BlockMorePistonsBase);
+			}
+			
+		}
 	}
 	
 	/**

@@ -261,6 +261,28 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
+
+	@Override
+	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+		
+		log.debug("onBlockDestroyedByPlayer : "+x+", "+y+", "+z);
+		
+		int orientation = BlockPistonBase.getPistonOrientation(metadata);
+		Block block = ModBlocks.blockPistonRod;
+		while (block instanceof BlockMorePistonsRod) {
+			
+			x += Facing.offsetsXForSide[orientation];
+			y += Facing.offsetsYForSide[orientation];
+			z += Facing.offsetsZForSide[orientation];
+			
+			block = world.getBlock(x, y, z);
+			
+			if (block instanceof BlockMorePistonsRod || block instanceof BlockMorePistonsExtension) {
+				world.func_147480_a(x, y, z, false);
+			}
+			
+		}
+	}
 	
 	/**
 	 * Called when the block is placed in the world. Envoie un event qunad on

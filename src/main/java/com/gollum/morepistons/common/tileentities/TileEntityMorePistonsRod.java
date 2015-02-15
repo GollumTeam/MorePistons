@@ -54,13 +54,13 @@ public class TileEntityMorePistonsRod extends TileEntity {
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
 		if (
-			nbtTagCompound.hasKey("extentionPosX") ||
-			nbtTagCompound.hasKey("extentionPosY") ||
-			nbtTagCompound.hasKey("extentionPosZ") 
+			nbtTagCompound.hasKey("pistonPosX") ||
+			nbtTagCompound.hasKey("pistonPosY") ||
+			nbtTagCompound.hasKey("pistonPosZ") 
 		) {
-			this.pistonPos.x = nbtTagCompound.getInteger("extentionPosX");
-			this.pistonPos.y = nbtTagCompound.getInteger("extentionPosY");
-			this.pistonPos.z = nbtTagCompound.getInteger("extentionPosZ");
+			this.pistonPos.x = nbtTagCompound.getInteger("pistonPosX");
+			this.pistonPos.y = nbtTagCompound.getInteger("pistonPosY");
+			this.pistonPos.z = nbtTagCompound.getInteger("pistonPosZ");
 			
 			this.isInit = true;
 		}
