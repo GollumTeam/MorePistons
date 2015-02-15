@@ -5,11 +5,6 @@
 			"test": {
 				"disabled": true,
 				"dimentions": {
-					"0": {
-						"spawnRate":0,
-						"spawnHeight":3,
-						"blocksSpawn":["minecraft:grass"]
-					}
 				}
 			}
 		}
