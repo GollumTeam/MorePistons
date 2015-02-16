@@ -181,7 +181,7 @@ public class BlockMorePistonsRod extends HBlockContainer {
 			z += Facing.offsetsZForSide[orientation];
 			
 			block = world.getBlock(x, y, z);
-			
+
 			if (
 				block instanceof BlockMorePistonsRod ||
 				block instanceof BlockMorePistonsExtension
@@ -199,7 +199,7 @@ public class BlockMorePistonsRod extends HBlockContainer {
 			zz -= Facing.offsetsZForSide[orientation];
 			
 			block = world.getBlock(xx, yy, zz);
-			
+
 			if (
 				block instanceof BlockMorePistonsRod ||
 				block instanceof BlockMorePistonsBase

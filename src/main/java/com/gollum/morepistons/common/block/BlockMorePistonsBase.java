@@ -758,17 +758,14 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		return infosExtend;
 	}
 	
-	public static boolean cleanBlockMoving(World world, int x, int y, int z) {
+	public void cleanBlockMoving(World world, int x, int y, int z) {
 		TileEntity oldTe = world.getTileEntity(x, y, z);
 		if (oldTe instanceof TileEntityMorePistonsMoving) {
 			((TileEntityMorePistonsMoving)oldTe).setBlockFinalMove();
-			return true;
 		}
 		if (oldTe instanceof TileEntityPiston) {
 			((TileEntityPiston)oldTe).clearPistonTileEntity();
-			return true;
 		}
-		return false;
 	}
 	
 	protected TileEntity cloneTileEntity(TileEntity te) {

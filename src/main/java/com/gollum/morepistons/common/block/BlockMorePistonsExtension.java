@@ -22,7 +22,6 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 		this.helper.vanillaTexture = true;
 	}
 	
-	@Override
 	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
 		
 		int direction = BlockPistonBase.getPistonOrientation(metadata);
@@ -33,7 +32,7 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 			z -= Facing.offsetsZForSide[direction];
 			
 			block = world.getBlock(x, y, z);
-			
+
 			if (
 				block instanceof BlockMorePistonsRod ||
 				block instanceof BlockMorePistonsBase
@@ -44,7 +43,10 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 		}
 	}
 	
-	@Override
+	/**
+	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
+	 * their own) Args: x, y, z, neighbor blockID
+	 */
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		
 		int metadata    = world.getBlockMetadata(x, y, z);

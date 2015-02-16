@@ -15,7 +15,6 @@ import com.gollum.morepistons.inits.ModBlocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -146,15 +145,11 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		
 //		this.updatePushedObjects(1.0F, 0.25F);
-
-		BlockMorePistonsBase piston = this.pistonOrigin();
 		
 		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
 			if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
 				if (this.extending) {
-					if (piston != null) {
-						this.displayPistonRod(this.distance - 1);
-					}
+					this.displayPistonRod(this.distance - 1);
 				} else {
 					this.removePistonRod(this.distance - 1);
 				}
@@ -172,22 +167,15 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
 			
-			if (
-				this.storedBlock instanceof BlockPistonExtension &&
-				piston == null
-			) {
-				this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
+			if (this.root) {
+				this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
 			} else {
-				if (this.root) {
-					this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
-				} else {
-					this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.getBlockMetadata(), 3);
-				}
-				if (this.worldObj != null) {
-					this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
-				}
-				this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
+				this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.getBlockMetadata(), 3);
 			}
+			if (this.worldObj != null) {
+				this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+			}
+			this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
 			
 		}
 	}
@@ -196,7 +184,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 
 		TileEntityMorePistonsPiston te = getPistonOriginTE();
 		
-		this.progress += 0.005;
+		this.progress += 0.5;
 		
 		if (this.progress >= 1.0F) {
 			this.progress = 1.0F;

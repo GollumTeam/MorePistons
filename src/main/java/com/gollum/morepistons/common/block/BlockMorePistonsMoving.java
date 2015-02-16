@@ -168,16 +168,6 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 		}
 	}
 	
-	@Override
-	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
-		if (BlockMorePistonsBase.cleanBlockMoving(world, x, y, z)) {
-			Block block = world.getBlock(x, y, z);
-			if (block != null) {
-				block.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
-			}
-		}
-	}
-	
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
