@@ -22,6 +22,7 @@ import net.minecraft.util.AxisAlignedBB; // aoe;
 import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess; // ym;
 import net.minecraft.world.World; // yc;
 // world.getBlockMetadata;
@@ -87,12 +88,23 @@ public class BlockMorePistonsRod extends HBlockContainer {
 	
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsRod && !((TileEntityMorePistonsRod) te).isDisplay()) {
+			return;
+		}
 		this.setBlockBoundsBasedOnState(world.getBlockMetadata(x, y, z));
 		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
  	}
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsRod && !((TileEntityMorePistonsRod) te).isDisplay()) {
+			setBlockBounds(0, 0, 0, 0, 0, 0);
+			return;
+		}
+		
 		this.setBlockBoundsBasedOnState(world.getBlockMetadata(x, y, z));
 	}
 	
@@ -164,7 +176,12 @@ public class BlockMorePistonsRod extends HBlockContainer {
 	public int quantityDropped(Random random) {
 		return 0;
 	}
-
+	
+	@Override
+	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+		this.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
+	}
+	
 	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
@@ -179,14 +196,19 @@ public class BlockMorePistonsRod extends HBlockContainer {
 			x += Facing.offsetsXForSide[orientation];
 			y += Facing.offsetsYForSide[orientation];
 			z += Facing.offsetsZForSide[orientation];
-			
+
+			BlockMorePistonsBase.cleanBlockMoving(world, x, y, z);
 			block = world.getBlock(x, y, z);
 			
 			if (
-				block instanceof BlockMorePistonsRod ||
-				block instanceof BlockMorePistonsExtension
+				BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z)) == orientation &&
+				(
+					block instanceof BlockMorePistonsRod ||
+					block instanceof BlockMorePistonsExtension ||
+					block instanceof BlockMorePistonsBase
+				)
 			) {
-				world.func_147480_a(x, y, z, false);
+				world.func_147480_a(x, y, z, block instanceof BlockMorePistonsBase);
 			}
 			
 		}
@@ -198,11 +220,16 @@ public class BlockMorePistonsRod extends HBlockContainer {
 			yy -= Facing.offsetsYForSide[orientation];
 			zz -= Facing.offsetsZForSide[orientation];
 			
+			BlockMorePistonsBase.cleanBlockMoving(world, xx, yy, zz);
 			block = world.getBlock(xx, yy, zz);
 			
 			if (
-				block instanceof BlockMorePistonsRod ||
-				block instanceof BlockMorePistonsBase
+				BlockPistonBase.getPistonOrientation(world.getBlockMetadata(xx, yy, zz)) == orientation &&
+				(
+					block instanceof BlockMorePistonsRod ||
+					block instanceof BlockMorePistonsExtension ||
+					block instanceof BlockMorePistonsBase
+				)
 			) {
 				world.func_147480_a(xx, yy, zz, block instanceof BlockMorePistonsBase);
 			}

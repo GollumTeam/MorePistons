@@ -25,12 +25,13 @@ import com.gollum.morepistons.inits.ModBlocks;
 public class TileEntityMorePistonsRodRenderer extends ATileEntityMorePistonsRenderer {
 	
 	private void renderRod(TileEntityMorePistonsRod tileEntityRod, double posX, double posY, double posZ, float f) {
-		
+
 		TileEntityMorePistonsMoving tileEntityMoving = tileEntityRod.getTileEntityMoving ();
+		TileEntityMorePistonsPiston tileEntityPiston = tileEntityRod.getTileEntityPiston ();
 		
 		Tessellator tessellator = this.startRender(tileEntityRod, posX, posY, posZ);
 		
-		if (tileEntityRod.isInit) {
+		if (tileEntityPiston != null) {
 			float progress = 0.0F;
 			
 			if (tileEntityMoving != null) {
@@ -41,15 +42,25 @@ public class TileEntityMorePistonsRodRenderer extends ATileEntityMorePistonsRend
 					(tileEntityMoving.getOffsetZ(f) - (float)Math.ceil(tileEntityMoving.getOffsetZ(f)))
 				);
 				
+				if (tileEntityRod.isDisplay ()) {
+					this.blockRenderer.renderPistonRod(
+						ModBlocks.blockPistonRod,
+						tileEntityRod.xCoord,
+						tileEntityRod.yCoord,
+						tileEntityRod.zCoord,
+						progress
+					);
+				}
+				
+			} else {
+				this.blockRenderer.renderPistonRod(
+					ModBlocks.blockPistonRod,
+					tileEntityRod.xCoord,
+					tileEntityRod.yCoord,
+					tileEntityRod.zCoord,
+					progress
+				);
 			}
-			
-			this.blockRenderer.renderPistonRod(
-				ModBlocks.blockPistonRod,
-				tileEntityRod.xCoord,
-				tileEntityRod.yCoord,
-				tileEntityRod.zCoord,
-				progress
-			);
 		}
 		
 		this.endRender(tessellator);

@@ -12,6 +12,7 @@ import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.client.ClientProxyMorePistons;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 import com.gollum.morepistons.inits.ModBlocks;
 
 import net.minecraft.block.Block;
@@ -275,9 +276,16 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			y += Facing.offsetsYForSide[orientation];
 			z += Facing.offsetsZForSide[orientation];
 			
+			BlockMorePistonsBase.cleanBlockMoving(world, x, y, z);
 			block = world.getBlock(x, y, z);
 			
-			if (block instanceof BlockMorePistonsRod || block instanceof BlockMorePistonsExtension) {
+			if (
+				BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z)) == orientation &&
+				(
+					block instanceof BlockMorePistonsRod || 
+					block instanceof BlockMorePistonsExtension
+				)
+			) {
 				world.func_147480_a(x, y, z, false);
 			}
 			
@@ -367,10 +375,12 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	* entity at this location. Args: world, x, y, z, blockID, EventID, event parameter
 	*/
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int lenghtOpened, int currentOpened) {
-
+		
 		int metadata    = world.getBlockMetadata(x, y, z);
 		int orientation = BlockPistonBase.getPistonOrientation(metadata);
-		
+		if (lenghtOpened != 0) {
+			lenghtOpened = this.getMaximalOpenedLenght(world, x, y, z, orientation);
+		}
 		if (!this.ignoreUpdates) {
 			
 			log.debug("onBlockEventReceived : ",x, y, z, "orientation="+orientation, "lenghtOpened="+lenghtOpened, "remote="+world.isRemote);
@@ -575,7 +585,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			block instanceof BlockMorePistonsExtension ||
 			block instanceof BlockPistonExtension ||
 			block instanceof BlockMorePistonsRod ||
-			block instanceof BlockPistonMoving
+			block instanceof BlockPistonMoving ||
+			block instanceof BlockMorePistonsMoving
 		) {
 			return orientation == BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z));
 		}
@@ -883,10 +894,25 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 				);
 			}
 		}
+
+		xExtension = x;
+		yExtension = y;
+		zExtension = z;
 		
-		xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-		yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
-		zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		for (int i = 0; i < lenghtOpened - 1; i++) {
+			
+			xExtension += Facing.offsetsXForSide[orientation];
+			yExtension += Facing.offsetsYForSide[orientation];
+			zExtension += Facing.offsetsZForSide[orientation];
+			
+			world.setBlock (xExtension, yExtension, zExtension, ModBlocks.blockPistonRod, orientation, 2);
+			world.setTileEntity(xExtension, yExtension, zExtension, new TileEntityMorePistonsRod(new Integer3d(x, y, z)));
+			
+		}
+		
+		xExtension += Facing.offsetsXForSide[orientation];
+		yExtension += Facing.offsetsYForSide[orientation];
+		zExtension += Facing.offsetsZForSide[orientation];
 		
 		//Déplace avec une animation l'extention du piston
 		log.debug("Create PistonMoving : "+xExtension, yExtension, zExtension, "orientation="+orientation, "lenghtOpened="+lenghtOpened);

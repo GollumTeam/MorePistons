@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import com.gollum.core.tools.helper.blocks.HBlockContainer;
+import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import com.gollum.morepistons.inits.ModBlocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -15,8 +18,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -168,30 +173,89 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 		}
 	}
 	
-	@Override
-	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
-		if (BlockMorePistonsBase.cleanBlockMoving(world, x, y, z)) {
-			Block block = world.getBlock(x, y, z);
-			if (block != null) {
-				block.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
-			}
-		}
-	}
-	
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
 	
 	public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
-		TileEntity tileentity = world.getTileEntity(x, y, z);
-
-		if (tileentity instanceof TileEntityMorePistonsMoving) {
-			((TileEntityMorePistonsMoving) tileentity).setBlockFinalMove();
-		} else {
+		if (!BlockMorePistonsBase.cleanBlockMoving(world, x, y, z)) {
 			super.breakBlock(world, x, y, z, block, metadata);
 		}
 	}
+	
+	@Override
+	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+		this.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
+	}
+	
+	@Override
+	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+		int direction = BlockPistonBase.getPistonOrientation(metadata);
+		
+		int xx= x;
+		int yy= y;
+		int zz= z;
 
+		boolean cont = true;
+		
+		while (cont) {
+			x += Facing.offsetsXForSide[direction];
+			y += Facing.offsetsYForSide[direction];
+			z += Facing.offsetsZForSide[direction];
+			
+			cont = cleanAndDestroy(world, x, y, z, direction);
+		}
+		
+
+		cont = true;
+		
+		while (cont) {
+			xx -= Facing.offsetsXForSide[direction];
+			yy -= Facing.offsetsYForSide[direction];
+			zz -= Facing.offsetsZForSide[direction];
+			
+			cont = cleanAndDestroy(world, xx, yy, zz, direction);
+		}
+	}
+	
+	protected boolean cleanAndDestroy(World world, int x, int y, int z, int direction) {
+		boolean cont;
+		Block block = world.getBlock(x, y, z);
+		
+		cont = false;
+		
+		if (
+			BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z)) == direction &&
+			(
+				block instanceof BlockMorePistonsRod ||
+				block instanceof BlockMorePistonsExtension ||
+				block instanceof BlockMorePistonsBase
+			)
+		) {
+			cont = !(block instanceof BlockMorePistonsBase);
+			world.func_147480_a(x, y, z, block instanceof BlockMorePistonsBase);
+		} else if (block instanceof BlockMorePistonsMoving) {
+			
+			TileEntity te = world.getTileEntity(x, y, z);
+			
+			if (
+				te instanceof TileEntityMorePistonsMoving &&
+				((TileEntityMorePistonsMoving)te).storedOrientation == direction
+			) {
+				cont = true;
+				TileEntityMorePistonsMoving tem = (TileEntityMorePistonsMoving)te;
+				
+				if (
+					tem.storedBlock instanceof BlockMorePistonsBase ||
+					tem.storedBlock instanceof BlockMorePistonsExtension
+				) {
+					world.func_147480_a(x, y, z, false);
+				}
+			}
+		}
+		return cont;
+	}
+	
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
 		if (!world.isRemote && world.getTileEntity(x, y, z) == null) {
 			world.setBlockToAir(x, y, z);

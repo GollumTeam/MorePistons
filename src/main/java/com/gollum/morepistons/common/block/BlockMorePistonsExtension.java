@@ -8,6 +8,7 @@ import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Facing;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +24,12 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 	}
 	
 	@Override
-	public void onBlockDestroyedByPlayer (World world, int x, int y, int z, int metadata) {
+	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+		this.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
+	}
+	
+	@Override
+	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
 		int direction = BlockPistonBase.getPistonOrientation(metadata);
 		Block block = ModBlocks.blockPistonRod;
@@ -32,11 +38,15 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 			y -= Facing.offsetsYForSide[direction];
 			z -= Facing.offsetsZForSide[direction];
 			
+			BlockMorePistonsBase.cleanBlockMoving(world, x, y, z);
 			block = world.getBlock(x, y, z);
 			
 			if (
-				block instanceof BlockMorePistonsRod ||
-				block instanceof BlockMorePistonsBase
+				BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z)) == direction &&
+				(
+					block instanceof BlockMorePistonsRod ||
+					block instanceof BlockMorePistonsBase
+				)
 			) {
 				world.func_147480_a(x, y, z, block instanceof BlockMorePistonsBase);
 			}

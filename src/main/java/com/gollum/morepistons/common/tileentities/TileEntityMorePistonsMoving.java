@@ -151,11 +151,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
 			if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
-				if (this.extending) {
-					if (piston != null) {
-						this.displayPistonRod(this.distance - 1);
-					}
-				} else {
+				if (!this.extending) {
 					this.removePistonRod(this.distance - 1);
 				}
 			}
@@ -207,9 +203,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		}
 		
 		if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
-			if (this.extending) {
-				this.displayPistonRod((int) Math.ceil((float)this.distance * this.progress) - 1);
-			} else {
+			if (!this.extending) {
 				this.removePistonRod((int) Math.ceil((float)this.distance * this.progress) - 1);
 			}
 		}
@@ -217,30 +211,6 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 	}
 	
-	
-	public void displayPistonRod(int nb) {
-		
-		int x = this.xCoord - (Facing.offsetsXForSide[this.storedOrientation] * this.distance);
-		int y = this.yCoord - (Facing.offsetsYForSide[this.storedOrientation] * this.distance);
-		int z = this.zCoord - (Facing.offsetsZForSide[this.storedOrientation] * this.distance);
-		
-		for (int i = 0; i < nb; i++) {
-			x += Facing.offsetsXForSide[this.storedOrientation];
-			y += Facing.offsetsYForSide[this.storedOrientation];
-			z += Facing.offsetsZForSide[this.storedOrientation];
-			Block block = this.worldObj.getBlock(x, y, z);
-			if (
-				block == null || 
-				block instanceof BlockAir || 
-				!(block instanceof BlockMorePistonsMoving)
-			) {
-				
-				this.worldObj.setBlock (x, y, z, ModBlocks.blockPistonRod, this.storedOrientation, 2);
-				this.worldObj.setTileEntity(x, y, z, new TileEntityMorePistonsRod(this.positionPiston));
-			}
-		}
-	}
-
 	/**
 	 * Remove les pistons rod
 	 * 
@@ -297,7 +267,6 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public float getOffsetZ(float f) {
 		return this.getProgressWithDistance(f) * Facing.offsetsZForSide[this.storedOrientation];
 	}
-	
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
@@ -364,4 +333,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.func_148857_g());
 	}
+
+
+	
 }
