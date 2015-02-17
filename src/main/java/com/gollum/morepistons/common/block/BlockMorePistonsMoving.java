@@ -1,29 +1,24 @@
 package com.gollum.morepistons.common.block;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-
-import com.gollum.core.tools.helper.blocks.HBlockContainer;
-import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
-import com.gollum.morepistons.inits.ModBlocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import com.gollum.core.tools.helper.blocks.HBlockContainer;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 
 public class BlockMorePistonsMoving extends HBlockContainer {
 
@@ -184,37 +179,42 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 	}
 	
 	@Override
-	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
-		this.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
+	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsMoving) {
+			
+			TileEntityMorePistonsMoving tem = (TileEntityMorePistonsMoving)te;
+			TileEntityMorePistonsPiston tep = tem.getPistonOriginTE();
+			
+			if (
+				tem.storedBlock instanceof BlockMorePistonsExtension && 
+				tep != null
+			) {
+				world.func_147480_a(tep.xCoord, tep.yCoord, tep.zCoord, true);
+			}
+			
+		}
+		
+		return super.removedByPlayer(world, player, x, y, z, willHarvest);
 	}
 	
 	@Override
-	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
-		int direction = BlockPistonBase.getPistonOrientation(metadata);
-		
-		int xx= x;
-		int yy= y;
-		int zz= z;
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 
-		boolean cont = true;
-		
-		while (cont) {
-			x += Facing.offsetsXForSide[direction];
-			y += Facing.offsetsYForSide[direction];
-			z += Facing.offsetsZForSide[direction];
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsMoving) {
 			
-			cont = cleanAndDestroy(world, x, y, z, direction);
-		}
-		
-
-		cont = true;
-		
-		while (cont) {
-			xx -= Facing.offsetsXForSide[direction];
-			yy -= Facing.offsetsYForSide[direction];
-			zz -= Facing.offsetsZForSide[direction];
+			TileEntityMorePistonsMoving tem = (TileEntityMorePistonsMoving)te;
+			TileEntityMorePistonsPiston tep = tem.getPistonOriginTE();
 			
-			cont = cleanAndDestroy(world, xx, yy, zz, direction);
+			if (
+				tem.storedBlock instanceof BlockMorePistonsExtension && 
+				tep == null
+			) {
+				world.setBlockToAir(x, y, z);
+			}
+			
 		}
 	}
 	

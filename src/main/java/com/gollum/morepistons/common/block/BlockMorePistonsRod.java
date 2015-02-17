@@ -7,6 +7,7 @@ import com.gollum.core.tools.helper.blocks.HBlock;
 import com.gollum.core.tools.helper.blocks.HBlockContainer;
 import com.gollum.morepistons.client.ClientProxyMorePistons;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 import com.gollum.morepistons.inits.ModBlocks;
 
@@ -15,6 +16,7 @@ import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material; // agi;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity; // lq;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -178,63 +180,29 @@ public class BlockMorePistonsRod extends HBlockContainer {
 	}
 	
 	@Override
-	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
-		this.onBlockDestroyedByPlayer(world, x, y, z, world.getBlockMetadata(x, y, z));
+	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsRod) {
+			TileEntityMorePistonsPiston tep = ((TileEntityMorePistonsRod) te).getTileEntityPiston();
+			if (tep != null) {
+				world.func_147480_a(tep.xCoord, tep.yCoord, tep.zCoord, true);
+			}
+		}
+		
+		return super.removedByPlayer(world, player, x, y, z, willHarvest);
 	}
 	
 	@Override
-	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
-		
-		int xx= x;
-		int yy= y;
-		int zz= z;
-		
-		int orientation = BlockPistonBase.getPistonOrientation(metadata);
-		Block block = ModBlocks.blockPistonRod;
-		while (block instanceof BlockMorePistonsRod) {
-			
-			x += Facing.offsetsXForSide[orientation];
-			y += Facing.offsetsYForSide[orientation];
-			z += Facing.offsetsZForSide[orientation];
-
-			BlockMorePistonsBase.cleanBlockMoving(world, x, y, z);
-			block = world.getBlock(x, y, z);
-			
-			if (
-				BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z)) == orientation &&
-				(
-					block instanceof BlockMorePistonsRod ||
-					block instanceof BlockMorePistonsExtension ||
-					block instanceof BlockMorePistonsBase
-				)
-			) {
-				world.func_147480_a(x, y, z, block instanceof BlockMorePistonsBase);
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsRod) {
+			TileEntityMorePistonsPiston tep = ((TileEntityMorePistonsRod) te).getTileEntityPiston();
+			if (tep != null) {
+				return;
 			}
-			
 		}
-		
-		block = ModBlocks.blockPistonRod;
-		while (block instanceof BlockMorePistonsRod) {
-			
-			xx -= Facing.offsetsXForSide[orientation];
-			yy -= Facing.offsetsYForSide[orientation];
-			zz -= Facing.offsetsZForSide[orientation];
-			
-			BlockMorePistonsBase.cleanBlockMoving(world, xx, yy, zz);
-			block = world.getBlock(xx, yy, zz);
-			
-			if (
-				BlockPistonBase.getPistonOrientation(world.getBlockMetadata(xx, yy, zz)) == orientation &&
-				(
-					block instanceof BlockMorePistonsRod ||
-					block instanceof BlockMorePistonsExtension ||
-					block instanceof BlockMorePistonsBase
-				)
-			) {
-				world.func_147480_a(xx, yy, zz, block instanceof BlockMorePistonsBase);
-			}
-			
-		}
+		world.setBlockToAir(x, y, z);
 	}
 	
 	/**

@@ -36,7 +36,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public  int        storedOrientation = 0;
 	public  boolean    extending         = false;
 	public  int        distance          = 0;
-	private Integer3d  positionPiston    = new Integer3d();
+	public  Integer3d  positionPiston    = new Integer3d();
 	public  boolean    root              = false;
 	public  TileEntity subTe             = null;
 	
@@ -192,7 +192,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 
 		TileEntityMorePistonsPiston te = getPistonOriginTE();
 		
-		this.progress += 0.005;
+		this.progress += 0.5;
 		
 		if (this.progress >= 1.0F) {
 			this.progress = 1.0F;

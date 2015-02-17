@@ -262,7 +262,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-
+	
 	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
 		
@@ -401,6 +401,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					if (currentOpened == lenghtOpened) {
 						
 						log.debug("Le piston reste immobile : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
+						world.notifyBlockChange(x, y, z, this);
 						
 					} else if (currentOpened == 0) {
 						
@@ -432,13 +433,15 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					log.debug("demande de fermeture : ",x, y, z);
 					
 					if (currentOpened == 0) {
-						world.setBlockMetadataWithNotify(x, y, z, orientation, 2);
 						log.debug("Le piston reste immobile : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
+						world.setBlockMetadataWithNotify(x, y, z, orientation, 3);
+						world.notifyBlockChange(x, y, z, this);
 					} else {
 						log.debug("Le piston se ferme : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
 						
 						tileEntityPiston.currentOpened = 0;
 						this.retract(world, x, y, z, orientation, currentOpened);
+						world.notifyBlockChange(x, y, z, this);
 						extendClose = true;
 					}
 					
@@ -534,6 +537,10 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	* @return int
 	*/
 	public int getMaximalOpenedLenght (World world, int x, int y, int z, int orientation, int maxlenght) {
+
+		int oX = x;
+		int oY = y;
+		int oZ = z;
 		
 		log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " maxlenght="+maxlenght);
 		
@@ -552,9 +559,26 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			
 			Block block = world.getBlock(x, y, z);
 			
-			if (block instanceof BlockPistonMoving) {
+			if (block instanceof BlockPistonMoving || block instanceof BlockMorePistonsMoving) {
 				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " find PistonMoving");
-				return lenght;
+				
+				TileEntity te = world.getTileEntity(x, y, z);
+				
+				if (
+					block instanceof BlockMorePistonsMoving &&
+					te instanceof TileEntityMorePistonsMoving && 
+					((TileEntityMorePistonsMoving)te).storedBlock instanceof BlockMorePistonsExtension &&
+					((TileEntityMorePistonsMoving)te).positionPiston.equals(new Integer3d(oX, oY, oZ))
+				) {
+
+					log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " is Extention");
+					
+					return lenght + 1;
+				}
+				log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z+ " clean and continue");
+				
+				this.cleanBlockMoving(world, x, y, z);
+				block = world.getBlock(x, y, z);
 			}
 			log.debug("getMaximalOpenedLenght : "+x+", "+y+", "+z);
 			if (! (this.isEmptyBlock(block)) && !this.isRodInOrientation(block, world, x, y, z, orientation)) {
@@ -584,9 +608,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		if (
 			block instanceof BlockMorePistonsExtension ||
 			block instanceof BlockPistonExtension ||
-			block instanceof BlockMorePistonsRod ||
-			block instanceof BlockPistonMoving ||
-			block instanceof BlockMorePistonsMoving
+			block instanceof BlockMorePistonsRod
 		) {
 			return orientation == BlockPistonBase.getPistonOrientation(world.getBlockMetadata(x, y, z));
 		}
