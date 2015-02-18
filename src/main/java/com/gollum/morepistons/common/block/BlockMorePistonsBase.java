@@ -403,21 +403,13 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 						log.debug("Le piston reste immobile : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
 						world.notifyBlockChange(x, y, z, this);
 						
-					} else if (currentOpened == 0) {
+					} else if (currentOpened < lenghtOpened) {
 						
 						log.debug("Le piston s'ouvre : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
 						
 						world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
 						tileEntityPiston.currentOpened = lenghtOpened;
-						this.extend(world, x, y, z, orientation, lenghtOpened);
-						extendOpen = true;
-
-					} else if (currentOpened < lenghtOpened) {
-						
-						log.debug("Le piston continue : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
-						
-						world.setBlockMetadataWithNotify(x, y, z, orientation | 0x8, 2);
-						tileEntityPiston.currentOpened = lenghtOpened;
+						this.extend(world, x, y, z, orientation, currentOpened, lenghtOpened);
 						extendOpen = true;
 						
 					} else {
@@ -751,11 +743,11 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		}
 	}
 	
-	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int lenghtOpened) {
+	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 		
-		int xExtension = x;
-		int yExtension = y;
-		int zExtension = z;
+		int xExtension = x + Facing.offsetsXForSide[orientation] * currentOpened;
+		int yExtension = y + Facing.offsetsYForSide[orientation] * currentOpened;
+		int zExtension = z + Facing.offsetsZForSide[orientation] * currentOpened;
 		
 		ArrayList<EMoveInfosExtend> infosExtend = new ArrayList<EMoveInfosExtend>();
 		
@@ -837,7 +829,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			new Integer3d(x, y, z),
 			this,
 			orientation | (this.isSticky ? 0x8 : 0x0),
-			orientation, 
+			orientation,
+			0,
 			lenghtClose,
 			false,
 			true
@@ -872,7 +865,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 				),
 				block,
 				metadata,
-				orientation, 
+				orientation,
+				0,
 				lenghtClose,
 				false,
 				false
@@ -882,14 +876,14 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		}
 	}
 	
-	protected void extend(World world, int x, int y, int z, int orientation, int lenghtOpened) {
+	protected void extend(World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 		
-		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, lenghtOpened);
-		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, lenghtOpened);
+		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened);
+		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened);
 		
 	}
 	
-	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int lenghtOpened) {
+	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 		
 		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
 		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
@@ -910,16 +904,17 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					infos.block,
 					infos.metadata,
 					orientation, 
+					currentOpened,
 					infos.move,
 					true,
 					false
 				);
 			}
 		}
-
-		xExtension = x;
-		yExtension = y;
-		zExtension = z;
+		
+		xExtension = x + Facing.offsetsXForSide[orientation] * currentOpened;
+		yExtension = y + Facing.offsetsYForSide[orientation] * currentOpened;
+		zExtension = z + Facing.offsetsZForSide[orientation] * currentOpened;
 		
 		for (int i = 0; i < lenghtOpened - 1; i++) {
 			
@@ -945,14 +940,15 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			new Integer3d(xExtension, yExtension, zExtension),
 			ModBlocks.blockPistonExtention,
 			orientation | (this.isSticky ? 0x8 : 0x0),
-			orientation, 
+			orientation,
+			currentOpened,
 			lenghtOpened,
 			true,
 			false
 		);
 	}
 
-	protected void createMoving(World world, Integer3d pistonPos, Integer3d dest, Block block, int metadata, int orientation, int lenghtOpened, boolean extending, boolean root) {
+	protected void createMoving(World world, Integer3d pistonPos, Integer3d dest, Block block, int metadata, int orientation, int start, int lenghtOpened, boolean extending, boolean root) {
 		
 		TileEntity teCopy = this.cloneTileEntity(world.getTileEntity(
 			dest.x + (extending ? -1 : 1) * lenghtOpened,
@@ -973,6 +969,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			block,
 			orientation, 
 			extending,
+			start,
 			lenghtOpened,
 			pistonPos,
 			root

@@ -52,7 +52,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	}
 	
 	
-	public TileEntityMorePistonsMoving(Block block, int orientation, boolean extending, int distance, Integer3d positionPiston, boolean root) {
+	public TileEntityMorePistonsMoving(Block block, int orientation, boolean extending, int start, int distance, Integer3d positionPiston, boolean root) {
 		if (block == null) {
 			log.severe ("Block strorage in null in creation TileEntiry");
 		}
@@ -65,6 +65,10 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.root                 = root;
 		this.isInit               = true;
 		
+		if (start != 0) {
+			this.progress     = (float) ((double)Math.abs(distance) / (double)Math.abs(start));
+			this.lastProgress = this.progress;
+		}
 	}
 	
 	public void updateEntity() {
@@ -189,10 +193,8 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	}
 	
 	private void upgradeProgess() {
-
-		TileEntityMorePistonsPiston te = getPistonOriginTE();
 		
-		this.progress += 0.5;
+		this.progress += 0.005;
 		
 		if (this.progress >= 1.0F) {
 			this.progress = 1.0F;
