@@ -3,4 +3,10 @@ More-Pistons
 
 More Pistons Mod for Minecraft
 
-Install forge for compile source
+ 
+For install :
+
+ wget http://www.smeagol-mods.com/builder/builds/forge/forge-1.6.4-9.11.1.965-prebuild.zip
+ unzip forge-1.6.4-9.11.1.965-prebuild.zip -d ./
+ ./install.sh
+ ./build.sh
