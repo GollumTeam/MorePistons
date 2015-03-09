@@ -33,7 +33,7 @@ public class ModMorePistons extends GollumMod {
 
 	public final static String MODID = "MorePistons";
 	public final static String MODNAME = "More Pistons";
-	public final static String VERSION = "2.0.0 Beta 1.0";
+	public final static String VERSION = "2.0.0 Beta 2.0";
 	public final static String MINECRAFT_VERSION = "1.6.4";
 	public final static String DEPENDENCIES = "required-after:GollumCoreLib";
 	
@@ -131,7 +131,7 @@ public class ModMorePistons extends GollumMod {
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		// Charge la configuration
-		this.config = new ConfigMorePistons();
+		this.config = new ConfigMorePistons().loadConfig();
 		
 		// Initialisation des blocks
 		this.initBlocks ();
