@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Minecraft-jf-uncompile</name>
+	<name>MorePistons</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -28,12 +28,12 @@
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<location>ROOT_LOC/src</location>
+			<locationURI>ROOT_LOC/src</locationURI>
 		</link>
 		<link>
 			<name>vendors</name>
 			<type>2</type>
-			<location>MCP_LOC/src/minecraft</location>
+			<locationURI>MCP_LOC/src/minecraft</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
@@ -77,11 +77,11 @@
 	<variableList>
 		<variable>
 			<name>MCP_LOC</name>
-			<value>$%7BPARENT-1-WORKSPACE_LOC%7D/mcp</value>
+			<value>$%7BPARENT-1-PARENT-1-PROJECT_LOC%7D/mcp</value>
 		</variable>
 		<variable>
 			<name>ROOT_LOC</name>
-			<value>$%7BPARENT-1-WORKSPACE_LOC%7D</value>
+			<value>$%7BPARENT-1-PARENT-1-PROJECT_LOC%7D</value>
 		</variable>
 	</variableList>
 </projectDescription>
