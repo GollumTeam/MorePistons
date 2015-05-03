@@ -106,29 +106,29 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 		}
 	}
 	
-	public AxisAlignedBB getAxisAlignedBB(World world, int x, int y, int z, Block block, float progress, int p_149964_7_) {
+	public AxisAlignedBB getAxisAlignedBB(World world, int x, int y, int z, Block block, float progress, int direction) {
 		if (block != null && block != this && block.getMaterial() != Material.air) {
 			AxisAlignedBB axisalignedbb = block.getCollisionBoundingBoxFromPool(world, x, y, z);
 			
 			if (axisalignedbb == null) {
 				return null;
 			} else {
-				if (Facing.offsetsXForSide[p_149964_7_] < 0) {
-					axisalignedbb.minX -= (double) ((float) Facing.offsetsXForSide[p_149964_7_] * progress);
+				if (Facing.offsetsXForSide[direction] < 0) {
+					axisalignedbb.minX -= (double) ((float) Facing.offsetsXForSide[direction] * progress);
 				} else {
-					axisalignedbb.maxX -= (double) ((float) Facing.offsetsXForSide[p_149964_7_] * progress);
+					axisalignedbb.maxX -= (double) ((float) Facing.offsetsXForSide[direction] * progress);
 				}
 
-				if (Facing.offsetsYForSide[p_149964_7_] < 0) {
-					axisalignedbb.minY -= (double) ((float) Facing.offsetsYForSide[p_149964_7_] * progress);
+				if (Facing.offsetsYForSide[direction] < 0) {
+					axisalignedbb.minY -= (double) ((float) Facing.offsetsYForSide[direction] * progress);
 				} else {
-					axisalignedbb.maxY -= (double) ((float) Facing.offsetsYForSide[p_149964_7_] * progress);
+					axisalignedbb.maxY -= (double) ((float) Facing.offsetsYForSide[direction] * progress);
 				}
 				
-				if (Facing.offsetsZForSide[p_149964_7_] < 0) {
-					axisalignedbb.minZ -= (double) ((float) Facing.offsetsZForSide[p_149964_7_] * progress);
+				if (Facing.offsetsZForSide[direction] < 0) {
+					axisalignedbb.minZ -= (double) ((float) Facing.offsetsZForSide[direction] * progress);
 				} else {
-					axisalignedbb.maxZ -= (double) ((float) Facing.offsetsZForSide[p_149964_7_] * progress);
+					axisalignedbb.maxZ -= (double) ((float) Facing.offsetsZForSide[direction] * progress);
 				}
 				
 				return axisalignedbb;

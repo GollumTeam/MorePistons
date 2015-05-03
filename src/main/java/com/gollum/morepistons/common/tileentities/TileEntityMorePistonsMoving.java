@@ -149,7 +149,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public void setBlockFinalMove() {
 		
 		
-//		this.updatePushedObjects(1.0F, 0.25F);
+		this.updatePushedObjects(1.0F, 0.25F);
 
 		BlockMorePistonsBase piston = this.pistonOrigin();
 		
@@ -201,7 +201,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		}
 		
 		if (this.extending) {
-//			this.upjdatePushedObjects(this.progress, 0.0625F);
+			this.updatePushedObjects(this.progress, 0.0625F);
 		}
 		
 		if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
@@ -212,6 +212,41 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		
 	}
+	
+	private void updatePushedObjects(float p_145863_1_, float p_145863_2_)
+    {
+        if (this.extending)
+        {
+            p_145863_1_ = 1.0F - p_145863_1_;
+        }
+        else
+        {
+            --p_145863_1_;
+        }
+
+        AxisAlignedBB axisalignedbb = Blocks.piston_extension.func_149964_a(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlock, p_145863_1_, this.storedOrientation);
+
+        if (axisalignedbb != null)
+        {
+            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity)null, axisalignedbb);
+
+            if (!list.isEmpty())
+            {
+                
+            	List pushedObjects = new ArrayList<Entity>();
+				pushedObjects.addAll(list);
+                Iterator iterator = pushedObjects.iterator();
+
+                while (iterator.hasNext())
+                {
+                    Entity entity = (Entity)iterator.next();
+                    entity.moveEntity((double)(p_145863_2_ * (float)Facing.offsetsXForSide[this.storedOrientation]), (double)(p_145863_2_ * (float)Facing.offsetsYForSide[this.storedOrientation]), (double)(p_145863_2_ * (float)Facing.offsetsZForSide[this.storedOrientation]));
+                }
+
+                pushedObjects.clear();
+            }
+        }
+    }
 	
 	/**
 	 * Remove les pistons rod
@@ -280,6 +315,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.distance          = nbtTagCompound.getInteger("distance");
 		this.progress          = nbtTagCompound.getFloat  ("progress");
 		this.lastProgress      = nbtTagCompound.getFloat  ("lastProgress");
+		this.root              = nbtTagCompound.getBoolean("root");
 		
 		this.positionPiston.x = nbtTagCompound.getInteger("pistonX");
 		this.positionPiston.y = nbtTagCompound.getInteger("pistonY");
@@ -312,6 +348,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		nbtTagCompound.setInteger("distance"    , this.distance);
 		nbtTagCompound.setFloat  ("progress"    , this.progress);
 		nbtTagCompound.setFloat  ("lastProgress", this.lastProgress);
+		nbtTagCompound.setBoolean("root"        , this.root);
 		
 		nbtTagCompound.setInteger("pistonX", this.positionPiston.x);
 		nbtTagCompound.setInteger("pistonY", this.positionPiston.y);

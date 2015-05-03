@@ -30,7 +30,7 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	}
 	
 	public TileEntityMorePistonsMoving getTileEntityMoving() {
-		if (this.extentionPos != null) {
+		if (this.worldObj != null && this.extentionPos != null) {
 			TileEntity te = this.worldObj.getTileEntity(this.extentionPos.x, this.extentionPos.y, this.extentionPos.z);
 			if (te instanceof TileEntityMorePistonsMoving) {
 				return (TileEntityMorePistonsMoving)te;
@@ -46,8 +46,8 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 		
 		if (
 			nbtTagCompound.hasKey("extentionPosX") &&
-			nbtTagCompound.hasKey("extentionPosX") &&
-			nbtTagCompound.hasKey("extentionPosX")
+			nbtTagCompound.hasKey("extentionPosY") &&
+			nbtTagCompound.hasKey("extentionPosZ")
 		) {
 			this.extentionPos = new Integer3d();
 			this.extentionPos.x = nbtTagCompound.getInteger("extentionPosX");
