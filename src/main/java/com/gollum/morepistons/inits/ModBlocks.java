@@ -3,9 +3,7 @@ package com.gollum.morepistons.inits;
 //import mods.morepistons.common.block.BlockMorePistonsGravitational;
 //import mods.morepistons.common.block.BlockMorePistonsMagnetic;
 //import mods.morepistons.common.block.BlockMorePistonsRedStone;
-import com.gollum.core.tools.registered.RegisteredObjects;
-import com.gollum.core.tools.registry.BlockRegistry;
-import com.gollum.core.utils.reflection.Reflection;
+import com.gollum.core.tools.registry.BuildingBlockRegistry;
 import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
 import com.gollum.morepistons.common.block.BlockMorePistonsExtension;
@@ -13,9 +11,7 @@ import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
 import com.gollum.morepistons.common.block.BlockMorePistonsRod;
 import com.gollum.morepistons.common.block.BlockMorePistonsVanilla;
 import com.gollum.morepistons.common.block.BlockMorePistonsVanillaProxy;
-
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import com.gollum.morepistons.common.building.handler.BlockMorePistonsBuildingHandler;
 
 public class ModBlocks {
 
@@ -98,11 +94,21 @@ public class ModBlocks {
 	public static BlockMorePistonsRod       blockPistonRod;
 	public static BlockMorePistonsMoving    blockPistonMoving;
 	
-
+	
 	/**
 	 * Initialisation des blocks
 	 */
 	public static void init() {
+		
+		initBlock ();
+		initHandlerRotation ();
+		
+	}
+	
+	/**
+	 * Initialisation des blocks
+	 */
+	private static void initBlock() {
 		
 		////////////////////
 		// Utility blocks //
@@ -206,6 +212,14 @@ public class ModBlocks {
 //		ModBlocks.blockMagneticStickyPistonBase7 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptupleStickyPistonBase7" , true ).setLength(7);
 //		ModBlocks.blockMagneticPistonBase8       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctuplePistonBase8"        , false).setLength(8);
 //		ModBlocks.blockMagneticStickyPistonBase8 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctupleStickyPistonBase8"  , true ).setLength(8);
+		
+		
+		
+	}
+	
+	private static void initHandlerRotation () {
+		
+		BuildingBlockRegistry.register(new BlockMorePistonsBuildingHandler());
 		
 	}
 }
