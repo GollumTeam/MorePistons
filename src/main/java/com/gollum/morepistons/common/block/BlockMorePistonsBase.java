@@ -5,16 +5,6 @@ import static com.gollum.morepistons.ModMorePistons.log;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gollum.core.common.blocks.IBlockDisplayInfos;
-import com.gollum.core.tools.helper.blocks.HBlockContainer;
-import com.gollum.core.utils.math.Integer3d;
-import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.client.ClientProxyMorePistons;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
-import com.gollum.morepistons.inits.ModBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
@@ -36,7 +26,21 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.util.RotationHelper;
 import net.minecraftforge.fluids.IFluidBlock;
+
+import com.gollum.core.common.blocks.IBlockDisplayInfos;
+import com.gollum.core.tools.helper.blocks.HBlockContainer;
+import com.gollum.core.utils.math.Integer3d;
+import com.gollum.core.utils.reflection.Reflection;
+import com.gollum.morepistons.ModMorePistons;
+import com.gollum.morepistons.client.ClientProxyMorePistons;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
+import com.gollum.morepistons.inits.ModBlocks;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -985,5 +989,42 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			((TileEntityMorePistonsMoving) te).getPistonOriginTE().extentionPos = new Integer3d(dest.x, dest.y, dest.z);
 			world.notifyBlockOfNeighborChange(dest.x, dest.y, dest.z, ModBlocks.blockPistonMoving);
 		}
+	}
+	
+	////////////
+	// Others //
+	////////////
+	
+	/**
+	 * Rotate the block. For vanilla blocks this rotates around the axis passed in (generally, it should be the "face" that was hit).
+	 * Note: for mod blocks, this is up to the block and modder to decide. It is not mandated that it be a rotation around the
+	 * face, but could be a rotation to orient *to* that face, or a visiting of possible rotations.
+	 * The method should return true if the rotation was successful though.
+	 *
+	 * @param worldObj The world
+	 * @param x X position
+	 * @param y Y position
+	 * @param z Z position
+	 * @param axis The axis to rotate around
+	 * @return True if the rotation was successful, False if the rotation failed, or is not possible
+	 */
+	public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis) {
+		if (worldObj.isRemote) {
+			return false;
+		}
+		
+		Object constants;
+		
+		try  {
+			constants = Class.forName(RotationHelper.class.getName()).getEnumConstants();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		Object type = ;
+		
+		
+		return false;
+		
+//		return RotationHelper.rotateBlock(worldObj, x, y, z, axis, 0x7, );
 	}
 }

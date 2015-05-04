@@ -1,6 +1,6 @@
 package com.gollum.morepistons;
 
-import com.gollum.core.common.creativetab.GollumCreativeTabs;
+import com.gollum.core.common.creativetab.StaffCreativeTabs;
 import com.gollum.core.common.i18n.I18n;
 import com.gollum.core.common.log.Logger;
 import com.gollum.core.common.mod.GollumMod;
@@ -53,7 +53,7 @@ public class ModMorePistons extends GollumMod {
 	/**
 	 * Onglet du mod
 	 */
-	public static GollumCreativeTabs morePistonsTabs = new GollumCreativeTabs("Pistons");
+	public static StaffCreativeTabs morePistonsTabs = new StaffCreativeTabs("Pistons");
 	
 	@EventHandler public void handler(FMLPreInitializationEvent event)  { super.handler (event); }
 	@EventHandler public void handler(FMLInitializationEvent event)     { super.handler (event); }
