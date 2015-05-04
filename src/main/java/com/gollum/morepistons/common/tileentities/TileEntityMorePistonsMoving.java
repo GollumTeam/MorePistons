@@ -149,7 +149,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public void setBlockFinalMove() {
 		
 		
-		this.updatePushedObjects(1.0F, 0.25F);
+		this.updatePushedObjects(1.0F);
 
 		BlockMorePistonsBase piston = this.pistonOrigin();
 		
@@ -194,14 +194,14 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	
 	private void upgradeProgess() {
 		
-		this.progress += 0.005;
+		this.progress += 0.5;
 		
 		if (this.progress >= 1.0F) {
 			this.progress = 1.0F;
 		}
 		
 		if (this.extending) {
-			this.updatePushedObjects(this.progress, 0.0625F);
+			this.updatePushedObjects(this.progress);
 		}
 		
 		if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
@@ -213,40 +213,82 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 	}
 	
-	private void updatePushedObjects(float p_145863_1_, float p_145863_2_)
-    {
-        if (this.extending)
-        {
-            p_145863_1_ = 1.0F - p_145863_1_;
-        }
-        else
-        {
-            --p_145863_1_;
-        }
+	private List<Entity> getEntitiesInProgess(float progress) {
+		List entities = new ArrayList<Entity>();
+		
+		AxisAlignedBB axisalignedbb = ModBlocks.blockPistonMoving.getAxisAlignedBB(
+			this.worldObj, 
+			this.positionPiston.x,
+			this.positionPiston.y,
+			this.positionPiston.z,
+			this.storedBlock,
+			-progress*this.distance,
+			this.storedOrientation
+		);
+		
+		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
+		Iterator iterator = list.iterator();
+		
+		while (iterator.hasNext()) {
+			Entity entity = (Entity) iterator.next();
+			entities.add(entity);
+		}
+		return entities;
+	}
+	
+	private void updatePushedObjects(float progress) {
+		if (this.extending) {
+			
+			List<Entity> entities = this.getEntitiesInProgess (progress);
+			
+			for (Entity entity : entities) {
 
-        AxisAlignedBB axisalignedbb = Blocks.piston_extension.func_149964_a(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlock, p_145863_1_, this.storedOrientation);
+				double x = entity.posX;
+				double y = entity.posY;
+				double z = entity.posZ;
+				
+				switch (this.storedOrientation) {
+					case 0:
+					case 1:
+						y = this.yCoord + this.getOffsetY(progress) + Facing.offsetsYForSide[this.storedOrientation] + Facing.offsetsYForSide[this.storedOrientation]*(entity.boundingBox.maxY-entity.boundingBox.minY);
+						break;
+					case 2:
+					case 3:
+						z = this.zCoord + this.getOffsetZ(progress) + Facing.offsetsZForSide[this.storedOrientation] + Facing.offsetsZForSide[this.storedOrientation]*(entity.boundingBox.maxZ-entity.boundingBox.minZ);
+						break;
+					case 4:
+					case 5:
+						x = this.xCoord + this.getOffsetX(progress) + Facing.offsetsXForSide[this.storedOrientation] + Facing.offsetsXForSide[this.storedOrientation]*(entity.boundingBox.maxX-entity.boundingBox.minX);
+						break;
+				}
+				
+				entity.moveEntity(
+					x - entity.posX,
+					y - entity.posY,
+					z - entity.posZ
+				);
+			}
+			
+		} else {
+			
+			List list = this.getEntitiesInProgess(0);
 
-        if (axisalignedbb != null)
-        {
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity)null, axisalignedbb);
-
-            if (!list.isEmpty())
-            {
-                
-            	List pushedObjects = new ArrayList<Entity>();
-				pushedObjects.addAll(list);
-                Iterator iterator = pushedObjects.iterator();
-
-                while (iterator.hasNext())
-                {
-                    Entity entity = (Entity)iterator.next();
-                    entity.moveEntity((double)(p_145863_2_ * (float)Facing.offsetsXForSide[this.storedOrientation]), (double)(p_145863_2_ * (float)Facing.offsetsYForSide[this.storedOrientation]), (double)(p_145863_2_ * (float)Facing.offsetsZForSide[this.storedOrientation]));
-                }
-
-                pushedObjects.clear();
-            }
-        }
-    }
+			if (!list.isEmpty()) {
+				
+				Iterator iterator = list.iterator();
+				
+				while (iterator.hasNext()) {
+					Entity entity = (Entity)iterator.next();
+					entity.moveEntity(
+						(double)(0.3F * (float)Facing.offsetsXForSide[this.storedOrientation]),
+						(double)(0.3F * (float)Facing.offsetsYForSide[this.storedOrientation]),
+						(double)(0.3F * (float)Facing.offsetsZForSide[this.storedOrientation])
+					);
+				}
+			}
+			
+		}
+	}
 	
 	/**
 	 * Remove les pistons rod
