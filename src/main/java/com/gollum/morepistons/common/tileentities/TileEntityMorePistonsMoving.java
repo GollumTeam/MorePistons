@@ -226,12 +226,14 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 			this.storedOrientation
 		);
 		
-		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
-		Iterator iterator = list.iterator();
-		
-		while (iterator.hasNext()) {
-			Entity entity = (Entity) iterator.next();
-			entities.add(entity);
+		if (axisalignedbb != null) {
+			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
+			Iterator iterator = list.iterator();
+			
+			while (iterator.hasNext()) {
+				Entity entity = (Entity) iterator.next();
+				entities.add(entity);
+			}
 		}
 		return entities;
 	}

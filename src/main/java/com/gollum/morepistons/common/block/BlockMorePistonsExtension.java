@@ -83,4 +83,8 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 		}
 		
 	}
+	
+	public boolean canProvidePower() {
+		return false;
+	}
 }

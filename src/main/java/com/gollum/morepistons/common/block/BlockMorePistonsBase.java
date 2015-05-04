@@ -3,6 +3,7 @@ package com.gollum.morepistons.common.block;
 import static com.gollum.morepistons.ModMorePistons.log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -751,10 +752,11 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		int xExtension = x + Facing.offsetsXForSide[orientation] * currentOpened;
 		int yExtension = y + Facing.offsetsYForSide[orientation] * currentOpened;
 		int zExtension = z + Facing.offsetsZForSide[orientation] * currentOpened;
-		
+
 		ArrayList<EMoveInfosExtend> infosExtend = new ArrayList<EMoveInfosExtend>();
+		ArrayList<EMoveInfosExtend> dropList    = new ArrayList<EMoveInfosExtend>();
 		
-		int size = lenghtOpened;
+		int size = lenghtOpened - currentOpened;
 		
 		for (int i = 0; i < (lenghtOpened + this.getMaxBlockMove ()) && size > 0; i++) {
 			
@@ -766,7 +768,9 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
 			
 			// Drop les élements légés (fleurs, leviers, herbes ..)
-			this.dropMobilityFlag1(block, metadata, world, xExtension, yExtension, zExtension);
+			if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
+				dropList.add(new EMoveInfosExtend(block, metadata, new Integer3d(xExtension, yExtension, zExtension), 0));
+			}
 			
 			if (this.isEmptyBlock(block)) {
 				
@@ -776,13 +780,20 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			} else if (!this.isMovableBlock(block, world, xExtension, yExtension, zExtension)) {
 				break;
 			} else {
-				infosExtend.add(new EMoveInfosExtend(block, metadata, size));
+				infosExtend.add(new EMoveInfosExtend(block, metadata, new Integer3d(xExtension, yExtension, zExtension), size));
 				
 				world.setTileEntity(xExtension, yExtension, zExtension, null);
-				world.setBlockToAir (xExtension, yExtension, zExtension);
+				world.setBlock (xExtension, yExtension, zExtension, Blocks.air, 0, 0);
 			}
 			
 		}
+		
+		Collections.reverse(infosExtend);
+		
+		for (EMoveInfosExtend info : dropList) {
+			this.dropMobilityFlag1(info.block, info.metadata, world, info.position.x, info.position.y, info.position.z);
+		}
+		
 		return infosExtend;
 	}
 	
@@ -882,22 +893,27 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	protected void extend(World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 		
 		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened);
+		
+		for (EMoveInfosExtend infos : infosExtend) {
+			world.notifyBlockChange(infos.position.x, infos.position.y, infos.position.z, world.getBlock(infos.position.x, infos.position.y, infos.position.z));
+		}
+		
 		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened);
 		
 	}
 	
 	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 		
-		int xExtension = x + Facing.offsetsXForSide[orientation] * lenghtOpened;
-		int yExtension = y + Facing.offsetsYForSide[orientation] * lenghtOpened;
-		int zExtension = z + Facing.offsetsZForSide[orientation] * lenghtOpened;
+		int xExtension;
+		int yExtension;
+		int zExtension;
 		
 		for (EMoveInfosExtend infos : infosExtend) {
 			
 			if (infos.block != null && infos.block != Blocks.air && infos.block != Blocks.piston_extension) {
-				xExtension += Facing.offsetsXForSide[orientation];
-				yExtension += Facing.offsetsYForSide[orientation];
-				zExtension += Facing.offsetsZForSide[orientation];
+				xExtension = infos.position.x + Facing.offsetsXForSide[orientation] * infos.move;
+				yExtension = infos.position.y + Facing.offsetsYForSide[orientation] * infos.move;
+				zExtension = infos.position.z + Facing.offsetsZForSide[orientation] * infos.move;
 				
 				//Déplace avec une animation les blocks
 				this.createMoving(
@@ -915,18 +931,26 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			}
 		}
 		
-		xExtension = x + Facing.offsetsXForSide[orientation] * currentOpened;
-		yExtension = y + Facing.offsetsYForSide[orientation] * currentOpened;
-		zExtension = z + Facing.offsetsZForSide[orientation] * currentOpened;
+		xExtension = x + Facing.offsetsXForSide[orientation] * (currentOpened-1);
+		yExtension = y + Facing.offsetsYForSide[orientation] * (currentOpened-1);
+		zExtension = z + Facing.offsetsZForSide[orientation] * (currentOpened-1);
 		
-		for (int i = 0; i < lenghtOpened - 1; i++) {
+		for (int i = currentOpened; i < lenghtOpened; i++) {
 			
 			xExtension += Facing.offsetsXForSide[orientation];
 			yExtension += Facing.offsetsYForSide[orientation];
 			zExtension += Facing.offsetsZForSide[orientation];
 			
-			world.setBlock (xExtension, yExtension, zExtension, ModBlocks.blockPistonRod, orientation, 2);
-			world.setTileEntity(xExtension, yExtension, zExtension, new TileEntityMorePistonsRod(new Integer3d(x, y, z)));
+			Block b = world.getBlock(xExtension, yExtension, zExtension);
+			
+			if (
+				b == null ||
+				b instanceof BlockAir ||
+				b instanceof BlockMorePistonsExtension
+			) {
+				world.setBlock (xExtension, yExtension, zExtension, ModBlocks.blockPistonRod, orientation, 2);
+				world.setTileEntity(xExtension, yExtension, zExtension, new TileEntityMorePistonsRod(new Integer3d(x, y, z)));
+			}
 			
 		}
 		
@@ -935,7 +959,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		zExtension += Facing.offsetsZForSide[orientation];
 		
 		//Déplace avec une animation l'extention du piston
-		log.debug("Create PistonMoving : "+xExtension, yExtension, zExtension, "orientation="+orientation, "lenghtOpened="+lenghtOpened);
+		log.debug("Create PistonMoving : "+xExtension, yExtension, zExtension, "orientation="+orientation, "currentOpened="+currentOpened, "lenghtOpened="+lenghtOpened);
 		
 		this.createMoving(
 			world,

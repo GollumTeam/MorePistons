@@ -3,6 +3,8 @@ package com.gollum.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
+import scala.xml.dtd.impl.WordBerrySethi;
+
 import com.gollum.core.tools.helper.blocks.HBlock;
 import com.gollum.core.tools.helper.blocks.HBlockContainer;
 import com.gollum.morepistons.client.ClientProxyMorePistons;
@@ -220,4 +222,5 @@ public class BlockMorePistonsRod extends HBlockContainer {
 	public Item getItemDropped(int par1, Random par2Random, int par3) {
 		return null;
 	}
+	
 }

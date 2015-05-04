@@ -25,11 +25,13 @@ public class TileEntityMorePistonsPistonRenderer extends ATileEntityMorePistonsR
 		int                  y           = tileEntity.yCoord;
 		int                  z           = tileEntity.zCoord;
 		
-		Tessellator tessellator = this.startRender(tileEntity, posX, posY, posZ);
-		
-		this.blockRenderer.renderPistonBase(block, x, y, z, false);
-		this.endRender(tessellator);
-		
+		if (block != null) {
+			
+			Tessellator tessellator = this.startRender(tileEntity, posX, posY, posZ);
+			
+			this.blockRenderer.renderPistonBase(block, x, y, z, false);
+			this.endRender(tessellator);
+		}
 	}
 	
 	@Override
