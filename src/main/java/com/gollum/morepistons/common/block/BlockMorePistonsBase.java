@@ -318,7 +318,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		log.debug("onNeighborBlockChange : "+x+", "+y+", "+z);
 		
-		if (!world.isRemote) {
+		if (!world.isRemote && !this.ignoreUpdates) {
 			this.updatePistonState(world, x, y, z);
 		}
 	}
@@ -362,10 +362,10 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		}
 		
 		if (powered) {
-			world.setBlockMetadataWithNotify (x, y, z, orientation | 0x8, 2);
+			world.setBlockMetadataWithNotify (x, y, z, orientation | 0x8, 0);
 			world.addBlockEvent(x, y, z, this, this.getMaximalOpenedLenght(world, x, y, z, orientation), currentOpened);
 		} else {
-			world.setBlockMetadataWithNotify (x, y, z, orientation, 2);
+			world.setBlockMetadataWithNotify (x, y, z, orientation, 0);
 			world.addBlockEvent(x, y, z, this, 0, currentOpened);
 		}
 	}
@@ -401,7 +401,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					if (currentOpened == lenghtOpened) {
 						
 						log.debug("Le piston reste immobile : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
-						world.notifyBlockChange(x, y, z, this);
+						//world.notifyBlockChange(x, y, z, this);
 						
 					} else if (currentOpened < lenghtOpened) {
 						
@@ -426,8 +426,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					
 					if (currentOpened == 0) {
 						log.debug("Le piston reste immobile : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
-						world.setBlockMetadataWithNotify(x, y, z, orientation, 3);
-						world.notifyBlockChange(x, y, z, this);
+						world.setBlockMetadataWithNotify(x, y, z, orientation, 0);
 					} else {
 						log.debug("Le piston se ferme : ", x, y, z, "currentOpened="+currentOpened, "remote="+world.isRemote);
 						
@@ -652,7 +651,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	private int getMoveBlockOnDistance (int distance, World world, Block block, int x, int y, int z, int orientation, int nbMoved) {
 		
 		if (nbMoved == this.getMaxBlockMove () || !this.isMovableBlock(block, world, x, y, z)) {
-			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
+//			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " Bloquer nbMoved="+nbMoved);
 			return 0;
 		}
 		
@@ -665,12 +664,12 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			
 
 			if (y >= 255) {
-				log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
+//				log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " y=>255");
 				break;
 			}
 			
 			Block blockNext = world.getBlock(x, y, z);
-			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " blockNext="+blockNext);
+//			log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " blockNext="+blockNext);
 			
 			if (this.isEmptyBlock(blockNext)) {
 				walking++;
@@ -681,7 +680,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			}
 		}
 		
-		log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
+//		log.debug("getMoveBlockOnDistance : "+x+", "+y+", "+z+ " walking="+walking+ " nbMoved="+nbMoved);
 		return walking;
 	}
 	
