@@ -1009,22 +1009,6 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	 * @return True if the rotation was successful, False if the rotation failed, or is not possible
 	 */
 	public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis) {
-		if (worldObj.isRemote) {
-			return false;
-		}
-		
-		Object constants;
-		
-		try  {
-			constants = Class.forName(RotationHelper.class.getName()).getEnumConstants();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//		Object type = ;
-		
-		
-		return false;
-		
-//		return RotationHelper.rotateBlock(worldObj, x, y, z, axis, 0x7, );
+		return RotationHelper.rotateVanillaBlock(Blocks.piston, worldObj, x, y, z, axis);
 	}
 }
