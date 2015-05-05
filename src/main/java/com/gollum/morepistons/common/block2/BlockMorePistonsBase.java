@@ -8,6 +8,8 @@ import com.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.inits.ModBlocks;
 
+import com.gollum.morepistons.inits.ModCreativeTab;
+
 //import mods.morepistons.common.tileentities.TileEntityMorePistons;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -35,7 +37,7 @@ public class BlockMorePistonsBase extends HBlockPistonBase {
 	public BlockMorePistonsBase(String registerName, boolean isSticky) {
 		super(registerName, isSticky);
 		
-		this.setCreativeTab(ModMorePistons.morePistonsTabs);
+		this.setCreativeTab(ModCreativeTab.morePistonsTabs);
 	}
 	
 	/**

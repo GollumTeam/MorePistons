@@ -1,6 +1,5 @@
 package com.gollum.morepistons;
 
-import com.gollum.core.common.creativetab.StaffCreativeTabs;
 import com.gollum.core.common.i18n.I18n;
 import com.gollum.core.common.log.Logger;
 import com.gollum.core.common.mod.GollumMod;
@@ -8,6 +7,7 @@ import com.gollum.core.common.version.VersionChecker;
 import com.gollum.morepistons.common.CommonProxyMorePistons;
 import com.gollum.morepistons.common.config.ConfigMorePistons;
 import com.gollum.morepistons.inits.ModBlocks;
+import com.gollum.morepistons.inits.ModCreativeTab;
 import com.gollum.morepistons.inits.ModRecipes;
 import com.gollum.morepistons.inits.ModTileEntities;
 
@@ -50,11 +50,6 @@ public class ModMorePistons extends GollumMod {
 	 */
 	public static ConfigMorePistons config;
 	
-	/**
-	 * Onglet du mod
-	 */
-	public static StaffCreativeTabs morePistonsTabs = new StaffCreativeTabs("Pistons");
-	
 	@EventHandler public void handler(FMLPreInitializationEvent event)  { super.handler (event); }
 	@EventHandler public void handler(FMLInitializationEvent event)     { super.handler (event); }
 	@EventHandler public void handler(FMLPostInitializationEvent event) { super.handler (event); }
@@ -84,9 +79,7 @@ public class ModMorePistons extends GollumMod {
 		ModRecipes.init ();
 		
 		// Set de l'icon du tab creative
-		this.morePistonsTabs.setIcon(Blocks.piston);
-		Blocks.piston       .setCreativeTab(null);
-		Blocks.sticky_piston.setCreativeTab(null);
+		ModCreativeTab.init();
 	}
 	
 	/** 3 **/

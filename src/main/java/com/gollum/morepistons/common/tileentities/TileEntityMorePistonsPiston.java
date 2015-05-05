@@ -13,8 +13,9 @@ import com.gollum.morepistons.common.block.BlockMorePistonsBase;
 
 public class TileEntityMorePistonsPiston extends TileEntity {
 	
-	public  int       currentOpened = 0;
-	public  Integer3d extentionPos  = null;
+	public int       currentOpened = 0;
+	public Integer3d extentionPos  = null;
+	public int       mutiplicateur = 1;
 	
 	public TileEntityMorePistonsPiston () {
 	}
@@ -45,7 +46,8 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
-		this.currentOpened  = nbtTagCompound.getInteger("currentOpened");
+		this.currentOpened = nbtTagCompound.getInteger("currentOpened");
+		this.mutiplicateur = nbtTagCompound.getInteger("mutiplicateur");
 		
 		if (
 			nbtTagCompound.hasKey("extentionPosX") &&
@@ -62,8 +64,9 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
 		super.writeToNBT(nbtTagCompound);
-		
+
 		nbtTagCompound.setInteger("currentOpened", this.currentOpened);
+		nbtTagCompound.setInteger("mutiplicateur", this.mutiplicateur);
 		
 		if (this.extentionPos != null) {
 			nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);

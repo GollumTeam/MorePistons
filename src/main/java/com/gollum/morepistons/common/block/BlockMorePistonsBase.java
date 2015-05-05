@@ -41,6 +41,7 @@ import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 import com.gollum.morepistons.inits.ModBlocks;
+import com.gollum.morepistons.inits.ModCreativeTab;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -85,7 +86,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		this.isSticky = isSticky;
 		this.setStepSound(soundTypePiston);
 		this.setHardness(0.5F);
-		this.setCreativeTab(ModMorePistons.morePistonsTabs);
+		this.setCreativeTab(ModCreativeTab.morePistonsTabs);
 	}
 	
 	@Override
