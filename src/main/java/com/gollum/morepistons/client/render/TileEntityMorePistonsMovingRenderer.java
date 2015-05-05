@@ -57,6 +57,23 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 				);
 			}
 			
+			if (tileEntityMoving.root && block instanceof BlockMorePistonsRod) {
+				float progress = Math.abs(
+					(tileEntityMoving.getOffsetX(0) - (float)Math.ceil(tileEntityMoving.getOffsetX(0))) +
+					(tileEntityMoving.getOffsetY(0) - (float)Math.ceil(tileEntityMoving.getOffsetY(0))) +
+					(tileEntityMoving.getOffsetZ(0) - (float)Math.ceil(tileEntityMoving.getOffsetZ(0)))
+				);
+					
+				this.blockRenderer.renderPistonRod(
+					ModBlocks.blockPistonRod,
+					tileEntityMoving.xCoord,
+					tileEntityMoving.yCoord,
+					tileEntityMoving.zCoord,
+					tileEntityMoving.storedOrientation,
+					progress
+				);
+			}
+			
 			tessellator.addTranslation(
 				tileEntityMoving.getOffsetX(f),
 				tileEntityMoving.getOffsetY(f),

@@ -65,8 +65,8 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.root                 = root;
 		this.isInit               = true;
 		
-		if (start != 0) {
-			this.progress     = (float) ((double)Math.abs(distance) / (double)Math.abs(start));
+		if (distance != 0) {
+			this.progress     = (float) ((double)Math.abs(start) / (double)Math.abs(distance));
 			this.lastProgress = this.progress;
 		}
 	}
@@ -178,11 +178,16 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 				this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
 			} else {
 				if (this.root) {
-					this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
+					
+					if (this.positionPiston.equals(new Integer3d(this.xCoord, this.yCoord, this.zCoord))) {
+						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
+						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+					}  else {
+						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, ModBlocks.blockPistonExtention, this.storedOrientation | (piston.isSticky() ? 0x8 : 0x0), 3);
+						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, null);
+					}
 				} else {
 					this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.getBlockMetadata(), 3);
-				}
-				if (this.worldObj != null) {
 					this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
 				}
 				this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
@@ -264,11 +269,22 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 						break;
 				}
 				
-				entity.moveEntity(
-					x - entity.posX,
-					y - entity.posY,
-					z - entity.posZ
-				);
+				if (
+					Math.abs(
+						x - entity.posX +
+						y - entity.posY +
+						z - entity.posZ
+					) > 4
+				) {
+					entity.setPosition(x, y, z);
+				} else {
+					entity.moveEntity(
+						x - entity.posX,
+						y - entity.posY,
+						z - entity.posZ
+					);
+				}
+				
 			}
 			
 		} else {

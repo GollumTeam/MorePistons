@@ -75,21 +75,21 @@ public class ModBlocks {
 //	public static BlockMorePistonsRedStone blockRedStonePistonBase8;
 //	public static BlockMorePistonsRedStone blockRedStoneStickyPistonBase8;
 //	
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase1;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase2;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase2;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase3;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase3;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase4;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase4;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase5;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase5;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase6;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase6;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase7;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase7;
-//	public static BlockMorePistonsMagnetic blockMagneticPistonBase8;
-//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase8;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
+//	public static BlockMorePistonsMagnetic blockMagneticStickyPistonBase;
 //	
 	public static BlockMorePistonsExtension blockPistonExtention;
 	public static BlockMorePistonsRod       blockPistonRod;
@@ -200,22 +200,22 @@ public class ModBlocks {
 //		// Magnetic pistons //
 //		//////////////////////
 		
-//		ModBlocks.blockMagneticPistonBase1       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticPistonBase1"               , false);
-//		ModBlocks.blockMagneticStickyPistonBase1 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticStickyPistonBase1"         , true );
-//		ModBlocks.blockMagneticPistonBase2       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoublePistonBase2"         , false).setLength(2);
-//		ModBlocks.blockMagneticStickyPistonBase2 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoubleStickyPistonBase2"   , true ).setLength(2);
-//		ModBlocks.blockMagneticPistonBase3       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticTriplePistonBase3"         , false).setLength(3);
-//		ModBlocks.blockMagneticStickyPistonBase3 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticTripleStickyPistonBase3"   , true ).setLength(3);
-//		ModBlocks.blockMagneticPistonBase4       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuadruplePistonBase4"      , false).setLength(4);
-//		ModBlocks.blockMagneticStickyPistonBase4 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuadrupleStickyPistonBase4", true ).setLength(4);
-//		ModBlocks.blockMagneticPistonBase5       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuintuplePistonBase5"      , false).setLength(5);
-//		ModBlocks.blockMagneticStickyPistonBase5 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuintupleStickyPistonBase5", true ).setLength(5);
-//		ModBlocks.blockMagneticPistonBase6       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSextuplePistonBase6"       , false).setLength(6);
-//		ModBlocks.blockMagneticStickyPistonBase6 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSextupleStickyPistonBase6" , true ).setLength(6);
-//		ModBlocks.blockMagneticPistonBase7       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptuplePistonBase7"       , false).setLength(7);
-//		ModBlocks.blockMagneticStickyPistonBase7 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptupleStickyPistonBase7" , true ).setLength(7);
-//		ModBlocks.blockMagneticPistonBase8       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctuplePistonBase8"        , false).setLength(8);
-//		ModBlocks.blockMagneticStickyPistonBase8 = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctupleStickyPistonBase8"  , true ).setLength(8);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticPistonBase"               , false);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticStickyPistonBase"         , true );
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoublePistonBase"         , false).setLength(2);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticDoubleStickyPistonBase"   , true ).setLength(2);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticTriplePistonBase"         , false).setLength(3);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticTripleStickyPistonBase"   , true ).setLength(3);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuadruplePistonBase"      , false).setLength(4);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuadrupleStickyPistonBase", true ).setLength(4);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuintuplePistonBase"      , false).setLength(5);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticQuintupleStickyPistonBase", true ).setLength(5);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSextuplePistonBase"       , false).setLength(6);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSextupleStickyPistonBase" , true ).setLength(6);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptuplePistonBase"       , false).setLength(7);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticSeptupleStickyPistonBase" , true ).setLength(7);
+//		ModBlocks.blockMagneticPistonBase       = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctuplePistonBase"        , false).setLength(8);
+//		ModBlocks.blockMagneticStickyPistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic("MagneticOctupleStickyPistonBase"  , true ).setLength(8);
 		
 		
 		

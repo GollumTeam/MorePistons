@@ -1,19 +1,23 @@
 package com.gollum.morepistons.common.block;
 
+import static com.gollum.morepistons.ModMorePistons.log;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	
-	private IIcon[] sidesIcon = new IIcon[6];
+	private IIcon[] sidesIcon = new IIcon[8];
 	
 	/**
 	 * Constructeur
@@ -23,42 +27,38 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	 */
 	public BlockMorePistonsRedStone(String registerName, boolean isSticky) {
 		super(registerName, isSticky);
-		
-		setCreativeTab(null);
 	}
 	
 	//////////////////////////
 	// Gestion des textures //
 	//////////////////////////
 	
+	@Override
 	protected void registerBlockIconsSide  (IIconRegister iconRegister) {
 		for (int i = 0; i < this.sidesIcon.length; i++) {
-			this.sidesIcon[i]  = helper.loadTexture(iconRegister, suffixSide);
+			this.sidesIcon[i]  = helper.loadTexture(iconRegister, suffixSide+"_"+(i+1));
 		}
+		this.blockIcon = this.sidesIcon[0];
 	}
 	
-//	/**
-//	 * Nom d'enregistrement du mod
-//	 */
-//	@Override
-//	public String getTextureKey() {
-//		
-//		String ori = super.getTextureKey();
-//		
-//		// Charge toujour la meme texture quelque soit le reston
-//		return ori.substring(0, ori.length() - 1);
-//	}
-//	
-//	/**
-//	 * Enregistre les textures
-//	 * Depuis la 1.5 on est obligé de charger les texture fichier par fichier
-//	 */
-//	@Override
-//	public void registerBlockIcons(IIconRegister iconRegister) {
-//		this.suffixSide = "_side_"+this.mutiplicateur;
-//		super.registerBlockIcons(iconRegister);
-//	}
-	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsMoving) {
+			te = ((TileEntityMorePistonsMoving) te).subTe;
+		}
+		if (te instanceof TileEntityMorePistonsPiston) {
+			this.blockIcon = this.sidesIcon[(((TileEntityMorePistonsPiston)te).mutiplicateur+7) % 8];
+		}
+		
+		IIcon icon = super.getIcon(world, x, y, z, side);
+		
+		this.blockIcon = this.sidesIcon[0];
+		
+		return icon;
+	}
 	
 	///////////////////////////////////
 	// Gestion du signal de redstone //
@@ -83,15 +83,11 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		return mutiplicateur;
 	}
 	
-	/**
-	 * Applique le bon multiplicateur
-	 * @param par1World
-	 * @param par2
-	 * @param par3
-	 * @param par4
-	 * @param multi
-	 */
 	public void applyMutiplicateur (World world, int x, int y, int z, int multi) {
+		
+		log.debug ("applyMutiplicateur = "+multi, "remote="+world.isRemote);
+		
+		int metadata = world.getBlockMetadata(x, y, z);
 		
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileEntityMorePistonsMoving) {
@@ -100,6 +96,8 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		if (te instanceof TileEntityMorePistonsPiston) {
 			((TileEntityMorePistonsPiston)te).mutiplicateur = multi;
 		}
+		
+		world.notifyBlockOfNeighborChange(x, y, z, this);
 	}
 
 	////////////////////////
@@ -120,12 +118,12 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 			
 			power = world.getBlockPowerInput(x, y, z);
 			
-			ModMorePistons.log.debug("getLengthInWorld: power="+power);
+			log.debug("getLengthInWorld: power="+power);
 			
 			power = (power <= 0) ? 16 : power;
 			power = (power > 16) ? 16 : power;
 			
-			ModMorePistons.log.debug("getLengthInWorld: power="+power);
+			log.debug("getLengthInWorld: power="+power);
 		}
 		
 		return power*multi;
@@ -134,6 +132,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	/**
 	 * Called upon block activation (right click on the block.)
 	 */
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int faceClicked, float par7, float par8, float par9)  {
 		int metadata = world.getBlockMetadata(x, y, z);
 		int orientation = BlockPistonBase.getPistonOrientation(metadata);
