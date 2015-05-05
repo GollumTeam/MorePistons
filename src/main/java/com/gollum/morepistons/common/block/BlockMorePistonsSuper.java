@@ -42,14 +42,19 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	@Override
 	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 
-		ArrayList<EMoveInfosExtend> infosExtend = super.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened);
+		ArrayList<EMoveInfosExtend> infosExtend = super.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened, false);
 		ArrayList<EMoveInfosExtend> upBlocks    = this.listUpBlocks(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened, true);
 		ArrayList<EMoveInfosExtend> nextBlocks  = this.listNextBlocks(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened, true);
 		
-		infosExtend.addAll(upBlocks);
+		for (EMoveInfosExtend infos : infosExtend) {
+			if (infos.block != null && infos.position != null) {
+				world.setTileEntity(infos.position.x, infos.position.y, infos.position.z, null);
+				world.setBlock (infos.position.x, infos.position.y, infos.position.z, Blocks.air, 0, 0);
+			}
+		}
 		
 		ArrayList<EMoveInfosExtend> all = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
-
+		
 		all.addAll(infosExtend);
 		all.addAll(upBlocks);
 		all.addAll(nextBlocks);
@@ -60,17 +65,22 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	@Override
 	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose) {
 		
-		ArrayList<EMoveInfosExtend> infosRetract = super.listBlockRetract(world, x, y, z, orientation, lenghtClose);
+		ArrayList<EMoveInfosExtend> infosRetract = super.listBlockRetract(world, x, y, z, orientation, lenghtClose, false);
 		ArrayList<EMoveInfosExtend> upBlocks     = this.listUpBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
 		ArrayList<EMoveInfosExtend> nextBlocks   = this.listNextBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
 		
-		infosRetract.addAll(upBlocks);
+		for (EMoveInfosExtend infos : infosRetract) {
+			if (infos.block != null && infos.position != null) {
+				world.setTileEntity(infos.position.x, infos.position.y, infos.position.z, null);
+				world.setBlock (infos.position.x, infos.position.y, infos.position.z, Blocks.air, 0, 0);
+			}
+		}
 		
 		ArrayList<EMoveInfosExtend> all = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
 		
+		all.addAll(infosRetract);
 		all.addAll(upBlocks);
 		all.addAll(nextBlocks);
-		all.addAll(infosRetract);
 		
 		return all;
 		
@@ -231,16 +241,6 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
 					TileEntity te = world.getTileEntity(xBlock, yBlock, zBlock);
 					
-	//				if (
-	//					block != null &&
-	//					(
-	//						block instanceof BlockDoor ||
-	//						block instanceof BlockBed
-	//					)
-	//				) {
-	//					continue;
-	//				}
-					
 					// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
 					if (
 						block != null && 
@@ -248,7 +248,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 						(	this.isEmptyBlock(block) ||
 							block instanceof BlockTrapDoor
 						)
-						&& SuperPistonManager.instance.isAttachOnNext (block, metadata, o)
+						&& SuperPistonManager.instance.isAttachOnNext (block, metadata, extend ? o : Facing.oppositeSide[o])
 					) {
 						int moveBlock = 0;
 						xExtension = xBlock;

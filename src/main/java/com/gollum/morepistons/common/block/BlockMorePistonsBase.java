@@ -739,6 +739,10 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	}
 	
 	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
+		return this.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened, true);
+	}
+	
+	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened, boolean removeAfter) {
 		
 		int xExtension = x + Facing.offsetsXForSide[orientation] * currentOpened;
 		int yExtension = y + Facing.offsetsYForSide[orientation] * currentOpened;
@@ -773,9 +777,11 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 				break;
 			} else {
 				infosExtend.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), size));
-				
-				world.setTileEntity(xExtension, yExtension, zExtension, null);
-				world.setBlock (xExtension, yExtension, zExtension, Blocks.air, 0, 0);
+
+				if (removeAfter) {
+					world.setTileEntity(xExtension, yExtension, zExtension, null);
+					world.setBlock (xExtension, yExtension, zExtension, Blocks.air, 0, 0);
+				}
 			}
 			
 		}
@@ -789,10 +795,15 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		return infosExtend;
 	}
 	
+	
 	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose) {
+		return this.listBlockRetract(world, x, y, z, orientation, lenghtClose, true);
+	}
+	
+	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose, boolean removeAfter) {
 		ArrayList<EMoveInfosExtend> infosRetract = new ArrayList<EMoveInfosExtend>();
 		
-		for (int i = 1; i <= 1; i++) {
+		for (int i = 1; i <= 4; i++) {
 			int xP1 = x + Facing.offsetsXForSide[orientation] * (lenghtClose + i);
 			int yP1 = y + Facing.offsetsYForSide[orientation] * (lenghtClose + i);
 			int zP1 = z + Facing.offsetsZForSide[orientation] * (lenghtClose + i);
@@ -812,8 +823,10 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					lenghtClose
 				));
 				
-				world.setTileEntity(xP1, yP1, zP1, null);
-				world.setBlock (xP1, yP1, zP1, Blocks.air, 0, 0);
+				if (removeAfter) {
+					world.setTileEntity(xP1, yP1, zP1, null);
+					world.setBlock (xP1, yP1, zP1, Blocks.air, 0, 0);
+				}
 			}
 		}
 		
@@ -882,7 +895,6 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		}
 	}
 	
-	
 	protected void retracSticky(World world, int x, int y, int z, int orientation, int lenghtClose) {
 		
 		ArrayList<EMoveInfosExtend> infosRetract = this.listBlockRetract(world, x, y, z, orientation, lenghtClose);
@@ -920,12 +932,11 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		ArrayList<EMoveInfosExtend> infosExtend = this.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened);
 		
+		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened);
+		
 		for (EMoveInfosExtend infos : infosExtend) {
 			world.notifyBlockChange(infos.position.x, infos.position.y, infos.position.z, world.getBlock(infos.position.x, infos.position.y, infos.position.z));
 		}
-		
-		this.moveBlockExtend(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened);
-		
 	}
 	
 	protected void moveBlockExtend (ArrayList<EMoveInfosExtend> infosExtend, World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
