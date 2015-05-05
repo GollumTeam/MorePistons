@@ -8,9 +8,9 @@ public class ConfigMorePistons extends Config {
 	@ConfigProp(mcRestart = true) public boolean overrideVanillaPiston = true;
 	@ConfigProp(mcRestart = true) public boolean overrideVanillaStickPiston = true;
 	
-	@ConfigProp(minValue="0", mcRestart = true) public int numberMovableBlockWithDefaultPiston = 12;
-	@ConfigProp(minValue="0", mcRestart = true) public int numberMovableBlockWithSuperPiston   = 41;
+	@ConfigProp(minValue="0") public int numberMovableBlockWithDefaultPiston = 12;
+	@ConfigProp(minValue="0") public int numberMovableBlockWithSuperPiston   = 41;
 	
-	@ConfigProp(minValue="0.1", mcRestart = true) public double powerGravitationalPistons = 1.5D;
+	@ConfigProp(minValue="0.1", maxValue="15.0") public double powerGravitationalPistons = 1.5D;
 	
 }

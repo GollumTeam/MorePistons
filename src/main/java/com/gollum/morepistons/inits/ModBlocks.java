@@ -4,6 +4,7 @@ import com.gollum.core.tools.registry.BuildingBlockRegistry;
 import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
 import com.gollum.morepistons.common.block.BlockMorePistonsExtension;
+import com.gollum.morepistons.common.block.BlockMorePistonsGravitational;
 import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
 import com.gollum.morepistons.common.block.BlockMorePistonsRedStone;
 import com.gollum.morepistons.common.block.BlockMorePistonsRod;
@@ -35,9 +36,9 @@ public class ModBlocks {
 	public static BlockMorePistonsBase    blockOctuplePistonBase;
 	public static BlockMorePistonsBase    blockOctupleStickyPistonBase;
 	
-//	public static BlockMorePistonsGravitational blockGravitationalPistonBase;
-//	public static BlockMorePistonsGravitational blockGravitationalStickyPistonBase;
-//	
+	public static BlockMorePistonsGravitational blockGravitationalPistonBase;
+	public static BlockMorePistonsGravitational blockGravitationalStickyPistonBase;
+	
 	public static BlockMorePistonsSuper blockSuperPistonBase;
 	public static BlockMorePistonsSuper blockSuperStickyPistonBase;
 	public static BlockMorePistonsSuper blockSuperDoublePistonBase;
@@ -117,9 +118,13 @@ public class ModBlocks {
 		ModBlocks.blockPistonExtention = new BlockMorePistonsExtension("MorePistonsExtension");
 		ModBlocks.blockPistonRod       = new BlockMorePistonsRod      ("MorePistonsRod");
 		ModBlocks.blockPistonMoving    = new BlockMorePistonsMoving   ("MorePistonsMoving");
+
+		////////////////////////////
+		// Gravitationnal pistons //
+		////////////////////////////
 		
-//		ModBlocks.blockGravitationalPistonBase       = new BlockMorePistonsGravitational("GravitationalPistonBase"      , false);
-//		ModBlocks.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational("GravitationalStickyPistonBase", true);
+		ModBlocks.blockGravitationalPistonBase       = new BlockMorePistonsGravitational("GravitationalPistonBase"      , false);
+		ModBlocks.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational("GravitationalStickyPistonBase", true);
 
 		/////////////////////
 		// Vanilla pistons //
