@@ -51,26 +51,17 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		public Block block = null;
 		public int metadata = 0;
-		public int move = 0;
 		public Integer3d position = new Integer3d();
+		public TileEntity tileEntity = null;
+		public int move = 0;
 		public EMoveInfosExtend() {}
 		
-		public EMoveInfosExtend(Block block, int metadata, int move) {
-			this.block    = block;
-			this.metadata = metadata;
-			this.move     = move;
-		}
-
-		public EMoveInfosExtend(Integer3d position, int move) {
-			this.position = position;
-			this.move = move;
-		}
-
-		public EMoveInfosExtend(Block block, int metadata, Integer3d position, int move) {
-			this.block = block;
-			this.metadata = metadata;
-			this.position = position;
-			this.move     = move;
+		public EMoveInfosExtend(Block block, int metadata, TileEntity tileEntity, Integer3d position, int move) {
+			this.block      = block;
+			this.metadata   = metadata;
+			this.position   = position;
+			this.tileEntity = BlockMorePistonsBase.cloneTileEntity(tileEntity);
+			this.move       = move;
 		}
 	}
 	
@@ -763,13 +754,14 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			xExtension += Facing.offsetsXForSide[orientation];
 			yExtension += Facing.offsetsYForSide[orientation];
 			zExtension += Facing.offsetsZForSide[orientation];
-			
-			Block block = world.getBlock(xExtension, yExtension, zExtension);
-			int metadata = world.getBlockMetadata(xExtension, yExtension, zExtension);
+
+			Block block   = world.getBlock(xExtension, yExtension, zExtension);
+			TileEntity te = world.getTileEntity(xExtension, yExtension, zExtension);
+			int metadata  = world.getBlockMetadata(xExtension, yExtension, zExtension);
 			
 			// Drop les élements légés (fleurs, leviers, herbes ..)
 			if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-				dropList.add(new EMoveInfosExtend(block, metadata, new Integer3d(xExtension, yExtension, zExtension), 0));
+				dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
 			}
 			
 			if (this.isEmptyBlock(block)) {
@@ -780,7 +772,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			} else if (!this.isMovableBlock(block, world, xExtension, yExtension, zExtension)) {
 				break;
 			} else {
-				infosExtend.add(new EMoveInfosExtend(block, metadata, new Integer3d(xExtension, yExtension, zExtension), size));
+				infosExtend.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), size));
 				
 				world.setTileEntity(xExtension, yExtension, zExtension, null);
 				world.setBlock (xExtension, yExtension, zExtension, Blocks.air, 0, 0);
@@ -810,7 +802,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		return false;
 	}
 	
-	protected TileEntity cloneTileEntity(TileEntity te) {
+	public static TileEntity cloneTileEntity(TileEntity te) {
 		if (te == null) {
 			return null;
 		}
@@ -837,12 +829,15 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		this.cleanBlockMoving(world, x2, y2, z2);
 		
+		TileEntity teCopy = this.cloneTileEntity(world.getTileEntity(x, y, z));
+		
 		this.createMoving(
 			world,
 			new Integer3d(x, y, z),
 			new Integer3d(x, y, z),
 			this,
 			orientation | (this.isSticky ? 0x8 : 0x0),
+			teCopy,
 			orientation,
 			0,
 			lenghtClose,
@@ -864,8 +859,9 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 
 		this.cleanBlockMoving(world, xP1, yP1, zP1);
 		
-		Block block    = world.getBlock(xP1, yP1, zP1);
-		int   metadata = world.getBlockMetadata(xP1, yP1, zP1);
+		Block block            = world.getBlock(xP1, yP1, zP1);
+		int metadata           = world.getBlockMetadata(xP1, yP1, zP1);
+		TileEntity  tileEntity = this.cloneTileEntity(world.getTileEntity(xP1, yP1, zP1));
 		
 		if (!isEmptyBlock(block) && isMovableBlock(block, world, xP1, yP1, zP1)) {
 			
@@ -879,6 +875,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 				),
 				block,
 				metadata,
+				tileEntity,
 				orientation,
 				0,
 				lenghtClose,
@@ -922,6 +919,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					new Integer3d(xExtension, yExtension, zExtension),
 					infos.block,
 					infos.metadata,
+					infos.tileEntity,
 					orientation, 
 					currentOpened,
 					infos.move,
@@ -967,6 +965,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			new Integer3d(xExtension, yExtension, zExtension),
 			ModBlocks.blockPistonExtention,
 			orientation | (this.isSticky ? 0x8 : 0x0),
+			null,
 			orientation,
 			currentOpened,
 			lenghtOpened,
@@ -975,21 +974,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		);
 	}
 
-	protected void createMoving(World world, Integer3d pistonPos, Integer3d dest, Block block, int metadata, int orientation, int start, int lenghtOpened, boolean extending, boolean root) {
-		
-		TileEntity teCopy = this.cloneTileEntity(world.getTileEntity(
-			dest.x + (extending ? -1 : 1) * lenghtOpened,
-			dest.y + (extending ? -1 : 1) * lenghtOpened,
-			dest.z + (extending ? -1 : 1) * lenghtOpened 
-		));
-		
-		if (root) {
-			teCopy = this.cloneTileEntity(world.getTileEntity(
-				dest.x,
-				dest.y,
-				dest.z 
-			));
-		}
+	protected void createMoving(World world, Integer3d pistonPos, Integer3d dest, Block block, int metadata, TileEntity teCopy,  int orientation, int start, int lenghtOpened, boolean extending, boolean root) {
 		
 		world.setBlock(dest.x, dest.y, dest.z, ModBlocks.blockPistonMoving, metadata, 2);
 		TileEntityMorePistonsMoving teExtension = new TileEntityMorePistonsMoving(

@@ -76,8 +76,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				yBlock = blockOrigin.position.y + 1;
 				zBlock = blockOrigin.position.z;
 				
-				Block block    = world.getBlock(xBlock, yBlock, zBlock);
-				int   metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
+				Block block   = world.getBlock(xBlock, yBlock, zBlock);
+				int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
+				TileEntity te = world.getTileEntity(xBlock, yBlock, zBlock);
 				
 				
 				// Déplacement des block standare au dessus
@@ -105,7 +106,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-										dropList.add(new EMoveInfosExtend(block, metadata, new Integer3d(xExtension, yExtension, zExtension), 0));
+										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
 									}
 								}
 							}
@@ -126,12 +127,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-										dropList.add(new EMoveInfosExtend(block, metadata, new Integer3d(xExtension, yExtension, zExtension), 0));
+										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
 									}
 								}
 							}
 							
-							blocksTop.add(new EMoveInfosExtend(block, metadata, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
 						}
 					} else if (!SuperPistonManager.instance.isntAttachOnTop (block, metadata)) {
 						
@@ -161,7 +162,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
 							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
 							
-							blocksTop.add(new EMoveInfosExtend(block, metadata, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
 						}
 					}
 				}
