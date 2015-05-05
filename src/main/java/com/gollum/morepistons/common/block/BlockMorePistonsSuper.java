@@ -43,7 +43,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	protected ArrayList<EMoveInfosExtend> listBlockExtend (World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
 
 		ArrayList<EMoveInfosExtend> infosExtend = super.listBlockExtend(world, x, y, z, orientation, currentOpened, lenghtOpened);
-		ArrayList<EMoveInfosExtend> upBlocks    = this.listUpBlocks(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened);
+		ArrayList<EMoveInfosExtend> upBlocks    = this.listUpBlocks(infosExtend, world, x, y, z, orientation, currentOpened, lenghtOpened, true);
 		
 		infosExtend.addAll(upBlocks);
 		
@@ -55,11 +55,30 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		return all;
 	}
 	
-	protected ArrayList<EMoveInfosExtend> listUpBlocks (ArrayList<EMoveInfosExtend> blocksOrigin, World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened) {
+	@Override
+	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose) {
+		
+		ArrayList<EMoveInfosExtend> infosRetract = super.listBlockRetract(world, x, y, z, orientation, lenghtClose);
+		ArrayList<EMoveInfosExtend> upBlocks     = this.listUpBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
+		
+		infosRetract.addAll(upBlocks);
+		
+		ArrayList<EMoveInfosExtend> all = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
+		
+		all.addAll(upBlocks);
+		all.addAll(infosRetract);
+		
+		return all;
+		
+	}
+	
+	protected ArrayList<EMoveInfosExtend> listUpBlocks (ArrayList<EMoveInfosExtend> blocksOrigin, World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened, boolean extend) {
 
 		int xExtension;
 		int yExtension;
 		int zExtension;
+		
+		int direction = extend ? 1 : -1;
 		
 		ArrayList<EMoveInfosExtend> blocksTop = new ArrayList<EMoveInfosExtend>();
 		ArrayList<EMoveInfosExtend> dropList  = new ArrayList<EMoveInfosExtend>();
@@ -95,9 +114,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							yExtension = yBlock;
 							zExtension = zBlock;
 							for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
-								xExtension += Facing.offsetsXForSide[orientation];
-								yExtension += Facing.offsetsYForSide[orientation];
-								zExtension += Facing.offsetsZForSide[orientation];
+								xExtension += Facing.offsetsXForSide[orientation]*direction;
+								yExtension += Facing.offsetsYForSide[orientation]*direction;
+								zExtension += Facing.offsetsZForSide[orientation]*direction;
 								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
 								if (!this.isEmptyBlock(blockNext)) {
 									break;
@@ -119,9 +138,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							zExtension = zBlock;
 							// Fait sauter les element avec un flag 1 qui non pas bouger 
 							for (int j = 0; j < moveBlock; j++) {
-								xExtension += Facing.offsetsXForSide[orientation];
-								yExtension += Facing.offsetsYForSide[orientation];
-								zExtension += Facing.offsetsZForSide[orientation];
+								xExtension += Facing.offsetsXForSide[orientation]*direction;
+								yExtension += Facing.offsetsYForSide[orientation]*direction;
+								zExtension += Facing.offsetsZForSide[orientation]*direction;
 								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
 								if (blockNext != null && block != Blocks.air) {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
@@ -141,9 +160,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 						yExtension = yBlock;
 						zExtension = zBlock;
 						for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
-							xExtension += Facing.offsetsXForSide[orientation];
-							yExtension += Facing.offsetsYForSide[orientation];
-							zExtension += Facing.offsetsZForSide[orientation];
+							xExtension += Facing.offsetsXForSide[orientation]*direction;
+							yExtension += Facing.offsetsYForSide[orientation]*direction;
+							zExtension += Facing.offsetsZForSide[orientation]*direction;
 							Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
 							if (blockNext != null && blockNext != Blocks.air) {
 								break;
@@ -158,9 +177,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							world.setTileEntity(xBlock, yBlock, zBlock, null);
 							world.setBlock (xBlock, yBlock, zBlock, Blocks.air, 0, 0);
 							
-							xExtension = xBlock + Facing.offsetsXForSide[orientation]*moveBlock;
-							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
-							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
+							xExtension = xBlock + Facing.offsetsXForSide[orientation]*moveBlock*direction;
+							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock*direction;
+							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock*direction;
 							
 							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
 						}

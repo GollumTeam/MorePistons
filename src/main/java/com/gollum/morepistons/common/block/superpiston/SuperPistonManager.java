@@ -39,7 +39,7 @@ public class SuperPistonManager {
 			(block instanceof BlockTripWireHook) ||                            // Les piège
 			(block instanceof BlockTorch && metadata != 5) ||                  // Les Torches charbons et Redstones
 			(block instanceof BlockTrapDoor && (metadata & 0x8) == 0x8) ||     // Les Trappe
-			(block instanceof BlockLever && metadata != 5 && metadata != 6)    // Les leviers
+			(block instanceof BlockLever && (metadata & 0x7) != 5 && (metadata & 0x7) != 6)    // Les leviers
 			
 		) {
 			return true;

@@ -148,9 +148,8 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	
 	public void setBlockFinalMove() {
 		
-		
 		this.updatePushedObjects(1.0F);
-
+		
 		BlockMorePistonsBase piston = this.pistonOrigin();
 		
 		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
@@ -187,6 +186,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 					this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
 				}
 				this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
+				
 			}
 			
 		}

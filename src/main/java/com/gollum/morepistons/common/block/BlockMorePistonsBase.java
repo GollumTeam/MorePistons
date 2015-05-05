@@ -743,7 +743,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		int xExtension = x + Facing.offsetsXForSide[orientation] * currentOpened;
 		int yExtension = y + Facing.offsetsYForSide[orientation] * currentOpened;
 		int zExtension = z + Facing.offsetsZForSide[orientation] * currentOpened;
-
+		
 		ArrayList<EMoveInfosExtend> infosExtend = new ArrayList<EMoveInfosExtend>();
 		ArrayList<EMoveInfosExtend> dropList    = new ArrayList<EMoveInfosExtend>();
 		
@@ -787,6 +787,37 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		}
 		
 		return infosExtend;
+	}
+	
+	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose) {
+		ArrayList<EMoveInfosExtend> infosRetract = new ArrayList<EMoveInfosExtend>();
+		
+		for (int i = 1; i <= 1; i++) {
+			int xP1 = x + Facing.offsetsXForSide[orientation] * (lenghtClose + i);
+			int yP1 = y + Facing.offsetsYForSide[orientation] * (lenghtClose + i);
+			int zP1 = z + Facing.offsetsZForSide[orientation] * (lenghtClose + i);
+			
+			this.cleanBlockMoving(world, xP1, yP1, zP1);
+			
+			Block block            = world.getBlock(xP1, yP1, zP1);
+			int metadata           = world.getBlockMetadata(xP1, yP1, zP1);
+			TileEntity  tileEntity = this.cloneTileEntity(world.getTileEntity(xP1, yP1, zP1));
+
+			if (!isEmptyBlock(block) && isMovableBlock(block, world, xP1, yP1, zP1)) {
+				infosRetract.add(new EMoveInfosExtend (
+					block,
+					metadata,
+					tileEntity,
+					new Integer3d(xP1, yP1, zP1),
+					lenghtClose
+				));
+				
+				world.setTileEntity(xP1, yP1, zP1, null);
+				world.setBlock (xP1, yP1, zP1, Blocks.air, 0, 0);
+			}
+		}
+		
+		return infosRetract;
 	}
 	
 	public static boolean cleanBlockMoving(World world, int x, int y, int z) {
@@ -851,39 +882,37 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		}
 	}
 	
+	
 	protected void retracSticky(World world, int x, int y, int z, int orientation, int lenghtClose) {
-
-		int xP1 = x + Facing.offsetsXForSide[orientation] * (lenghtClose + 1);
-		int yP1 = y + Facing.offsetsYForSide[orientation] * (lenghtClose + 1);
-		int zP1 = z + Facing.offsetsZForSide[orientation] * (lenghtClose + 1);
-
-		this.cleanBlockMoving(world, xP1, yP1, zP1);
 		
-		Block block            = world.getBlock(xP1, yP1, zP1);
-		int metadata           = world.getBlockMetadata(xP1, yP1, zP1);
-		TileEntity  tileEntity = this.cloneTileEntity(world.getTileEntity(xP1, yP1, zP1));
+		ArrayList<EMoveInfosExtend> infosRetract = this.listBlockRetract(world, x, y, z, orientation, lenghtClose);
+
+		for (EMoveInfosExtend infos : infosRetract) {
+			if (infos.block != null && infos.position != null) {
+				
+				this.createMoving(
+					world,
+					new Integer3d(x, y, z),
+					new Integer3d(
+						infos.position.x - Facing.offsetsXForSide[orientation] * infos.move,
+						infos.position.y - Facing.offsetsYForSide[orientation] * infos.move,
+						infos.position.z - Facing.offsetsZForSide[orientation] * infos.move
+					),
+					infos.block,
+					infos.metadata,
+					infos.tileEntity,
+					orientation,
+					0,
+					infos.move,
+					false,
+					false
+				);
+				
+			}
+		}
 		
-		if (!isEmptyBlock(block) && isMovableBlock(block, world, xP1, yP1, zP1)) {
-			
-			this.createMoving(
-				world,
-				new Integer3d(x, y, z),
-				new Integer3d(
-					x + Facing.offsetsXForSide[orientation],
-					y + Facing.offsetsYForSide[orientation],
-					z + Facing.offsetsZForSide[orientation]
-				),
-				block,
-				metadata,
-				tileEntity,
-				orientation,
-				0,
-				lenghtClose,
-				false,
-				false
-			);
-			world.setBlockToAir (xP1, yP1, zP1);
-			
+		for (EMoveInfosExtend infos : infosRetract) {
+			world.notifyBlockChange(infos.position.x, infos.position.y, infos.position.z, world.getBlock(infos.position.x, infos.position.y, infos.position.z));
 		}
 	}
 	
