@@ -119,7 +119,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					
 					if (
 						!this.isEmptyBlock(block) &&
-						!SuperPistonManager.instance.dontMoveIfOnTop(block)
+						!SuperPistonManager.instance.dontMoveIfOnTop(block, metadata, world, xBlock, yBlock, zBlock, extend ? orientation : Facing.oppositeSide[orientation])
 					) {
 						
 						int moveBlock = 0;
@@ -167,7 +167,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							
 							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
 						}
-					} else if (!SuperPistonManager.instance.isntAttachOnTop (block, metadata)) {
+					} else if (!SuperPistonManager.instance.isntAttachOnTop (block, metadata, world, xBlock, yBlock, zBlock, extend ? orientation : Facing.oppositeSide[orientation])) {
 						
 						int moveBlock = 0;
 						xExtension = xBlock;
@@ -245,11 +245,13 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					if (
 						block != null && 
 						block != Blocks.air &&
-						(	this.isEmptyBlock(block) ||
-							block instanceof BlockTrapDoor
+						(
+							this.isEmptyBlock(block) ||
+							SuperPistonManager.instance.isAttachableBlockOnNext (block, metadata, world, xBlock, yBlock, zBlock, extend ? o : Facing.oppositeSide[o])
 						)
-						&& SuperPistonManager.instance.isAttachOnNext (block, metadata, extend ? o : Facing.oppositeSide[o])
+						&& SuperPistonManager.instance.isAttachOnNext (block, metadata, world, xBlock, yBlock, zBlock, extend ? o : Facing.oppositeSide[o])
 					) {
+						
 						int moveBlock = 0;
 						xExtension = xBlock;
 						yExtension = yBlock;
