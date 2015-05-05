@@ -62,12 +62,14 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		
 		ArrayList<EMoveInfosExtend> infosRetract = super.listBlockRetract(world, x, y, z, orientation, lenghtClose);
 		ArrayList<EMoveInfosExtend> upBlocks     = this.listUpBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
+		ArrayList<EMoveInfosExtend> nextBlocks   = this.listNextBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
 		
 		infosRetract.addAll(upBlocks);
 		
 		ArrayList<EMoveInfosExtend> all = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
 		
 		all.addAll(upBlocks);
+		all.addAll(nextBlocks);
 		all.addAll(infosRetract);
 		
 		return all;
@@ -91,7 +93,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 			int zBlock;
 			
 			// Si on est à l'orizontal
-			if (orientation != 0 && orientation != 1) {
+			if (blockOrigin.block != null && blockOrigin.position != null && orientation != 0 && orientation != 1) {
 
 				xBlock = blockOrigin.position.x;
 				yBlock = blockOrigin.position.y + 1;
@@ -198,84 +200,92 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		return blocksTop;
 	}
 	
-	protected ArrayList<EMoveInfosExtend> listNextBlocks (ArrayList<EMoveInfosExtend> blocksOrigin, World world, int x, int y, int z, int orientation, int lenghtOpened, boolean extend) {
+	protected ArrayList<EMoveInfosExtend> listNextBlocks (ArrayList<EMoveInfosExtend> blocksOrigin, World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened, boolean extend) {
 		
 		int xExtension;
 		int yExtension;
 		int zExtension;
 		
+		int direction = extend ? 1 : -1;
+		
 		ArrayList<EMoveInfosExtend> blocksList = new ArrayList<EMoveInfosExtend>();
+		ArrayList<EMoveInfosExtend> dropList  = new ArrayList<EMoveInfosExtend>();
 		
 		for (EMoveInfosExtend blockOrigin : blocksOrigin) {
 			
-			int xBlock;
-			int yBlock;
-			int zBlock;
-			
-			// On aprcour les 4 coins
-			for (int o = 2; o <= 5; o++) {
+			if (blockOrigin.block != null && blockOrigin.position != null) {
 				
-				if (o == orientation || o == Facing.oppositeSide[orientation]) {
-					continue;
+				// On aprcour les 4 coins
+				for (int o = 2; o <= 5; o++) {
+					
+					if (o == orientation || o == Facing.oppositeSide[orientation]) {
+						continue;
+					}
+					
+					
+					int xBlock = blockOrigin.position.x + Facing.offsetsXForSide[o]*direction;
+					int yBlock = blockOrigin.position.y;
+					int zBlock = blockOrigin.position.z + Facing.offsetsZForSide[o]*direction;
+					
+					Block block   = world.getBlock(xBlock, yBlock, zBlock);
+					int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
+					TileEntity te = world.getTileEntity(xBlock, yBlock, zBlock);
+					
+	//				if (
+	//					block != null &&
+	//					(
+	//						block instanceof BlockDoor ||
+	//						block instanceof BlockBed
+	//					)
+	//				) {
+	//					continue;
+	//				}
+					
+					// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
+					if (
+						block != null && 
+						block != Blocks.air &&
+						(	this.isEmptyBlock(block) ||
+							block instanceof BlockTrapDoor
+						)
+						&& SuperPistonManager.instance.isAttachOnNext (block, metadata, o)
+					) {
+						int moveBlock = 0;
+						xExtension = xBlock;
+						yExtension = yBlock;
+						zExtension = zBlock;
+						for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
+							xExtension += Facing.offsetsXForSide[orientation]*direction;
+							yExtension += Facing.offsetsYForSide[orientation]*direction;
+							zExtension += Facing.offsetsZForSide[orientation]*direction;
+							Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+							if (blockNext != null && blockNext != Blocks.air) {
+								break;
+							}
+						}
+						
+						// Si le mouvement ne peux etre complet alors on drop l'element
+						if (moveBlock != blockOrigin.move) {
+							// Drop les élements légés (fleurs, leviers, herbes ..)
+							if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
+								dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+							}
+						} else {
+							world.setBlockToAir(xBlock, yBlock, zBlock);
+							
+							xExtension = xBlock + Facing.offsetsXForSide[orientation]*moveBlock;
+							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
+							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
+							
+							blocksList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+						}
+					}
 				}
-				
-				
-				xBlock = blockOrigin.position.x + Facing.offsetsXForSide[o];
-				yBlock = blockOrigin.position.y;
-				zBlock = blockOrigin.position.z + Facing.offsetsZForSide[o];
-				
-				Block block       = world.getBlock(xBlock, yBlock, zBlock);
-				int metadata = world.getBlockMetadata(xBlock, yBlock, zBlock);
-				
-//				if (
-//					block != null &&
-//					(
-//						block instanceof BlockDoor ||
-//						block instanceof BlockBed
-//					)
-//				) {
-//					continue;
-//				}
-				
-				// nous avons la un block qui saccroche devrais dropper si c'etait un piston normal
-				if (
-					block != null && 
-					block != Blocks.air &&
-					(	this.isEmptyBlock(block) ||
-						block instanceof BlockTrapDoor
-					)
-					&& SuperPistonManager.instance.isAttachOnNext (block, metadata, o)
-				) {
-//					int moveBlock = 0;
-//					xExtension = xBlock;
-//					yExtension = yBlock;
-//					zExtension = zBlock;
-//					for (moveBlock = 0; moveBlock < blockOrigin.move; moveBlock++) {
-//						xExtension += Facing.offsetsXForSide[orientation];
-//						yExtension += Facing.offsetsYForSide[orientation];
-//						zExtension += Facing.offsetsZForSide[orientation];
-//						Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
-//						if (blockNext != null && blockNext != Blocks.air) {
-//							break;
-//						}
-//					}
-//					
-//					// Si le mouvement ne peux etre complet alors on drop l'element
-//					if (moveBlock != blockOrigin.move) {
-//						// Drop les élements légés (fleurs, leviers, herbes ..)
-//						this.dropMobilityFlag1(block, metadata, world, xBlock, yBlock, zBlock);
-//					} else {
-//						world.setBlockToAir(xBlock, yBlock, zBlock);
-//						
-//						xExtension = xBlock + Facing.offsetsXForSide[orientation]*moveBlock;
-//						yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
-//						zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
-//						
-//						blocksList.add(new EMoveInfosExtend(block, metadata, xExtension, yExtension, zExtension, moveBlock));
-//					}
-//				}
 			}
-			
+		}
+		
+		for (EMoveInfosExtend info : dropList) {
+			this.dropMobilityFlag1(info.block, info.metadata, world, info.position.x, info.position.y, info.position.z);
 		}
 		
 		return blocksList;
