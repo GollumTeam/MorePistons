@@ -17,18 +17,20 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsMagneticExtension extends BlockMorePistonsExtension {
-	
+
 	protected IIcon iconTop;
+	protected IIcon iconBack;
+	protected IIcon iconSide;
 	
 	public BlockMorePistonsMagneticExtension(String registerName) {
 		super(registerName);
-		this.helper.vanillaTexture = true;
 	}
 	
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.iconTop = iconRegister.registerIcon(ModMorePistons.MODID+":top_magnetic");
-		super.registerBlockIcons(iconRegister);
+		this.iconTop  = helper.loadTexture(iconRegister, "top" );
+		this.iconBack = helper.loadTexture(iconRegister, "back");
+		this.iconSide = helper.loadTexture(iconRegister, "side");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -39,6 +41,11 @@ public class BlockMorePistonsMagneticExtension extends BlockMorePistonsExtension
 		if (side == direction) {
 			return this.iconTop;
 		}
-		return super.getIcon(side, metadata);
+		
+		if (direction < 6 && side == Facing.oppositeSide[direction]) {
+			return this.iconBack;
+		}
+		
+		return this.iconSide;
 	}
 }
