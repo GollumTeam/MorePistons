@@ -60,7 +60,7 @@ public class BlockMorePistonsMagnetic extends BlockMorePistonsBase {
 	
 	@Override
 	protected void registerBlockIconsTop (IIconRegister iconRegister) { 
-		this.iconTop = helper.loadTexture(iconRegister, "top_magnetic", true);
+		this.iconTop = helper.loadTexture(iconRegister, "morepistonsmagneticextension_top", true);
 	}
 	
 	///////////////////////////////////

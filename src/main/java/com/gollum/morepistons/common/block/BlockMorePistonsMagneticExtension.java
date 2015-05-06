@@ -28,9 +28,9 @@ public class BlockMorePistonsMagneticExtension extends BlockMorePistonsExtension
 	
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.iconTop  = helper.loadTexture(iconRegister, "top" );
-		this.iconBack = helper.loadTexture(iconRegister, "back");
-		this.iconSide = helper.loadTexture(iconRegister, "side");
+		this.iconTop  = helper.loadTexture(iconRegister, "_top" );
+		this.iconBack = helper.loadTexture(iconRegister, "_back");
+		this.iconSide = helper.loadTexture(iconRegister, "_side");
 	}
 	
 	@SideOnly(Side.CLIENT)
