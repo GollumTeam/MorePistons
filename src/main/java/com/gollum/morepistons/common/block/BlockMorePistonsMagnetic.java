@@ -4,6 +4,7 @@ import static com.gollum.morepistons.ModMorePistons.log;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -11,6 +12,7 @@ import net.minecraft.world.World;
 
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import com.gollum.morepistons.inits.ModBlocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,6 +29,10 @@ public class BlockMorePistonsMagnetic extends BlockMorePistonsBase {
 	 */
 	public BlockMorePistonsMagnetic(String registerName) {
 		super(registerName, true);
+	}
+	
+	public BlockMorePistonsExtension getBlockExtention () {
+		return ModBlocks.blockPistonMagneticExtention;
 	}
 	
 	//////////////////////////
@@ -50,6 +56,11 @@ public class BlockMorePistonsMagnetic extends BlockMorePistonsBase {
 		this.blockIcon = this.sidesIcon[0];
 		
 		return icon;
+	}
+	
+	@Override
+	protected void registerBlockIconsTop (IIconRegister iconRegister) { 
+		this.iconTop = helper.loadTexture(iconRegister, "top_magnetic", true);
 	}
 	
 	///////////////////////////////////

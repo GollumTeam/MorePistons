@@ -183,7 +183,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
 						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
 					}  else {
-						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, ModBlocks.blockPistonExtention, this.storedOrientation | (piston.isSticky() ? 0x8 : 0x0), 3);
+						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, piston.getBlockExtention(), this.storedOrientation | (piston.isSticky() ? 0x8 : 0x0), 3);
 						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, null);
 					}
 				} else {

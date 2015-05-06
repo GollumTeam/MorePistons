@@ -82,19 +82,19 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 			
 			if (tileEntityMoving.root) {
 				
-				ModBlocks.blockPistonExtention.func_150086_a(blockPiston.getPistonExtensionTexture());
+				blockPiston.getBlockExtention().func_150086_a(blockPiston.getPistonExtensionTexture());
 				this.blockRenderer.renderPistonExtensionAllFaces(
-					ModBlocks.blockPistonExtention,
+					blockPiston.getBlockExtention(),
 					tileEntityMoving.xCoord,
 					tileEntityMoving.yCoord,
 					tileEntityMoving.zCoord,
 					distance > 0.5f
 				);
-				ModBlocks.blockPistonExtention.func_150087_e();
+				blockPiston.getBlockExtention().func_150087_e();
 				
 			} else if (block instanceof BlockMorePistonsExtension) {
 				
-				ModBlocks.blockPistonExtention.func_150086_a(blockPiston.getPistonExtensionTexture());
+				blockPiston.getBlockExtention().func_150086_a(blockPiston.getPistonExtensionTexture());
 				this.blockRenderer.renderPistonExtensionAllFaces(
 					block,
 					tileEntityMoving.xCoord,
@@ -102,7 +102,7 @@ public class TileEntityMorePistonsMovingRenderer extends ATileEntityMorePistonsR
 					tileEntityMoving.zCoord,
 					reste > 0.5f
 				);
-				ModBlocks.blockPistonExtention.func_150087_e();
+				blockPiston.getBlockExtention().func_150087_e();
 				
 			} else  {
 				if (block instanceof BlockMorePistonsBase) {

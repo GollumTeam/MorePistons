@@ -124,6 +124,10 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		return false;
 	}
 	
+	public BlockMorePistonsExtension getBlockExtention () {
+		return ModBlocks.blockPistonExtention;
+	}
+	
 	//////////////////////////
 	// Gestion des textures //
 	//////////////////////////
@@ -1079,7 +1083,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			world,
 			new Integer3d(x, y, z),
 			new Integer3d(xExtension, yExtension, zExtension),
-			ModBlocks.blockPistonExtention,
+			this.getBlockExtention(),
 			orientation | (this.isSticky ? 0x8 : 0x0),
 			null,
 			orientation,

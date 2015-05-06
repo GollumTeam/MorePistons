@@ -6,6 +6,7 @@ import com.gollum.morepistons.common.block.BlockMorePistonsBase;
 import com.gollum.morepistons.common.block.BlockMorePistonsExtension;
 import com.gollum.morepistons.common.block.BlockMorePistonsGravitational;
 import com.gollum.morepistons.common.block.BlockMorePistonsMagnetic;
+import com.gollum.morepistons.common.block.BlockMorePistonsMagneticExtension;
 import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
 import com.gollum.morepistons.common.block.BlockMorePistonsRedStone;
 import com.gollum.morepistons.common.block.BlockMorePistonsRod;
@@ -85,10 +86,11 @@ public class ModBlocks {
 	public static BlockMorePistonsMagnetic blockMagneticSextuplePistonBase;
 	public static BlockMorePistonsMagnetic blockMagneticSeptuplePistonBase;
 	public static BlockMorePistonsMagnetic blockMagneticOctuplePistonBase;
-//	
-	public static BlockMorePistonsExtension blockPistonExtention;
-	public static BlockMorePistonsRod       blockPistonRod;
-	public static BlockMorePistonsMoving    blockPistonMoving;
+	
+	public static BlockMorePistonsExtension         blockPistonExtention;
+	public static BlockMorePistonsMagneticExtension blockPistonMagneticExtention;
+	public static BlockMorePistonsRod               blockPistonRod;
+	public static BlockMorePistonsMoving            blockPistonMoving;
 	
 	
 	/**
@@ -109,9 +111,10 @@ public class ModBlocks {
 		////////////////////
 		// Utility blocks //
 		////////////////////
-		ModBlocks.blockPistonExtention = new BlockMorePistonsExtension("MorePistonsExtension");
-		ModBlocks.blockPistonRod       = new BlockMorePistonsRod      ("MorePistonsRod");
-		ModBlocks.blockPistonMoving    = new BlockMorePistonsMoving   ("MorePistonsMoving");
+		ModBlocks.blockPistonExtention         = new BlockMorePistonsExtension        ("MorePistonsExtension");
+		ModBlocks.blockPistonMagneticExtention = new BlockMorePistonsMagneticExtension("MorePistonsMagneticExtension");
+		ModBlocks.blockPistonRod               = new BlockMorePistonsRod              ("MorePistonsRod");
+		ModBlocks.blockPistonMoving            = new BlockMorePistonsMoving           ("MorePistonsMoving");
 
 		////////////////////////////
 		// Gravitationnal pistons //
