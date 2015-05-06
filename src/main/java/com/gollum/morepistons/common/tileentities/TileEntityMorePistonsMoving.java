@@ -177,21 +177,26 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 			) {
 				this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
 			} else {
-				if (this.root) {
-					
-					if (this.positionPiston.equals(new Integer3d(this.xCoord, this.yCoord, this.zCoord))) {
-						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
-						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
-					}  else {
-						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, piston.getBlockExtention(), this.storedOrientation | (piston.isSticky() ? 0x8 : 0x0), 3);
-						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, null);
-					}
-				} else {
-					this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.getBlockMetadata(), 3);
-					this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
-				}
-				this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
 				
+				if (this.storedBlock == null) {
+					this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
+				} else {
+					
+					if (this.root) {
+						
+						if (this.positionPiston.equals(new Integer3d(this.xCoord, this.yCoord, this.zCoord))) {
+							this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
+							this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+						}  else {
+							this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, piston.getBlockExtention(), this.storedOrientation | (piston.isSticky() ? 0x8 : 0x0), 3);
+							this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, null);
+						}
+					} else {
+						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.getBlockMetadata(), 3);
+						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+					}
+					this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
+				}
 			}
 			
 		}

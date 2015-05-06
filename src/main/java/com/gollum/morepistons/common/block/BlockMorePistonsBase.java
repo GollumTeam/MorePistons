@@ -883,6 +883,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					world.setTileEntity(xP1, yP1, zP1, null);
 					world.setBlock (xP1, yP1, zP1, Blocks.air, 0, 0);
 				}
+			} else {
+				break;
 			}
 		}
 		

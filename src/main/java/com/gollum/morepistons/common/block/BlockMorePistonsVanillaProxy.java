@@ -7,7 +7,7 @@ import com.gollum.core.tools.registered.RegisteredObjects;
 import com.gollum.core.tools.registry.BlockRegistry;
 import com.gollum.core.tools.registry.ItemRegistry;
 import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.common.item.ItemMorePistonsProxy;
+import com.gollum.morepistons.common.item.ItemMorePistonsVanillaProxy;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.inits.ModBlocks;
 
@@ -45,8 +45,12 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 		helper.vanillaTexture = true;
 	}
 	
+	//////////////////////////
+	//Gestion des textures  //
+	//////////////////////////
+	
 	@Override protected void registerBlockIconsTop   (IIconRegister iconRegister) { this.iconTop    = iconRegister.registerIcon(this.isSticky ? "piston_top_sticky" : "piston_top_normal"); }
-	@Override protected void registerBlockIconsOpen  (IIconRegister iconRegister) { this.iconOpen   = iconRegister.registerIcon("piston_inner");   }
+	@Override protected void registerBlockIconsOpen  (IIconRegister iconRegister) { this.iconOpen   = iconRegister.registerIcon("piston_inner");  }
 	@Override protected void registerBlockIconsBottom(IIconRegister iconRegister) { this.iconBottom = iconRegister.registerIcon("piston_bottom"); }
 	@Override protected void registerBlockIconsSide  (IIconRegister iconRegister) { this.blockIcon  = iconRegister.registerIcon("piston_side");   }
 	
@@ -60,7 +64,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 		
 		BlockRegistry.instance().overrideBlocksClassField(this.vanillaPiston, this);
 		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
-		ItemRegistry .instance().overrideRegistered(this.getRegisterName(), new ItemMorePistonsProxy(Item.getItemFromBlock(this.vanillaPiston), this));
+		ItemRegistry .instance().overrideRegistered(this.getRegisterName(), new ItemMorePistonsVanillaProxy(Item.getItemFromBlock(this.vanillaPiston), this));
 	}
 	
 	////////////
@@ -106,25 +110,31 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int EventId, int metadata) {
 		
-		int     orientation = BlockPistonBase.getPistonOrientation(metadata);
-		boolean open        = BlockPistonBase.isExtended(metadata);
-		
-		log.debug("onBlockEventReceived : ",x, y, z, "metadata="+metadata,"open="+open);
-		
-		world.setBlock(x, y, z, this.target, metadata, 2);
-		TileEntityMorePistonsPiston te = new TileEntityMorePistonsPiston();
-		if (open) {
-			te.currentOpened = 1;
-		}
-		world.setTileEntity(x, y, z, te);
-		if (open) {
-			int x2 = x + Facing.offsetsXForSide[orientation];
-			int y2 = y + Facing.offsetsYForSide[orientation];
-			int z2 = z + Facing.offsetsZForSide[orientation];
+		try {
 			
-			world.setBlock(x2, y2, z2, ModBlocks.blockPistonExtention, orientation | (this.target.isSticky ? 0x8 : 0x0), 2);
+			int     orientation = BlockPistonBase.getPistonOrientation(metadata);
+			boolean open        = BlockPistonBase.isExtended(metadata);
+			
+			log.debug("onBlockEventReceived : ",x, y, z, "metadata="+metadata,"open="+open);
+			
+			world.setBlock(x, y, z, this.target, metadata, 2);
+			TileEntityMorePistonsPiston te = new TileEntityMorePistonsPiston();
+			if (open) {
+				te.currentOpened = 1;
+			}
+			world.setTileEntity(x, y, z, te);
+			if (open) {
+				int x2 = x + Facing.offsetsXForSide[orientation];
+				int y2 = y + Facing.offsetsYForSide[orientation];
+				int z2 = z + Facing.offsetsZForSide[orientation];
+				
+				world.setBlock(x2, y2, z2, ModBlocks.blockPistonExtention, orientation | (this.target.isSticky ? 0x8 : 0x0), 2);
+			}
+			this.target.updatePistonState(world, x, y, z);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		this.target.updatePistonState(world, x, y, z);
 		
 		return true;
 	}

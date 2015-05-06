@@ -13,4 +13,6 @@ public class ConfigMorePistons extends Config {
 	
 	@ConfigProp(minValue="0.1", maxValue="15.0") public double powerGravitationalPistons = 1.5D;
 	
+	@ConfigProp(mcRestart = true) public boolean compatibilityWithOldVersion = false;
+	
 }

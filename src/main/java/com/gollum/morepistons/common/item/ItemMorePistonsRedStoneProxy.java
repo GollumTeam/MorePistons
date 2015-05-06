@@ -5,6 +5,7 @@ import static com.gollum.morepistons.ModMorePistons.log;
 import com.gollum.autoreplace.common.blocks.BlockAutoReplace;
 import com.gollum.autoreplace.common.blocks.BlockAutoReplace.ReplaceBlock;
 import com.gollum.core.tools.registered.RegisteredObjects;
+import com.gollum.morepistons.common.block.BlockMorePistonsRedStoneProxy;
 import com.gollum.morepistons.common.block.BlockMorePistonsVanillaProxy;
 
 import net.minecraft.block.Block;
@@ -19,15 +20,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class ItemMorePistonsProxy extends ItemPiston {
+public class ItemMorePistonsRedStoneProxy extends ItemPiston {
 	
-	public Item vanillaItem;
-	public BlockMorePistonsVanillaProxy block;
+	public BlockMorePistonsRedStoneProxy block;
 	
-	public ItemMorePistonsProxy(Item vanillaItem, Block block) {
+	public ItemMorePistonsRedStoneProxy(Block block) {
 		super(block);
-		this.vanillaItem = vanillaItem;
-		this.block       = (BlockMorePistonsVanillaProxy) block;
+		this.block = (BlockMorePistonsRedStoneProxy) block;
 	}
 	
 	private ItemStack replaceItemStack (ItemStack is) {
