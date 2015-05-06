@@ -63,9 +63,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 	}
 	
 	@Override
-	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose) {
+	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose, int stickySize) {
 		
-		ArrayList<EMoveInfosExtend> infosRetract = super.listBlockRetract(world, x, y, z, orientation, lenghtClose, false);
+		ArrayList<EMoveInfosExtend> infosRetract = super.listBlockRetract(world, x, y, z, orientation, lenghtClose, stickySize, false);
 		ArrayList<EMoveInfosExtend> upBlocks     = this.listUpBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
 		ArrayList<EMoveInfosExtend> nextBlocks   = this.listNextBlocks(infosRetract, world, x, y, z, orientation, 0, lenghtClose, false);
 		

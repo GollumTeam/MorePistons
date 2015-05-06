@@ -475,6 +475,17 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	// Etat du piston //
 	////////////////////
 	
+	public int getStickySize (IBlockAccess world, int x, int y, int z) {
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityMorePistonsMoving) {
+			te = ((TileEntityMorePistonsMoving)te).getPistonOriginTE();
+		}
+		if (te instanceof TileEntityMorePistonsPiston) {
+			return ((TileEntityMorePistonsPiston)te).stickySize;
+		}
+		return 1;
+	}
+	
 	public boolean isRunning (World world, int x, int y, int z) {
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileEntityMorePistonsMoving) {
@@ -837,14 +848,14 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	}
 	
 	
-	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose) {
-		return this.listBlockRetract(world, x, y, z, orientation, lenghtClose, true);
+	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose, int stickySize) {
+		return this.listBlockRetract(world, x, y, z, orientation, lenghtClose, stickySize, true);
 	}
 	
-	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose, boolean removeAfter) {
+	protected ArrayList<EMoveInfosExtend> listBlockRetract (World world, int x, int y, int z, int orientation, int lenghtClose, int stickySize, boolean removeAfter) {
 		ArrayList<EMoveInfosExtend> infosRetract = new ArrayList<EMoveInfosExtend>();
 		
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <= stickySize; i++) {
 			int xP1 = x + Facing.offsetsXForSide[orientation] * (lenghtClose + i);
 			int yP1 = y + Facing.offsetsYForSide[orientation] * (lenghtClose + i);
 			int zP1 = z + Facing.offsetsZForSide[orientation] * (lenghtClose + i);
@@ -962,7 +973,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		int y2 = y + Facing.offsetsYForSide[orientation]*lenghtOpenned;
 		int z2 = z + Facing.offsetsZForSide[orientation]*lenghtOpenned;
 		
-		ArrayList<EMoveInfosExtend> infosRetract = this.listBlockRetract(world, x2, y2, z2, orientation, currentOpened - lenghtOpenned);
+		ArrayList<EMoveInfosExtend> infosRetract = this.listBlockRetract(world, x2, y2, z2, orientation, currentOpened - lenghtOpenned, this.getStickySize(world, x, y, z));
 
 		for (EMoveInfosExtend infos : infosRetract) {
 			if (infos.block != null && infos.position != null) {

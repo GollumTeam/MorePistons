@@ -19,6 +19,7 @@ public class BlockMorePistonsGravitational extends BlockMorePistonsBase {
 		super(registerName, isSticky);
 	}
 	
+	@Override
 	protected void extend(World world, int x, int y, int z, int orientation, int currentOpened, int lenghtOpened)  {
 		
 		int x2 = x;

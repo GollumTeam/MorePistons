@@ -16,6 +16,7 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	public int       currentOpened = 0;
 	public Integer3d extentionPos  = null;
 	public int       mutiplicateur = 1;
+	public int       stickySize    = 1;;
 	public boolean running = false;
 	
 	public TileEntityMorePistonsPiston () {
@@ -49,6 +50,7 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 		super.readFromNBT(nbtTagCompound);
 		this.currentOpened = nbtTagCompound.getInteger("currentOpened");
 		this.mutiplicateur = nbtTagCompound.getInteger("mutiplicateur");
+		this.stickySize    = nbtTagCompound.getInteger("stickySize");
 		if (this.mutiplicateur < 0) {
 			this.mutiplicateur = 1;
 		}
@@ -71,6 +73,7 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 
 		nbtTagCompound.setInteger("currentOpened", this.currentOpened);
 		nbtTagCompound.setInteger("mutiplicateur", this.mutiplicateur);
+		nbtTagCompound.setInteger("stickySize"   , this.stickySize);
 		
 		if (this.extentionPos != null) {
 			nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
