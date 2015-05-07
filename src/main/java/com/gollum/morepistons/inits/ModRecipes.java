@@ -86,14 +86,12 @@ public class ModRecipes {
 		GameRegistry.addRecipe(
 			new ItemStack(ModItems.itemMagnet, 1), 
 			new Object[] {
-				"XXX",
-				"DRE",
-				" Y ",
-				Character.valueOf('X'), Blocks.planks,
-				Character.valueOf('D'), Items.diamond,
-				Character.valueOf('E'), Items.emerald,
-				Character.valueOf('R'), Items.repeater,
-				Character.valueOf('Y'), ModBlocks.blockOctuplePistonBase
+				"R L",
+				"I I",
+				" I ",
+				Character.valueOf('R'), Blocks.planks,
+				Character.valueOf('L'), Items.diamond,
+				Character.valueOf('I'), Items.iron_ingot,
 			}
 		);
 		
