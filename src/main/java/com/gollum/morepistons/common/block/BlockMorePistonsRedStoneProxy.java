@@ -110,7 +110,7 @@ public class BlockMorePistonsRedStoneProxy extends HBlockPistonBase {
 			
 			world.setBlock(x, y, z, this.target, orientation, 2);
 			TileEntityMorePistonsPiston te = new TileEntityMorePistonsPiston();
-			te.mutiplicateur = this.multiplicator;
+			te.multiplier = this.multiplicator;
 			world.setTileEntity(x, y, z, te);
 			
 			if (open) {

@@ -60,6 +60,15 @@
 		"28x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
 		"30x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
 		"32x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
-		"34x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" }
+		"34x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+
+		"38x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 1 } },
+		"41x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 2 } },
+		"44x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 3 } },
+		"47x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 4 } },
+		"50x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 5 } },
+		"53x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 6 } },
+		"56x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 7 } },
+		"59x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 8 } }
 	}
 }

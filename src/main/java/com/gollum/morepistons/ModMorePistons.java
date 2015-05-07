@@ -1,5 +1,6 @@
 package com.gollum.morepistons;
 
+import com.gollum.core.ModGollumCoreLib;
 import com.gollum.core.common.i18n.I18n;
 import com.gollum.core.common.log.Logger;
 import com.gollum.core.common.mod.GollumMod;
@@ -27,7 +28,7 @@ public class ModMorePistons extends GollumMod {
 	public final static String MODNAME = "More Pistons";
 	public final static String VERSION = "2.0.0 Beta 1.0";
 	public final static String MINECRAFT_VERSION = "1.7.10";
-	public final static String DEPENDENCIES = "required-after:GollumCoreLib";
+	public final static String DEPENDENCIES = "required-after:"+ModGollumCoreLib.MODID;
 	
 	@Instance(ModMorePistons.MODID)
 	public static ModMorePistons instance;

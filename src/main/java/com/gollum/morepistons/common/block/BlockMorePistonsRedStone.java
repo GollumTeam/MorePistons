@@ -50,7 +50,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 			te = ((TileEntityMorePistonsMoving) te).subTe;
 		}
 		if (te instanceof TileEntityMorePistonsPiston) {
-			this.blockIcon = this.sidesIcon[(((TileEntityMorePistonsPiston)te).mutiplicateur+7) % 8];
+			this.blockIcon = this.sidesIcon[(((TileEntityMorePistonsPiston)te).multiplier+7) % 8];
 		}
 		
 		IIcon icon = super.getIcon(world, x, y, z, side);
@@ -66,26 +66,26 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	
 	/**
 	 * @param int metadata
-	 * @return int mutiplicateur
+	 * @return int multiplier
 	 */
-	public int getMutiplicateur (World world, int x, int y, int z) {
+	public int getMutiplier (World world, int x, int y, int z) {
 		
-		int mutiplicateur = 1;
+		int multiplier = 1;
 		
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileEntityMorePistonsMoving) {
 			te = ((TileEntityMorePistonsMoving) te).subTe;
 		}
 		if (te instanceof TileEntityMorePistonsPiston) {
-			mutiplicateur = ((TileEntityMorePistonsPiston)te).mutiplicateur;
+			multiplier = ((TileEntityMorePistonsPiston)te).multiplier;
 		}
 		
-		return mutiplicateur;
+		return multiplier;
 	}
 	
-	public void applyMutiplicateur (World world, int x, int y, int z, int multi) {
+	public void applyMutiplier (World world, int x, int y, int z, int multi) {
 		
-		log.debug ("applyMutiplicateur = "+multi, "remote="+world.isRemote);
+		log.debug ("applyMultiplier = "+multi, "remote="+world.isRemote);
 		
 		int metadata = world.getBlockMetadata(x, y, z);
 		
@@ -94,7 +94,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 			te = ((TileEntityMorePistonsMoving) te).subTe;
 		}
 		if (te instanceof TileEntityMorePistonsPiston) {
-			((TileEntityMorePistonsPiston)te).mutiplicateur = multi;
+			((TileEntityMorePistonsPiston)te).multiplier = multi;
 		}
 		
 		world.notifyBlockOfNeighborChange(x, y, z, this);
@@ -112,7 +112,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 	@Override
 	public int getLengthInWorld(World world, int x, int y, int z, int orientation) {
 		int power = 0;
-		int multi = this.getMutiplicateur(world, x, y, z);
+		int multi = this.getMutiplier(world, x, y, z);
 		
 		if (this.isIndirectlyPowered(world, x, y, z, orientation)) {
 			
@@ -140,8 +140,8 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 			return false;
 		}
 		
-		int multi = this.getMutiplicateur(world, x, y, z) % 8 + 1;
-		this.applyMutiplicateur(world, x, y, z, multi);
+		int multi = this.getMutiplier(world, x, y, z) % 8 + 1;
+		this.applyMutiplier(world, x, y, z, multi);
 		world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
 		
 		return true;
