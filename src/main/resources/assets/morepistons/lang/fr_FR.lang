@@ -1,5 +1,7 @@
 itemGroup.Pistons=Pistons
 
+item.Magnet.name=Aimant
+
 tile.GravitationalPistonBase.name=Piston Gravitationnel
 tile.GravitationalStickyPistonBase.name=Piston Gravitationnel Collant
 

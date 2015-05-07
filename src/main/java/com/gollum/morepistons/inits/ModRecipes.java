@@ -44,6 +44,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockOctuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSeptupleStickyPistonBase });
 		
+		
 		//////////////////
 		// Super Piston //
 		//////////////////
@@ -66,7 +67,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperQuintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSuperQuadruplePistonBase });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperQuintupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockSuperQuintuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperQuintupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSuperQuadrupleStickyPistonBase });
-	
+		
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperSextuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSuperQuintuplePistonBase });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperSextupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockSuperSextuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperSextupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSuperQuintupleStickyPistonBase });
@@ -89,11 +90,47 @@ public class ModRecipes {
 				"R L",
 				"I I",
 				" I ",
-				Character.valueOf('R'), Blocks.planks,
-				Character.valueOf('L'), Items.diamond,
+				Character.valueOf('R'), Items.redstone,
+				Character.valueOf('L'), new ItemStack(Items.dye, 1, 4),
 				Character.valueOf('I'), Items.iron_ingot,
 			}
 		);
+		
+		GameRegistry.addRecipe(
+			new ItemStack(ModItems.itemMagnet, 1), 
+			new Object[] {
+				"L R",
+				"I I",
+				" I ",
+				Character.valueOf('R'), Items.redstone,
+				Character.valueOf('L'), new ItemStack(Items.dye, 1, 4),
+				Character.valueOf('I'), Items.iron_ingot,
+			}
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockDoublePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticDoublePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockDoublePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticPistonBase });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticTriplePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockTriplePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticTriplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticDoublePistonBase });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticQuadruplePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockQuadruplePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticQuadruplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticTriplePistonBase });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticQuintuplePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockQuintuplePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticQuintuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticQuadruplePistonBase });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticSextuplePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockSextuplePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticSextuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticQuintuplePistonBase });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticSeptuplePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockSeptuplePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticSeptuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticSextuplePistonBase });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticOctuplePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockOctuplePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockMagneticSeptuplePistonBase });
+		
 		
 		//////////////////////////
 		// Gravitational Piston //
@@ -101,6 +138,7 @@ public class ModRecipes {
 		
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockGravitationalPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), Blocks.piston, Character.valueOf('Y'), Blocks.tnt });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockGravitationalStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockGravitationalPistonBase, Character.valueOf('Y'), Items.slime_ball });
+		
 		
 		////////////////////
 		// Redston Piston //

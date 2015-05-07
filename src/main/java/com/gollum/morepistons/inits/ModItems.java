@@ -10,7 +10,7 @@ public class ModItems {
 	
 	public static void init() {
 		
-		ModItems.itemMagnet = new HItem("ItemMagnet").setCreativeTab(ModCreativeTab.morePistonsTabs);
+		ModItems.itemMagnet = new HItem("Magnet").setCreativeTab(ModCreativeTab.morePistonsTabs);
 		
 	}
 }
