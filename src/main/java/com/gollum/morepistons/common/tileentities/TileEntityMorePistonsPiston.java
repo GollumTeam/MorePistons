@@ -17,7 +17,7 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	public Integer3d extentionPos  = null;
 	public int       multiplier    = 1;
 	public int       stickySize    = 1;;
-	public boolean running = false;
+	public boolean   running = false;
 	
 	public TileEntityMorePistonsPiston () {
 	}

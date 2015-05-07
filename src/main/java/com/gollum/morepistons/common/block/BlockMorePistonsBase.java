@@ -1007,6 +1007,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		for (EMoveInfosExtend infos : infosRetract) {
 			world.notifyBlockChange(infos.position.x, infos.position.y, infos.position.z, world.getBlock(infos.position.x, infos.position.y, infos.position.z));
+			world.markBlockForUpdate(infos.position.x, infos.position.y, infos.position.z);
 		}
 	}
 	
@@ -1018,6 +1019,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		
 		for (EMoveInfosExtend infos : infosExtend) {
 			world.notifyBlockChange(infos.position.x, infos.position.y, infos.position.z, world.getBlock(infos.position.x, infos.position.y, infos.position.z));
+			world.markBlockForUpdate(infos.position.x, infos.position.y, infos.position.z);
 		}
 	}
 	
@@ -1112,13 +1114,15 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		world.setTileEntity(dest.x, dest.y, dest.z, teExtension);
 		
 		TileEntity te = world.getTileEntity(pistonPos.x, pistonPos.y, pistonPos.z);
-		if (te instanceof TileEntityMorePistonsPiston) {
-			((TileEntityMorePistonsPiston)te).extentionPos = new Integer3d(dest.x, dest.y, dest.z);
-			world.notifyBlockOfNeighborChange(dest.x, dest.y, dest.z, this);
-		}
-		if (te instanceof TileEntityMorePistonsMoving) {
-			((TileEntityMorePistonsMoving) te).getPistonOriginTE().extentionPos = new Integer3d(dest.x, dest.y, dest.z);
-			world.notifyBlockOfNeighborChange(dest.x, dest.y, dest.z, ModBlocks.blockPistonMoving);
+		if (root || block instanceof BlockMorePistonsExtension) {
+			if (te instanceof TileEntityMorePistonsPiston) {
+				((TileEntityMorePistonsPiston)te).extentionPos = new Integer3d(dest.x, dest.y, dest.z);
+				world.notifyBlockOfNeighborChange(dest.x, dest.y, dest.z, this);
+			}
+			if (te instanceof TileEntityMorePistonsMoving) {
+				((TileEntityMorePistonsMoving) te).getPistonOriginTE().extentionPos = new Integer3d(dest.x, dest.y, dest.z);
+				world.notifyBlockOfNeighborChange(dest.x, dest.y, dest.z, ModBlocks.blockPistonMoving);
+			}
 		}
 	}
 	
