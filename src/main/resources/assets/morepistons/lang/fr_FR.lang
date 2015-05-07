@@ -51,7 +51,12 @@ tile.RedStoneStickyPistonBase.name=Redstone Piston Collant
 
 morepistons.config.overrideVanillaPiston=Remplacer le piston natif
 morepistons.config.overrideVanillaStickPiston=Remplacer le piston collant natif
-morepistons.config.numberMovableBlockWithDefaultPiston=Nombre de bloc déplaçable pour un piston
-morepistons.config.numberMovableBlockWithSuperPiston=Nombre de bloc déplaçable pour un super piston
+morepistons.config.numberMovableBlockWithDefaultPiston=Nombre de blocs déplaçables pour un piston
+morepistons.config.numberMovableBlockWithSuperPiston=Nombre de blocs déplaçables pour un super piston
 morepistons.config.powerGravitationalPistons=Puissance du piston gravitationnel
-morepistons.config.compatibilityWithOldVersion=Compatibilité avec les anciennes version du mode
+morepistons.config.compatibilityWithOldVersion=Compatibilité avec les anciennes versions du mode
+
+fml.configgui.tooltip.undoChanges=Annuler les changements
+fml.configgui.tooltip.resetToDefault=Valeur par défaut
+
+
