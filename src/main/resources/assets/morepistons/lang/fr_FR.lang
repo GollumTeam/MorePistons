@@ -35,19 +35,21 @@ tile.SuperSeptupleStickyPistonBase.name=Super Sticky Septuple Piston
 tile.SuperOctuplePistonBase.name=Super Octuple Piston
 tile.SuperOctupleStickyPistonBase.name=Super Octuple Piston Collant
 
-tile.RedStonePistonBase1.name=Redstone Piston
-tile.RedStoneStickyPistonBase1.name=Redstone Piston Collant
-tile.RedStonePistonBase2.name=Redstone Piston
-tile.RedStoneStickyPistonBase2.name=Redstone Piston Collant
-tile.RedStonePistonBase3.name=Redstone Piston
-tile.RedStoneStickyPistonBase3.name=Redstone Piston Collant
-tile.RedStonePistonBase4.name=Redstone Piston
-tile.RedStoneStickyPistonBase4.name=Redstone Piston Collant
-tile.RedStonePistonBase5.name=Redstone Piston
-tile.RedStoneStickyPistonBase5.name=Redstone Piston Collant
-tile.RedStonePistonBase6.name=Redstone Piston
-tile.RedStoneStickyPistonBase6.name=Redstone Piston Collant
-tile.RedStonePistonBase7.name=Redstone Piston
-tile.RedStoneStickyPistonBase7.name=Redstone Piston Collant
-tile.RedStonePistonBase8.name=Redstone Piston
-tile.RedStoneStickyPistonBase8.name=Redstone Piston Collant
+tile.MagneticPistonBase.name=Piston Magnétique
+tile.MagneticDoublePistonBase.name=Double Piston Magnétique
+tile.MagneticTriplePistonBase.name=Triple Piston Magnétique
+tile.MagneticQuadruplePistonBase.name=Quadruple Piston Magnétique
+tile.MagneticQuintuplePistonBase.name=Quintuple Piston Magnétique
+tile.MagneticSextuplePistonBase.name=Sextuple Piston Magnétique
+tile.MagneticSeptuplePistonBase.name=Septuple Piston Magnétique
+tile.MagneticOctuplePistonBase.name=Octuple Piston Magnétique
+
+tile.RedStonePistonBase.name=Redstone Piston
+tile.RedStoneStickyPistonBase.name=Redstone Piston Collant
+
+morepistons.config.overrideVanillaPiston=Remplacer le piston natif
+morepistons.config.overrideVanillaStickPiston=Remplacer le piston collant natif
+morepistons.config.numberMovableBlockWithDefaultPiston=Nombre de bloc déplaçable pour un piston
+morepistons.config.numberMovableBlockWithSuperPiston=Nombre de bloc déplaçable pour un super piston
+morepistons.config.powerGravitationalPistons=Puissance du piston gravitationnel
+morepistons.config.compatibilityWithOldVersion=Compatibilité avec les anciennes version du mode

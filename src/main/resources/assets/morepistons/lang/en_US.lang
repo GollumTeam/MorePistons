@@ -2,6 +2,7 @@ itemGroup.Pistons=Pistons
 
 tile.GravitationalPistonBase.name=Gravitational Piston
 tile.GravitationalStickyPistonBase.name=Gravitational Sticky Piston
+
 tile.DoublePistonBase.name=Double Piston
 tile.DoubleStickyPistonBase.name=Double Sticky Piston
 tile.TriplePistonBase.name=Triple Piston
@@ -34,19 +35,21 @@ tile.SuperSeptupleStickyPistonBase.name=Super Sticky Sevenfold Piston
 tile.SuperOctuplePistonBase.name=Super Eightfold Piston
 tile.SuperOctupleStickyPistonBase.name=Super Eightfold Sticky Piston
 
-tile.RedStonePistonBase1.name=Redstone Piston
-tile.RedStoneStickyPistonBase1.name=Redstone Sticky Piston
-tile.RedStonePistonBase2.name=Redstone Piston
-tile.RedStoneStickyPistonBase2.name=Redstone Sticky Piston
-tile.RedStonePistonBase3.name=Redstone Piston
-tile.RedStoneStickyPistonBase3.name=Redstone Sticky Piston
-tile.RedStonePistonBase4.name=Redstone Piston
-tile.RedStoneStickyPistonBase4.name=Redstone Sticky Piston
-tile.RedStonePistonBase5.name=Redstone Piston
-tile.RedStoneStickyPistonBase5.name=Redstone Sticky Piston
-tile.RedStonePistonBase6.name=Redstone Piston
-tile.RedStoneStickyPistonBase6.name=Redstone Sticky Piston
-tile.RedStonePistonBase7.name=Redstone Piston
-tile.RedStoneStickyPistonBase7.name=Redstone Sticky Piston
-tile.RedStonePistonBase8.name=Redstone Piston
-tile.RedStoneStickyPistonBase8.name=Redstone Sticky Piston
+tile.MagneticPistonBase.name=Magnetic Piston
+tile.MagneticDoublePistonBase.name=Magnetic Double Piston
+tile.MagneticTriplePistonBase.name=Magnetic Triple Piston
+tile.MagneticQuadruplePistonBase.name=Magnetic Quadruple Piston
+tile.MagneticQuintuplePistonBase.name=Magnetic Quintuple Piston
+tile.MagneticSextuplePistonBase.name=Magnetic Sextuple Piston
+tile.MagneticSeptuplePistonBase.name=Magnetic Septuple Piston
+tile.MagneticOctuplePistonBase.name=Magnetic Octuple Piston
+
+tile.RedStonePistonBase.name=Redstone Piston
+tile.RedStoneStickyPistonBase.name=Redstone Sticky Piston
+
+morepistons.config.overrideVanillaPiston=Override vanilla piston
+morepistons.config.overrideVanillaStickPiston=Override vanilla stickey piston
+morepistons.config.numberMovableBlockWithDefaultPiston=Max block to movable of piston
+morepistons.config.numberMovableBlockWithSuperPiston=Max block to movable of super piston
+morepistons.config.powerGravitationalPistons=Power of gravitational piston
+morepistons.config.compatibilityWithOldVersion=Old mod version compatibility
