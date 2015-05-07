@@ -1,15 +1,12 @@
 package com.gollum.morepistons.common.tileentities;
 
-import static com.gollum.morepistons.ModMorePistons.log;
-
-import com.gollum.core.utils.math.Integer3d;
-import com.gollum.morepistons.common.block.BlockMorePistonsBase;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+
+import com.gollum.core.utils.math.Integer3d;
 
 
 public class TileEntityMorePistonsRod extends TileEntity {

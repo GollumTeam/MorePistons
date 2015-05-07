@@ -3,13 +3,6 @@ package com.gollum.morepistons.common.block.superpiston;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockButton;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockLever;
-import net.minecraft.block.BlockSkull;
-import net.minecraft.block.BlockTorch;
-import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockTripWireHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 

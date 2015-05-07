@@ -3,16 +3,6 @@ package com.gollum.morepistons.common.block;
 import java.util.List;
 import java.util.Random;
 
-import scala.xml.dtd.impl.WordBerrySethi;
-
-import com.gollum.core.tools.helper.blocks.HBlock;
-import com.gollum.core.tools.helper.blocks.HBlockContainer;
-import com.gollum.morepistons.client.ClientProxyMorePistons;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
-import com.gollum.morepistons.inits.ModBlocks;
-
 import net.minecraft.block.Block; // world.getBlockMetadata;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material; // agi;
@@ -23,13 +13,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB; // aoe;
-import net.minecraft.util.Facing;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess; // ym;
 import net.minecraft.world.World; // yc;
 // world.getBlockMetadata;
+
+import com.gollum.core.tools.helper.blocks.HBlockContainer;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 
 public class BlockMorePistonsRod extends HBlockContainer {
 	

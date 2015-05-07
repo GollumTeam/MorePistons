@@ -1,16 +1,6 @@
 package com.gollum.morepistons.common.block;
 
 import static com.gollum.morepistons.ModMorePistons.log;
-
-import com.gollum.core.tools.helper.blocks.HBlockPistonBase;
-import com.gollum.core.tools.registered.RegisteredObjects;
-import com.gollum.core.tools.registry.BlockRegistry;
-import com.gollum.core.tools.registry.ItemRegistry;
-import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.common.item.ItemMorePistonsVanillaProxy;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
-import com.gollum.morepistons.inits.ModBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,10 +8,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPiston;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
+
+import com.gollum.core.tools.helper.blocks.HBlockPistonBase;
+import com.gollum.core.tools.registered.RegisteredObjects;
+import com.gollum.core.tools.registry.BlockRegistry;
+import com.gollum.core.tools.registry.ItemRegistry;
+import com.gollum.morepistons.common.item.ItemMorePistonsVanillaProxy;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import com.gollum.morepistons.inits.ModBlocks;
 
 public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	

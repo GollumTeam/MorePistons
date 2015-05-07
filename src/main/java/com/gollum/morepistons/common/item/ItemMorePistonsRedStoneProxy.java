@@ -1,24 +1,17 @@
 package com.gollum.morepistons.common.item;
 
 import static com.gollum.morepistons.ModMorePistons.log;
-
-import com.gollum.autoreplace.common.blocks.BlockAutoReplace;
-import com.gollum.autoreplace.common.blocks.BlockAutoReplace.ReplaceBlock;
-import com.gollum.core.tools.registered.RegisteredObjects;
-import com.gollum.morepistons.common.block.BlockMorePistonsRedStoneProxy;
-import com.gollum.morepistons.common.block.BlockMorePistonsVanillaProxy;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemPiston;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import com.gollum.core.tools.registered.RegisteredObjects;
+import com.gollum.morepistons.common.block.BlockMorePistonsRedStoneProxy;
 
 public class ItemMorePistonsRedStoneProxy extends ItemPiston {
 	

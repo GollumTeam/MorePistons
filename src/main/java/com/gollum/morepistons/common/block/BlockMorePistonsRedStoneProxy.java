@@ -13,7 +13,6 @@ import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 
-import com.gollum.core.inits.ModCreativeTab;
 import com.gollum.core.tools.helper.blocks.HBlockPistonBase;
 import com.gollum.morepistons.common.item.ItemMorePistonsRedStoneProxy;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;

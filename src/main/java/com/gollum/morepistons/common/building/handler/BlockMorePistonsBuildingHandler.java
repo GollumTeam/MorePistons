@@ -4,22 +4,14 @@ package com.gollum.morepistons.common.building.handler;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.gollum.core.ModGollumCoreLib;
-import com.gollum.core.common.building.Building.Unity;
+import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import com.gollum.core.common.building.handler.BlockDirectionalWithBit1BuildingHandler;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
 import com.gollum.morepistons.common.block.BlockMorePistonsRedStone;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockPistonBase;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class BlockMorePistonsBuildingHandler extends BlockDirectionalWithBit1BuildingHandler {
 	

@@ -2,7 +2,6 @@ package com.gollum.morepistons.inits;
 
 import net.minecraft.init.Blocks;
 
-import com.gollum.core.common.blocks.BlockProximitySpawn;
 import com.gollum.core.common.creativetab.StaffCreativeTabs;
 
 public class ModCreativeTab {

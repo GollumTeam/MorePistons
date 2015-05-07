@@ -9,10 +9,10 @@ import com.gollum.morepistons.common.CommonProxyMorePistons;
 import com.gollum.morepistons.common.config.ConfigMorePistons;
 import com.gollum.morepistons.inits.ModBlocks;
 import com.gollum.morepistons.inits.ModCreativeTab;
+import com.gollum.morepistons.inits.ModItems;
 import com.gollum.morepistons.inits.ModRecipes;
 import com.gollum.morepistons.inits.ModTileEntities;
 
-import net.minecraft.init.Blocks;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -58,6 +58,9 @@ public class ModMorePistons extends GollumMod {
 	/** 1 **/
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
+
+		// Initialisation des blocks
+		ModItems.init();
 		
 		// Initialisation des blocks
 		ModBlocks.init();

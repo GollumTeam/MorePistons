@@ -1,19 +1,8 @@
 package com.gollum.morepistons.common.block;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBed;
-import net.minecraft.block.BlockButton;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockLever;
-import net.minecraft.block.BlockSkull;
-import net.minecraft.block.BlockSnow;
-import net.minecraft.block.BlockTorch;
-import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockTripWireHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
@@ -21,7 +10,6 @@ import net.minecraft.world.World;
 
 import com.gollum.core.utils.math.Integer3d;
 import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.common.block.BlockMorePistonsBase.EMoveInfosExtend;
 import com.gollum.morepistons.common.block.superpiston.SuperPistonManager;
 
 public class BlockMorePistonsSuper extends BlockMorePistonsBase {

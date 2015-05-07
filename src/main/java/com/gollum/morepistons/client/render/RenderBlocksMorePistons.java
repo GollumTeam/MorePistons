@@ -1,16 +1,14 @@
 package com.gollum.morepistons.client.render;
 
-import com.gollum.morepistons.common.block.BlockMorePistonsRod;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+
+import com.gollum.morepistons.common.block.BlockMorePistonsRod;
 
 public class RenderBlocksMorePistons extends RenderBlocks {
 

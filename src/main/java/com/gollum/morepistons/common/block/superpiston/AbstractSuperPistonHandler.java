@@ -1,7 +1,6 @@
 package com.gollum.morepistons.common.block.superpiston;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.world.World;
 
 

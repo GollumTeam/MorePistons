@@ -6,18 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.gollum.core.utils.math.Integer3d;
-import com.gollum.morepistons.common.block.BlockMorePistonsBase;
-import com.gollum.morepistons.common.block.BlockMorePistonsExtension;
-import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
-import com.gollum.morepistons.common.block.BlockMorePistonsRod;
-import com.gollum.morepistons.inits.ModBlocks;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -25,7 +16,14 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import com.gollum.core.utils.math.Integer3d;
+import com.gollum.morepistons.common.block.BlockMorePistonsBase;
+import com.gollum.morepistons.common.block.BlockMorePistonsExtension;
+import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
+import com.gollum.morepistons.common.block.BlockMorePistonsRod;
+import com.gollum.morepistons.inits.ModBlocks;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
