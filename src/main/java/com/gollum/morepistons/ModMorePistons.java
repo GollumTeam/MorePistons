@@ -35,7 +35,7 @@ public class ModMorePistons extends GollumMod {
 	
 	@SidedProxy(clientSide = "com.gollum.morepistons.client.ClientProxyMorePistons", serverSide = "com.gollum.morepistons.common.CommonProxyMorePistons")
 	public static CommonProxyMorePistons proxy;
-
+	
 	/**
 	 * Gestion des logs
 	 */

@@ -2,11 +2,11 @@ package com.gollum.morepistons.inits;
 
 import net.minecraft.init.Blocks;
 
-import com.gollum.core.common.creativetab.StaffCreativeTabs;
+import com.gollum.core.common.creativetab.GollumCreativeTabs;
 
 public class ModCreativeTab {
 	
-	public static StaffCreativeTabs morePistonsTabs = new StaffCreativeTabs("Pistons");
+	public static GollumCreativeTabs morePistonsTabs = new GollumCreativeTabs("Pistons");
 	
 	public static void init() {
 		
