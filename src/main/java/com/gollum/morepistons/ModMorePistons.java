@@ -21,7 +21,13 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = ModMorePistons.MODID, name = ModMorePistons.MODNAME, version = ModMorePistons.VERSION, acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION, dependencies = ModMorePistons.DEPENDENCIES)
+@Mod(
+	modid                     = ModMorePistons.MODID,
+	name                      = ModMorePistons.MODNAME, 
+	version                   = ModMorePistons.VERSION, 
+	acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION, 
+	dependencies              = ModMorePistons.DEPENDENCIES
+)
 public class ModMorePistons extends GollumMod {
 
 	public final static String MODID = "MorePistons";
