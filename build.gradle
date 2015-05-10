@@ -9,10 +9,6 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
-        GollumCoreLib {
-		    name = "GollumCoreLib"
-		    url = "./GollumCoreLib"
-		}
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
@@ -26,7 +22,7 @@ minecraft {
     runDir = "eclipse"
 }
 
-version = "3.0.0"+minecraft.version
+version = "3.0.0-"+minecraft.version
 group= "com.gollum.morepistons" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MorePistons"
 
