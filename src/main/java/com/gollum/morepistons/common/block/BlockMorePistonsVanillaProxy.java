@@ -46,7 +46,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	//Gestion des textures  //
 	//////////////////////////
 	
-	@Override protected void registerBlockIconsTop   (IIconRegister iconRegister) { this.iconTop    = iconRegister.registerIcon(this.isSticky ? "piston_top_sticky" : "piston_top_normal"); }
+	@Override protected void registerBlockIconsTop   (IIconRegister iconRegister) { this.iconTop    = iconRegister.registerIcon(this.isStickyPiston ? "piston_top_sticky" : "piston_top_normal"); }
 	@Override protected void registerBlockIconsOpen  (IIconRegister iconRegister) { this.iconOpen   = iconRegister.registerIcon("piston_inner");  }
 	@Override protected void registerBlockIconsBottom(IIconRegister iconRegister) { this.iconBottom = iconRegister.registerIcon("piston_bottom"); }
 	@Override protected void registerBlockIconsSide  (IIconRegister iconRegister) { this.blockIcon  = iconRegister.registerIcon("piston_side");   }

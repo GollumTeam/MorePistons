@@ -49,7 +49,7 @@ public class BlockMorePistonsRedStoneProxy extends HBlockPistonBase {
 	
 	@Override
 	protected void registerBlockIconsTop (IIconRegister iconRegister) {
-		this.iconTop = helper.loadTexture(iconRegister, "top" + (this.isSticky ? suffixSticky : ""), true);
+		this.iconTop = helper.loadTexture(iconRegister, "top" + (this.isStickyPiston ? suffixSticky : ""), true);
 	}
 	
 	@Override
