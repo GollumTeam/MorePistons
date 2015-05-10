@@ -43,8 +43,8 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-	
-	compile "com.gollum.core"
+    
+    compile files('GollumCoreLib/build/libs/GollumCoreLib-2.0.0-1.7.10.jar')
 	
 }
 
