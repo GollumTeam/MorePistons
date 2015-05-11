@@ -11,7 +11,7 @@ For Install :
 git submodule update --init
 cd GollumCoreLib
 ./gradlew setupDecompWorkspace
-./gradlew build
+./gradlew jar
 cd..
 ./gradlew setupDecompWorkspace
 ./gradlew eclipse
