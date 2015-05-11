@@ -15,6 +15,7 @@ import com.gollum.morepistons.common.block.BlockMorePistonsSuper;
 import com.gollum.morepistons.common.block.BlockMorePistonsVanilla;
 import com.gollum.morepistons.common.block.BlockMorePistonsVanillaProxy;
 import com.gollum.morepistons.common.building.handler.BlockMorePistonsBuildingHandler;
+import com.gollum.morepistons.common.building.handler.BlockMorePistonsVanillaProxyBuildingHandler;
 
 public class ModBlocks {
 
@@ -222,8 +223,9 @@ public class ModBlocks {
 	}
 	
 	private static void initHandlerRotation () {
-		
+
 		BuildingBlockRegistry.register(new BlockMorePistonsBuildingHandler());
+		BuildingBlockRegistry.register(new BlockMorePistonsVanillaProxyBuildingHandler());
 		
 	}
 }
