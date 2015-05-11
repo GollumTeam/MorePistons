@@ -26,6 +26,23 @@ version = "3.0.0-"+minecraft.version
 group= "com.gollum.morepistons" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MorePistons"
 
+task unmappedjar (type: Copy, dependsOn: ':jar') {
+    from 'build/libs/'+archivesBaseName+'-'+version+'.jar'
+    into 'build/libs/'
+    rename { String fileName ->
+        fileName.replace(".jar", "-unmapped.jar")
+    }
+}
+build.dependsOn unmappedjar
+genSrgs.shouldRunAfter unmappedjar
+
+task submodule(type: GradleBuild) {
+    buildFile = 'GollumCoreLib/build.gradle'
+    tasks = ['build']
+}
+classes.dependsOn submodule
+classes.shouldRunAfter submodule
+
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
@@ -40,7 +57,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     
-    compile files('GollumCoreLib/build/libs/GollumCoreLib-2.0.0-1.7.10.jar')
+    compile files('GollumCoreLib/build/libs/GollumCoreLib-2.0.0-'+minecraft.version+'-unmapped.jar')
 	
 }
 
