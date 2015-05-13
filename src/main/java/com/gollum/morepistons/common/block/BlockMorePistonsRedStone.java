@@ -115,21 +115,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		int multi = this.getMutiplier(world, x, y, z);
 		
 		if (this.isIndirectlyPowered(world, x, y, z, orientation)) {
-			
-			power = world.getBlockPowerInput(x, y, z);
-			
-			log.debug("getLengthInWorld: power="+power);
-			if (power == 0) {
-				log.debug ("===============================");
-				log.debug ("===============================");
-				log.debug ("===============================");
-				log.debug ("===============================");
-				log.debug ("PASSSSSSSSSSSCOOOOOOOOOOOOOOOOL");
-				log.debug ("===============================");
-				log.debug ("===============================");
-				log.debug ("===============================");
-				log.debug ("===============================");
-			}
+			power = world.getStrongestIndirectPower(x, y, z);
 		}
 		
 		return power*multi;
