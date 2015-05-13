@@ -1,0 +1,12 @@
+{
+	"test": {
+		"globalSpawnRate":0,
+		"buildings": {
+			"test": {
+				"disabled": true,
+				"dimentions": {
+				}
+			}
+		}
+	}
+}

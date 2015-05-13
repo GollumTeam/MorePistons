@@ -1,0 +1,74 @@
+{
+	"height":-1,
+	"color" : [
+		{ "block": "minecraft:grass" },
+		{ "block": "minecraft:redstone_wire" },
+		{ "block": "minecraft:lever", "orientation": "bottom_vertical" },
+		{ "block": "minecraft:unpowered_repeater", "orientation": "right"  },
+		{ "block": "minecraft:unpowered_repeater", "orientation": "down" },
+		{ "block": "minecraft:unpowered_repeater", "orientation": "left" },
+		{ "block": "minecraft:planks" }
+	],
+	
+	"sets": {
+		
+		"8x1x16": { "block": "MorePistons:SuperStickyPistonBase"         , "orientation": "left" },
+		"8x1x15": { "block": "MorePistons:SuperDoubleStickyPistonBase"   , "orientation": "left" },
+		"8x1x14": { "block": "MorePistons:SuperTripleStickyPistonBase"   , "orientation": "left" },
+		"8x1x13": { "block": "MorePistons:SuperQuadrupleStickyPistonBase", "orientation": "left" },
+		"8x1x12": { "block": "MorePistons:SuperQuintupleStickyPistonBase", "orientation": "left" },
+		"8x1x11": { "block": "MorePistons:SuperSextupleStickyPistonBase" , "orientation": "left" },
+		"8x1x10": { "block": "MorePistons:SuperSeptupleStickyPistonBase" , "orientation": "left" },
+		"8x1x9":  { "block": "MorePistons:SuperOctupleStickyPistonBase"  , "orientation": "left" },
+		 
+		"8x1x7":  { "block": "MorePistons:DoubleStickyPistonBase"   , "orientation": "left" },
+		"8x1x6":  { "block": "MorePistons:TripleStickyPistonBase"   , "orientation": "left" },
+		"8x1x5":  { "block": "MorePistons:QuadrupleStickyPistonBase", "orientation": "left" },
+		"8x1x4":  { "block": "MorePistons:QuintupleStickyPistonBase", "orientation": "left" },
+		"8x1x3":  { "block": "MorePistons:SextupleStickyPistonBase" , "orientation": "left" },
+		"8x1x2":  { "block": "MorePistons:SeptupleStickyPistonBase" , "orientation": "left" },
+		"8x1x1":  { "block": "MorePistons:OctupleStickyPistonBase"  , "orientation": "left" },
+		
+		"2x1x16": { "block": "MorePistons:SuperPistonBase"         , "metadata": 1 },
+		"2x1x15": { "block": "MorePistons:SuperDoublePistonBase"   , "metadata": 1 },
+		"2x1x14": { "block": "MorePistons:SuperTriplePistonBase"   , "metadata": 1 },
+		"2x1x13": { "block": "MorePistons:SuperQuadruplePistonBase", "metadata": 1 },
+		"2x1x12": { "block": "MorePistons:SuperQuintuplePistonBase", "metadata": 1 },
+		"2x1x11": { "block": "MorePistons:SuperSextuplePistonBase" , "metadata": 1 },
+		"2x1x10": { "block": "MorePistons:SuperSeptuplePistonBase" , "metadata": 1 },
+		"2x1x9":  { "block": "MorePistons:SuperOctuplePistonBase"  , "metadata": 1 },
+		
+		"2x1x7":  { "block": "MorePistons:DoublePistonBase"   , "metadata": 1 },
+		"2x1x6":  { "block": "MorePistons:TriplePistonBase"   , "metadata": 1 },
+		"2x1x5":  { "block": "MorePistons:QuadruplePistonBase", "metadata": 1 },
+		"2x1x4":  { "block": "MorePistons:QuintuplePistonBase", "metadata": 1 },
+		"2x1x3":  { "block": "MorePistons:SextuplePistonBase" , "metadata": 1 },
+		"2x1x2":  { "block": "MorePistons:SeptuplePistonBase" , "metadata": 1 },
+		"2x1x1":  { "block": "MorePistons:OctuplePistonBase"  , "metadata": 1 },
+		
+		"6x1x24":  { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"8x1x24":  { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"10x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"12x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"14x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"16x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"18x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"20x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"22x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"24x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"26x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"28x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"30x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"32x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+		"34x1x24": { "block": "MorePistons:RedStonePistonBase", "orientation": "down" },
+
+		"38x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 1 } },
+		"41x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 2 } },
+		"44x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 3 } },
+		"47x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 4 } },
+		"50x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 5 } },
+		"53x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 6 } },
+		"56x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 7 } },
+		"59x1x24": { "block": "MorePistons:RedStonePistonBase", "metadata": 1, "extra": { "multiplier" : 8 } }
+	}
+}
