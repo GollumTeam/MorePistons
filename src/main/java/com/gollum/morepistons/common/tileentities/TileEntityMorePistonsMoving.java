@@ -9,6 +9,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -194,6 +195,21 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
 					}
 					this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
+
+					int xx = this.xCoord;
+					int yy = this.xCoord;
+					int zz = this.xCoord;
+					
+					for (int i = 0 ; i < 90; i++) {
+
+						xx += Facing.offsetsXForSide[this.storedOrientation];
+						yy += Facing.offsetsYForSide[this.storedOrientation];
+						zz += Facing.offsetsZForSide[this.storedOrientation];
+
+						this.worldObj.notifyBlockOfNeighborChange(xx, yy, zz, this.worldObj.getBlock(xx, yy, zz));
+					}
+					this.worldObj.markBlockRangeForRenderUpdate(this.xCoord, this.yCoord, this.zCoord, xx, yy, zz);
+					
 				}
 			}
 			
@@ -332,8 +348,16 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 				block instanceof BlockMorePistonsRod ||
 				block instanceof BlockMorePistonsExtension
 			) {
+				TileEntity te = this.worldObj.getTileEntity(x, y, z);
+				if (te != null) {
+					te.invalidate();
+				}
+				
 				this.worldObj.setBlockToAir (x, y, z);
-				this.worldObj.setBlockMetadataWithNotify(x, y, z, 0, 2);
+				this.worldObj.removeTileEntity(x, y, z);
+				this.worldObj.setBlockMetadataWithNotify(x, y, z, 0, 7);
+				this.worldObj.notifyBlockOfNeighborChange(x, y, z, Blocks.air);
+				
 			}
 		}
 	}

@@ -119,11 +119,17 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 			power = world.getBlockPowerInput(x, y, z);
 			
 			log.debug("getLengthInWorld: power="+power);
-			
-			power = (power <= 0) ? 16 : power;
-			power = (power > 16) ? 16 : power;
-			
-			log.debug("getLengthInWorld: power="+power);
+			if (power == 0) {
+				log.debug ("===============================");
+				log.debug ("===============================");
+				log.debug ("===============================");
+				log.debug ("===============================");
+				log.debug ("PASSSSSSSSSSSCOOOOOOOOOOOOOOOOL");
+				log.debug ("===============================");
+				log.debug ("===============================");
+				log.debug ("===============================");
+				log.debug ("===============================");
+			}
 		}
 		
 		return power*multi;
@@ -141,6 +147,7 @@ public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
 		}
 		
 		int multi = this.getMutiplier(world, x, y, z) % 8 + 1;
+		
 		this.applyMutiplier(world, x, y, z, multi);
 		world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
 		
