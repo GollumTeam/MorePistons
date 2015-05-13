@@ -171,7 +171,8 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 	////////////////////////
 	// Gestion des events //
 	////////////////////////
-	
+
+	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
 		if (!BlockMorePistonsBase.cleanBlockMoving(world, x, y, z)) {
 			super.breakBlock(world, x, y, z, block, metadata);
@@ -256,6 +257,7 @@ public class BlockMorePistonsMoving extends HBlockContainer {
 		return cont;
 	}
 	
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
 		if (!world.isRemote && world.getTileEntity(x, y, z) == null) {
 			world.setBlockToAir(x, y, z);

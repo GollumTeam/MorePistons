@@ -139,6 +139,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		return super.getTextureKey().replace("sticky", "");
 	}
 	
+	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
 		
 		if (helper.vanillaTexture) {
