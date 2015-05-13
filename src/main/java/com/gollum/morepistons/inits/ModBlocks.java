@@ -2,7 +2,6 @@ package com.gollum.morepistons.inits;
 
 import static com.gollum.morepistons.ModMorePistons.config;
 
-import com.gollum.core.common.config.ConfigProp;
 import com.gollum.core.tools.registry.BuildingBlockRegistry;
 import com.gollum.morepistons.ModMorePistons;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
@@ -135,7 +134,7 @@ public class ModBlocks {
 		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla(config.blockPistonVanillaID      , "PistonBase"      , false);
 		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla(config.blockStickyPistonVanillaID, "StickyPistonBase", true );
 		
-//		if (ModMorePistons.config.overrideVanillaPiston)      new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
+		if (ModMorePistons.config.overrideVanillaPiston)      new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
 //		if (ModMorePistons.config.overrideVanillaStickPiston) new BlockMorePistonsVanillaProxy(ModBlocks.blockStickyPistonBase);
 		
 		//////////////////////
@@ -212,14 +211,14 @@ public class ModBlocks {
 		// Magnetic pistons //
 		//////////////////////
 		
-		ModBlocks.blockMagneticPistonBase          = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase1ID, "MagneticPistonBase"         );
-		ModBlocks.blockMagneticDoublePistonBase    = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase2ID, "MagneticDoublePistonBase"   ).setLength(2);
-		ModBlocks.blockMagneticTriplePistonBase    = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase3ID, "MagneticTriplePistonBase"   ).setLength(3);
-		ModBlocks.blockMagneticQuadruplePistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase4ID, "MagneticQuadruplePistonBase").setLength(4);
-		ModBlocks.blockMagneticQuintuplePistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase5ID, "MagneticQuintuplePistonBase").setLength(5);
-		ModBlocks.blockMagneticSextuplePistonBase  = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase6ID, "MagneticSextuplePistonBase" ).setLength(6);
-		ModBlocks.blockMagneticSeptuplePistonBase  = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase7ID, "MagneticSeptuplePistonBase" ).setLength(7);
-		ModBlocks.blockMagneticOctuplePistonBase   = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockRedStonemagePistonBase8ID, "MagneticOctuplePistonBase"  ).setLength(8);
+		ModBlocks.blockMagneticPistonBase          = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase1ID, "MagneticPistonBase"         );
+		ModBlocks.blockMagneticDoublePistonBase    = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase2ID, "MagneticDoublePistonBase"   ).setLength(2);
+		ModBlocks.blockMagneticTriplePistonBase    = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase3ID, "MagneticTriplePistonBase"   ).setLength(3);
+		ModBlocks.blockMagneticQuadruplePistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase4ID, "MagneticQuadruplePistonBase").setLength(4);
+		ModBlocks.blockMagneticQuintuplePistonBase = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase5ID, "MagneticQuintuplePistonBase").setLength(5);
+		ModBlocks.blockMagneticSextuplePistonBase  = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase6ID, "MagneticSextuplePistonBase" ).setLength(6);
+		ModBlocks.blockMagneticSeptuplePistonBase  = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase7ID, "MagneticSeptuplePistonBase" ).setLength(7);
+		ModBlocks.blockMagneticOctuplePistonBase   = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase8ID, "MagneticOctuplePistonBase"  ).setLength(8);
 		
 		
 		
