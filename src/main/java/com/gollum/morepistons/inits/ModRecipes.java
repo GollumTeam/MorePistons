@@ -13,6 +13,15 @@ public class ModRecipes {
 	public static void init () {
 		
 		////////////////////
+		// Vanilla Piston //
+		////////////////////
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockPistonBase, Character.valueOf('Y'), Items.slime_ball });
+		
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockPistonBase });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockDoubleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockStickyPistonBase });
+		
+		////////////////////
 		// Classic Piston //
 		////////////////////
 		
@@ -43,7 +52,6 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSeptuplePistonBase });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockOctuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSeptupleStickyPistonBase });
-		
 		
 		//////////////////
 		// Super Piston //
@@ -79,7 +87,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperOctuplePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSuperSeptuplePistonBase });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperOctupleStickyPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockSuperOctuplePistonBase, Character.valueOf('Y'), Items.slime_ball });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSuperOctupleStickyPistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Blocks.planks, Character.valueOf('Y'), Items.iron_ingot, Character.valueOf('Z'), ModBlocks.blockSuperSeptupleStickyPistonBase });
-
+		
 		////////////////////
 		// Manetic Piston //
 		////////////////////
