@@ -331,7 +331,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 			x -= Facing.offsetsXForSide[this.storedOrientation];
 			y -= Facing.offsetsYForSide[this.storedOrientation];
 			z -= Facing.offsetsZForSide[this.storedOrientation];
-
+			
 			int   id    = this.worldObj.getBlockId(x, y, z);
 			Block block = Block.blocksList[id];
 			if (
