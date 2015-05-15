@@ -36,6 +36,7 @@ public class BlockMorePistonsRedStoneProxy extends HBlockPistonBase {
 		}
 		
 		this.setItemBlockClass(ItemMorePistonsRedStoneProxy.class);
+		this.setCreativeTab(null);
 	}
 	
 	//////////////////////////
