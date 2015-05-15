@@ -1,0 +1,268 @@
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2313, orientation=4, powered=true, currentOpened=0
+2015-05-15 01:46:56 [INFOS] [MorePistons] onNeighborBlockChange : -197, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDERR] net.minecraft.util.ReportedException: Rendering Tile Entity
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntityAt(TileEntityRenderer.java:179)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntity(TileEntityRenderer.java:157)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:536)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1160)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender(EntityRenderer.java:1006)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:946)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.Minecraft.run(Minecraft.java:838)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2307 maxlenght=11
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.main.Main.main(Main.java:93)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at java.lang.reflect.Method.invoke(Method.java:606)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.launchwrapper.Launch.launch(Launch.java:131)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.launchwrapper.Launch.main(Launch.java:27)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] Caused by: java.lang.NullPointerException
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonRodUD(RenderBlocks.java:1420)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonExtension(RenderBlocks.java:1520)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonExtensionAllFaces(RenderBlocks.java:1485)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -207, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at com.gollum.morepistons.client.render.TileEntityMorePistonsMovingRenderer.renderMoving(TileEntityMorePistonsMovingRenderer.java:80)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -208, 4, -2307
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at com.gollum.morepistons.client.render.TileEntityMorePistonsMovingRenderer.renderTileEntityAt(TileEntityMorePistonsMovingRenderer.java:159)
+2015-05-15 01:46:56 [INFOS] [STDERR] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntityAt(TileEntityRenderer.java:172)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -208, 4, -2307 : lenght=11
+2015-05-15 01:46:56 [INFOS] [STDERR] 	... 13 more
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2307, orientation=4, lenghtOpened=11, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston s'ouvre : , -197, 4, -2307, currentOpened=0, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] Create PistonMoving : -208, 4, -2307, orientation=4, currentOpened=0, lenghtOpened=11
+2015-05-15 01:46:56 [INFOS] [MorePistons] onNeighborBlockChange : -197, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2307, orientation=4, powered=true, currentOpened=11
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2309 maxlenght=10
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] ---- Minecraft Crash Report ----
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] // I just don't know what went wrong :(
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] Time: 15/05/15 01:46
+2015-05-15 01:46:56 [INFOS] [STDOUT] Description: Rendering Tile Entity
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] java.lang.NullPointerException
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonRodUD(RenderBlocks.java:1420)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonExtension(RenderBlocks.java:1520)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -207, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonExtensionAllFaces(RenderBlocks.java:1485)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -207, 4, -2309 : lenght=10
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at com.gollum.morepistons.client.render.TileEntityMorePistonsMovingRenderer.renderMoving(TileEntityMorePistonsMovingRenderer.java:80)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at com.gollum.morepistons.client.render.TileEntityMorePistonsMovingRenderer.renderTileEntityAt(TileEntityMorePistonsMovingRenderer.java:159)
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2309, orientation=4, lenghtOpened=10, remote=false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntityAt(TileEntityRenderer.java:172)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntity(TileEntityRenderer.java:157)
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:536)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1160)
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston s'ouvre : , -197, 4, -2309, currentOpened=0, remote=false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender(EntityRenderer.java:1006)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:946)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.Minecraft.run(Minecraft.java:838)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.main.Main.main(Main.java:93)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+2015-05-15 01:46:56 [INFOS] [MorePistons] Create PistonMoving : -207, 4, -2309, orientation=4, currentOpened=0, lenghtOpened=10
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at java.lang.reflect.Method.invoke(Method.java:606)
+2015-05-15 01:46:56 [INFOS] [MorePistons] onNeighborBlockChange : -197, 4, -2309
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.launchwrapper.Launch.launch(Launch.java:131)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.launchwrapper.Launch.main(Launch.java:27)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] A detailed walkthrough of the error, its code path and all known details is as follows:
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2309, orientation=4, powered=true, currentOpened=10
+2015-05-15 01:46:56 [INFOS] [STDOUT] ---------------------------------------------------------------------------------------
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] -- Head --
+2015-05-15 01:46:56 [INFOS] [STDOUT] Stacktrace:
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonRodUD(RenderBlocks.java:1420)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonExtension(RenderBlocks.java:1520)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderBlocks.renderPistonExtensionAllFaces(RenderBlocks.java:1485)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at com.gollum.morepistons.client.render.TileEntityMorePistonsMovingRenderer.renderMoving(TileEntityMorePistonsMovingRenderer.java:80)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at com.gollum.morepistons.client.render.TileEntityMorePistonsMovingRenderer.renderTileEntityAt(TileEntityMorePistonsMovingRenderer.java:159)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] -- Tile Entity Details --
+2015-05-15 01:46:56 [INFOS] [STDOUT] Details:
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Name: MorePistonsMoving // com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Block type: ID #4045 (tile.MorePistonsMoving // com.gollum.morepistons.common.block.BlockMorePistonsMoving)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Block data value: 1 / 0x1 / 0b0001
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Block location: World: (-174,12,-2295), Chunk: (at 2,0,9 in -11,-144; contains blocks -176,0,-2304 to -161,255,-2289), Region: (-1,-5; contains chunks -32,-160 to -1,-129, blocks -512,0,-2560 to -1,255,-2049)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Actual block type: ID #4045 (tile.MorePistonsMoving // com.gollum.morepistons.common.block.BlockMorePistonsMoving)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Actual block data value: 1 / 0x1 / 0b0001
+2015-05-15 01:46:56 [INFOS] [STDOUT] Stacktrace:
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntityAt(TileEntityRenderer.java:172)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.tileentity.TileEntityRenderer.renderTileEntity(TileEntityRenderer.java:157)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2311 maxlenght=9
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:536)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1160)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] -- Affected level --
+2015-05-15 01:46:56 [INFOS] [STDOUT] Details:
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level name: MpServer
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	All players: 1 total; [EntityClientPlayerMP['Player82'/124, l='MpServer', x=-168,90, y=5,62, z=-2295,98]]
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Chunk stats: MultiplayerChunkCache: 441
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level seed: 0
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level generator: ID 01 - flat, ver 0. Features enabled: false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level generator options: 
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level spawn location: World: (-219,4,-2329), Chunk: (at 5,0,7 in -14,-146; contains blocks -224,0,-2336 to -209,255,-2321), Region: (-1,-5; contains chunks -32,-160 to -1,-129, blocks -512,0,-2560 to -1,255,-2049)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level time: 15827 game time, 1767 day time
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level dimension: 0
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level storage version: 0x00000 - Unknown?
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Forced entities: 28 total; [EntitySlime['Slime'/7069, l='MpServer', x=-154,23, y=4,00, z=-2296,60], EntityItem['item.item.bone'/10577, l='MpServer', x=-201,09, y=4,13, z=-2280,34], EntityItem['item.item.arrow'/10576, l='MpServer', x=-200,47, y=4,13, z=-2279,78], EntitySlime['Slime'/22967, l='MpServer', x=-147,95, y=4,00, z=-2341,36], EntityClientPlayerMP['Player82'/124, l='MpServer', x=-168,90, y=5,62, z=-2295,98], EntitySlime['Slime'/36080, l='MpServer', x=-117,75, y=4,00, z=-2287,06], EntityItem['item.item.rottenFlesh'/10003, l='MpServer', x=-158,44, y=4,13, z=-2302,97], EntitySlime['Slime'/48, l='MpServer', x=-139,72, y=4,00, z=-2269,06], EntityItem['item.item.rottenFlesh'/9884, l='MpServer', x=-226,19, y=4,13, z=-2240,25], EntityItem['item.item.bone'/9748, l='MpServer', x=-194,22, y=4,13, z=-2318,09], EntityItem['item.item.arrow'/9747, l='MpServer', x=-193,63, y=4,13, z=-2317,25], EntityItem['item.item.rottenFlesh'/9832, l='MpServer', x=-118,41, y=4,13, z=-2240,47], EntityCreeper['Creeper'/76, l='MpServer', x=-171,02, y=4,00, z=-2310,42], EntityItem['item.tile.lever'/77, l='MpServer', x=-173,69, y=4,13, z=-2291,41], EntityItem['item.tile.SuperOctupleStickyPistonBase'/78, l='MpServer', x=-173,63, y=4,13, z=-2293,06], EntityItem['item.tile.mushroom'/79, l='MpServer', x=-174,13, y=4,13, z=-2291,53], EntityItem['item.tile.SuperTriplePistonBase'/84, l='MpServer', x=-173,56, y=4,13, z=-2291,59], EntityItem['item.tile.MagneticOctuplePistonBase'/81, l='MpServer', x=-173,69, y=4,13, z=-2293,13], EntityItem['item.tile.torch'/80, l='MpServer', x=-173,63, y=4,13, z=-2293,03], EntityItem['item.tile.DoubleStickyPistonBase'/83, l='MpServer', x=-174,19, y=4,13, z=-2291,56], EntityItem['item.tile.rose'/82, l='MpServer', x=-174,56, y=4,13, z=-2291,31], EntityItem['item.item.arrow'/9439, l='MpServer', x=-131,31, y=4,13, z=-2333,78], EntitySheep['Sheep'/89, l='MpServer', x=-148,38, y=4,00, z=-2327,81], EntitySheep['Sheep'/90, l='MpServer', x=-151,94, y=4,00, z=-2261,03], EntityItem['item.item.rottenFlesh'/11014, l='MpServer', x=-191,88, y=4,13, z=-2333,44], EntitySheep['Sheep'/100, l='MpServer', x=-126,22, y=4,00, z=-2294,69], EntitySheep['Sheep'/99, l='MpServer', x=-133,19, y=4,00, z=-2309,19], EntityItem['item.item.rottenFlesh'/10765, l='MpServer', x=-204,13, y=4,13, z=-2350,19]]
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Retry entities: 0 total; []
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Server brand: fml,forge
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Server type: Integrated singleplayer server
+2015-05-15 01:46:56 [INFOS] [STDOUT] Stacktrace:
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2311 : lenght=9
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:440)
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2311, orientation=4, lenghtOpened=9, remote=false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2312)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.Minecraft.run(Minecraft.java:856)
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.client.main.Main.main(Main.java:93)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston s'ouvre : , -197, 4, -2311, currentOpened=0, remote=false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at java.lang.reflect.Method.invoke(Method.java:606)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.launchwrapper.Launch.launch(Launch.java:131)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	at net.minecraft.launchwrapper.Launch.main(Launch.java:27)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 
+2015-05-15 01:46:56 [INFOS] [STDOUT] -- System Details --
+2015-05-15 01:46:56 [INFOS] [MorePistons] Create PistonMoving : -206, 4, -2311, orientation=4, currentOpened=0, lenghtOpened=9
+2015-05-15 01:46:56 [INFOS] [STDOUT] Details:
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Minecraft Version: 1.6.4
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Operating System: Linux (amd64) version 3.13.0-46-generic
+2015-05-15 01:46:56 [INFOS] [MorePistons] onNeighborBlockChange : -197, 4, -2311
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Java Version: 1.7.0_75, Oracle Corporation
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Oracle Corporation
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2311, orientation=4, powered=true, currentOpened=9
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Memory: 700732488 bytes (668 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	AABB Pool Size: 1075 (60200 bytes; 0 MB) allocated, 997 (55832 bytes; 0 MB) used
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Suspicious classes: FML and Forge are installed
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2313 maxlenght=8
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	FML: MCP v8.11 FML v6.4.49.965 Minecraft Forge 9.11.1.965 5 mods loaded, 5 mods active
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	mcp{8.09} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	FML{6.4.49.965} [Forge Mod Loader] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Forge{9.11.1.965} [Minecraft Forge] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	GollumCoreLib{2.0.0} [Gollum Core Lib] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	MorePistons{2.0.0 Beta 1.0} [More Pistons] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Launched Version: 1.6
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	LWJGL: 2.9.0
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2313 : lenght=8
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2313, orientation=4, lenghtOpened=8, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston s'ouvre : , -197, 4, -2313, currentOpened=0, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] Create PistonMoving : -205, 4, -2313, orientation=4, currentOpened=0, lenghtOpened=8
+2015-05-15 01:46:56 [INFOS] [MorePistons] onNeighborBlockChange : -197, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2313, orientation=4, powered=true, currentOpened=8
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2307 maxlenght=11
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -207, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -208, 4, -2307 find PistonMoving
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -208, 4, -2307 is Extention
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2307, orientation=4, lenghtOpened=11, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2307
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston reste immobile : , -197, 4, -2307, currentOpened=11, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2309 maxlenght=10
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -207, 4, -2309 find PistonMoving
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -207, 4, -2309 is Extention
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2309, orientation=4, lenghtOpened=10, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2309
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston reste immobile : , -197, 4, -2309, currentOpened=10, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2311 maxlenght=9
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2311 find PistonMoving
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -206, 4, -2311 is Extention
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2311, orientation=4, lenghtOpened=9, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2311
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston reste immobile : , -197, 4, -2311, currentOpened=9, remote=false
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -197, 4, -2313 maxlenght=8
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -198, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -199, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -200, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -201, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -202, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -203, 4, -2313
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -204, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	OpenGL: Mesa DRI Intel(R) Sandybridge Mobile  GL version 3.0 Mesa 10.1.3, Intel Open Source Technology Center
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Is Modded: Definitely; Client brand changed to 'fml,forge'
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2313 find PistonMoving
+2015-05-15 01:46:56 [INFOS] [MorePistons] getMaximalOpenedLenght : -205, 4, -2313 is Extention
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Type: Client (map_client.txt)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Resource Pack: Default
+2015-05-15 01:46:56 [INFOS] [MorePistons] onBlockEventReceived : , -197, 4, -2313, orientation=4, lenghtOpened=8, remote=false
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Current Language: English (US)
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Profiler Position: N/A (disabled)
+2015-05-15 01:46:56 [INFOS] [MorePistons] demande d'ouverture : , -197, 4, -2313
+2015-05-15 01:46:56 [INFOS] [STDOUT] 	Vec3 Pool Size: 360 (20160 bytes; 0 MB) allocated, 360 (20160 bytes; 0 MB) used
+2015-05-15 01:46:56 [INFOS] [MorePistons] Le piston reste immobile : , -197, 4, -2313, currentOpened=8, remote=false
+2015-05-15 01:46:56 [INFOS] [STDOUT] #@!@# Game crashed! Crash report saved to: #@!@# /home/smeagol/Works/Minecraft/Git/MorePistons-1.6.4/mcp/jars/./crash-reports/crash-2015-05-15_01.46.56-client.txt
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2301, orientation=4, powered=true, currentOpened=14
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2303, orientation=4, powered=true, currentOpened=13
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2305, orientation=4, powered=true, currentOpened=12
+2015-05-15 01:46:56 [INFOS] [MorePistons] updatePistonState : , -197, 4, -2299, orientation=4, powered=true, currentOpened=15
+AL lib: (EE) alc_cleanup: 1 device not closed

@@ -127,15 +127,6 @@ public class ModBlocks {
 		
 		ModBlocks.blockGravitationalPistonBase       = new BlockMorePistonsGravitational(config.blockGravitationalPistonBaseID      , "GravitationalPistonBase"      , false);
 		ModBlocks.blockGravitationalStickyPistonBase = new BlockMorePistonsGravitational(config.blockGravitationalStickyPistonBaseID, "GravitationalStickyPistonBase", true);
-
-		/////////////////////
-		// Vanilla pistons //
-		/////////////////////
-		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla(config.blockPistonVanillaID      , "PistonBase"      , false);
-		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla(config.blockStickyPistonVanillaID, "StickyPistonBase", true );
-		
-		if (ModMorePistons.config.overrideVanillaPiston)      new BlockMorePistonsVanillaProxy(ModBlocks.blockPistonBase);
-//		if (ModMorePistons.config.overrideVanillaStickPiston) new BlockMorePistonsVanillaProxy(ModBlocks.blockStickyPistonBase);
 		
 		//////////////////////
 		// Standard pistons //
@@ -220,7 +211,22 @@ public class ModBlocks {
 		ModBlocks.blockMagneticSeptuplePistonBase  = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase7ID, "MagneticSeptuplePistonBase" ).setLength(7);
 		ModBlocks.blockMagneticOctuplePistonBase   = (BlockMorePistonsMagnetic) new BlockMorePistonsMagnetic(config.blockMagneticPistonBase8ID, "MagneticOctuplePistonBase"  ).setLength(8);
 		
+		/////////////////////
+		// Vanilla pistons //
+		/////////////////////
+		ModBlocks.blockPistonBase       = new BlockMorePistonsVanilla(config.blockPistonVanillaID      , "PistonBase"      , false);
+		ModBlocks.blockStickyPistonBase = new BlockMorePistonsVanilla(config.blockStickyPistonVanillaID, "StickyPistonBase", true );
 		
+		try {
+			if (ModMorePistons.config.overrideVanillaPiston) new BlockMorePistonsVanillaProxy(config.BlockPistonOverrideTemporyID, ModBlocks.blockPistonBase);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			if (ModMorePistons.config.overrideVanillaStickPiston) new BlockMorePistonsVanillaProxy(config.BlockStickyPistonOverrideTemporyID, ModBlocks.blockStickyPistonBase);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

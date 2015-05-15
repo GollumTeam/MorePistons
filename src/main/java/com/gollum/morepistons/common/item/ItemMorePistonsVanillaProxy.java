@@ -25,9 +25,18 @@ public class ItemMorePistonsVanillaProxy extends ItemPiston {
 		this.blockId = id + 256;
 	}
 	
+	private static int getFirstFreeIndexInBlockList () throws Exception {
+		for (int id = 0; id < Block.blocksList.length; id++) {
+			if (Block.blocksList[id] == null) {
+				return id;
+			}
+		}
+		throw new Exception("No free block found");
+	}
+	
 	private ItemStack replaceItemStack (ItemStack is) {
 		if (this.itemID == is.itemID) {
-			is.itemID = ((BlockMorePistonsRedStoneProxy)Block.blocksList[this.blockId]).target.blockID;
+			is.itemID = ((BlockMorePistonsVanillaProxy)Block.blocksList[this.blockId]).target.blockID;
 		}
 		return is;
 	}

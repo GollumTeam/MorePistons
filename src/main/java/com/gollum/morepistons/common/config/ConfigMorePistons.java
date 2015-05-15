@@ -4,7 +4,7 @@ import com.gollum.core.common.config.Config;
 import com.gollum.core.common.config.ConfigProp;
 
 public class ConfigMorePistons extends Config {
-
+	
 	@ConfigProp(mcRestart = true) public boolean overrideVanillaPiston = true;
 	@ConfigProp(mcRestart = true) public boolean overrideVanillaStickPiston = true;
 	
@@ -30,8 +30,12 @@ public class ConfigMorePistons extends Config {
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockPistonRodID                     = 4086;
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockPistonMagneticExtensionID       = 4044;
 	
+	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int BlockPistonOverrideTemporyID         = 4031;
+	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int BlockStickyPistonOverrideTemporyID   = 4030;
+	
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockPistonVanillaID                 = 4043;
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockStickyPistonVanillaID           = 4042;
+	
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockDoublePistonBaseID              = 4095;
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockDoubleStickyPistonBaseID        = 4094;
 	@ConfigProp(group = "Blocks Ids", mcRestart = true) public int blockTriplePistonBaseID              = 4093;

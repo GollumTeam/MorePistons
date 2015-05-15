@@ -24,9 +24,9 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	public BlockMorePistonsVanilla target;
 	public BlockPistonBase vanillaPiston;
 	
-	public BlockMorePistonsVanillaProxy(BlockMorePistonsVanilla target) {
+	public BlockMorePistonsVanillaProxy(int id, BlockMorePistonsVanilla target) throws Exception {
 		super(
-			target.isSticky() ? Block.pistonStickyBase.blockID : Block.pistonBase.blockID,
+			id,
 			target.isSticky() ? RegisteredObjects.instance().getRegisterName(Block.pistonStickyBase) : RegisteredObjects.instance().getRegisterName(Block.pistonBase), 
 			target.isSticky()
 		);
@@ -40,6 +40,7 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 		
 		this.setUnlocalizedName(this.vanillaPiston.getUnlocalizedName().replace("tile.", ""));
 		helper.vanillaTexture = true;
+		
 	}
 	
 	//////////////////////////
@@ -59,10 +60,17 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 	public void register() {
 		if (helper.vanillaRegister) return;
 		
-		// TODO
-//		BlockRegistry.instance().overrideBlocksClassField(this.vanillaPiston, this);
-//		BlockRegistry.instance().overrideRegistered(this.getRegisterName(), this);
-//		ItemRegistry .instance().overrideRegistered(this.getRegisterName(), new ItemMorePistonsVanillaProxy(Item.getItemFromBlock(this.vanillaPiston), this));
+		int newId = this.vanillaPiston.blockID;
+		int oldId = this.blockID;
+		
+		Item item        = new ItemMorePistonsVanillaProxy(this.blockID - 256, Item.itemsList[oldId]);
+		Item vanillaItem = Item.itemsList[newId];
+		
+		BlockRegistry.instance().overrideBlocksId(this.vanillaPiston, this);
+		ItemRegistry.instance().overrideItemId(vanillaItem, item);
+		
+		BlockRegistry.instance().overrideBlocksClassField(this.vanillaPiston, this);
+		
 	}
 	
 	////////////
