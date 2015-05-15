@@ -40,7 +40,6 @@ public class BlockMorePistonsVanillaProxy extends HBlockPistonBase {
 		
 		this.setUnlocalizedName(this.vanillaPiston.getUnlocalizedName().replace("tile.", ""));
 		helper.vanillaTexture = true;
-		
 	}
 	
 	//////////////////////////
