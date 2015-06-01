@@ -7,7 +7,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gollum.morepistons.client.ClientProxyMorePistons;
+import com.gollum.morepistons.common.CommonProxyMorePistons;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -73,7 +73,7 @@ public class MorePistonsInventoryRenderer implements ISimpleBlockRenderingHandle
 	
 	@Override
 	public int getRenderId() {
-		return ClientProxyMorePistons.idMorePistonsBaseRenderer;
+		return CommonProxyMorePistons.idMorePistonsBaseRenderer;
 	}
 	
 }

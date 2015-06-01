@@ -377,17 +377,14 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		return distance - this.getProgress(f) * distance;
 	}
 
-	@SideOnly(Side.CLIENT)
 	public float getOffsetX(float f) {
 		return this.getProgressWithDistance(f) * Facing.offsetsXForSide[this.storedOrientation];
 	}
 
-	@SideOnly(Side.CLIENT)
 	public float getOffsetY(float f) {
 		return this.getProgressWithDistance(f) * Facing.offsetsYForSide[this.storedOrientation];
 	}
 
-	@SideOnly(Side.CLIENT)
 	public float getOffsetZ(float f) {
 		return this.getProgressWithDistance(f) * Facing.offsetsZForSide[this.storedOrientation];
 	}
