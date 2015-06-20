@@ -28,6 +28,8 @@ public abstract class ATileEntityMorePistonsRenderer extends TileEntitySpecialRe
 	
 	protected Tessellator startRender(TileEntity tileEntity, double posX, double posY, double posZ) {
 		Tessellator tessellator = Tessellator.instance;
+		
+		GL11.glPushMatrix();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 		RenderHelper.disableStandardItemLighting();
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -53,7 +55,8 @@ public abstract class ATileEntityMorePistonsRenderer extends TileEntitySpecialRe
 	protected void endRender(Tessellator tessellator) {
 		tessellator.setTranslation(0.0D, 0.0D, 0.0D);
 		tessellator.draw();
-		RenderHelper.disableStandardItemLighting();
+		RenderHelper.enableStandardItemLighting();
+		GL11.glPopMatrix();
 	}
 	
 }

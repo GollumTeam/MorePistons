@@ -20,6 +20,8 @@ public class MorePistonsInventoryRenderer implements ISimpleBlockRenderingHandle
 		
 		Tessellator tessellator = Tessellator.instance;
 		
+		GL11.glPushMatrix();
+		
 		renderer.setRenderBoundsFromBlock(block);
 		
 		block.setBlockBoundsForItemRender();
@@ -59,6 +61,7 @@ public class MorePistonsInventoryRenderer implements ISimpleBlockRenderingHandle
 		
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 		
+		GL11.glPopMatrix();
 	}
 	
 	@Override
