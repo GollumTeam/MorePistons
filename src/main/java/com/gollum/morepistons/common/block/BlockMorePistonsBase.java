@@ -33,7 +33,7 @@ import com.gollum.core.common.blocks.IBlockDisplayInfos;
 import com.gollum.core.tools.helper.blocks.HBlockContainer;
 import com.gollum.core.utils.math.Integer3d;
 import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.client.ClientProxyMorePistons;
+import com.gollum.morepistons.common.CommonProxyMorePistons;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
