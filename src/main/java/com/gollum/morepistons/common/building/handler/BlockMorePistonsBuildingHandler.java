@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 import com.gollum.core.common.building.handler.BlockDirectionalWithBit1BuildingHandler;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
+import com.gollum.morepistons.common.block.BlockMorePistonsMagnetic;
 import com.gollum.morepistons.common.block.BlockMorePistonsRedStone;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 
@@ -42,6 +43,19 @@ public class BlockMorePistonsBuildingHandler extends BlockDirectionalWithBit1Bui
 				int multiplier = 1; try { multiplier = Integer.parseInt(extra.get("multiplier")); } catch (Exception e) {}
 				
 				((TileEntityMorePistonsPiston) te).multiplier = ((multiplier-1) % 8) + 1;
+			}
+			
+		}
+		
+		if (block instanceof BlockMorePistonsMagnetic) {
+			
+			TileEntity te = world.getTileEntity(x, y, z);
+			
+			if (te instanceof TileEntityMorePistonsPiston) {
+				
+				int stickySize = 1; try { stickySize = Integer.parseInt(extra.get("stickysize")); } catch (Exception e) {}
+				
+				((TileEntityMorePistonsPiston) te).stickySize = ((stickySize-1) % 8) + 1;
 			}
 			
 		}
