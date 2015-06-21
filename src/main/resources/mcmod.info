@@ -4,8 +4,9 @@
 	"name": "More Pistons",
 	"description": "Add new Pistons",
 	"version": "2.0.0",
+	"mcversion": "1.7.10",
 	"url": "http://www.smeagol-mods.com",
-	"authorList": ["SmeagolWorms4", "MontyPylon"],
+	"authorList": [ "SmeagolWorms4", "MontyPylon" ],
 	"logoFile": "logo_morepistons.png",
 	"requiredMods": ["GollumCoreLib"]
 }
