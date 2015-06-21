@@ -131,7 +131,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									if (block != null && block.getMobilityFlag() == 1) {
-										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0, 1));
 									}
 								}
 							}
@@ -155,12 +155,12 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									if (block != null && block.getMobilityFlag() == 1) {
-										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0, 1));
 									}
 								}
 							}
 							
-							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock, 1));
 						}
 					} else if (!SuperPistonManager.instance.isntAttachOnTop (block, metadata, world, xBlock, yBlock, zBlock, extend ? orientation : Facing.oppositeSide[orientation])) {
 						
@@ -193,7 +193,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock*direction;
 							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock*direction;
 							
-							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock, 1));
 						}
 					}
 				}
@@ -272,7 +272,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 						if (moveBlock != blockOrigin.move) {
 							// Drop les élements légés (fleurs, leviers, herbes ..)
 							if (block != null && block.getMobilityFlag() == 1) {
-								dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+								dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0, 1));
 							}
 						} else {
 							world.setBlockToAir(xBlock, yBlock, zBlock);
@@ -281,7 +281,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
 							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
 							
-							blocksList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock, 1));
 						}
 					}
 				}
