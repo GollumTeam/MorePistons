@@ -49,7 +49,7 @@ public class BlockMorePistonsBuildingHandler extends BlockDirectionalWithBit1Bui
 		
 		if (block instanceof BlockMorePistonsMagnetic) {
 			
-			TileEntity te = world.getTileEntity(x, y, z);
+			TileEntity te = world.getBlockTileEntity(x, y, z);
 			
 			if (te instanceof TileEntityMorePistonsPiston) {
 				
