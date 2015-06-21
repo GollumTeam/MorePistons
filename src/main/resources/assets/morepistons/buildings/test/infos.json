@@ -51,8 +51,8 @@
 		"2x1x10": { "block": "MorePistons:SuperSeptuplePistonBase" , "metadata": 1 },
 		"2x1x9":  { "block": "MorePistons:SuperOctuplePistonBase"  , "metadata": 1 },
 		
-		"2x1x18":  { "block": "MorePistons:OctupleStickyPistonBase"  , "metadata": 1 },
-		"2x1x21":  { "block": "MorePistons:OctupleStickyPistonBase"  , "metadata": 1 },
+		"2x1x18":  { "block": "MorePistons:SuperOctupleStickyPistonBase"  , "metadata": 1 },
+		"2x1x21":  { "block": "MorePistons:SuperOctupleStickyPistonBase"  , "metadata": 1 },
 		
 		"2x2x19": { "block": "minecraft:tripwire_hook", "orientation": "down"  },
 		"3x2x18": { "block": "minecraft:stone_button" , "orientation": "left"  },

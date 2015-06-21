@@ -37,9 +37,11 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public  Integer3d  positionPiston    = new Integer3d();
 	public  boolean    root              = false;
 	public  TileEntity subTe             = null;
+	public  int        waitFinish        = 0;
 	
 	private float progress     = 0;
 	private float lastProgress = 0;
+	
 	
 	private boolean isInit = false;
 	
@@ -50,7 +52,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	}
 	
 	
-	public TileEntityMorePistonsMoving(Block block, int orientation, boolean extending, int start, int distance, Integer3d positionPiston, boolean root) {
+	public TileEntityMorePistonsMoving(Block block, int orientation, boolean extending, int start, int distance, Integer3d positionPiston, boolean root, int waitFinish) {
 		if (block == null) {
 			log.severe ("Block strorage in null in creation TileEntiry");
 		}
@@ -62,6 +64,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.positionPiston       = (Integer3d)positionPiston.clone();
 		this.root                 = root;
 		this.isInit               = true;
+		this.waitFinish           = waitFinish;
 		
 		if (distance != 0) {
 			this.progress     = (float) ((double)Math.abs(start) / (double)Math.abs(distance));
@@ -86,7 +89,11 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.lastProgress = this.progress;
 		
 		if (this.lastProgress >= 1.0F) {
-			this.setBlockFinalMove();
+			if (this.waitFinish <= 0) {
+				this.setBlockFinalMove();
+			} else {
+				this.waitFinish--;
+			}
 		} else {
 			this.upgradeProgess ();
 		}
@@ -382,6 +389,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		this.progress          = nbtTagCompound.getFloat  ("progress");
 		this.lastProgress      = nbtTagCompound.getFloat  ("lastProgress");
 		this.root              = nbtTagCompound.getBoolean("root");
+		this.waitFinish        = nbtTagCompound.getInteger("waitFinish");
 		
 		this.positionPiston.x = nbtTagCompound.getInteger("pistonX");
 		this.positionPiston.y = nbtTagCompound.getInteger("pistonY");
@@ -415,6 +423,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		nbtTagCompound.setFloat  ("progress"    , this.progress);
 		nbtTagCompound.setFloat  ("lastProgress", this.lastProgress);
 		nbtTagCompound.setBoolean("root"        , this.root);
+		nbtTagCompound.setInteger("waitFinish"  , this.waitFinish);
 		
 		nbtTagCompound.setInteger("pistonX", this.positionPiston.x);
 		nbtTagCompound.setInteger("pistonY", this.positionPiston.y);

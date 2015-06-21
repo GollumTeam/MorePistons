@@ -52,14 +52,20 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 		public Integer3d position = new Integer3d();
 		public TileEntity tileEntity = null;
 		public int move = 0;
+		public int waitFinish = 0;
 		public EMoveInfosExtend() {}
 		
 		public EMoveInfosExtend(Block block, int metadata, TileEntity tileEntity, Integer3d position, int move) {
+			this(block, metadata, tileEntity, position, move, 0);
+		}
+		
+		public EMoveInfosExtend(Block block, int metadata, TileEntity tileEntity, Integer3d position, int move, int waitFinish) {
 			this.block      = block;
 			this.metadata   = metadata;
 			this.position   = position;
 			this.tileEntity = BlockMorePistonsBase.cloneTileEntity(tileEntity);
 			this.move       = move;
+			this.waitFinish = waitFinish;
 		}
 	}
 	
@@ -193,7 +199,7 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 	
 	@Override
 	public int getRenderType() {
-		return ClientProxyMorePistons.idMorePistonsBaseRenderer;
+		return CommonProxyMorePistons.idMorePistonsBaseRenderer;
 	}
 	
 	@Override
@@ -967,7 +973,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			0,
 			currentOpened - lenghtOpenned,
 			false,
-			true
+			true,
+			0
 		);
 		world.setBlockToAir (xOri, yOri, zOri);
 		
@@ -1002,7 +1009,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					0,
 					infos.move,
 					false,
-					false
+					false,
+					infos.waitFinish
 				);
 				
 			}
@@ -1051,7 +1059,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 					currentOpened,
 					infos.move,
 					true,
-					false
+					false,
+					infos.waitFinish
 				);
 			}
 		}
@@ -1097,11 +1106,12 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			currentOpened,
 			lenghtOpened,
 			true,
-			false
+			false,
+			0
 		);
 	}
 
-	protected void createMoving(World world, Integer3d pistonPos, Integer3d dest, Block block, int metadata, TileEntity teCopy,  int orientation, int start, int lenghtOpened, boolean extending, boolean root) {
+	protected void createMoving(World world, Integer3d pistonPos, Integer3d dest, Block block, int metadata, TileEntity teCopy,  int orientation, int start, int lenghtOpened, boolean extending, boolean root, int waitFinish) {
 		
 		world.setBlock(dest.x, dest.y, dest.z, ModBlocks.blockPistonMoving.blockID, metadata, 2);
 		TileEntityMorePistonsMoving teExtension = new TileEntityMorePistonsMoving(
@@ -1111,7 +1121,8 @@ public class BlockMorePistonsBase extends HBlockContainer implements IBlockDispl
 			start,
 			lenghtOpened,
 			pistonPos,
-			root
+			root,
+			waitFinish
 		);
 		teExtension.subTe = teCopy;
 		world.setBlockTileEntity(dest.x, dest.y, dest.z, teExtension);

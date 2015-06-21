@@ -42,9 +42,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		
 		ArrayList<EMoveInfosExtend> all = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
 		
-		all.addAll(infosExtend);
 		all.addAll(upBlocks);
 		all.addAll(nextBlocks);
+		all.addAll(infosExtend);
 		
 		return all;
 	}
@@ -95,7 +95,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				xBlock = blockOrigin.position.x;
 				yBlock = blockOrigin.position.y + 1;
 				zBlock = blockOrigin.position.z;
-
+				
+				this.cleanBlockMoving(world, xBlock, yBlock, zBlock);
 				int   id      = world.getBlockId(xBlock, yBlock, zBlock);
 				Block block   = Block.blocksList[id];
 				int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
@@ -119,6 +120,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation]*direction;
 								yExtension += Facing.offsetsYForSide[orientation]*direction;
 								zExtension += Facing.offsetsZForSide[orientation]*direction;
+								
+								this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 								int   idNext    = world.getBlockId(xExtension, yExtension, zExtension);
 								Block blockNext = Block.blocksList[idNext];
 								if (!this.isEmptyBlock(blockNext)) {
@@ -144,6 +147,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation]*direction;
 								yExtension += Facing.offsetsYForSide[orientation]*direction;
 								zExtension += Facing.offsetsZForSide[orientation]*direction;
+								
+								this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 								int   idNext    = world.getBlockId(xExtension, yExtension, zExtension);
 								Block blockNext = Block.blocksList[idNext];
 								if (blockNext != null) {
@@ -167,6 +172,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							xExtension += Facing.offsetsXForSide[orientation]*direction;
 							yExtension += Facing.offsetsYForSide[orientation]*direction;
 							zExtension += Facing.offsetsZForSide[orientation]*direction;
+							
+							this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 							int   idNext    = world.getBlockId(xExtension, yExtension, zExtension);
 							Block blockNext = Block.blocksList[idNext];
 							if (blockNext != null) {
@@ -228,6 +235,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					int yBlock = blockOrigin.position.y;
 					int zBlock = blockOrigin.position.z + Facing.offsetsZForSide[o]*direction;
 
+					this.cleanBlockMoving(world, xBlock, yBlock, zBlock);
 					int   id      = world.getBlockId(xBlock, yBlock, zBlock);
 					Block block   = Block.blocksList[id];
 					int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
@@ -251,6 +259,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							xExtension += Facing.offsetsXForSide[orientation]*direction;
 							yExtension += Facing.offsetsYForSide[orientation]*direction;
 							zExtension += Facing.offsetsZForSide[orientation]*direction;
+							
+							this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 							int   idNext    = world.getBlockId(xExtension, yExtension, zExtension);
 							Block blockNext = Block.blocksList[idNext];
 							if (blockNext != null) {
