@@ -1,9 +1,13 @@
 [
 {
-  "modid": "MorePistons",
-  "name": "More Pistons",
-  "version": "1.5.1 [Build Smeagol]",
-  "mcversion": "1.6.4",
-  "authors": [ "Smeagol" ]
+	"modid": "MorePistons",
+	"name": "More Pistons",
+	"description": "Add new Pistons",
+	"version": "2.0.0",
+	"mcversion": "1.6.4",
+	"url": "http://www.smeagol-mods.com",
+	"authors": [ "SmeagolWorms4", "MontyPylon" ],
+	"logoFile": "logo_morepistons.png",
+	"requiredMods": ["GollumCoreLib"]
 }
 ]
