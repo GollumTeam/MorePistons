@@ -13,7 +13,7 @@ import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class ClientProxyMorePistons extends CommonProxyMorePistons {
-
+	
 	@Override
 	public void registerRenderers() {
 		

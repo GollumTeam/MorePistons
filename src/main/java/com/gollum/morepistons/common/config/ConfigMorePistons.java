@@ -4,7 +4,7 @@ import com.gollum.core.common.config.Config;
 import com.gollum.core.common.config.ConfigProp;
 
 public class ConfigMorePistons extends Config {
-
+	
 	@ConfigProp(mcRestart = true) public boolean overrideVanillaPiston = true;
 	@ConfigProp(mcRestart = true) public boolean overrideVanillaStickPiston = true;
 	
