@@ -1,42 +1,12 @@
 [
 {
-  "modid": "MorePistons",
-  "name": "More Pistons",
-  "description": "Add new Pistons",
-  "version": "2.0.0",
-  "updateUrl": "",
-  "authors": ["SmeagolWorms4"],
-  "screenshots": [],
-  "dependencies": ["GollumCoreLib"]
-},
-{
-  "modid": "GollumCoreLib",
-  "name": "Gollum Core Lib",
-  "description": "",
-  "version": "2.0.0",
-  "updateUrl": "",
-  "authors": ["SmeagolWorms4"],
-  "screenshots": [],
-  "dependencies": []
-},
-{
-  "modid": "GollumAutoReplace",
-  "name": "Gollum Auto Replace",
-  "description": "",
-  "version": "1.0.0",
-  "updateUrl": "",
-  "authors": ["SmeagolWorms4"],
-  "screenshots": [],
-  "dependencies": []
-},
-{
-  "modid": "CastleDefenders",
-  "name": "Castle Defenders",
-  "description": "",
-  "version": "3.0.0",
-  "updateUrl": "",
-  "authors": ["SmeagolWorms4"],
-  "screenshots": [],
-  "dependencies": []
+	"modid": "MorePistons",
+	"name": "More Pistons",
+	"description": "Add new Pistons",
+	"version": "2.0.0",
+	"url": "http://www.smeagol-mods.com",
+	"authorList": ["SmeagolWorms4", "MontyPylon"],
+	"logoFile": "logo_morepistons.png",
+	"requiredMods": ["GollumCoreLib"]
 }
 ]
