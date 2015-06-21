@@ -43,9 +43,9 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 		
 		ArrayList<EMoveInfosExtend> all = new ArrayList<BlockMorePistonsBase.EMoveInfosExtend>();
 		
-		all.addAll(infosExtend);
 		all.addAll(upBlocks);
 		all.addAll(nextBlocks);
+		all.addAll(infosExtend);
 		
 		return all;
 	}
@@ -97,6 +97,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 				yBlock = blockOrigin.position.y + 1;
 				zBlock = blockOrigin.position.z;
 				
+				this.cleanBlockMoving(world, xBlock, yBlock, zBlock);
 				Block block   = world.getBlock(xBlock, yBlock, zBlock);
 				int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
 				TileEntity te = world.getTileEntity(xBlock, yBlock, zBlock);
@@ -119,7 +120,10 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation]*direction;
 								yExtension += Facing.offsetsYForSide[orientation]*direction;
 								zExtension += Facing.offsetsZForSide[orientation]*direction;
+								
+								this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+								
 								if (!this.isEmptyBlock(blockNext)) {
 									break;
 								}
@@ -127,7 +131,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0, 1));
 									}
 								}
 							}
@@ -143,17 +147,20 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 								xExtension += Facing.offsetsXForSide[orientation]*direction;
 								yExtension += Facing.offsetsYForSide[orientation]*direction;
 								zExtension += Facing.offsetsZForSide[orientation]*direction;
+								
+								this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 								Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+								
 								if (blockNext != null && block != Blocks.air) {
 									int metadataNext = world.getBlockMetadata(xExtension, yExtension, zExtension);
 									// Drop les élements légés (fleurs, leviers, herbes ..)
 									if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+										dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0, 1));
 									}
 								}
 							}
 							
-							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock, 1));
 						}
 					} else if (!SuperPistonManager.instance.isntAttachOnTop (block, metadata, world, xBlock, yBlock, zBlock, extend ? orientation : Facing.oppositeSide[orientation])) {
 						
@@ -165,6 +172,8 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							xExtension += Facing.offsetsXForSide[orientation]*direction;
 							yExtension += Facing.offsetsYForSide[orientation]*direction;
 							zExtension += Facing.offsetsZForSide[orientation]*direction;
+							
+							this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 							Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
 							if (blockNext != null && blockNext != Blocks.air) {
 								break;
@@ -183,7 +192,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock*direction;
 							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock*direction;
 							
-							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksTop.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock, 1));
 						}
 					}
 				}
@@ -225,6 +234,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 					int yBlock = blockOrigin.position.y;
 					int zBlock = blockOrigin.position.z + Facing.offsetsZForSide[o]*direction;
 					
+					this.cleanBlockMoving(world, xBlock, yBlock, zBlock);
 					Block block   = world.getBlock(xBlock, yBlock, zBlock);
 					int metadata  = world.getBlockMetadata(xBlock, yBlock, zBlock);
 					TileEntity te = world.getTileEntity(xBlock, yBlock, zBlock);
@@ -248,7 +258,10 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							xExtension += Facing.offsetsXForSide[orientation]*direction;
 							yExtension += Facing.offsetsYForSide[orientation]*direction;
 							zExtension += Facing.offsetsZForSide[orientation]*direction;
+							
+							this.cleanBlockMoving(world, xExtension, yExtension, zExtension);
 							Block blockNext = world.getBlock(xExtension, yExtension, zExtension);
+							
 							if (blockNext != null && blockNext != Blocks.air) {
 								break;
 							}
@@ -258,7 +271,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 						if (moveBlock != blockOrigin.move) {
 							// Drop les élements légés (fleurs, leviers, herbes ..)
 							if (block != null && block != Blocks.air && block.getMobilityFlag() == 1) {
-								dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0));
+								dropList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xExtension, yExtension, zExtension), 0, 1));
 							}
 						} else {
 							world.setBlockToAir(xBlock, yBlock, zBlock);
@@ -267,7 +280,7 @@ public class BlockMorePistonsSuper extends BlockMorePistonsBase {
 							yExtension = yBlock + Facing.offsetsYForSide[orientation]*moveBlock;
 							zExtension = zBlock + Facing.offsetsZForSide[orientation]*moveBlock;
 							
-							blocksList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock));
+							blocksList.add(new EMoveInfosExtend(block, metadata, te, new Integer3d(xBlock, yBlock, zBlock), moveBlock, 1));
 						}
 					}
 				}
