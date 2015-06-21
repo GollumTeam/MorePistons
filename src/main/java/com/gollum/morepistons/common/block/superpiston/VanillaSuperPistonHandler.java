@@ -31,7 +31,7 @@ public class VanillaSuperPistonHandler extends AbstractSuperPistonHandler {
 			(block instanceof BlockLadder) ||                                  // Les echelles
 			(block instanceof BlockButton) ||                                  // Les boutons
 			(block instanceof BlockTripWireHook) ||                            // Les piège
-			(block instanceof BlockTorch && metadata != 5) ||                  // Les Torches charbons et Redstones
+			(block instanceof BlockTorch && metadata != 5 && metadata != 0) || // Les Torches charbons et Redstones
 			(block instanceof BlockTrapDoor && (metadata & 0x8) == 0x8) ||     // Les Trappe
 			(block instanceof BlockLever && (metadata & 0x7) != 5 && (metadata & 0x7) != 6) // Les leviers
 			
