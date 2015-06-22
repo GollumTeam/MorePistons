@@ -116,7 +116,8 @@ public class ModRecipes {
 			}
 		);
 		
-		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockDoublePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), Block.pistonBase         , Character.valueOf('Y'), ModItems.itemMagnet });
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticPistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockPistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
 		
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticDoublePistonBase, 1), new Object[] { "Y", "X", Character.valueOf('X'), ModBlocks.blockDoublePistonBase, Character.valueOf('Y'), ModItems.itemMagnet });
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockMagneticDoublePistonBase, 1), new Object[] { "XXX", " Y ", " Z ", Character.valueOf('X'), Block.planks, Character.valueOf('Y'), Item.ingotIron, Character.valueOf('Z'), ModBlocks.blockMagneticPistonBase });
