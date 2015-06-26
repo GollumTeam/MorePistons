@@ -28,6 +28,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 	acceptedMinecraftVersions = ModMorePistons.MINECRAFT_VERSION, 
 	dependencies              = ModMorePistons.DEPENDENCIES
 )
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ModMorePistons extends GollumMod {
 
 	public final static String MODID = "MorePistons";
