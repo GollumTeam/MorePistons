@@ -115,7 +115,7 @@ public class ModBlocks {
 		////////////////////
 		// Utility blocks //
 		////////////////////
-
+		
 		ModBlocks.blockPistonExtention         = new BlockMorePistonsExtension        (config.blockPistonExtensionID        , "MorePistonsExtension");
 		ModBlocks.blockPistonMagneticExtention = new BlockMorePistonsMagneticExtension(config.blockPistonMagneticExtensionID, "MorePistonsMagneticExtension");
 		ModBlocks.blockPistonRod               = new BlockMorePistonsRod              (config.blockPistonRodID              , "MorePistonsRod");
