@@ -144,8 +144,8 @@ public class ModBlocks {
 		ModBlocks.blockSextupleStickyPistonBase  = new BlockMorePistonsBase   (config.blockSextStickyPistonBaseID  , "SextupleStickyPistonBase" , true ).setLength (6);
 		ModBlocks.blockSeptuplePistonBase        = new BlockMorePistonsBase   (config.blockSeptPistonBaseID        , "SeptuplePistonBase"       , false).setLength (7);
 		ModBlocks.blockSeptupleStickyPistonBase  = new BlockMorePistonsBase   (config.blockSeptStickyPistonBaseID  , "SeptupleStickyPistonBase" , true ).setLength (7);
-		ModBlocks.blockOctuplePistonBase         = new BlockMorePistonsBase   (config.blockOctStickyPistonBaseID   , "OctuplePistonBase"        , false).setLength (8);
-		ModBlocks.blockOctupleStickyPistonBase   = new BlockMorePistonsBase   (config.blockOctPistonBaseID         , "OctupleStickyPistonBase"  , true ).setLength (8);
+		ModBlocks.blockOctuplePistonBase         = new BlockMorePistonsBase   (config.blockOctPistonBaseID         , "OctuplePistonBase"        , false).setLength (8);
+		ModBlocks.blockOctupleStickyPistonBase   = new BlockMorePistonsBase   (config.blockOctStickyPistonBaseID   , "OctupleStickyPistonBase"  , true ).setLength (8);
 		
 
 		///////////////////
