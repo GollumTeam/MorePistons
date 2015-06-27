@@ -21,7 +21,7 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 	}
 	
 	@Override
-	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
 		
 		int metadata    = world.getBlockMetadata(x, y, z);
 		int orientation = BlockPistonBase.getPistonOrientation(metadata);
@@ -36,10 +36,10 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 			world.func_147480_a(x2, y2, z2, true);
 		}
 		if (b instanceof BlockMorePistonsRod) {
-			b.removedByPlayer(world, player,x2, y2, z2, willHarvest);
+			b.removedByPlayer(world, player,x2, y2, z2);
 		}
 		
-		return super.removedByPlayer(world, player, x, y, z, willHarvest);
+		return super.removedByPlayer(world, player, x, y, z);
 	}
 	
 	@Override

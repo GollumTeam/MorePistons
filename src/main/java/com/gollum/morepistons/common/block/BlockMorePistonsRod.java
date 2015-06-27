@@ -174,7 +174,7 @@ public class BlockMorePistonsRod extends HBlockContainer {
 	}
 	
 	@Override
-	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
 		
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileEntityMorePistonsRod) {
@@ -184,7 +184,7 @@ public class BlockMorePistonsRod extends HBlockContainer {
 			}
 		}
 		
-		return super.removedByPlayer(world, player, x, y, z, willHarvest);
+		return super.removedByPlayer(world, player, x, y, z);
 	}
 	
 	@Override
