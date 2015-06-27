@@ -30,9 +30,9 @@ public class BlockMorePistonsRedStoneProxy extends HBlockPistonBase {
 		this.multiplicator = multiplicator;
 		
 		if (sticky) {
-			this.target = ModBlocks.blockRedStonePistonBase;
-		} else {
 			this.target = ModBlocks.blockRedStoneStickyPistonBase;
+		} else {
+			this.target = ModBlocks.blockRedStonePistonBase;
 		}
 		
 		this.setItemBlockClass(ItemMorePistonsRedStoneProxy.class);
