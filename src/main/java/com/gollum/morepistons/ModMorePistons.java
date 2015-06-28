@@ -64,7 +64,7 @@ public class ModMorePistons extends GollumMod {
 	/** 1 **/
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-
+		
 		// Initialisation des blocks
 		ModItems.init();
 		
