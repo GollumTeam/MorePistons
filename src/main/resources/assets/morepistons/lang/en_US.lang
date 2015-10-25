@@ -42,9 +42,9 @@ tile.MagneticDoublePistonBase.name=Magnetic Double Piston
 tile.MagneticTriplePistonBase.name=Magnetic Triple Piston
 tile.MagneticQuadruplePistonBase.name=Magnetic Quadruple Piston
 tile.MagneticQuintuplePistonBase.name=Magnetic Quintuple Piston
-tile.MagneticSextuplePistonBase.name=Magnetic Sextuple Piston
-tile.MagneticSeptuplePistonBase.name=Magnetic Septuple Piston
-tile.MagneticOctuplePistonBase.name=Magnetic Octuple Piston
+tile.MagneticSextuplePistonBase.name=Magnetic Sixfold Piston
+tile.MagneticSeptuplePistonBase.name=Magnetic Sevenfold Piston
+tile.MagneticOctuplePistonBase.name=Magnetic Eightfold Piston
 
 tile.RedStonePistonBase.name=Redstone Piston
 tile.RedStoneStickyPistonBase.name=Redstone Sticky Piston
