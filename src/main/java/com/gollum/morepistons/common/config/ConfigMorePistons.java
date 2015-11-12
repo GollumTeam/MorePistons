@@ -19,7 +19,7 @@ public class ConfigMorePistons extends Config {
 	// Items Id //
 	//////////////
 	
-	@ConfigProp(group = "Items Ids", mcRestart = true) public int itemsMagnetID = 13001;
+	@ConfigProp(group = "Items Ids", mcRestart = true) public int itemsMagnetID = 13002;
 	
 	///////////////
 	// Blocks Id //
