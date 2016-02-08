@@ -42,8 +42,8 @@ import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 import com.gollum.morepistons.inits.ModBlocks;
 import com.gollum.morepistons.inits.ModCreativeTab;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsBase extends HBlockContainer implements IBlockDisplayInfos {
 	

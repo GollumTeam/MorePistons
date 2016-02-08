@@ -13,8 +13,8 @@ import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.inits.ModBlocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsMagnetic extends BlockMorePistonsBase {
 

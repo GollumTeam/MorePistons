@@ -4,7 +4,7 @@ import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModTileEntities {
 	

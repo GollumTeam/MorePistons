@@ -10,7 +10,7 @@ import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
 import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxyMorePistons extends CommonProxyMorePistons {
 	

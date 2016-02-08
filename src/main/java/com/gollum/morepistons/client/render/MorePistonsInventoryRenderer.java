@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.gollum.morepistons.common.CommonProxyMorePistons;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class MorePistonsInventoryRenderer implements ISimpleBlockRenderingHandler {
 	

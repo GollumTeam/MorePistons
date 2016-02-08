@@ -13,13 +13,13 @@ import com.gollum.morepistons.inits.ModItems;
 import com.gollum.morepistons.inits.ModRecipes;
 import com.gollum.morepistons.inits.ModTileEntities;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(
 	modid                     = ModMorePistons.MODID,
@@ -33,7 +33,7 @@ public class ModMorePistons extends GollumMod {
 	public final static String MODID = "MorePistons";
 	public final static String MODNAME = "More Pistons";
 	public final static String VERSION = "2.0.0DEV";
-	public final static String MINECRAFT_VERSION = "1.7.10";
+	public final static String MINECRAFT_VERSION = "1.8.8";
 	public final static String DEPENDENCIES = "required-after:"+ModGollumCoreLib.MODID;
 	
 	@Instance(ModMorePistons.MODID)

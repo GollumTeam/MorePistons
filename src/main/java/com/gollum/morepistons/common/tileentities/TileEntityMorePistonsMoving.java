@@ -25,8 +25,8 @@ import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
 import com.gollum.morepistons.common.block.BlockMorePistonsRod;
 import com.gollum.morepistons.inits.ModBlocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class TileEntityMorePistonsMoving extends TileEntity {
