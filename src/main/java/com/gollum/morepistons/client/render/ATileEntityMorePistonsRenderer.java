@@ -1,62 +1,103 @@
 package com.gollum.morepistons.client.render;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
 public abstract class ATileEntityMorePistonsRenderer extends TileEntitySpecialRenderer {
+
+	protected final BlockRendererDispatcher blockRenderer = Minecraft.getMinecraft().getBlockRendererDispatcher();
 	
-	protected RenderBlocksMorePistons blockRenderer;
-	
-	/**
-	 * Called when the ingame world being rendered changes (e.g. on world ->
-	 * nether travel) due to using one renderer per tile entity type, rather
-	 * than instance
-	 */
-	@Override
-//	public void onWorldChange(World world) {
-	public void func_147496_a(World world) {
-		this.blockRenderer = new RenderBlocksMorePistons (world);
-	}
-	
+	private double offsetX = 0;
+	private double offsetY = 0;
+	private double offsetZ = 0;
 	
 	protected Tessellator startRender(TileEntity tileEntity, double posX, double posY, double posZ) {
-		Tessellator tessellator = Tessellator.instance;
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 		
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		this.bindTexture(TextureMap.locationBlocksTexture);
 		RenderHelper.disableStandardItemLighting();
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		
+		GlStateManager.blendFunc(770, 771);
+		GlStateManager.enableBlend();
+		GlStateManager.disableCull();
+
 		if (Minecraft.isAmbientOcclusionEnabled()) {
-			GL11.glShadeModel(GL11.GL_SMOOTH);
+			GlStateManager.shadeModel(7425);
 		} else {
-			GL11.glShadeModel(GL11.GL_FLAT);
+			GlStateManager.shadeModel(7424);
 		}
 		
-		tessellator.startDrawingQuads();
-		tessellator.setTranslation(
-			posX - (double)tileEntity.xCoord,
-			posY - (double)tileEntity.yCoord,
-			posZ - (double)tileEntity.zCoord
+		worldrenderer.func_181668_a(7, DefaultVertexFormats.BLOCK);
+		this.setTranslation(
+			posX - (double)tileEntity.getPos().getX(),
+			posY - (double)tileEntity.getPos().getY(),
+			posZ - (double)tileEntity.getPos().getZ()
 		);
-		tessellator.setColorOpaque(1, 1, 1);
 		return tessellator;
 	}
 	
-	protected void endRender(Tessellator tessellator) {
-		tessellator.setTranslation(0.0D, 0.0D, 0.0D);
+	protected void renderModel(IBlockState state, BlockPos pos) {
+		Tessellator   tessellator   = Tessellator.getInstance();
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		World         world         = this.getWorld();
+		this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(state, world, pos), state, pos, worldrenderer, true);
+	}
+	
+	protected void endRender() {
+		Tessellator tessellator = Tessellator.getInstance();
+		
 		tessellator.draw();
 		RenderHelper.enableStandardItemLighting();
+		this.setTranslation(0.0D, 0.0D, 0.0D);
 		GL11.glPopMatrix();
+		
+	}
+	
+	protected void setTranslation(double offsetX, double offsetY, double offsetZ) {
+		
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
+		this.offsetZ = offsetZ;
+		
+		worldrenderer.setTranslation(
+			this.offsetX,
+			this.offsetY,
+			this.offsetZ
+		);
+	}
+	
+	protected void addTranslation(double offsetX, double offsetY, double offsetZ) {
+		
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		
+		this.offsetX += offsetX;
+		this.offsetY += offsetY;
+		this.offsetZ += offsetZ;
+		
+		worldrenderer.setTranslation(
+			this.offsetX,
+			this.offsetY,
+			this.offsetZ
+		);
 	}
 	
 }

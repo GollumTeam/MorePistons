@@ -1,0 +1,8 @@
+{
+    "parent": "block/piston",
+    "textures": {
+        "bottom": "morepistons:blocks/septuplepistonbase_bottom",
+        "side": "morepistons:blocks/septuplepistonbase_side",
+        "platform": "morepistons:blocks/top_sticky"
+    }
+}

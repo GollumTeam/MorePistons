@@ -11,8 +11,8 @@ public class ModCreativeTab {
 	public static void init() {
 		
 		ModCreativeTab.morePistonsTabs.setIcon(Blocks.piston);
-		Blocks.piston       .setCreativeTab(null);
-		Blocks.sticky_piston.setCreativeTab(null);
+//		Blocks.piston       .setCreativeTab(null);
+//		Blocks.sticky_piston.setCreativeTab(null);
 		
 	}
 }

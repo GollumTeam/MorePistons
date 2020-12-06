@@ -1,6 +1,7 @@
 package com.gollum.morepistons.common.tileentities;
 
 import static com.gollum.morepistons.ModMorePistons.log;
+import static net.minecraft.block.BlockPistonExtension.FACING;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonExtension;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +18,9 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Facing;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
 import com.gollum.core.utils.math.Integer3d;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
@@ -24,21 +28,21 @@ import com.gollum.morepistons.common.block.BlockMorePistonsExtension;
 import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
 import com.gollum.morepistons.common.block.BlockMorePistonsRod;
 import com.gollum.morepistons.inits.ModBlocks;
+import com.ibm.icu.math.BigDecimal;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class TileEntityMorePistonsMoving extends TileEntity {
+public class TileEntityMorePistonsMoving extends TileEntity implements ITickable {
 
-	public  Block      storedBlock       = null;
-	public  int        storedOrientation = 0;
-	public  boolean    extending         = false;
-	public  int        distance          = 0;
-	public  Integer3d  positionPiston    = new Integer3d();
-	public  boolean    root              = false;
-	public  TileEntity subTe             = null;
-	public  int        waitFinish        = 0;
+	public  IBlockState storedState      = null;
+	public  boolean     extending         = false;
+	public  int         distance          = 0;
+	public  BlockPos    positionPiston    = new BlockPos(0, 0, 0);
+	public  boolean     root              = false;
+	public  TileEntity  subTe             = null;
+	public  int         waitFinish        = 0;
 	
 	private float progress     = 0;
 	private float lastProgress = 0;
@@ -53,28 +57,27 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	}
 	
 	
-	public TileEntityMorePistonsMoving(Block block, int orientation, boolean extending, int start, int distance, Integer3d positionPiston, boolean root, int waitFinish) {
-		if (block == null) {
+	public TileEntityMorePistonsMoving(IBlockState state, boolean extending, int start, int distance, BlockPos positionPiston, boolean root, int waitFinish) {
+		if (state == null) {
 			log.severe ("Block strorage in null in creation TileEntiry");
 		}
 		
-		this.storedBlock          = block;
-		this.storedOrientation    = orientation;
+		this.storedState          = state;
 		this.extending            = extending;
 		this.distance             = distance;
-		this.positionPiston       = (Integer3d)positionPiston.clone();
+		this.positionPiston       = positionPiston;
 		this.root                 = root;
 		this.isInit               = true;
 		this.waitFinish           = waitFinish;
 		
 		if (distance != 0) {
-			this.progress     = (float) ((double)Math.abs(start) / (double)Math.abs(distance));
+			this.progress     = ((float)Math.abs(start) / (float)Math.abs(distance));
 			this.lastProgress = this.progress;
 		}
 	}
 	
-	public void updateEntity() {
-		super.updateEntity();
+	@Override
+	public void update() {
 		
 		if (!this.isInit) {
 			return;
@@ -82,7 +85,7 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		BlockMorePistonsBase piston = this.pistonOrigin();
 		if (piston == null) {
-			log.debug("The piston origin of moving block not found", this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+			log.debug("The piston origin of moving block not found", this.positionPiston);
 			this.setBlockFinalMove();
 			return;
 		}
@@ -101,41 +104,26 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	}
 
 	public BlockMorePistonsBase pistonOrigin() {
-		Block b = this.worldObj.getBlock(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
-		if (b instanceof BlockMorePistonsBase) {
-			return (BlockMorePistonsBase)b;
+		IBlockState s = this.worldObj.getBlockState(this.positionPiston);
+		if (s != null && s.getBlock() instanceof BlockMorePistonsBase) {
+			return (BlockMorePistonsBase)s.getBlock();
 		}
-		if (b instanceof BlockMorePistonsMoving) {
-			TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+		if (s != null && s.getBlock() instanceof BlockMorePistonsMoving) {
+			TileEntity te = this.worldObj.getTileEntity(this.positionPiston);
 			if (te instanceof TileEntityMorePistonsMoving) {
 				TileEntityMorePistonsMoving teM = (TileEntityMorePistonsMoving)te;
-				if (teM.storedBlock instanceof BlockMorePistonsBase) {
-					return (BlockMorePistonsBase)teM.storedBlock;
+				if (teM.storedState != null && teM.storedState.getBlock() instanceof BlockMorePistonsBase) {
+					return (BlockMorePistonsBase)teM.storedState.getBlock();
 				}
 			}
 		}
 		return null;
 	}
 	
-	public int pistonOriginMetadata() {
-		Block b = this.worldObj.getBlock(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
-		if (b instanceof BlockMorePistonsMoving) {
-			TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
-			if (te instanceof TileEntityMorePistonsMoving) {
-				TileEntityMorePistonsMoving teM = (TileEntityMorePistonsMoving)te;
-				if (teM.storedBlock instanceof BlockMorePistonsBase) {
-					return teM.getBlockMetadata();
-				}
-			}
-		}
-		return this.worldObj.getBlockMetadata(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
-	}
-	
 	public TileEntityMorePistonsPiston getPistonOriginTE() {
-		
-		Block b = this.worldObj.getBlock(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
-		if (b instanceof BlockMorePistonsMoving) {
-			TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+		IBlockState s = this.worldObj.getBlockState(this.positionPiston);
+		if (s.getBlock() instanceof BlockMorePistonsMoving) {
+			TileEntity te = this.worldObj.getTileEntity(this.positionPiston);
 			if (te instanceof TileEntityMorePistonsMoving) {
 				TileEntityMorePistonsMoving teM = (TileEntityMorePistonsMoving)te;
 				if (teM.subTe != null && teM.subTe instanceof TileEntityMorePistonsPiston) {
@@ -144,22 +132,24 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 			}
 		}
 		
-		TileEntity te = this.worldObj.getTileEntity(this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+		TileEntity te = this.worldObj.getTileEntity(this.positionPiston);
 		if (te instanceof TileEntityMorePistonsPiston) {
 			return ((TileEntityMorePistonsPiston)te);
 		}
-		log.severe("TE Piston origin not found :", this.positionPiston.x, this.positionPiston.y, this.positionPiston.z);
+		log.severe("TE Piston origin not found :", this.positionPiston);
 		return null;
 	}
 	
 	public void setBlockFinalMove() {
 		
-		this.updatePushedObjects(1.0F);
+		this.updatePushedObjects();
 		
 		BlockMorePistonsBase piston = this.pistonOrigin();
 		
-		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
-			if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
+		IBlockState state = this.worldObj.getBlockState(this.pos);
+		
+		if (state != null && state.getBlock() instanceof BlockMorePistonsMoving) {
+			if (this.root || (this.storedState != null && this.storedState.getBlock() instanceof BlockMorePistonsExtension)) {
 				if (!this.extending) {
 					this.removePistonRod(this.distance - 1);
 				}
@@ -168,54 +158,58 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		TileEntityMorePistonsPiston te = getPistonOriginTE();
 		
-		this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.blockType);
+		this.worldObj.notifyBlockOfStateChange(this.pos, this.blockType);
 		this.invalidate ();
-		this.worldObj.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
+		this.worldObj.removeTileEntity(this.pos);
 		if (te != null) {
 			te.extentionPos = null;
 		}
 		
-		if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockMorePistonsMoving) {
+		state = this.worldObj.getBlockState(this.pos);
+		
+		if (state != null && state.getBlock() instanceof BlockMorePistonsMoving) {
+			
+			EnumFacing facing = state.getValue(FACING);
 			
 			if (
-				this.storedBlock instanceof BlockPistonExtension &&
+				this.storedState != null &&
+				this.storedState.getBlock() instanceof BlockPistonExtension &&
 				piston == null
 			) {
-				this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
+				this.worldObj.setBlockToAir(this.pos);
 			} else {
 				
-				if (this.storedBlock == null) {
-					this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
+				if (this.storedState == null) {
+					this.worldObj.setBlockToAir(this.pos);
 				} else {
 					
 					if (this.root) {
 						
-						if (this.positionPiston.equals(new Integer3d(this.xCoord, this.yCoord, this.zCoord))) {
-							this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedOrientation, 3);
-							this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+						if (this.positionPiston.equals(this.pos)) {
+							this.worldObj.setBlockState(this.pos, this.storedState, 3);
+							this.worldObj.setTileEntity(this.pos, this.subTe);
 						}  else {
-							this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, piston.getBlockExtention(), this.storedOrientation | (piston.isSticky() ? 0x8 : 0x0), 3);
-							this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, null);
+							this.worldObj.setBlockState(this.pos, piston.getBlockExtention().getDefaultState()
+								.withProperty(FACING, facing)
+								.withProperty(BlockPistonExtension.TYPE, piston.getEnumPistonType())
+							, 3);
+							this.worldObj.setTileEntity(this.pos, null);
 						}
 					} else {
-						this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.getBlockMetadata(), 3);
-						this.worldObj.setTileEntity(this.xCoord, this.yCoord, this.zCoord, this.subTe);
+						this.worldObj.setBlockState(this.pos, this.storedState, 3);
+						this.worldObj.setTileEntity(this.pos, this.subTe);
 					}
-					this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
-
-					int xx = this.xCoord;
-					int yy = this.xCoord;
-					int zz = this.xCoord;
+					this.worldObj.notifyBlockOfStateChange(this.pos, this.storedState != null ? this.storedState.getBlock() : Blocks.air);
+					
+					BlockPos ppos = this.pos;
 					
 					for (int i = 0 ; i < 90; i++) {
-
-						xx += Facing.offsetsXForSide[this.storedOrientation];
-						yy += Facing.offsetsYForSide[this.storedOrientation];
-						zz += Facing.offsetsZForSide[this.storedOrientation];
-
-						this.worldObj.notifyBlockOfNeighborChange(xx, yy, zz, this.worldObj.getBlock(xx, yy, zz));
+						
+						ppos = ppos.offset(facing);
+						
+						this.worldObj.notifyBlockOfStateChange(ppos, this.worldObj.getBlockState(ppos).getBlock());
 					}
-					this.worldObj.markBlockRangeForRenderUpdate(this.xCoord, this.yCoord, this.zCoord, xx, yy, zz);
+					this.worldObj.markBlockRangeForRenderUpdate(this.pos, ppos);
 					
 				}
 			}
@@ -225,19 +219,19 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	
 	private void upgradeProgess() {
 		
-		this.progress += 0.5;
+		this.progress += 0.5F;
 		
-		if (this.progress >= 1.0F) {
+		if (this.progress >= 1.0) {
 			this.progress = 1.0F;
 		}
 		
 		if (this.extending) {
-			this.updatePushedObjects(this.progress);
+			this.updatePushedObjects();
 		}
 		
-		if (this.root || this.storedBlock instanceof BlockMorePistonsExtension) {
+		if (this.root || (this.storedState != null && this.storedState.getBlock() instanceof BlockMorePistonsExtension)) {
 			if (!this.extending) {
-				this.removePistonRod((int) Math.ceil((float)this.distance * this.progress) - 1);
+				this.removePistonRod((int) Math.ceil((double)this.distance * this.progress) - 1);
 			}
 		}
 		
@@ -246,72 +240,78 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	
 	private List<Entity> getEntitiesInProgess(float progress) {
 		List entities = new ArrayList<Entity>();
+		EnumFacing facing = this.getFacing();
 		
-		AxisAlignedBB axisalignedbb = ModBlocks.blockPistonMoving.getAxisAlignedBB(
-			this.worldObj, 
-			this.positionPiston.x,
-			this.positionPiston.y,
-			this.positionPiston.z,
-			this.storedBlock,
-			-progress*this.distance,
-			this.storedOrientation
-		);
-		
-		if (axisalignedbb != null) {
-			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
-			Iterator iterator = list.iterator();
-			
-			while (iterator.hasNext()) {
-				Entity entity = (Entity) iterator.next();
-				entities.add(entity);
-			}
-		}
+//		if (facing != null) {
+//			
+//			AxisAlignedBB axisalignedbb = ModBlocks.blockPistonMoving.getBoundingBox(
+//				this.worldObj, 
+//				this.positionPiston,
+//				this.storedState,
+//				-progress*this.distance,
+//				facing
+//			);
+//			
+//			if (axisalignedbb != null) {
+//				List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
+//				Iterator iterator = list.iterator();
+//				
+//				while (iterator.hasNext()) {
+//					Entity entity = (Entity) iterator.next();
+//					entities.add(entity);
+//				}
+//			}
+//			
+//		}
 		return entities;
 	}
 	
-	private void updatePushedObjects(float progress) {
+	private void updatePushedObjects() {
+		
+		EnumFacing facing = this.getFacing();
+		
 		if (this.extending) {
 			
-			List<Entity> entities = this.getEntitiesInProgess (progress);
-			
-			for (Entity entity : entities) {
-
-				double x = entity.posX;
-				double y = entity.posY;
-				double z = entity.posZ;
-				
-				switch (this.storedOrientation) {
-					case 0:
-					case 1:
-						y = this.yCoord + this.getOffsetY(progress) + Facing.offsetsYForSide[this.storedOrientation] + Facing.offsetsYForSide[this.storedOrientation]*(entity.boundingBox.maxY-entity.boundingBox.minY);
-						break;
-					case 2:
-					case 3:
-						z = this.zCoord + this.getOffsetZ(progress) + Facing.offsetsZForSide[this.storedOrientation] + Facing.offsetsZForSide[this.storedOrientation]*(entity.boundingBox.maxZ-entity.boundingBox.minZ);
-						break;
-					case 4:
-					case 5:
-						x = this.xCoord + this.getOffsetX(progress) + Facing.offsetsXForSide[this.storedOrientation] + Facing.offsetsXForSide[this.storedOrientation]*(entity.boundingBox.maxX-entity.boundingBox.minX);
-						break;
-				}
-				
-				if (
-					Math.abs(
-						x - entity.posX +
-						y - entity.posY +
-						z - entity.posZ
-					) > 4
-				) {
-					entity.setPosition(x, y, z);
-				} else {
-					entity.moveEntity(
-						x - entity.posX,
-						y - entity.posY,
-						z - entity.posZ
-					);
-				}
-				
-			}
+//			List<Entity> entities = this.getEntitiesInProgess (this.progress);
+//			
+//			for (Entity entity : entities) {
+//
+//				double x = entity.posX;
+//				double y = entity.posY;
+//				double z = entity.posZ;
+//				
+//				switch (facing) {
+//					case UP:
+//					case DOWN:
+//						y = this.pos.getY() + this.getOffsetY(this.progress) + facing.getFrontOffsetY() + facing.getFrontOffsetY()*(entity.getEntityBoundingBox().maxY-entity.getEntityBoundingBox().minY);
+//						break;
+//					case NORTH:
+//					case SOUTH:
+//						z = this.pos.getZ() + this.getOffsetZ(this.progress) + facing.getFrontOffsetZ() + facing.getFrontOffsetZ()*(entity.getEntityBoundingBox().maxZ-entity.getEntityBoundingBox().minZ);
+//						break;
+//					case EAST:
+//					case WEST:
+//						x = this.pos.getX() + this.getOffsetX(this.progress) + facing.getFrontOffsetX() + facing.getFrontOffsetX()*(entity.getEntityBoundingBox().maxX-entity.getEntityBoundingBox().minX);
+//						break;
+//				}
+//				
+//				if (
+//					Math.abs(
+//						x - entity.posX +
+//						y - entity.posY +
+//						z - entity.posZ
+//					) > 4
+//				) {
+//					entity.setPosition(x, y, z);
+//				} else {
+//					entity.moveEntity(
+//						x - entity.posX,
+//						y - entity.posY,
+//						z - entity.posZ
+//					);
+//				}
+//				
+//			}
 			
 		} else {
 			
@@ -324,14 +324,25 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 				while (iterator.hasNext()) {
 					Entity entity = (Entity)iterator.next();
 					entity.moveEntity(
-						(double)(0.3F * (float)Facing.offsetsXForSide[this.storedOrientation]),
-						(double)(0.3F * (float)Facing.offsetsYForSide[this.storedOrientation]),
-						(double)(0.3F * (float)Facing.offsetsZForSide[this.storedOrientation])
+						0.3D * (double)facing.getFrontOffsetX(),
+						0.3D * (double)facing.getFrontOffsetY(),
+						0.3D * (double)facing.getFrontOffsetZ()
 					);
 				}
 			}
 			
 		}
+	}
+	
+	public EnumFacing getFacing() {
+		IBlockState state = this.worldObj.getBlockState(this.pos);
+		if (state != null && state.getBlock() instanceof BlockMorePistonsMoving) {
+			return state.getValue(FACING);
+		}
+		if (this.getPistonOriginTE() != null) {
+			return this.getPistonOriginTE().getFacing();
+		}
+		return null;
 	}
 	
 	/**
@@ -341,35 +352,34 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	 */
 	public void removePistonRod(int nb) {
 		
-		int x = this.xCoord + Facing.offsetsXForSide[this.storedOrientation] * (this.distance + 1);
-		int y = this.yCoord + Facing.offsetsYForSide[this.storedOrientation] * (this.distance + 1);
-		int z = this.zCoord + Facing.offsetsZForSide[this.storedOrientation] * (this.distance + 1);
+		EnumFacing facing = this.getFacing();
+		BlockPos pos = this.pos.offset(facing, this.distance + 1);
 		
 		for (int i = 0; i <= nb; i++) {
-			x -= Facing.offsetsXForSide[this.storedOrientation];
-			y -= Facing.offsetsYForSide[this.storedOrientation];
-			z -= Facing.offsetsZForSide[this.storedOrientation];
 			
-			Block block = this.worldObj.getBlock(x, y, z);
+			pos = pos.offset(facing, -1);
+			
+			IBlockState state = this.worldObj.getBlockState(pos);
 			if (
-				block instanceof BlockMorePistonsRod ||
-				block instanceof BlockMorePistonsExtension
+				state != null &&
+				state.getBlock() instanceof BlockMorePistonsRod ||
+				state.getBlock() instanceof BlockMorePistonsExtension
 			) {
-				TileEntity te = this.worldObj.getTileEntity(x, y, z);
+				TileEntity te = this.worldObj.getTileEntity(pos);
 				if (te != null) {
 					te.invalidate();
 				}
 				
-				this.worldObj.setBlockToAir (x, y, z);
-				this.worldObj.removeTileEntity(x, y, z);
-				this.worldObj.setBlockMetadataWithNotify(x, y, z, 0, 7);
-				this.worldObj.notifyBlockOfNeighborChange(x, y, z, Blocks.air);
+				this.worldObj.setBlockToAir (pos);
+				this.worldObj.removeTileEntity(pos);
+				this.worldObj.notifyBlockOfStateChange(pos, Blocks.air);
 				
 			}
 		}
 	}
 	
-	public float getProgress (float f) {
+	public Float getProgress (float f) {
+//		return 0.40063894F;
 		if (f > 1.0F) {
 			f = 1.0F;
 		}
@@ -377,41 +387,48 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		return this.lastProgress + (this.progress - this.lastProgress) * f;
 	}
 	
-	public float getProgressWithDistance (float f) {
+	public Float getProgressWithDistance (float f) {
 		if (this.extending) {
 			return this.getProgress(f) * distance - distance;
 		}
 		return distance - this.getProgress(f) * distance;
 	}
 	
-	public float getOffsetX(float f) {
-		return this.getProgressWithDistance(f) * Facing.offsetsXForSide[this.storedOrientation];
+	public Float getOffsetX(float f) {
+		EnumFacing facing = this.getFacing();
+		return this.getProgressWithDistance(f) * facing.getFrontOffsetX();
 	}
 	
-	public float getOffsetY(float f) {
-		return this.getProgressWithDistance(f) * Facing.offsetsYForSide[this.storedOrientation];
+	public double getOffsetY(float f) {
+		EnumFacing facing = this.getFacing();
+		return this.getProgressWithDistance(f) * facing.getFrontOffsetY();
 	}
 	
-	public float getOffsetZ(float f) {
-		return this.getProgressWithDistance(f) * Facing.offsetsZForSide[this.storedOrientation];
+	public double getOffsetZ(float f) {
+		EnumFacing facing = this.getFacing();
+		return this.getProgressWithDistance(f) * facing.getFrontOffsetZ();
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound) {
 		super.readFromNBT(nbtTagCompound);
 		
-		this.storedBlock       = Block.getBlockById(nbtTagCompound.getInteger("blockId"));
-		this.storedOrientation = nbtTagCompound.getInteger("orientation");
+		Block block = Block.getBlockById(nbtTagCompound.getInteger("blockId"));
+		int metadata = nbtTagCompound.getInteger("metadata");
+		
+		this.storedState       = block.getStateFromMeta(metadata);
 		this.extending         = nbtTagCompound.getBoolean("extending");
 		this.distance          = nbtTagCompound.getInteger("distance");
-		this.progress          = nbtTagCompound.getFloat  ("progress");
-		this.lastProgress      = nbtTagCompound.getFloat  ("lastProgress");
+		this.progress          = nbtTagCompound.getFloat("progress");
+		this.lastProgress      = nbtTagCompound.getFloat("lastProgress");
 		this.root              = nbtTagCompound.getBoolean("root");
 		this.waitFinish        = nbtTagCompound.getInteger("waitFinish");
 		
-		this.positionPiston.x = nbtTagCompound.getInteger("pistonX");
-		this.positionPiston.y = nbtTagCompound.getInteger("pistonY");
-		this.positionPiston.z = nbtTagCompound.getInteger("pistonZ");
+		this.positionPiston = new BlockPos (
+			nbtTagCompound.getInteger("pistonX"),
+			nbtTagCompound.getInteger("pistonY"),
+			nbtTagCompound.getInteger("pistonZ")
+		);
 		
 		this.subTe = null;
 		if (nbtTagCompound.hasKey("subTe")) {
@@ -428,24 +445,30 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 		
 		log.debug ("this.progress", this.progress);
 	}
-
+	
 	@Override
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
 		
 		super.writeToNBT(nbtTagCompound);
 		
-		nbtTagCompound.setInteger("blockId"     , Block.getIdFromBlock(this.storedBlock));
-		nbtTagCompound.setInteger("orientation" , this.storedOrientation);
+		if (this.storedState != null) {
+			Block b = this.storedState.getBlock();
+			nbtTagCompound.setInteger("blockId"     , Block.getIdFromBlock(b));
+			nbtTagCompound.setInteger("metadata"    , b.getMetaFromState(this.storedState));
+		} else {
+			nbtTagCompound.setInteger("blockId"     , 0);
+			nbtTagCompound.setInteger("metadata"    , 0);
+		}
 		nbtTagCompound.setBoolean("extending"   , this.extending);
 		nbtTagCompound.setInteger("distance"    , this.distance);
-		nbtTagCompound.setFloat  ("progress"    , this.progress);
-		nbtTagCompound.setFloat  ("lastProgress", this.lastProgress);
+		nbtTagCompound.setFloat("progress"    , this.progress);
+		nbtTagCompound.setFloat("lastProgress", this.lastProgress);
 		nbtTagCompound.setBoolean("root"        , this.root);
 		nbtTagCompound.setInteger("waitFinish"  , this.waitFinish);
 		
-		nbtTagCompound.setInteger("pistonX", this.positionPiston.x);
-		nbtTagCompound.setInteger("pistonY", this.positionPiston.y);
-		nbtTagCompound.setInteger("pistonZ", this.positionPiston.z);
+		nbtTagCompound.setInteger("pistonX", this.positionPiston.getX());
+		nbtTagCompound.setInteger("pistonY", this.positionPiston.getY());
+		nbtTagCompound.setInteger("pistonZ", this.positionPiston.getZ());
 		
 		if (this.subTe != null) {
 			NBTTagCompound subNBT = new NBTTagCompound();
@@ -458,14 +481,12 @@ public class TileEntityMorePistonsMoving extends TileEntity {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		this.writeToNBT(nbttagcompound);
-		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord,this.zCoord, 0, nbttagcompound);
+		return new S35PacketUpdateTileEntity(this.pos, 0, nbttagcompound);
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		this.readFromNBT(pkt.func_148857_g());
+		this.readFromNBT(pkt.getNbtCompound());
 	}
-
-
 	
 }

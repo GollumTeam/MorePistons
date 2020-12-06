@@ -1,20 +1,30 @@
 package com.gollum.morepistons.common.tileentities;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPistonExtension;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+
+import static net.minecraft.block.BlockPistonBase.FACING;
 
 import com.gollum.core.utils.math.Integer3d;
 import com.gollum.morepistons.common.block.BlockMorePistonsBase;
+import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
+
+import akka.actor.FSM.State;
 
 
 public class TileEntityMorePistonsPiston extends TileEntity {
 	
 	public int       currentOpened = 0;
-	public Integer3d extentionPos  = null;
+	public BlockPos  extentionPos  = null;
 	public int       multiplier    = 1;
 	public int       stickySize    = 1;;
 	public boolean   running = false;
@@ -24,23 +34,30 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	
 	
 	public BlockMorePistonsBase getBlockPiston() {
-		Block b = this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
-		if (b instanceof BlockMorePistonsBase) {
-			return (BlockMorePistonsBase)b;
+		IBlockState s = this.worldObj.getBlockState(this.pos);
+		if (s != null && s.getBlock() instanceof BlockMorePistonsBase) {
+			return (BlockMorePistonsBase)s;
 		}
 		return null;
-	}	
-	
-	public void updateEntity() {
-		super.updateEntity();
 	}
 	
 	public TileEntityMorePistonsMoving getTileEntityMoving() {
 		if (this.worldObj != null && this.extentionPos != null) {
-			TileEntity te = this.worldObj.getTileEntity(this.extentionPos.x, this.extentionPos.y, this.extentionPos.z);
+			TileEntity te = this.worldObj.getTileEntity(this.extentionPos);
 			if (te instanceof TileEntityMorePistonsMoving) {
 				return (TileEntityMorePistonsMoving)te;
 			}
+		}
+		return null;
+	}
+
+	public EnumFacing getFacing() {
+		IBlockState state = this.worldObj.getBlockState(this.pos);
+		if (state != null && state.getBlock() instanceof BlockMorePistonsBase) {
+			return state.getValue(FACING);
+		}
+		if (state != null && state.getBlock() instanceof BlockMorePistonsMoving) {
+			return state.getValue(BlockPistonExtension.FACING);
 		}
 		return null;
 	}
@@ -60,11 +77,17 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 			nbtTagCompound.hasKey("extentionPosY") &&
 			nbtTagCompound.hasKey("extentionPosZ")
 		) {
-			this.extentionPos = new Integer3d();
-			this.extentionPos.x = nbtTagCompound.getInteger("extentionPosX");
-			this.extentionPos.y = nbtTagCompound.getInteger("extentionPosY");
-			this.extentionPos.z = nbtTagCompound.getInteger("extentionPosZ");
+			this.extentionPos = new BlockPos(
+				nbtTagCompound.getInteger("extentionPosX"),
+				nbtTagCompound.getInteger("extentionPosY"),
+				nbtTagCompound.getInteger("extentionPosZ")
+			);
 		}
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return oldState.getBlock() !=  newSate.getBlock();
 	}
 	
 	@Override
@@ -76,9 +99,9 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 		nbtTagCompound.setInteger("stickySize"   , this.stickySize);
 		
 		if (this.extentionPos != null) {
-			nbtTagCompound.setInteger("extentionPosX", this.extentionPos.x);
-			nbtTagCompound.setInteger("extentionPosY", this.extentionPos.y);
-			nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.z);
+			nbtTagCompound.setInteger("extentionPosX", this.extentionPos.getX());
+			nbtTagCompound.setInteger("extentionPosY", this.extentionPos.getY());
+			nbtTagCompound.setInteger("extentionPosZ", this.extentionPos.getZ());
 		}
 	}
 	
@@ -86,12 +109,12 @@ public class TileEntityMorePistonsPiston extends TileEntity {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		this.writeToNBT(nbttagcompound);
-		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord,this.zCoord, 0, nbttagcompound);
+		return new S35PacketUpdateTileEntity(this.pos, 0, nbttagcompound);
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		this.readFromNBT(pkt.func_148857_g());
+		this.readFromNBT(pkt.getNbtCompound());
 	}
 
 
