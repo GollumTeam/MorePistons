@@ -1,8 +1,6 @@
 {
     "parent": "block/piston_extended",
-    "textures": {
-        "particle": "#side",
-        "bottom": "morepistons:blocks/quadruplepistonbase_bottom",
+    "textures": {        "bottom": "morepistons:blocks/quadruplepistonbase_bottom",
         "side": "morepistons:blocks/quadruplepistonbase_side",
         "inside": "morepistons:blocks/quadruplepistonbase_open"
     }

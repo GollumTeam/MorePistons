@@ -2,6 +2,7 @@ package com.gollum.morepistons.common.block;
 
 import com.gollum.core.tools.helper.blocks.HBlockPistonExtension;
 
+import jline.internal.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.block.state.IBlockState;
@@ -115,7 +116,12 @@ public class BlockMorePistonsExtension extends HBlockPistonExtension {
 		
 		do {
 			pos2 = pos2.offset(facing, -1);
-			state2 = world.getBlockState(pos2);
+			try {
+				state2 = world.getBlockState(pos2);	
+			} catch (Exception e) {
+				Log.error(e.getMessage());
+				return null;
+			}
 			
 		} while (state2.getBlock() instanceof BlockMorePistonsRod);
 		
