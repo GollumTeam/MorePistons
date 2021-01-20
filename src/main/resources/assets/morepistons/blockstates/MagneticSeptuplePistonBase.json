@@ -1,0 +1,19 @@
+{
+    "variants": {
+		
+		"inventory": {"model": "morepistons:MagneticSeptuplePistonBase" },
+		
+        "extended=false,facing=down":  { "model": "morepistons:MagneticSeptuplePistonBase", "x": 90 },
+        "extended=false,facing=up":    { "model": "morepistons:MagneticSeptuplePistonBase", "x": 270 },
+        "extended=false,facing=north": { "model": "morepistons:MagneticSeptuplePistonBase" },
+        "extended=false,facing=south": { "model": "morepistons:MagneticSeptuplePistonBase", "y": 180 },
+        "extended=false,facing=west":  { "model": "morepistons:MagneticSeptuplePistonBase", "y": 270 },
+        "extended=false,facing=east":  { "model": "morepistons:MagneticSeptuplePistonBase", "y": 90 },
+        "extended=true,facing=down":   { "model": "morepistons:MagneticSeptuplePistonBase_extended", "x": 90 },
+        "extended=true,facing=up":     { "model": "morepistons:MagneticSeptuplePistonBase_extended", "x": 270 },
+        "extended=true,facing=north":  { "model": "morepistons:MagneticSeptuplePistonBase_extended" },
+        "extended=true,facing=south":  { "model": "morepistons:MagneticSeptuplePistonBase_extended", "y": 180 },
+        "extended=true,facing=west":   { "model": "morepistons:MagneticSeptuplePistonBase_extended", "y": 270 },
+        "extended=true,facing=east":   { "model": "morepistons:MagneticSeptuplePistonBase_extended", "y": 90 }
+    }
+}

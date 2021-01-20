@@ -26,6 +26,9 @@ public class TileEntityMorePistonsRodRenderer extends ATileEntityMorePistonsRend
 		EnumFacing  facing     = tileEntityRod.getFacing();
 		BlockPos    pos        = tileEntityRod.getPos();
 		int         distanceTo = tileEntityRod.getDistanceToPiston();
+		if (facing == null) {
+			return;
+		}
 		IBlockState state  = ModBlocks.blockPistonRod.getDefaultState()
 			.withProperty(FACING, facing)
 			.withProperty(SHORT, tileEntityRod.isShort())

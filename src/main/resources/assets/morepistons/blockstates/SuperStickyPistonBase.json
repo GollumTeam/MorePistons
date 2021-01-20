@@ -1,0 +1,19 @@
+{
+    "variants": {
+        
+        "inventory": {"model": "morepistons:SuperStickyPistonBase" },
+        
+        "extended=false,facing=down":  { "model": "morepistons:SuperStickyPistonBase", "x": 90 },
+        "extended=false,facing=up":    { "model": "morepistons:SuperStickyPistonBase", "x": 270 },
+        "extended=false,facing=north": { "model": "morepistons:SuperStickyPistonBase" },
+        "extended=false,facing=south": { "model": "morepistons:SuperStickyPistonBase", "y": 180 },
+        "extended=false,facing=west":  { "model": "morepistons:SuperStickyPistonBase", "y": 270 },
+        "extended=false,facing=east":  { "model": "morepistons:SuperStickyPistonBase", "y": 90 },
+        "extended=true,facing=down":   { "model": "morepistons:SuperStickyPistonBase", "x": 90 },
+        "extended=true,facing=up":     { "model": "morepistons:SuperStickyPistonBase_extended", "x": 270 },
+        "extended=true,facing=north":  { "model": "morepistons:SuperStickyPistonBase_extended" },
+        "extended=true,facing=south":  { "model": "morepistons:SuperStickyPistonBase_extended", "y": 180 },
+        "extended=true,facing=west":   { "model": "morepistons:SuperStickyPistonBase_extended", "y": 270 },
+        "extended=true,facing=east":   { "model": "morepistons:SuperStickyPistonBase_extended", "y": 90 }
+    }
+}

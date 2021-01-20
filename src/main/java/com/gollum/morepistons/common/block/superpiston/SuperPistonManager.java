@@ -3,7 +3,10 @@ package com.gollum.morepistons.common.block.superpiston;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SuperPistonManager {
@@ -22,14 +25,14 @@ public class SuperPistonManager {
 		this.handlers.add(handler);
 	}
 	
-	public boolean dontMoveIfOnTop (Block block, int metadata, World world, int x, int y, int z, int orientation) {
+	public boolean dontMoveIfOnTop (IBlockState state, World world, BlockPos pos, EnumFacing facing) {
 		
-		if (block == null || block == Blocks.air) {
+		if (state == null || state.getBlock() == Blocks.air) {
 			return false;
 		}
 		
 		for (AbstractSuperPistonHandler h : this.handlers) {
-			if (h.dontMoveIfOnTop(block, metadata, world, x, y, z, orientation)) {
+			if (h.dontMoveIfOnTop(state, world, pos, facing)) {
 				return true;
 			}
 		}
@@ -37,14 +40,14 @@ public class SuperPistonManager {
 		return false;
 	}
 	
-	public boolean isntAttachOnTop (Block block, int metadata, World world, int x, int y, int z, int orientation) {
+	public boolean isntAttachOnTop (IBlockState state, World world, BlockPos pos, EnumFacing facing) {
 		
-		if (block == null || block == Blocks.air) {
+		if (state == null || state.getBlock() == Blocks.air) {
 			return false;
 		}
 		
 		for (AbstractSuperPistonHandler h : this.handlers) {
-			if (h.isntAttachOnTop(block, metadata, world, x, y, z, orientation)) {
+			if (h.isntAttachOnTop(state, world, pos, facing)) {
 				return true;
 			}
 		}
@@ -52,14 +55,14 @@ public class SuperPistonManager {
 		return false;
 	}
 	
-	public boolean isAttachOnNext (Block block, int metadata, World world, int x, int y, int z, int orientation) {
-		
-		if (block == null || block == Blocks.air) {
+	public boolean isAttachOnNext (IBlockState state, World world, BlockPos pos, EnumFacing facing) {
+
+		if (state == null || state.getBlock() == Blocks.air) {
 			return false;
 		}
 		
 		for (AbstractSuperPistonHandler h : this.handlers) {
-			if (h.isAttachOnNext(block, metadata, world, x, y, z, orientation)) {
+			if (h.isAttachOnNext(state, world, pos, facing)) {
 				return true;
 			}
 		}
@@ -67,14 +70,14 @@ public class SuperPistonManager {
 		return false;
 	}
 	
-	public boolean isAttachableBlockOnNext (Block block, int metadata, World world, int x, int y, int z, int orientation) {
-		
-		if (block == null || block == Blocks.air) {
+	public boolean isAttachableBlockOnNext (IBlockState state, World world, BlockPos pos, EnumFacing facing) {
+
+		if (state == null || state.getBlock() == Blocks.air) {
 			return false;
 		}
 		
 		for (AbstractSuperPistonHandler h : this.handlers) {
-			if (h.isAttachableBlockOnNext(block, metadata, world, x, y, z, orientation)) {
+			if (h.isAttachableBlockOnNext(state, world, pos, facing)) {
 				return true;
 			}
 		}

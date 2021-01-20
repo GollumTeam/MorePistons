@@ -8,20 +8,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.gollum.core.common.blocks.IBlockDisplayInfos;
+import com.gollum.core.tools.helper.blocks.HBlockContainer;
+import com.gollum.morepistons.ModMorePistons;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
+import com.gollum.morepistons.inits.ModBlocks;
+import com.gollum.morepistons.inits.ModCreativeTab;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
+import net.minecraft.block.BlockPistonExtension.EnumPistonType;
 import net.minecraft.block.BlockPistonMoving;
 import net.minecraft.block.BlockSnow;
-import net.minecraft.block.BlockPistonExtension.EnumPistonType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -35,25 +43,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
-
-import com.gollum.core.common.blocks.IBlockDisplayInfos;
-import com.gollum.core.tools.helper.IBlockHelper;
-import com.gollum.core.tools.helper.IItemHelper;
-import com.gollum.core.tools.helper.blocks.HBlockContainer;
-import com.gollum.core.utils.math.Integer3d;
-import com.gollum.morepistons.ModMorePistons;
-import com.gollum.morepistons.common.CommonProxyMorePistons;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
-import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsRod;
-import com.gollum.morepistons.inits.ModBlocks;
-import com.gollum.morepistons.inits.ModCreativeTab;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMorePistonsBase extends HBlockContainer implements IBlockDisplayInfos {
-	
+    
 	protected static class EMoveInfosExtend {
 		
 		public IBlockState state = null;
