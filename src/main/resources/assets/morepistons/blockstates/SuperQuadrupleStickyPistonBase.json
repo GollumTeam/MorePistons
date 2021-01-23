@@ -1,19 +1,19 @@
 {
     "variants": {
 		
-		"inventory": {"model": "morepistons:SuperQuadrupStickylePistonBase" },
+		"inventory": {"model": "morepistons:super/quadruple/sticky", "x": 270 },
 		
-        "extended=false,facing=down":  { "model": "morepistons:SuperQuadrupleStickyPistonBase", "x": 90 },
-        "extended=false,facing=up":    { "model": "morepistons:SuperQuadrupleStickyPistonBase", "x": 270 },
-        "extended=false,facing=north": { "model": "morepistons:SuperQuadrupleStickyPistonBase" },
-        "extended=false,facing=south": { "model": "morepistons:SuperQuadrupleStickyPistonBase", "y": 180 },
-        "extended=false,facing=west":  { "model": "morepistons:SuperQuadrupleStickyPistonBase", "y": 270 },
-        "extended=false,facing=east":  { "model": "morepistons:SuperQuadrupleStickyPistonBase", "y": 90 },
-        "extended=true,facing=down":   { "model": "morepistons:SuperQuadrupleStickyPistonBase", "x": 90 },
-        "extended=true,facing=up":     { "model": "morepistons:SuperQuadrupleStickyPistonBase_extended", "x": 270 },
-        "extended=true,facing=north":  { "model": "morepistons:SuperQuadrupleStickyPistonBase_extended" },
-        "extended=true,facing=south":  { "model": "morepistons:SuperQuadrupleStickyPistonBase_extended", "y": 180 },
-        "extended=true,facing=west":   { "model": "morepistons:SuperQuadrupleStickyPistonBase_extended", "y": 270 },
-        "extended=true,facing=east":   { "model": "morepistons:SuperQuadrupleStickyPistonBase_extended", "y": 90 }
+        "extended=false,facing=down":  { "model": "morepistons:super/quadruple/sticky", "x": 90 },
+        "extended=false,facing=up":    { "model": "morepistons:super/quadruple/sticky", "x": 270 },
+        "extended=false,facing=north": { "model": "morepistons:super/quadruple/sticky" },
+        "extended=false,facing=south": { "model": "morepistons:super/quadruple/sticky", "y": 180 },
+        "extended=false,facing=west":  { "model": "morepistons:super/quadruple/sticky", "y": 270 },
+        "extended=false,facing=east":  { "model": "morepistons:super/quadruple/sticky", "y": 90 },
+        "extended=true,facing=down":   { "model": "morepistons:super/quadruple/extended", "x": 90 },
+        "extended=true,facing=up":     { "model": "morepistons:super/quadruple/extended", "x": 270 },
+        "extended=true,facing=north":  { "model": "morepistons:super/quadruple/extended" },
+        "extended=true,facing=south":  { "model": "morepistons:super/quadruple/extended", "y": 180 },
+        "extended=true,facing=west":   { "model": "morepistons:super/quadruple/extended", "y": 270 },
+        "extended=true,facing=east":   { "model": "morepistons:super/quadruple/extended", "y": 90 }
     }
 }

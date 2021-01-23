@@ -1,8 +1,0 @@
-{
-    "parent": "block/piston_extended",
-    "textures": {
-        "bottom": "morepistons:blocks/superdoublepistonbase_bottom",
-        "side": "morepistons:blocks/superdoublepistonbase_side",
-        "inside": "morepistons:blocks/superdoublepistonbase_open"
-    }
-}

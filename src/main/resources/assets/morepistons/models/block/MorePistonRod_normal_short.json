@@ -1,6 +1,0 @@
-{
-    "parent": "morepistons:block/MorePistonRod_short",
-    "textures": {
-        "side": "morepistons:blocks/morepistonsrod"
-    }
-}

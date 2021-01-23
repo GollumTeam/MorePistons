@@ -1,0 +1,18 @@
+{
+   "variants": {		
+		"inventory": {"model": "gollumcorelib:air" },
+		
+		"facing=down,type=normal" : { "model": "gollumcorelib:air" },
+		"facing=up,type=normal" : { "model": "gollumcorelib:air" },
+		"facing=north,type=normal" : { "model": "gollumcorelib:air" },
+		"facing=south,type=normal" : { "model": "gollumcorelib:air" },
+		"facing=west,type=normal" : { "model": "gollumcorelib:air" },
+		"facing=east,type=normal" : { "model": "gollumcorelib:air" },
+		"facing=down,type=sticky" : { "model": "gollumcorelib:air" },
+		"facing=up,type=sticky" : { "model": "gollumcorelib:air" },
+		"facing=north,type=sticky" : { "model": "gollumcorelib:air" },
+		"facing=south,type=sticky" : { "model": "gollumcorelib:air" },
+		"facing=west,type=sticky" : { "model": "gollumcorelib:air" },
+		"facing=east,type=sticky" : { "model": "gollumcorelib:air" }
+   }
+}

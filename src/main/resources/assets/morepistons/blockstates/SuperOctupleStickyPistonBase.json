@@ -1,19 +1,19 @@
 {
     "variants": {
 		
-		"inventory": {"model": "morepistons:SuperOctupleStickyPistonBase" },
+		"inventory": {"model": "morepistons:super/octuple/sticky", "x": 270 },
 		
-        "extended=false,facing=down":  { "model": "morepistons:SuperOctupleStickyPistonBase", "x": 90 },
-        "extended=false,facing=up":    { "model": "morepistons:SuperOctupleStickyPistonBase", "x": 270 },
-        "extended=false,facing=north": { "model": "morepistons:SuperOctupleStickyPistonBase" },
-        "extended=false,facing=south": { "model": "morepistons:SuperOctupleStickyPistonBase", "y": 180 },
-        "extended=false,facing=west":  { "model": "morepistons:SuperOctupleStickyPistonBase", "y": 270 },
-        "extended=false,facing=east":  { "model": "morepistons:SuperOctupleStickyPistonBase", "y": 90 },
-        "extended=true,facing=down":   { "model": "morepistons:SuperOctupleStickyPistonBase", "x": 90 },
-        "extended=true,facing=up":     { "model": "morepistons:SuperOctupleStickyPistonBase_extended", "x": 270 },
-        "extended=true,facing=north":  { "model": "morepistons:SuperOctupleStickyPistonBase_extended" },
-        "extended=true,facing=south":  { "model": "morepistons:SuperOctupleStickyPistonBase_extended", "y": 180 },
-        "extended=true,facing=west":   { "model": "morepistons:SuperOctupleStickyPistonBase_extended", "y": 270 },
-        "extended=true,facing=east":   { "model": "morepistons:SuperOctupleStickyPistonBase_extended", "y": 90 }
+        "extended=false,facing=down":  { "model": "morepistons:super/octuple/sticky", "x": 90 },
+        "extended=false,facing=up":    { "model": "morepistons:super/octuple/sticky", "x": 270 },
+        "extended=false,facing=north": { "model": "morepistons:super/octuple/sticky" },
+        "extended=false,facing=south": { "model": "morepistons:super/octuple/sticky", "y": 180 },
+        "extended=false,facing=west":  { "model": "morepistons:super/octuple/sticky", "y": 270 },
+        "extended=false,facing=east":  { "model": "morepistons:super/octuple/sticky", "y": 90 },
+        "extended=true,facing=down":   { "model": "morepistons:super/octuple/extended", "x": 90 },
+        "extended=true,facing=up":     { "model": "morepistons:super/octuple/extended", "x": 270 },
+        "extended=true,facing=north":  { "model": "morepistons:super/octuple/extended" },
+        "extended=true,facing=south":  { "model": "morepistons:super/octuple/extended", "y": 180 },
+        "extended=true,facing=west":   { "model": "morepistons:super/octuple/extended", "y": 270 },
+        "extended=true,facing=east":   { "model": "morepistons:super/octuple/extended", "y": 90 }
     }
 }

@@ -1,0 +1,8 @@
+{
+    "parent": "block/piston_extended",
+    "textures": {
+        "bottom": "morepistons:blocks/magnetictriplepistonbase_bottom",
+        "side": "morepistons:blocks/magnetictriplepistonbase_side_4",
+        "inside": "morepistons:blocks/magnetictriplepistonbase_open"
+    }
+}

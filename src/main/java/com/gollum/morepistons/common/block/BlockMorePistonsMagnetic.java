@@ -83,7 +83,6 @@ public class BlockMorePistonsMagnetic extends BlockMorePistonsBase {
 		
 		log.debug ("applyRetractSize = "+size, "remote="+world.isRemote);
 		
-		IBlockState state = world.getBlockState(pos);
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityMorePistonsMoving) {
 			te = ((TileEntityMorePistonsMoving) te).subTe;

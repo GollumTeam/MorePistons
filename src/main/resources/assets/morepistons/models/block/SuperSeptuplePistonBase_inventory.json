@@ -1,8 +1,0 @@
-{
-    "parent": "block/cube_bottom_top",
-    "textures": {
-        "bottom": "morepistons:blocks/superseptuplepistonbase_bottom",
-        "side": "morepistons:blocks/superseptuplepistonbase_side",
-        "top": "morepistons:blocks/top"
-    }
-}

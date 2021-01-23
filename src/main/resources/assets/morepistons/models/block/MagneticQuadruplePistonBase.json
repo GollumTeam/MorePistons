@@ -1,8 +1,0 @@
-{
-    "parent": "block/piston",
-    "textures": {
-        "bottom": "morepistons:blocks/magneticquadruplepistonbase_bottom",
-        "side": "morepistons:blocks/magneticquadruplepistonbase_side",
-        "platform": "morepistons:blocks/top"
-    }
-}

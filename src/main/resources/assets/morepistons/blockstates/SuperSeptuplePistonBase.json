@@ -1,19 +1,19 @@
 {
     "variants": {
 		
-		"inventory": {"model": "morepistons:SuperSeptuplePistonBase" },
+		"inventory": {"model": "morepistons:super/septuple/base", "x": 270 },
 		
-        "extended=false,facing=down":  { "model": "morepistons:SuperSeptuplePistonBase", "x": 90 },
-        "extended=false,facing=up":    { "model": "morepistons:SuperSeptuplePistonBase", "x": 270 },
-        "extended=false,facing=north": { "model": "morepistons:SuperSeptuplePistonBase" },
-        "extended=false,facing=south": { "model": "morepistons:SuperSeptuplePistonBase", "y": 180 },
-        "extended=false,facing=west":  { "model": "morepistons:SuperSeptuplePistonBase", "y": 270 },
-        "extended=false,facing=east":  { "model": "morepistons:SuperSeptuplePistonBase", "y": 90 },
-        "extended=true,facing=down":   { "model": "morepistons:SuperSeptuplePistonBase_extended", "x": 90 },
-        "extended=true,facing=up":     { "model": "morepistons:SuperSeptuplePistonBase_extended", "x": 270 },
-        "extended=true,facing=north":  { "model": "morepistons:SuperSeptuplePistonBase_extended" },
-        "extended=true,facing=south":  { "model": "morepistons:SuperSeptuplePistonBase_extended", "y": 180 },
-        "extended=true,facing=west":   { "model": "morepistons:SuperSeptuplePistonBase_extended", "y": 270 },
-        "extended=true,facing=east":   { "model": "morepistons:SuperSeptuplePistonBase_extended", "y": 90 }
+        "extended=false,facing=down":  { "model": "morepistons:super/septuple/base", "x": 90 },
+        "extended=false,facing=up":    { "model": "morepistons:super/septuple/base", "x": 270 },
+        "extended=false,facing=north": { "model": "morepistons:super/septuple/base" },
+        "extended=false,facing=south": { "model": "morepistons:super/septuple/base", "y": 180 },
+        "extended=false,facing=west":  { "model": "morepistons:super/septuple/base", "y": 270 },
+        "extended=false,facing=east":  { "model": "morepistons:super/septuple/base", "y": 90 },
+        "extended=true,facing=down":   { "model": "morepistons:super/septuple/extended", "x": 90 },
+        "extended=true,facing=up":     { "model": "morepistons:super/septuple/extended", "x": 270 },
+        "extended=true,facing=north":  { "model": "morepistons:super/septuple/extended" },
+        "extended=true,facing=south":  { "model": "morepistons:super/septuple/extended", "y": 180 },
+        "extended=true,facing=west":   { "model": "morepistons:super/septuple/extended", "y": 270 },
+        "extended=true,facing=east":   { "model": "morepistons:super/septuple/extended", "y": 90 }
     }
 }

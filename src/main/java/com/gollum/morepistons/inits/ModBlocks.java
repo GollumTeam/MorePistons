@@ -183,27 +183,6 @@ public class ModBlocks {
 //		ModBlocks.blockRedStonePistonBase       = new BlockMorePistonsRedStone("RedStonePistonBase"      , false);
 //		ModBlocks.blockRedStoneStickyPistonBase = new BlockMorePistonsRedStone("RedStoneStickyPistonBase", true );
 //		
-//		if (ModMorePistons.config.compatibilityWithOldVersion) {
-//			
-//			ModBlocks.blockRedStoneCompatibilityPistonBase1       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase1"      , false, 1);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase1 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase1", true , 1);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase2       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase2"      , false, 2);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase2 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase2", true , 2);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase3       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase3"      , false, 3);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase3 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase3", true , 3);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase4       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase4"      , false, 4);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase4 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase4", true , 4);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase5       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase5"      , false, 5);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase5 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase5", true , 5);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase6       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase6"      , false, 6);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase6 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase6", true , 6);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase7       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase7"      , false, 7);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase7 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase7", true , 7);
-//			ModBlocks.blockRedStoneCompatibilityPistonBase8       = new BlockMorePistonsRedStoneProxy("RedStonePistonBase8"      , false, 8);
-//			ModBlocks.blockRedStoneCompatibilityStickyPistonBase8 = new BlockMorePistonsRedStoneProxy("RedStoneStickyPistonBase8", true , 8);
-//			
-//		}
-//		
 		//////////////////////
 		// Magnetic pistons //
 		//////////////////////

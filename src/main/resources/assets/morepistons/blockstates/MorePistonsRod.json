@@ -3,18 +3,18 @@
 		
 		"inventory": {"model": "piston_normal" },
 		
-		"facing=down,short=false" : { "model": "morepistons:MorePistonRod_normal", "x": 90 },
-		"facing=up,short=false"   : { "model": "morepistons:MorePistonRod_normal", "x": 270 },
-		"facing=north,short=false": { "model": "morepistons:MorePistonRod_normal" },
-		"facing=south,short=false": { "model": "morepistons:MorePistonRod_normal", "y": 180 },
-		"facing=west,short=false" : { "model": "morepistons:MorePistonRod_normal", "y": 270 },
-		"facing=east,short=false" : { "model": "morepistons:MorePistonRod_normal", "y": 90 },
+		"facing=down,short=false" : { "model": "morepistons:rod/normal", "x": 90 },
+		"facing=up,short=false"   : { "model": "morepistons:rod/normal", "x": 270 },
+		"facing=north,short=false": { "model": "morepistons:rod/normal" },
+		"facing=south,short=false": { "model": "morepistons:rod/normal", "y": 180 },
+		"facing=west,short=false" : { "model": "morepistons:rod/normal", "y": 270 },
+		"facing=east,short=false" : { "model": "morepistons:rod/normal", "y": 90 },
 
-		"facing=down,short=true" : { "model": "morepistons:MorePistonRod_normal_short", "x": 90 },
-		"facing=up,short=true"   : { "model": "morepistons:MorePistonRod_normal_short", "x": 270 },
-		"facing=north,short=true": { "model": "morepistons:MorePistonRod_normal_short" },
-		"facing=south,short=true": { "model": "morepistons:MorePistonRod_normal_short", "y": 180 },
-		"facing=west,short=true" : { "model": "morepistons:MorePistonRod_normal_short", "y": 270 },
-		"facing=east,short=true" : { "model": "morepistons:MorePistonRod_normal_short", "y": 90 }
+		"facing=down,short=true" : { "model": "morepistons:rod/normal_short", "x": 90 },
+		"facing=up,short=true"   : { "model": "morepistons:rod/normal_short", "x": 270 },
+		"facing=north,short=true": { "model": "morepistons:rod/normal_short" },
+		"facing=south,short=true": { "model": "morepistons:rod/normal_short", "y": 180 },
+		"facing=west,short=true" : { "model": "morepistons:rod/normal_short", "y": 270 },
+		"facing=east,short=true" : { "model": "morepistons:rod/normal_short", "y": 90 }
 	}
 }

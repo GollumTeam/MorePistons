@@ -1,19 +1,19 @@
 {
     "variants": {
 		
-		"inventory": {"model": "morepistons:DoublePistonBase" },
+		"inventory": {"model": "morepistons:normal/double/base", "x": 270 },
 		
-        "extended=false,facing=down":  { "model": "morepistons:DoublePistonBase", "x": 90 },
-        "extended=false,facing=up":    { "model": "morepistons:DoublePistonBase", "x": 270 },
-        "extended=false,facing=north": { "model": "morepistons:DoublePistonBase" },
-        "extended=false,facing=south": { "model": "morepistons:DoublePistonBase", "y": 180 },
-        "extended=false,facing=west":  { "model": "morepistons:DoublePistonBase", "y": 270 },
-        "extended=false,facing=east":  { "model": "morepistons:DoublePistonBase", "y": 90 },
-        "extended=true,facing=down":   { "model": "morepistons:DoublePistonBase_extended", "x": 90 },
-        "extended=true,facing=up":     { "model": "morepistons:DoublePistonBase_extended", "x": 270 },
-        "extended=true,facing=north":  { "model": "morepistons:DoublePistonBase_extended" },
-        "extended=true,facing=south":  { "model": "morepistons:DoublePistonBase_extended", "y": 180 },
-        "extended=true,facing=west":   { "model": "morepistons:DoublePistonBase_extended", "y": 270 },
-        "extended=true,facing=east":   { "model": "morepistons:DoublePistonBase_extended", "y": 90 }
+        "extended=false,facing=down":  { "model": "morepistons:normal/double/base", "x": 90 },
+        "extended=false,facing=up":    { "model": "morepistons:normal/double/base", "x": 270 },
+        "extended=false,facing=north": { "model": "morepistons:normal/double/base" },
+        "extended=false,facing=south": { "model": "morepistons:normal/double/base", "y": 180 },
+        "extended=false,facing=west":  { "model": "morepistons:normal/double/base", "y": 270 },
+        "extended=false,facing=east":  { "model": "morepistons:normal/double/base", "y": 90 },
+        "extended=true,facing=down":   { "model": "morepistons:normal/double/extended", "x": 90 },
+        "extended=true,facing=up":     { "model": "morepistons:normal/double/extended", "x": 270 },
+        "extended=true,facing=north":  { "model": "morepistons:normal/double/extended" },
+        "extended=true,facing=south":  { "model": "morepistons:normal/double/extended", "y": 180 },
+        "extended=true,facing=west":   { "model": "morepistons:normal/double/extended", "y": 270 },
+        "extended=true,facing=east":   { "model": "morepistons:normal/double/extended", "y": 90 }
     }
 }
