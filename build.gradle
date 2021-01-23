@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 
 minecraft {
-    version = "1.7.10-10.13.3.1395-1710ls"
+    version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "eclipse"
 }
 
@@ -57,7 +57,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     
-    compile files('GollumCoreLib/build/libs/GollumCoreLib-2.0.0-'+minecraft.version+'-unmapped.jar')
+    compile files('GollumCoreLib/build/libs/GollumCoreLib-2.1.0-'+minecraft.version+'-unmapped.jar')
 	
 }
 
