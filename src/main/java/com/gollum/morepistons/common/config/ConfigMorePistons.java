@@ -12,7 +12,4 @@ public class ConfigMorePistons extends Config {
 	@ConfigProp(minValue="0") public int numberMovableBlockWithSuperPiston   = 41;
 	
 	@ConfigProp(minValue="1.5", maxValue="15.0") public double powerGravitationalPistons = 1.5D;
-	
-	@ConfigProp(mcRestart = true) public boolean compatibilityWithOldVersion = false;
-	
 }

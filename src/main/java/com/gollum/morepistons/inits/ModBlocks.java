@@ -8,11 +8,7 @@ import com.gollum.morepistons.common.block.BlockMorePistonsRod;
 import com.gollum.morepistons.common.block.BlockMorePistonsSuper;
 //import com.gollum.morepistons.common.block.BlockMorePistonsGravitational;
 import com.gollum.morepistons.common.block.BlockMorePistonsMagnetic;
-//import com.gollum.morepistons.common.block.BlockMorePistonsMoving;
-//import com.gollum.morepistons.common.block.BlockMorePistonsRedStone;
-//import com.gollum.morepistons.common.block.BlockMorePistonsRedStoneProxy;
-//import com.gollum.morepistons.common.block.BlockMorePistonsRod;
-//import com.gollum.morepistons.common.block.BlockMorePistonsSuper;
+import com.gollum.morepistons.common.block.BlockMorePistonsRedStone;
 import com.gollum.morepistons.common.block.BlockMorePistonsVanilla;
 //import com.gollum.morepistons.common.block.BlockMorePistonsVanillaProxy;
 import com.gollum.morepistons.common.building.handler.BlockMorePistonsBuildingHandler;
@@ -59,27 +55,10 @@ public class ModBlocks {
 	public static BlockMorePistonsSuper blockSuperSeptupleStickyPistonBase;
 	public static BlockMorePistonsSuper blockSuperOctuplePistonBase;
 	public static BlockMorePistonsSuper blockSuperOctupleStickyPistonBase;
-//	
-//	public static BlockMorePistonsRedStone blockRedStonePistonBase;
-//	public static BlockMorePistonsRedStone blockRedStoneStickyPistonBase;
-//	
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase1       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase1 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase2       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase2 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase3       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase3 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase4       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase4 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase5       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase5 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase6       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase6 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase7       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase7 = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityPistonBase8       = null;
-//	public static BlockMorePistonsRedStoneProxy blockRedStoneCompatibilityStickyPistonBase8 = null;
-//	
+
+	public static BlockMorePistonsRedStone blockRedStonePistonBase;
+	public static BlockMorePistonsRedStone blockRedStoneStickyPistonBase;
+	
 	public static BlockMorePistonsMagnetic blockMagneticPistonBase;
 	public static BlockMorePistonsMagnetic blockMagneticDoublePistonBase;
 	public static BlockMorePistonsMagnetic blockMagneticTriplePistonBase;
@@ -175,14 +154,14 @@ public class ModBlocks {
 		ModBlocks.blockSuperSeptupleStickyPistonBase  = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperSeptupleStickyPistonBase" , true ).setLength (7);
 		ModBlocks.blockSuperOctuplePistonBase         = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperOctuplePistonBase"        , false).setLength (8);
 		ModBlocks.blockSuperOctupleStickyPistonBase   = (BlockMorePistonsSuper) new BlockMorePistonsSuper("SuperOctupleStickyPistonBase"  , true ).setLength (8);
-//		
-//		//////////////////////
-//		// RedStone pistons //
-//		//////////////////////
-//		
-//		ModBlocks.blockRedStonePistonBase       = new BlockMorePistonsRedStone("RedStonePistonBase"      , false);
-//		ModBlocks.blockRedStoneStickyPistonBase = new BlockMorePistonsRedStone("RedStoneStickyPistonBase", true );
-//		
+		
+		//////////////////////
+		// RedStone pistons //
+		//////////////////////
+		
+		ModBlocks.blockRedStonePistonBase       = new BlockMorePistonsRedStone("RedStonePistonBase"      , false);
+		ModBlocks.blockRedStoneStickyPistonBase = new BlockMorePistonsRedStone("RedStoneStickyPistonBase", true );
+		
 		//////////////////////
 		// Magnetic pistons //
 		//////////////////////

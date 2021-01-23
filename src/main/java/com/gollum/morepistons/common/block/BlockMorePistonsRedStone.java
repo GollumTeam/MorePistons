@@ -1,64 +1,64 @@
-//package com.gollum.morepistons.common.block;
-//
-//import static com.gollum.morepistons.ModMorePistons.log;
-//import net.minecraft.block.BlockPistonBase;
-//import net.minecraft.client.renderer.texture.IIconRegister;
-//import net.minecraft.entity.player.EntityPlayer;
-//import net.minecraft.tileentity.TileEntity;
-//import net.minecraft.util.IIcon;
-//import net.minecraft.world.IBlockAccess;
-//import net.minecraft.world.World;
-//
-//import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
-//import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
-//
-//import net.minecraftforge.fml.relauncher.Side;
-//import net.minecraftforge.fml.relauncher.SideOnly;
-//
-//public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
-//	
-//	private IIcon[] sidesIcon = new IIcon[8];
-//	
-//	/**
-//	 * Constructeur
-//	 * @param id
-//	 * @param flag
-//	 * @param texturePrefixe
-//	 */
-//	public BlockMorePistonsRedStone(String registerName, boolean isSticky) {
-//		super(registerName, isSticky);
-//	}
-//	
-//	//////////////////////////
-//	// Gestion des textures //
-//	//////////////////////////
-//	
-//	@Override
-//	protected void registerBlockIconsSide  (IIconRegister iconRegister) {
-//		for (int i = 0; i < this.sidesIcon.length; i++) {
-//			this.sidesIcon[i]  = helper.loadTexture(iconRegister, suffixSide+"_"+(i+1));
-//		}
-//		this.blockIcon = this.sidesIcon[0];
-//	}
-//	
-//	@SideOnly(Side.CLIENT)
-//	@Override
-//	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-//		
-//		TileEntity te = world.getTileEntity(x, y, z);
-//		if (te instanceof TileEntityMorePistonsMoving) {
-//			te = ((TileEntityMorePistonsMoving) te).subTe;
-//		}
-//		if (te instanceof TileEntityMorePistonsPiston) {
-//			this.blockIcon = this.sidesIcon[(((TileEntityMorePistonsPiston)te).multiplier+7) % 8];
-//		}
-//		
-//		IIcon icon = super.getIcon(world, x, y, z, side);
-//		
-//		this.blockIcon = this.sidesIcon[0];
-//		
-//		return icon;
-//	}
+package com.gollum.morepistons.common.block;
+import static net.minecraft.block.BlockPistonBase.EXTENDED;
+import static net.minecraft.block.BlockPistonBase.FACING;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsMoving;
+import com.gollum.morepistons.common.tileentities.TileEntityMorePistonsPiston;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
+
+public class BlockMorePistonsRedStone extends BlockMorePistonsBase {
+
+    public static final PropertyInteger POWER = PropertyInteger.create("power", 1, 8);
+	
+	/**
+	 * Constructeur
+	 * @param id
+	 * @param flag
+	 * @param texturePrefixe
+	 */
+	public BlockMorePistonsRedStone(String registerName, boolean isSticky) {
+		super(registerName, isSticky);
+	}
+	
+	////////////
+	// States //
+	////////////
+	
+	@Override
+	protected BlockState createBlockState() {
+		return new BlockState(this, new IProperty[]{
+			FACING,
+			EXTENDED,
+			POWER
+		});
+	}
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return super.getStateFromMeta(meta)
+			.withProperty(POWER, 1)
+		;
+	}
+	
+	@Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TileEntityMorePistonsMoving) {
+			te = ((TileEntityMorePistonsMoving) te).subTe;
+		}
+		if (te instanceof TileEntityMorePistonsPiston) {
+			state.withProperty(
+				POWER,
+				((TileEntityMorePistonsPiston)te).stickySize
+			);
+		}
+        return state;
+    }
 //	
 //	///////////////////////////////////
 //	// Gestion du signal de redstone //
@@ -140,4 +140,4 @@
 //		return true;
 //	}
 //	
-//}
+}
